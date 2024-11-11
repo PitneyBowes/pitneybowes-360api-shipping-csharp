@@ -1,4 +1,4 @@
-# com.pitneybowes.api360 - the C# library for the Shipping APIs
+# C# library for the API 360 Shipping APIs
 
 ### Introduction
 
