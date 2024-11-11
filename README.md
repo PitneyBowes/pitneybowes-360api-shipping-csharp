@@ -8,7 +8,7 @@ Some of the key API operations available in the Shipping API includes:
 ### Shipment API
 
 | Operation      | Description |
-| - -- -- -- -- -- | - -- -- -- -- -- | 
+| ----------- | ----------- | 
 | Get Carriers    | This operation fetches all onboarded carriers. Typically, user will use this service to get list of onboarded carriers and supported properties for those carriers.  | 
 | Get Countries | This operation fetches list of supported destination countries for a provided carrier and origin country.  | 
 | Get Services | This operation fetches a list of supported services for a carrier with respect to specific origin and destination country. | 
