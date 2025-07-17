@@ -32,34 +32,6 @@ namespace com.pitneybowes.api360.Model
     public partial class PrintDocumentRequest : IValidatableObject
     {
         /// <summary>
-        /// Content/Identifier of document e.g. DOCUMENT_REFERECE_ID. Actual document name e.g. abc.pdf. [IN] i.e base64 string, URL, file path
-        /// </summary>
-        /// <value>Content/Identifier of document e.g. DOCUMENT_REFERECE_ID. Actual document name e.g. abc.pdf. [IN] i.e base64 string, URL, file path</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum DataEnum
-        {
-            /// <summary>
-            /// Enum PDF for value: PDF
-            /// </summary>
-            [EnumMember(Value = "PDF")]
-            PDF = 1,
-
-            /// <summary>
-            /// Enum URL for value: URL
-            /// </summary>
-            [EnumMember(Value = "URL")]
-            URL = 2
-        }
-
-
-        /// <summary>
-        /// Content/Identifier of document e.g. DOCUMENT_REFERECE_ID. Actual document name e.g. abc.pdf. [IN] i.e base64 string, URL, file path
-        /// </summary>
-        /// <value>Content/Identifier of document e.g. DOCUMENT_REFERECE_ID. Actual document name e.g. abc.pdf. [IN] i.e base64 string, URL, file path</value>
-        /// <example>&lt;&lt;base64string&gt;&gt;</example>
-        [DataMember(Name = "data", IsRequired = true, EmitDefaultValue = true)]
-        public DataEnum Data { get; set; }
-        /// <summary>
         /// Data Type of the document e.g. DOCUMENT_REFERENCE. [IN/OUT]
         /// </summary>
         /// <value>Data Type of the document e.g. DOCUMENT_REFERENCE. [IN/OUT]</value>
@@ -182,7 +154,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="formName">The name of the Document Form. (required).</param>
         /// <param name="orientation">The orientation of the document layout: Portrait or Landscape..</param>
         /// <param name="reference">reference.</param>
-        public PrintDocumentRequest(string printerAliasName = default(string), DataEnum data = default(DataEnum), DataTypeEnum dataType = default(DataTypeEnum), DocumentTypeEnum documentType = default(DocumentTypeEnum), FormNameEnum formName = default(FormNameEnum), string orientation = default(string), PrintDocumentRequestReference reference = default(PrintDocumentRequestReference))
+        public PrintDocumentRequest(string printerAliasName = default(string), string data = default(string), DataTypeEnum dataType = default(DataTypeEnum), DocumentTypeEnum documentType = default(DocumentTypeEnum), FormNameEnum formName = default(FormNameEnum), string orientation = default(string), PrintDocumentRequestReference reference = default(PrintDocumentRequestReference))
         {
             // to ensure "printerAliasName" is required (not null)
             if (printerAliasName == null)
@@ -190,6 +162,11 @@ namespace com.pitneybowes.api360.Model
                 throw new ArgumentNullException("printerAliasName is a required property for PrintDocumentRequest and cannot be null");
             }
             this.PrinterAliasName = printerAliasName;
+            // to ensure "data" is required (not null)
+            if (data == null)
+            {
+                throw new ArgumentNullException("data is a required property for PrintDocumentRequest and cannot be null");
+            }
             this.Data = data;
             this.DataType = dataType;
             this.DocumentType = documentType;
@@ -205,6 +182,14 @@ namespace com.pitneybowes.api360.Model
         /// <example>Pitney Bowes Printer</example>
         [DataMember(Name = "printerAliasName", IsRequired = true, EmitDefaultValue = true)]
         public string PrinterAliasName { get; set; }
+
+        /// <summary>
+        /// Content/Identifier of document e.g. DOCUMENT_REFERECE_ID. Actual document name e.g. abc.pdf. [IN] i.e base64 string, URL, file path
+        /// </summary>
+        /// <value>Content/Identifier of document e.g. DOCUMENT_REFERECE_ID. Actual document name e.g. abc.pdf. [IN] i.e base64 string, URL, file path</value>
+        /// <example>&lt;&lt;base64string&gt;&gt;</example>
+        [DataMember(Name = "data", IsRequired = true, EmitDefaultValue = true)]
+        public string Data { get; set; }
 
         /// <summary>
         /// The orientation of the document layout: Portrait or Landscape.
