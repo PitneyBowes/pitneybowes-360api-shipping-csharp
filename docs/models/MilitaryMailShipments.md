@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **ToAddress** | [**MilitaryMailShipmentsToAddress**](MilitaryMailShipmentsToAddress.md) |  | 
 **Format** | **string** | Defines the type of the shipment label that is printed. QR_CODE can be generated only in GIF format. | [optional] 
 **ContentType** | **string** | Specifies how the label content is encoded.&lt;br/&gt; URL is supported for &#x60;PDF&#x60; and &#x60;GIF&#x60;. &lt;br/&gt; BASE64 is supported for &#x60;ZPL2&#x60;, &#x60;PNG&#x60;, and &#x60;GIF&#x60;.  | [optional] 
-**DateOfShipment** | **DateOnly** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
+**DateOfShipment** | **DateTime** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
 **SpecialServices** | [**List&lt;SpecialService&gt;**](SpecialService.md) |  It provides a carrier-service based special or extra service. | [optional] 
 **ShipmentOptions** | [**ShipmentOptions**](ShipmentOptions.md) |  | [optional] 
 **CarrierPayments** | [**List&lt;CarrierPaymentsInner&gt;**](CarrierPaymentsInner.md) | Defines how carrier charges are billed to a third party. Use this field to specify  account and charge type details for transportation and/or duties and taxes. This  field is optional and currently supported for FedEx, UPS, and DHL Express.  - If no &#x60;party&#x60; (who will pay for TRANSPORTATION_CHARGES or duties and taxes) is explicitly specified during shipment creation, the charges will automatically default to the sender (shipper). To direct charges to a different party, the appropriate bill-to details must be provided in the request.  | [optional] 

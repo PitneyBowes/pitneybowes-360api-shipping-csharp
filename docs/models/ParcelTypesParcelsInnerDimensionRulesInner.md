@@ -1,13 +1,13 @@
-# com.pitneybowes.api360.Model.ParcelTypesInnerDimensionRulesInner
+# com.pitneybowes.api360.Model.ParcelTypesParcelsInnerDimensionRulesInner
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **MaxLengthPlusGirth** | **decimal** | This measures the parcel&#39;s maximum length and determine parcel’s girth. | [optional] 
-**MaxParcelDimensions** | [**ParcelTypesInnerDimensionRulesInnerMaxParcelDimensions**](ParcelTypesInnerDimensionRulesInnerMaxParcelDimensions.md) |  | [optional] 
+**MaxParcelDimensions** | [**ParcelTypesParcelsInnerDimensionRulesInnerMaxParcelDimensions**](ParcelTypesParcelsInnerDimensionRulesInnerMaxParcelDimensions.md) |  | [optional] 
 **MinLengthPlusGirth** | **decimal** | This measures the parcel&#39;s minimum length and determine parcel’s girth. | [optional] 
-**MinParcelDimensions** | [**ParcelTypesInnerDimensionRulesInnerMinParcelDimensions**](ParcelTypesInnerDimensionRulesInnerMinParcelDimensions.md) |  | [optional] 
+**MinParcelDimensions** | [**ParcelTypesParcelsInnerDimensionRulesInnerMinParcelDimensions**](ParcelTypesParcelsInnerDimensionRulesInnerMinParcelDimensions.md) |  | [optional] 
 **Required** | **bool** |  | [optional] 
 **UnitOfMeasurement** | **string** | UnitofMesurement is a standard for measuring the physical quantities of specified dimension parameters. | [optional] 
 

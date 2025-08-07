@@ -56,7 +56,7 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task UploadETDAsyncTest()
         {
-            UploadETDRequest uploadETDRequest = default!;
+            UploadETDRequest uploadETDRequest = default;
             var response = await _instance.UploadETDAsync(uploadETDRequest);
             var model = response.Ok();
             Assert.IsType<UploadETD200Response>(model);

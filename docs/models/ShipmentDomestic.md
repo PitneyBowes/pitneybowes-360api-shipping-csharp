@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **ToAddress** | [**ShipmentDomesticToAddress**](ShipmentDomesticToAddress.md) |  | 
 **Format** | **string** | Defines the type of the shipment label that is printed. QR_CODE can be generated only in GIF format. | [optional] 
 **ContentType** | **string** | Specifies how the label content is encoded.&lt;br/&gt; URL is supported for &#x60;PDF&#x60; and &#x60;GIF&#x60;. &lt;br/&gt; BASE64 is supported for &#x60;ZPL2&#x60;, &#x60;PNG&#x60;, and &#x60;GIF&#x60;.  | [optional] 
-**DateOfShipment** | **DateOnly** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
+**DateOfShipment** | **DateTime** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
 **AltReturnAddress** | [**ShipmentDomesticAltReturnAddress**](ShipmentDomesticAltReturnAddress.md) |  | [optional] 
 **SpecialServices** | [**List&lt;SpecialService&gt;**](SpecialService.md) |  It provides a carrier-service based special or extra service. | [optional] 
 **ShipmentOptions** | [**ShipmentDomesticShipmentOptions**](ShipmentDomesticShipmentOptions.md) |  | [optional] 

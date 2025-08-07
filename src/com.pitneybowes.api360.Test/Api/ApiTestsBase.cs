@@ -13,7 +13,6 @@ using System.Security.Cryptography;
 using Microsoft.Extensions.Hosting;
 using com.pitneybowes.api360.Client;
 using com.pitneybowes.api360.Extensions;
-using Polly;
 
 
 /* *********************************************************************************
@@ -47,31 +46,20 @@ namespace com.pitneybowes.api360.Test.Api
 
         public ApiTestsBase(string[] args)
         {
-            
             _host = CreateHostBuilder(args).Build();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
             .ConfigureApi((context, services, options) =>
             {
-                string bearerTokenValue1 = "eyJraWQiOiJIcEQ0UGY2dWFUQThIUEdDZk5wVkprYjczTTBZWFl0V2dVNjl1djJWYUpzIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULkRfT2J2Nm11U3R2TmExOUNiVTdZenk5WEUyRTRqc3FLX19NQVVBU1Q5Zk0iLCJpc3MiOiJodHRwczovL3BpdG5leWJvd2VzLm9rdGFwcmV2aWV3LmNvbS9vYXV0aDIvYXVzMWtyYWcxazJuc2htWTgwaDgiLCJhdWQiOiJodHRwczovL2FwaS5waXRuZXlib3dlcy5jb20iLCJzdWIiOiJBUEktU1AzNjAtQndlRTdZTmVLb2EtREVWIiwiaWF0IjoxNzU0MDU1MDUzLCJleHAiOjE3NTQwNjk0NTMsImNpZCI6IjBvYTFteXZ4Y3RiUHo5Y1c3MGg4Iiwic2NwIjpbInBzYXBpIl0sInN2Y1ZlciI6IjMuMCIsImNsYWltX3BzYXBpIjp7ImVudElEIjoid1pyd1pWdlFCcEUiLCJ1aWQiOiIwb2ExbXl2eGN0YlB6OWNXNzBoOCIsInN1YklEIjoic2E4N2JmMCIsInBhcmVudFBsYW4iOiJQSVRORVlTSElQX1BSTyIsImN0eXAiOiJjb21tZXJjaWFsIiwiY250cnkiOiJVUyIsInBsYW5zIjpbIkFQSV9CQVNJQyIsIkFQSV9TRU5ESU5HX0JBU0lDIiwiREFUQVJFVEFJTl9QTEFOIiwiUElUTkVZU0hJUF9FTlRFUlBSSVNFIiwiU0VORElOR19FTlRFUlBSSVNFX1BMQU4iLCJDT05ORUNUT1JfRVBJQ19QTEFOIiwiQ09OTkVDVE9SX01DS19QTEFOIiwiQ09OTkVDVE9SX1NDUl9QTEFOIiwiRklSRUJBTExfMi4wIiwiNDM0MCIsIkFQSV9NQU5BR0UiLCJBVVRPTUFUSU9OX1JVTEVTIiwiQVVUT01BVElPTl9SVUxFU19BRFYiLCJBVVRPTUFUSU9OX1JVTEVTX09SREVSX0lNUE9SVCJdLCJkZXZJRCI6InNhODdiZjAiLCJwcmRJZCI6InBpdG5leXNoaXBfZW50In19.fbWCOYgjot0jmT1v5FOHVsRfXDXqRNu-ZMsXFJnFgJ3wExfzovAexXPM6abAqO3E6KIfe6zwLBPTIHfpvekjalI2UTpfvyY6-L5vSaEXCQwnTAL17mogNwz2Di9CnDEj44uVY1fnTxGC1CzYwjZFCycykx1m73Mnlxhx6WDoIYSvgyGNb6pcY66tBNFT3P6JuM9BFiWVntJXPqkeJ_5_OzZ_UVYSjB4IooOMBWR_SqYIvmwIvAY0t9M9uXtYi-zoMAG430UUEL_kdeJo5HFvqWZ2Is3EmCOpWJibWQ3oGlcoKwOxR-aWY0-2HwmPVx6D6FdJZCA5kr6Y1QgkLvzDnA";
-                BearerToken bearerToken1 = new(bearerTokenValue1, timeout: TimeSpan.FromSeconds(1));
+                string bearerTokenValue1 = "eyJraWQiOiJIcEQ0UGY2dWFUQThIUEdDZk5wVkprYjczTTBZWFl0V2dVNjl1djJWYUpzIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULkdySzdCdkhKbFE3bGRDVDNPTXhJZVJMOThVZlZseldTMlY1WkVVT0xuWTAiLCJpc3MiOiJodHRwczovL3BpdG5leWJvd2VzLm9rdGFwcmV2aWV3LmNvbS9vYXV0aDIvYXVzMWtyYWcxazJuc2htWTgwaDgiLCJhdWQiOiJodHRwczovL2FwaS5waXRuZXlib3dlcy5jb20iLCJzdWIiOiJBUEktU1AzNjAtQndlRTdZTmVLb2EtREVWIiwiaWF0IjoxNzU0NDk4MzQwLCJleHAiOjE3NTQ1MTI3NDAsImNpZCI6IjBvYTFteXZ4Y3RiUHo5Y1c3MGg4Iiwic2NwIjpbInBzYXBpIl0sInN2Y1ZlciI6IjMuMCIsImNsYWltX3BzYXBpIjp7ImVudElEIjoid1pyd1pWdlFCcEUiLCJ1aWQiOiIwb2ExbXl2eGN0YlB6OWNXNzBoOCIsInN1YklEIjoic2E4N2JmMCIsInBhcmVudFBsYW4iOiJQSVRORVlTSElQX1BSTyIsImN0eXAiOiJjb21tZXJjaWFsIiwiY250cnkiOiJVUyIsInBsYW5zIjpbIkFQSV9CQVNJQyIsIkFQSV9TRU5ESU5HX0JBU0lDIiwiREFUQVJFVEFJTl9QTEFOIiwiUElUTkVZU0hJUF9FTlRFUlBSSVNFIiwiU0VORElOR19FTlRFUlBSSVNFX1BMQU4iLCJDT05ORUNUT1JfRVBJQ19QTEFOIiwiQ09OTkVDVE9SX01DS19QTEFOIiwiQ09OTkVDVE9SX1NDUl9QTEFOIiwiRklSRUJBTExfMi4wIiwiNDM0MCIsIkFQSV9NQU5BR0UiLCJBVVRPTUFUSU9OX1JVTEVTIiwiQVVUT01BVElPTl9SVUxFU19BRFYiLCJBVVRPTUFUSU9OX1JVTEVTX09SREVSX0lNUE9SVCJdLCJkZXZJRCI6InNhODdiZjAiLCJwcmRJZCI6InBpdG5leXNoaXBfZW50In19.scDDFuiduxWLRJSWNq8jqG1nk015rLkEI9D0NbmyYOLcfkzW5q1eooawk03GWMqSJCNiwIirFHzoFMPCuWp51-agNhykSOvW_fA_tYXTFkQAZlBX4VzTXQIJo4dW-XQy3wX3qAd4K5GkzjP0jsS1j9nwhgBLG19p5KbCeRrkhcThGypmNmKDEgGqZa64KxYK4-JRtN_mWTA9ID-TmyFiMwYfuHtfV0Ska9kKsikS7YtsT_Qi9HkaxGmpC_CrlgjFAYSw8nJ9qSmLH0RwgCGH_BXGzcD9SHRvIH6TB9qF0fDP7bm_sbI3IcoAi6qtKzcyq56BZWSc8vDtMURkzhieqg";
+                BearerToken bearerToken1 = new BearerToken(bearerTokenValue1, timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(bearerToken1);
 
                 string basicTokenUsername1 = "Test";
-                string basicTokenPassword1 = "JaiShriRam";
-                BasicToken basicToken1 = new(basicTokenUsername1, basicTokenPassword1, timeout: TimeSpan.FromSeconds(1));
-                options.AddTokens(basicToken1);
+                string basicTokenPassword1 = "Test";
+                BasicToken basicToken1 = new BasicToken(basicTokenUsername1, basicTokenPassword1, timeout: TimeSpan.FromSeconds(1));
+                options.AddTokens(basicToken1); 
             });
-        /*{
-                string bearerTokenValue1 = context.Configuration["<token>"] ?? throw new Exception("Token not found.");
-        BearerToken bearerToken1 = new(bearerTokenValue1, timeout: TimeSpan.FromSeconds(1));
-        options.AddTokens(bearerToken1);
-
-                string basicTokenUsername1 = context.Configuration["<username>"] ?? throw new Exception("Username not found.");
-        string basicTokenPassword1 = context.Configuration["<password>"] ?? throw new Exception("Password not found.");
-        BasicToken basicToken1 = new(basicTokenUsername1, basicTokenPassword1, timeout: TimeSpan.FromSeconds(1));
-        options.AddTokens(basicToken1);
-            });*/
     }
 }

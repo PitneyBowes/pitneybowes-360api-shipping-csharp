@@ -1,4 +1,4 @@
-# com.pitneybowes.api360.Model.CountriesInner
+# com.pitneybowes.api360.Model.CountriesCountriesInner
 
 ## Properties
 

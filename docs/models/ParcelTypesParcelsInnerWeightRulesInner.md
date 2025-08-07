@@ -1,4 +1,4 @@
-# com.pitneybowes.api360.Model.ParcelTypesInnerWeightRulesInner
+# com.pitneybowes.api360.Model.ParcelTypesParcelsInnerWeightRulesInner
 
 ## Properties
 

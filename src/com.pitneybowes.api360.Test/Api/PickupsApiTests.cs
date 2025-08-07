@@ -56,8 +56,8 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task CancelPickupsAsyncTest()
         {
-            SchedulePickupCancelRequest schedulePickupCancelRequest = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
+            SchedulePickupCancelRequest schedulePickupCancelRequest = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.CancelPickupsAsync(schedulePickupCancelRequest, xPBDeveloperPartnerId);
             var model = response.Ok();
             Assert.IsType<SchedulePickupCancelResponse>(model);
@@ -69,9 +69,9 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task CancelledPickupDocumentAsyncTest()
         {
-            string type = default!;
-            GetPickupCancelledDocumentRequest getPickupCancelledDocumentRequest = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
+            string type = default;
+            GetPickupCancelledDocumentRequest getPickupCancelledDocumentRequest = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.CancelledPickupDocumentAsync(type, getPickupCancelledDocumentRequest, xPBDeveloperPartnerId);
             var model = response.Ok();
             Assert.IsType<GetPickupCancelledDocumentResponse>(model);
@@ -83,8 +83,8 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task GetPickupDocumentAsyncTest()
         {
-            string pickupId = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
+            string pickupId = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.GetPickupDocumentAsync(pickupId, xPBDeveloperPartnerId);
             var model = response.Ok();
             Assert.IsType<GetPickupDocument>(model);
@@ -96,11 +96,11 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task GetPickupsAsyncTest()
         {
-            string carrier = default!;
-            string startDate = default!;
-            string endDate = default!;
-            string status = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
+            string carrier = default;
+            string startDate = default;
+            string endDate = default;
+            string status = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.GetPickupsAsync(carrier, startDate, endDate, status, xPBDeveloperPartnerId);
             var model = response.Ok();
             Assert.IsType<GetAllPickups>(model);
@@ -112,8 +112,8 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task SchedulePickupAsyncTest()
         {
-            SchedulePickupRequest schedulePickupRequest = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
+            SchedulePickupRequest schedulePickupRequest = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.SchedulePickupAsync(schedulePickupRequest, xPBDeveloperPartnerId);
             var model = response.Ok();
             Assert.IsType<SchedulePickup200Response>(model);

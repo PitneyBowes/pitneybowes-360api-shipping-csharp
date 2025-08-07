@@ -1,11 +1,10 @@
-# com.pitneybowes.api360.Model.ServicesInner
+# com.pitneybowes.api360.Model.Services
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**BrandedName** | **string** | The branded name of service. | [optional] 
-**ServiceId** | **string** | The unique identifier given to the carrier specific service. | [optional] 
+**VarServices** | [**List&lt;ServicesServicesInner&gt;**](ServicesServicesInner.md) |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

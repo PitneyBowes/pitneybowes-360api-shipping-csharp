@@ -52,5 +52,14 @@ namespace com.pitneybowes.api360.Test.Model
             // TODO uncomment below to test "IsType" SchedulePickupRequest
             //Assert.IsType<SchedulePickupRequest>(instance);
         }
+
+        /// <summary>
+        /// Test the property 'CarrierAccountId'
+        /// </summary>
+        [Fact]
+        public void CarrierAccountIdTest()
+        {
+            // TODO unit test for the property 'CarrierAccountId'
+        }
     }
 }

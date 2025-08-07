@@ -27,7 +27,7 @@ Name | Type | Description | Notes
 **Metadata** | [**List&lt;MilitaryMailShipmentsRequestV2MetadataInner&gt;**](MilitaryMailShipmentsRequestV2MetadataInner.md) | Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; For now, &#39;Cost Account Name&#39; is supported. | [optional] 
 **ContentType** | **string** | Specifies how the label content is encoded.&lt;br/&gt; URL is supported for &#x60;PDF&#x60; and &#x60;GIF&#x60;. &lt;br/&gt; BASE64 is supported for &#x60;ZPL2&#x60;, &#x60;PNG&#x60;, and &#x60;GIF&#x60;.  | [optional] 
 **PrinterAliasName** | **string** | Refers to a printer connected (directly or via network) to a computer. &#x60;Max length &#x3D; 60&#x60; | [optional] 
-**DateOfShipment** | **DateOnly** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
+**DateOfShipment** | **DateTime** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
 **DeliveryOption** | [**MilitaryMailShipmentsRequestV2DeliveryOption**](MilitaryMailShipmentsRequestV2DeliveryOption.md) |  | [optional] 
 **ReturnOptions** | [**ShipmentDomesticByCarrierReturnOptions**](ShipmentDomesticByCarrierReturnOptions.md) |  | [optional] 
 **Customs** | [**ShipmentDomesticByCarrierCustoms**](ShipmentDomesticByCarrierCustoms.md) |  | [optional] 

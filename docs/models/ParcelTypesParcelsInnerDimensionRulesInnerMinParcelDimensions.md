@@ -1,4 +1,4 @@
-# com.pitneybowes.api360.Model.ParcelTypesInnerDimensionRulesInnerMinParcelDimensions
+# com.pitneybowes.api360.Model.ParcelTypesParcelsInnerDimensionRulesInnerMinParcelDimensions
 
 ## Properties
 

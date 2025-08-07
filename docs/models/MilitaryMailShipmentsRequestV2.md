@@ -6,7 +6,7 @@ For domestic USPS Military Mail shipments (APO/FPO/DPO Address), `customs` objec
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FromAddress** | [**FromAddressV2**](FromAddressV2.md) |  | 
-**ToAddress** | [**ToAddressV2**](ToAddressV2.md) |  | 
+**ToAddress** | [**MilitaryMailAddress**](MilitaryMailAddress.md) |  | 
 **ParcelType** | **string** | Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;  | 
 **RateShopBy** | **string** | RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup. | 
 **LabelSize** | **string** | Defines the label size of the Shipment, that is, the Shipping Label is available in different Doc Size. &lt;br /&gt; &#x60;Max length &#x3D; 10&#x60; | 
@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 **Metadata** | [**List&lt;MilitaryMailShipmentsRequestV2MetadataInner&gt;**](MilitaryMailShipmentsRequestV2MetadataInner.md) | Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; For now, &#39;Cost Account Name&#39; is supported. | [optional] 
 **ContentType** | **string** | Specifies how the label content is encoded.&lt;br/&gt; URL is supported for &#x60;PDF&#x60; and &#x60;GIF&#x60;. &lt;br/&gt; BASE64 is supported for &#x60;ZPL2&#x60;, &#x60;PNG&#x60;, and &#x60;GIF&#x60;.  | [optional] 
 **PrinterAliasName** | **string** | Refers to a printer connected (directly or via network) to a computer. &#x60;Max length &#x3D; 60&#x60; | [optional] 
-**DateOfShipment** | **DateOnly** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
+**DateOfShipment** | **DateTime** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
 **DeliveryOption** | [**MilitaryMailShipmentsRequestV2DeliveryOption**](MilitaryMailShipmentsRequestV2DeliveryOption.md) |  | [optional] 
 **ReturnOptions** | [**MilitaryMailShipmentsRequestV2ReturnOptions**](MilitaryMailShipmentsRequestV2ReturnOptions.md) |  | [optional] 
 **Customs** | [**MilitaryMailShipmentsCustoms**](MilitaryMailShipmentsCustoms.md) |  | [optional] 

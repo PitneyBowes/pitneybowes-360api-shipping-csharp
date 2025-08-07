@@ -121,6 +121,10 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                countries:
+                - countryCode: CA
+                  countryName: Canada
               schema:
                 $ref: "#/components/schemas/countries"
           description: A list of Countries has been fetched.
@@ -193,6 +197,10 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                services:
+                - serviceId: EM
+                  brandedName: Priority Mail Express™
               schema:
                 $ref: "#/components/schemas/services"
           description: A list of services has been fetched.
@@ -265,6 +273,51 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                parcels:
+                - brandedName: Box 1092
+                  carrier: USPS
+                  groupName: Specialty Boxes and Envelopes
+                  brandedDimensions:
+                    girth: 0
+                    length: 12.25
+                    width: 2.875
+                    height: 13.6875
+                    unitOfMeasurement: IN
+                  parcelId: B1092
+                  isBranded: true
+                  parcelType: LP
+                  serviceId: PM
+                  weightRules:
+                  - maxWeight: 1120
+                    minWeight: 0.01
+                    required: true
+                    unitOfMeasurement: OZ
+                - brandedName: My Box
+                  dimensionRules:
+                  - maxLengthPlusGirth: 130
+                    maxParcelDimensions:
+                      length: 120
+                      width: 38
+                      height: 41
+                      unitOfMeasurement: IN
+                    minParcelDimensions:
+                      length: 0.001
+                      width: 0.001
+                      height: 0.001
+                      unitOfMeasurement: IN
+                    required: true
+                    unitOfMeasurement: IN
+                  groupName: My Packaging
+                  parcelId: PKG
+                  isBranded: false
+                  parcelType: PKG
+                  suggestedTrackableSpecialserviceId: Sig
+                  weightRules:
+                  - maxWeight: 1120
+                    minWeight: 0.01
+                    required: true
+                    unitOfMeasurement: OZ
               schema:
                 $ref: "#/components/schemas/parcelTypes"
           description: A list of Parcel Types has been fetched.
@@ -491,41 +544,50 @@ paths:
       - Shipment
   /api/v2/shipments:
     post:
-      description: "The Create Shipment API is used to create shipments and generate\
-        \ shipment labels. A shipment refers to the process of packing and transporting\
-        \ an item from a source location to a destination location using a carrier\
-        \ service. The API supports both domestic and international shipments.<br>\n\
-        \n**Domestic Shipments** <br>\n\n  - Both the `toAddress` and `fromAddress`\
-        \ addresses must be within the same country.\n  - Requires carrier services\
-        \ and associated special services.\n\n**International Shipments**\n  - The\
-        \ `toAddress` must be in a different country than the `fromAddress`.\n  -\
-        \ Requires international carrier services, special services, and customs information.<br>\n\
-        \nThe V2 Create Shipment API compares shipping rates, services, and options\
-        \ across multiple carriers. It selects the best shipping solution based on\
-        \ criteria such as cost, delivery speed, or other business rules. This automates\
-        \ decision-making and eliminates the need for manual analysis of carrier data.\
-        \ It supports three RateShop types: <br>\n\n**1. By Carrier:**<br>\n\n  -\
-        \ Manually specify the carrier and service for shipment creation.\n  - Provides\
-        \ more customization than V1 Create Shipment.\n\n**2. By RuleSet**<br>\n\n\
-        \  - Automatically select the best carrier and service based on predefined\
-        \ rules (e.g., cheapest, fastest). For example: <br>\n  - Shipments weighing\
-        \ up to 3kg use a \"Standard\" service type with carrier A.\n  - Shipments\
-        \ exceeding 3kg use an \"Over-weight\" service type with carrier B.\n  - Rules\
-        \ are fully client-defined, allowing for dynamic decision-making based on\
-        \ shipment parameters like weight, dimensions, and destination.\n\n**3. By\
-        \ RateGroup**<br>\n\n  - Use predefined rate groups to select a carrier and\
-        \ service dynamically.For example:<br>\n  - Clients can choose between the\
-        \ fastest delivery or the cheapest service rate among a predefined group of\
-        \ carriers.\n  - The system automatically determines and selects the best\
-        \ carrier and service, without the need for manual comparisons.\n  \n**Notes**<br>\n\
-        \n  - The `rateShopBy` field determines the variant to use (`carrier`, `ruleset`,\
-        \ or `rategroup`).\n  - Ensure that variant-specific fields are correctly\
-        \ populated:\n    - **byCarrier:** `carrierAccountId`, `carrier`, and `service`\n\
-        \    - **byRuleSet:** `ruleType` and `shipOption`\n    - **byRateGroup:**\
-        \ `ruleType` and `rateGroupId`\n\n  - Define special services in one of two\
-        \ ways - by using a `specialServiceId` or by specifying  special service objects\
-        \ such as `deliveryConfirmation`, `handling`, `insurance`, or `returnOptions`.\
-        \ These two cannot be used together in the same request.\n"
+      description: "> **Note:** This Request sample includes the full set of supported\
+        \ fields across all carriers. However, not all fields are applicable to every\
+        \ carrier. When making API calls from the doc portal, ensure you include only\
+        \ the parameters supported by the specific carrier you are integrating with.\
+        \ If unsupported fields are included, the request may fail. <br/>\nTo simplify\
+        \ integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/).\
+        \ <br/>\nTo explore which label types, label formats, label sizes, parcel\
+        \ types, services, and special services are supported by each carrier, see\
+        \ the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed\
+        \ field descriptions are also provided below.\n\nThe Create Shipment API is\
+        \ used to create shipments and generate shipment labels. A shipment refers\
+        \ to the process of packing and transporting an item from a source location\
+        \ to a destination location using a carrier service. The API supports both\
+        \ domestic and international shipments.<br>\n\n**Domestic Shipments** <br>\n\
+        \n  - Both the `toAddress` and `fromAddress` addresses must be within the\
+        \ same country.\n  - Requires carrier services and associated special services.\n\
+        \n**International Shipments**\n  - The `toAddress` must be in a different\
+        \ country than the `fromAddress`.\n  - Requires international carrier services,\
+        \ special services, and customs information.<br>\n\nThe V2 Create Shipment\
+        \ API compares shipping rates, services, and options across multiple carriers.\
+        \ It selects the best shipping solution based on criteria such as cost, delivery\
+        \ speed, or other business rules. This automates decision-making and eliminates\
+        \ the need for manual analysis of carrier data. It supports three RateShop\
+        \ types: <br>\n\n**1. By Carrier:**<br>\n\n  - Manually specify the carrier\
+        \ and service for shipment creation.\n  - Provides more customization than\
+        \ V1 Create Shipment.\n\n**2. By RuleSet**<br>\n\n  - Automatically select\
+        \ the best carrier and service based on predefined rules (e.g., cheapest,\
+        \ fastest). For example: <br>\n  - Shipments weighing up to 3kg use a \"Standard\"\
+        \ service type with carrier A.\n  - Shipments exceeding 3kg use an \"Over-weight\"\
+        \ service type with carrier B.\n  - Rules are fully client-defined, allowing\
+        \ for dynamic decision-making based on shipment parameters like weight, dimensions,\
+        \ and destination.\n\n**3. By RateGroup**<br>\n\n  - Use predefined rate groups\
+        \ to select a carrier and service dynamically.For example:<br>\n  - Clients\
+        \ can choose between the fastest delivery or the cheapest service rate among\
+        \ a predefined group of carriers.\n  - The system automatically determines\
+        \ and selects the best carrier and service, without the need for manual comparisons.\n\
+        \  \n**Notes**<br>\n\n  - The `rateShopBy` field determines the variant to\
+        \ use (`carrier`, `ruleset`, or `rategroup`).\n  - Ensure that variant-specific\
+        \ fields are correctly populated:\n    - **byCarrier:** `carrierAccountId`,\
+        \ `carrier`, and `service`\n    - **byRuleSet:** `ruleType` and `shipOption`\n\
+        \    - **byRateGroup:** `ruleType` and `rateGroupId`\n\n  - Define special\
+        \ services in one of two ways - by using a `specialServiceId` or by specifying\
+        \  special service objects such as `deliveryConfirmation`, `handling`, `insurance`,\
+        \ or `returnOptions`. These two cannot be used together in the same request.\n"
       operationId: createShipmentV2
       parameters:
       - description: "The Developer Partner ID is assigned by PB to uniquely identify\
@@ -2175,6 +2237,72 @@ components:
       - toAddress
       - type
       type: object
+    MilitaryMailAddress:
+      properties:
+        addressLine1:
+          description: "The addressLine1 can contain the Flat number, Building or\
+            \ Apartment Name/number (if any) or company name (if not residential)."
+          example: UNIT 35007
+          type: string
+        addressLine2:
+          description: The addressLine2 contains Street address or Landmark (if any).
+          example: near abc street
+          type: string
+        addressLine3:
+          description: The addressLine3 contains P.O. Box (if any) near the address.
+          example: near xyz street
+          type: string
+        cityTown:
+          description: The name of the city or town to where the address belongs.
+          example: APO
+          type: string
+        countryCode:
+          description: "The two-character ISO Code of the destination country from\
+            \ this ISO country list.  The country in which the address is located.\
+            \ Use ISO 3166-1 Alpha-2 standard values. For best results this should\
+            \ be included, especially if the country name does not appear in any of\
+            \ the unparsedAddressLines."
+          example: US
+          type: string
+        name:
+          description: Name of the recipient to which this address points.
+          example: Recipient Name
+          type: string
+        phone:
+          description: 'This is recipient''s phone number. Enter the digits with or
+            without spaces or hyphens. The maximum limit of characters for Phone number
+            are 10 digits. '
+          example: 518-727-4964
+          type: string
+        company:
+          description: "The name of the company, in case if the receiver address is\
+            \ not residential."
+          example: PB
+          type: string
+        email:
+          description: This must be sender's valid email. Email is required if the
+            customer is using GoFor Carrier.
+          example: testuser@gmail.com
+          type: string
+        postalCode:
+          description: "The Postal Code or ZIP Code of the address. For US addresses,\
+            \ use either the 5-digit or 9-digit ZIP Code in one of the following formats:\
+            \ '12345' or '12345-6789'. If you use a different format, such as 12345-\
+            \ or 123451234, will receive an error."
+          example: 96376-5007
+          type: string
+        stateProvince:
+          description: "The State or Province of the address. For a US or Canadian\
+            \ address, it is the 2-letter state or province code. "
+          example: AP
+          type: string
+        residential:
+          description: "The specified address can be Residential or Official. In case\
+            \ if the address is Residential, the boolean value will be 'true', else\
+            \ it will take 'false'."
+          example: false
+          type: boolean
+      type: object
     MilitaryMailShipments:
       description: |
         For domestic USPS Military Mail shipments (APO/FPO/DPO Address), `customs` object is required if any of the following are true:
@@ -2379,7 +2507,7 @@ components:
         fromAddress:
           $ref: "#/components/schemas/fromAddressV2"
         toAddress:
-          $ref: "#/components/schemas/toAddressV2"
+          $ref: "#/components/schemas/MilitaryMailAddress"
         soldToAddress:
           $ref: "#/components/schemas/soldToAddressV2"
         additionalAddresses:
@@ -4329,11 +4457,16 @@ components:
     countries:
       example:
         countries:
-        - countryCode: CA
-          countryName: Canada
-      items:
-        $ref: "#/components/schemas/countries_inner"
-      type: array
+        - countryCode: TV
+          countryName: Tuvalu
+        - countryCode: TV
+          countryName: Tuvalu
+      properties:
+        countries:
+          items:
+            $ref: "#/components/schemas/countries_countries_inner"
+          type: array
+      type: object
     carriers:
       example:
         carriers:
@@ -4360,11 +4493,16 @@ components:
     services:
       example:
         services:
-        - serviceId: EM
-          brandedName: Priority Mail Express™
-      items:
-        $ref: "#/components/schemas/services_inner"
-      type: array
+        - serviceId: serviceId
+          brandedName: brandedName
+        - serviceId: serviceId
+          brandedName: brandedName
+      properties:
+        services:
+          items:
+            $ref: "#/components/schemas/services_services_inner"
+          type: array
+      type: object
     specialServices:
       example:
         services:
@@ -6719,6 +6857,7 @@ components:
             name: RESIDENTIAL
           serviceId: NDA
           currencyCode: USD
+          publishedTotalCarrierCharge: 73.12
         - deliveryCommitment:
             maxEstimatedNumberOfDays: "3"
             estimatedDeliveryDateTime: 2024-12-18 18:00:00.000
@@ -6766,6 +6905,7 @@ components:
             name: RESIDENTIAL
           serviceId: NDA
           currencyCode: USD
+          publishedTotalCarrierCharge: 73.12
         fromAddress:
           residential: true
           phone: 323 555-1212
@@ -7078,32 +7218,17 @@ components:
     parcelTypes:
       example:
         parcels:
-        - brandedName: Box 1092
-          carrier: USPS
+        - carrier: USPS
           groupName: Specialty Boxes and Envelopes
-          brandedDimensions:
-            girth: 0
-            length: 12.25
-            width: 2.875
-            height: 13.6875
-            unitOfMeasurement: IN
-          parcelId: B1092
-          isBranded: true
           parcelType: LP
-          serviceId: PM
-          weightRules:
-          - maxWeight: 1120
-            minWeight: 0.01
-            required: true
-            unitOfMeasurement: OZ
-        - brandedName: My Box
           dimensionRules:
-          - maxLengthPlusGirth: 130
+          - maxLengthPlusGirth: 58
             maxParcelDimensions:
-              length: 120
-              width: 38
-              height: 41
+              length: 18
+              width: 2
+              height: 18
               unitOfMeasurement: IN
+            minLengthPlusGirth: 0.001
             minParcelDimensions:
               length: 0.001
               width: 0.001
@@ -7111,19 +7236,64 @@ components:
               unitOfMeasurement: IN
             required: true
             unitOfMeasurement: IN
-          groupName: My Packaging
-          parcelId: PKG
-          isBranded: false
-          parcelType: PKG
-          suggestedTrackableSpecialserviceId: Sig
           weightRules:
           - maxWeight: 1120
             minWeight: 0.01
             required: true
             unitOfMeasurement: OZ
-      items:
-        $ref: "#/components/schemas/parcelTypes_inner"
-      type: array
+          brandedDimensions:
+            unitOfMeasurement: IN
+            girth: 0
+            length: 12.25
+            width: 2.875
+            height: 13.6875
+          isBranded: true
+          serviceId: PM
+          serviceName: Priority Mail®
+          suggestedTrackableSpecialserviceId: DelCon
+          brandedName: Box 1092
+          parcelId: B1092
+        - carrier: USPS
+          groupName: Specialty Boxes and Envelopes
+          parcelType: LP
+          dimensionRules:
+          - maxLengthPlusGirth: 58
+            maxParcelDimensions:
+              length: 18
+              width: 2
+              height: 18
+              unitOfMeasurement: IN
+            minLengthPlusGirth: 0.001
+            minParcelDimensions:
+              length: 0.001
+              width: 0.001
+              height: 0.001
+              unitOfMeasurement: IN
+            required: true
+            unitOfMeasurement: IN
+          weightRules:
+          - maxWeight: 1120
+            minWeight: 0.01
+            required: true
+            unitOfMeasurement: OZ
+          brandedDimensions:
+            unitOfMeasurement: IN
+            girth: 0
+            length: 12.25
+            width: 2.875
+            height: 13.6875
+          isBranded: true
+          serviceId: PM
+          serviceName: Priority Mail®
+          suggestedTrackableSpecialserviceId: DelCon
+          brandedName: Box 1092
+          parcelId: B1092
+      properties:
+        parcels:
+          items:
+            $ref: "#/components/schemas/parcelTypes_parcels_inner"
+          type: array
+      type: object
     getAllShipments:
       example:
         data:
@@ -9193,6 +9363,8 @@ components:
           type: array
       type: object
     createShipmentV2_request:
+      discriminator:
+        propertyName: rateShopBy
       oneOf:
       - $ref: "#/components/schemas/shipmentDomesticByCarrier"
       - $ref: "#/components/schemas/shipmentDomesticByRateGroup"
@@ -9205,6 +9377,8 @@ components:
       - $ref: "#/components/schemas/internationalShipmentResponseV2"
       - $ref: "#/components/schemas/MilitaryMailShipmentResponseV2"
     rateShipment_request:
+      discriminator:
+        propertyName: rateShopBy
       oneOf:
       - $ref: "#/components/schemas/RateShopbyCarrier"
       - $ref: "#/components/schemas/RateShopbyRategroup"
@@ -9586,6 +9760,8 @@ components:
           type: string
       type: object
     schedulePickup_request:
+      discriminator:
+        propertyName: carrierAccountId
       oneOf:
       - $ref: "#/components/schemas/schedulePickupDHLEXPRequest"
       - $ref: "#/components/schemas/schedulePickupUSPSRequest"
@@ -9598,6 +9774,8 @@ components:
       - $ref: "#/components/schemas/schedulePickupUPSResponse"
       - $ref: "#/components/schemas/schedulePickupFedexResponse"
     multipieceShipment_request:
+      discriminator:
+        propertyName: format
       oneOf:
       - $ref: "#/components/schemas/MultipieceShipmentRequest"
       - $ref: "#/components/schemas/MultipieceShipmentInternationalRequest"
@@ -9607,6 +9785,8 @@ components:
       - $ref: "#/components/schemas/MultipieceShipmentInternationalResponse"
       - $ref: "#/components/schemas/MultipieceShipmentSplitParcelLabelResponse"
     multipieceRates_request:
+      discriminator:
+        propertyName: format
       oneOf:
       - $ref: "#/components/schemas/MultipieceRateShopRequest"
       - $ref: "#/components/schemas/MultipieceRatesRequest"
@@ -11949,7 +12129,7 @@ components:
       title: DHL Express Carrier Payment
       type: object
     carrierPayments_inner:
-      oneOf:
+      anyOf:
       - $ref: "#/components/schemas/FedEx_Carrier_Payment"
       - $ref: "#/components/schemas/UPS_Carrier_Payment"
       - $ref: "#/components/schemas/DHL_Express_Carrier_Payment"
@@ -14201,7 +14381,10 @@ components:
       - countryCode
       - postalCode
       type: object
-    countries_inner:
+    countries_countries_inner:
+      example:
+        countryCode: TV
+        countryName: Tuvalu
       properties:
         countryCode:
           description: "The two-character ISO Code of the country from this ISO country\
@@ -14266,7 +14449,10 @@ components:
         properties:
           $ref: "#/components/schemas/carriers_carriers_inner_properties"
       type: object
-    services_inner:
+    services_services_inner:
+      example:
+        serviceId: serviceId
+        brandedName: brandedName
       properties:
         brandedName:
           description: The branded name of service.
@@ -18615,6 +18801,12 @@ components:
           items:
             $ref: "#/components/schemas/MultipieceRatesResponse_rates_inner_surcharges_inner"
           type: array
+        publishedTotalCarrierCharge:
+          description: |
+            The total amount based on the carrier's standard (published) rates, including base charges, surcharges, special services, discounts, and applicable taxes. This value reflects the amount the carrier would charge without any negotiated discounts or platform-specific rate adjustments.
+            - Returned only when supported by the carrier (e.g., FedEx, UPS, DHL, USPS)."
+          example: 73.12
+          type: number
       type: object
     MultipieceRateShopResponse_fromAddress:
       description: Details of the sender's address.
@@ -18935,6 +19127,7 @@ components:
           name: RESIDENTIAL
         serviceId: NDA
         currencyCode: USD
+        publishedTotalCarrierCharge: 73.12
       properties:
         totalCarrierCharge:
           description: "The total amount payable to the carrier, including base charges,\
@@ -18969,8 +19162,14 @@ components:
           items:
             $ref: "#/components/schemas/MultipieceRateShopResponse_rates_inner_surcharges_inner"
           type: array
+        publishedTotalCarrierCharge:
+          description: |
+            The total amount based on the carrier's standard (published) rates, including base charges, surcharges, special services, discounts, and applicable taxes. This value reflects the amount the carrier would charge without any negotiated discounts or platform-specific rate adjustments.
+            - Returned only when supported by the carrier (e.g., FedEx, UPS, DHL, USPS)."
+          example: 73.12
+          type: number
       type: object
-    parcelTypes_inner_dimensionRules_inner_maxParcelDimensions:
+    parcelTypes_parcels_inner_dimensionRules_inner_maxParcelDimensions:
       properties:
         length:
           description: "Length is a part of Dimension object having highest numeric\
@@ -18995,7 +19194,7 @@ components:
           example: IN
           type: string
       type: object
-    parcelTypes_inner_dimensionRules_inner_minParcelDimensions:
+    parcelTypes_parcels_inner_dimensionRules_inner_minParcelDimensions:
       properties:
         length:
           description: "Length is a part of Dimension object having highest numeric\
@@ -19020,7 +19219,7 @@ components:
           example: IN
           type: string
       type: object
-    parcelTypes_inner_dimensionRules_inner:
+    parcelTypes_parcels_inner_dimensionRules_inner:
       properties:
         maxLengthPlusGirth:
           description: This measures the parcel's maximum length and determine parcel’s
@@ -19028,14 +19227,14 @@ components:
           example: 58
           type: number
         maxParcelDimensions:
-          $ref: "#/components/schemas/parcelTypes_inner_dimensionRules_inner_maxParcelDimensions"
+          $ref: "#/components/schemas/parcelTypes_parcels_inner_dimensionRules_inner_maxParcelDimensions"
         minLengthPlusGirth:
           description: This measures the parcel's minimum length and determine parcel’s
             girth.
           example: 0.001
           type: number
         minParcelDimensions:
-          $ref: "#/components/schemas/parcelTypes_inner_dimensionRules_inner_minParcelDimensions"
+          $ref: "#/components/schemas/parcelTypes_parcels_inner_dimensionRules_inner_minParcelDimensions"
         required:
           example: true
           type: boolean
@@ -19045,8 +19244,14 @@ components:
           example: IN
           type: string
       type: object
-    parcelTypes_inner_brandedDimensions:
+    parcelTypes_parcels_inner_brandedDimensions:
       description: This will be available for parcels with Parcel Type as branded.
+      example:
+        unitOfMeasurement: IN
+        girth: 0
+        length: 12.25
+        width: 2.875
+        height: 13.6875
       properties:
         girth:
           description: This is the measure around parcel by area or circumference.
@@ -19075,7 +19280,7 @@ components:
           example: IN
           type: string
       type: object
-    parcelTypes_inner_weightRules_inner:
+    parcelTypes_parcels_inner_weightRules_inner:
       properties:
         maxWeight:
           description: "Defines maximum weight, which can be considered."
@@ -19094,7 +19299,43 @@ components:
           example: OZ
           type: string
       type: object
-    parcelTypes_inner:
+    parcelTypes_parcels_inner:
+      example:
+        carrier: USPS
+        groupName: Specialty Boxes and Envelopes
+        parcelType: LP
+        dimensionRules:
+        - maxLengthPlusGirth: 58
+          maxParcelDimensions:
+            length: 18
+            width: 2
+            height: 18
+            unitOfMeasurement: IN
+          minLengthPlusGirth: 0.001
+          minParcelDimensions:
+            length: 0.001
+            width: 0.001
+            height: 0.001
+            unitOfMeasurement: IN
+          required: true
+          unitOfMeasurement: IN
+        weightRules:
+        - maxWeight: 1120
+          minWeight: 0.01
+          required: true
+          unitOfMeasurement: OZ
+        brandedDimensions:
+          unitOfMeasurement: IN
+          girth: 0
+          length: 12.25
+          width: 2.875
+          height: 13.6875
+        isBranded: true
+        serviceId: PM
+        serviceName: Priority Mail®
+        suggestedTrackableSpecialserviceId: DelCon
+        brandedName: Box 1092
+        parcelId: B1092
       properties:
         brandedName:
           description: The branded name of parcel type
@@ -19123,13 +19364,13 @@ components:
             required: true
             unitOfMeasurement: IN
           items:
-            $ref: "#/components/schemas/parcelTypes_inner_dimensionRules_inner"
+            $ref: "#/components/schemas/parcelTypes_parcels_inner_dimensionRules_inner"
           type: array
         groupName:
           example: Specialty Boxes and Envelopes
           type: string
         brandedDimensions:
-          $ref: "#/components/schemas/parcelTypes_inner_brandedDimensions"
+          $ref: "#/components/schemas/parcelTypes_parcels_inner_brandedDimensions"
         parcelId:
           description: A unique identifier associated with the Parcel.
           example: B1092
@@ -19164,7 +19405,7 @@ components:
             required: true
             unitOfMeasurement: OZ
           items:
-            $ref: "#/components/schemas/parcelTypes_inner_weightRules_inner"
+            $ref: "#/components/schemas/parcelTypes_parcels_inner_weightRules_inner"
           type: array
       type: object
     getAllShipments_pageInfo:

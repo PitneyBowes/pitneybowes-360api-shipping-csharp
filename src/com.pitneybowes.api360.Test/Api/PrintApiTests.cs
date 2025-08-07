@@ -56,10 +56,10 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task DeletePrinterMappingAsyncTest()
         {
-            string alias = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> xPBLocationId = default!;
-            Client.Option<string> xPBTransactionId = default!;
+            string alias = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> xPBLocationId = default;
+            Client.Option<string> xPBTransactionId = default;
             await _instance.DeletePrinterMappingAsync(alias, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId);
         }
 
@@ -69,10 +69,10 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task GetPrinterMappingAsyncTest()
         {
-            string alias = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> xPBLocationId = default!;
-            Client.Option<string> xPBTransactionId = default!;
+            string alias = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> xPBLocationId = default;
+            Client.Option<string> xPBTransactionId = default;
             var response = await _instance.GetPrinterMappingAsync(alias, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId);
             var model = response.Ok();
             Assert.IsType<PrinterMappingGetResponse>(model);
@@ -84,10 +84,10 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task JobStatusAsyncTest()
         {
-            string jobId = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> xPBLocationId = default!;
-            Client.Option<string> xPBTransactionId = default!;
+            string jobId = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> xPBLocationId = default;
+            Client.Option<string> xPBTransactionId = default;
             var response = await _instance.JobStatusAsync(jobId, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId);
             var model = response.Ok();
             Assert.IsType<JobStatus>(model);
@@ -99,10 +99,10 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task PrintDocumentAsyncTest()
         {
-            PrintDocumentRequest printDocumentRequest = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> xPBLocationId = default!;
-            Client.Option<string> xPBTransactionId = default!;
+            PrintDocumentRequest printDocumentRequest = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> xPBLocationId = default;
+            Client.Option<string> xPBTransactionId = default;
             var response = await _instance.PrintDocumentAsync(printDocumentRequest, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId);
             var model = response.Ok();
             Assert.IsType<PrintDocumentResponse>(model);
@@ -114,10 +114,10 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task PrinterMappingAsyncTest()
         {
-            PrinterMappingRequest printerMappingRequest = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> xPBLocationId = default!;
-            Client.Option<string> xPBTransactionId = default!;
+            PrinterMappingRequest printerMappingRequest = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> xPBLocationId = default;
+            Client.Option<string> xPBTransactionId = default;
             var response = await _instance.PrinterMappingAsync(printerMappingRequest, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId);
             var model = response.Created();
             Assert.IsType<PrinterMappingResponse>(model);
