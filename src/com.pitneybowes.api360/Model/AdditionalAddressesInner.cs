@@ -77,7 +77,12 @@ namespace com.pitneybowes.api360.Model
             /// <summary>
             /// Enum ALTDELIVERY for value: ALT_DELIVERY
             /// </summary>
-            ALTDELIVERY = 6
+            ALTDELIVERY = 6,
+
+            /// <summary>
+            /// Enum SHIPPER for value: SHIPPER
+            /// </summary>
+            SHIPPER = 7
         }
 
         /// <summary>
@@ -105,6 +110,9 @@ namespace com.pitneybowes.api360.Model
 
             if (value.Equals("ALT_DELIVERY"))
                 return AddressTypeEnum.ALTDELIVERY;
+
+            if (value.Equals("SHIPPER"))
+                return AddressTypeEnum.SHIPPER;
 
             throw new NotImplementedException($"Could not convert value to type AddressTypeEnum: '{value}'");
         }
@@ -134,6 +142,9 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("ALT_DELIVERY"))
                 return AddressTypeEnum.ALTDELIVERY;
 
+            if (value.Equals("SHIPPER"))
+                return AddressTypeEnum.SHIPPER;
+
             return null;
         }
 
@@ -162,6 +173,9 @@ namespace com.pitneybowes.api360.Model
 
             if (value == AddressTypeEnum.ALTDELIVERY)
                 return "ALT_DELIVERY";
+
+            if (value == AddressTypeEnum.SHIPPER)
+                return "SHIPPER";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }

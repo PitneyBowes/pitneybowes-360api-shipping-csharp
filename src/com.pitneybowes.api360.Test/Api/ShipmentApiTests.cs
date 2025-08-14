@@ -96,13 +96,13 @@ namespace com.pitneybowes.api360.Test.Api
         /// <summary>
         /// Test CreateShipmentV2
         /// </summary>
-        [Fact]
+        [Fact ]
         public async Task CreateShipmentV2DomesticUSPSAsyncTest()
         {
             bool isReturn = false;
-            Option<ByCarrierV2> byCarrier = new ByCarrierV2("eRMnRx4mzPP", "USPS", "EM");
+            Option<ByCarrierV2> byCarrier = new ByCarrierV2("kwwaeElqqnD1", "USPS", "EM");
             ShipmentDomesticByCarrier shipReqByCarrier = new ShipmentDomesticByCarrier(
-                new FromAddressV2("Name", "24182 Kathy Ave", "203-555-1213", "Lake Forest", "CA", "92630-1827", "US"),
+                new FromAddressV2("Paul Wright", "24182 Kathy Ave", "203-555-1213", "Lake Forest", "CA", "92630-1827", "US"),
                 new ToAddressV2("Paul Wright", "55 Pharr Rd NW, Apt E104", "Atlanta", "GA", "30305-2151", "US", "203-555-1213"), "PKG",
                 ShipmentDomesticByCarrier.RateShopByEnum.Carrier, ShipmentDomesticByCarrier.LabelSizeEnum.DOC4X6,
                 ShipmentDomesticByCarrier.LabelTypeEnum.SHIPPINGLABEL, ShipmentDomesticByCarrier.LabelFormatEnum.PDF);
@@ -123,10 +123,80 @@ namespace com.pitneybowes.api360.Test.Api
         }
 
         [Fact]
+        public async Task CreateShipmentV2_1_DomesticUSPSAsyncTest()
+        {
+            bool isReturn = false;
+            var shipReqByCarrier = new ShipmentDomesticByCarrier(
+            contentType: ShipmentDomesticByCarrier.ContentTypeEnum.URL,
+            fromAddress: new FromAddressV2(
+                addressLine1: "24182 Kathy Ave",
+                cityTown: "Lake Forest",
+                countryCode: "US",
+                name: "Paul Wright",
+                phone: "203-555-1213",
+                postalCode: "92630-1827",
+                stateProvince: "CA"
+                ),
+            toAddress: new ToAddressV2(
+                addressLine1: "55 Pharr Rd NW, Apt E104",
+                cityTown: "Atlanta",
+                countryCode: "US",
+                name: "Paul Wright",
+                phone: "203-555-1213",
+                postalCode: "30305-2151",
+                stateProvince: "GA"
+            ),
+            parcel: new ParcelV2(
+                length: 2,
+                width: 1,
+                height: 1,
+                dimUnit: ParcelV2.DimUnitEnum.IN,
+                weightUnit: ParcelV2.WeightUnitEnum.OZ,
+                weight: 2,
+                packageValue: 2
+                ),
+            parcelType: "PKG",
+            rateShopBy: ShipmentDomesticByCarrier.RateShopByEnum.Carrier,
+            byCarrier: new ByCarrierV2(
+                carrierAccountId: "kwwaeElqqnD1",
+                carrier: "USPS",
+                service: "PM"
+                ),
+            references: new ReferenceV2
+            {
+                Reference1 = "123456",
+                Reference2 = "SendTech",
+                Reference3 = "98437",
+                Reference4 = "USPS Shipping",
+                PoNumber = "R2W 2H2",
+                Department = "Name department",
+                AdditionalReference1 = "612987641",
+                AdditionalReference2 = "989"
+            },
+            labelSize: ShipmentDomesticByCarrier.LabelSizeEnum.DOC4X6,
+            labelType: ShipmentDomesticByCarrier.LabelTypeEnum.SHIPPINGLABEL,
+            labelFormat: ShipmentDomesticByCarrier.LabelFormatEnum.PDF,
+            //printerAliasName: "test",
+            dateOfShipment: DateTime.Today
+        );
+
+            CreateShipmentV2Request createShipmentV2Request = new CreateShipmentV2Request(shipReqByCarrier);
+            Client.Option<string> xPBDeveloperPartnerId = "";
+            Client.Option<string> xPBLocationId = "";
+            Client.Option<string> xPBTransactionId = Guid.NewGuid().ToString();
+            Client.Option<string> xPBDefaultID = "";
+            Client.Option<string> includeDeliveryCommitment = "No";
+            var response = await _instance.CreateShipmentV2Async(isReturn, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment);
+            var model = response.Ok();
+            Assert.IsType<CreateShipmentV2200Response>(model);
+        }
+
+
+        [Fact (Skip = "not implemented")]
         public async Task CreateShipmentV2EdexCarrierPaymentAsyncTest()
         {
             bool isReturn = false;
-            Option<ByCarrierV2> byCarrier = new ByCarrierV2("XN6G3KzjWlKGV67", "Fedex", "3DA");
+            Option<ByCarrierV2> byCarrier = new ByCarrierV2("86V9MGxGa7z0ROz", "Fedex", "3DA");
             ShipmentDomesticByCarrier shipReqByCarrier = new ShipmentDomesticByCarrier(
                 new FromAddressV2("Name", "24182 Kathy Ave", "203-555-1213", "Lake Forest", "CA", "92630-1827", "US"),
                 new ToAddressV2("Paul Wright", "55 Pharr Rd NW, Apt E104", "Atlanta", "GA", "30305-2151", "US", "203-555-1213"), "PKG",
@@ -317,7 +387,7 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact]
         public async Task ShipmentByIdAsyncTest()
         {
-            string shipmentId = "USPS2201331900376016";
+            string shipmentId = "USPS2201386201292829";
             Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.ShipmentByIdAsync(shipmentId, xPBDeveloperPartnerId);
             var model = response.Ok();

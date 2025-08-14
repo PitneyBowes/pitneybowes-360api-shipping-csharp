@@ -793,9 +793,11 @@ paths:
         \ other agencies receive electronically sent documents faster than paper copies\
         \ attached with your shipment. The customs clearance process is also optimized\
         \ as capturing and sharing of critical trade information is done at earlier\
-        \ stages of shipping.\n\n> Note:\n- In certain scenarios, the originals of\
-        \ specific international documents still need to be attached to the package.\
-        \ \n- For smooth customs clearance and to avoid delays, ensure that the documents\
+        \ stages of shipping.\n\n> Note:\n- FedEx supports ETD with the special service\
+        \ `ELECTRONIC_TRADE_DOCUMENTS`.\n- DHL Express supports ETD with the special\
+        \ service `PAPERLESS`.\n- In certain scenarios, the originals of specific\
+        \ international documents still need to be attached to the package. \n- For\
+        \ smooth customs clearance and to avoid delays, ensure that the documents\
         \ are visually clear and not distorted in any way.\n\n**How the Workflow Operates**<br/>\n\
         \n**Step 1: Submit Electronic Trade Document Metadata**<br/>\n\nInitiate the\
         \ process by making a POST request to the ETD Upload API with the document\
@@ -3338,12 +3340,12 @@ components:
           type: string
         poNumber:
           description: "The Purchase Order Number. For FedEx, the PO number is passed\
-            \ in the Reference 2 field. <br /> `Max length = 30`."
+            \ in the `reference4` field. <br /> `Max length = 30`."
           example: R2W 2H2
           type: string
         department:
           description: "The department of the Recipient.For FedEx, the Department\
-            \ is passed in reference4 field. <br /> `Max length = 30`."
+            \ is passed in `reference2` field. <br /> `Max length = 30`."
           example: Name department
           type: string
         additionalReference1:
@@ -15989,6 +15991,7 @@ components:
           - PICKUP
           - EXPORTER
           - ALT_DELIVERY
+          - SHIPPER
           example: BROKER
           type: string
       type: object

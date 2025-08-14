@@ -35,8 +35,8 @@ namespace com.pitneybowes.api360.Model
         /// <param name="reference2">Reference 2 can have other details as indicated in the example values above. This is also printed on Label. For FedEx, this is the department. For USPS, it is a print custom message that will be printed horizontally at the bottom of the label. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</param>
         /// <param name="reference3">Reference 3 can have the information which were not fulfilled in Ref1 and Ref2. For FedEx, this is the invoice number. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</param>
         /// <param name="reference4">Reference 4 can have more information which were not provided in Ref1, Ref2, or Ref3. For FedEx, this is the PO number. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</param>
-        /// <param name="poNumber">The Purchase Order Number. For FedEx, the PO number is passed in the Reference 2 field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</param>
-        /// <param name="department">The department of the Recipient.For FedEx, the Department is passed in reference4 field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</param>
+        /// <param name="poNumber">The Purchase Order Number. For FedEx, the PO number is passed in the &#x60;reference4&#x60; field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</param>
+        /// <param name="department">The department of the Recipient.For FedEx, the Department is passed in &#x60;reference2&#x60; field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</param>
         /// <param name="additionalReference1">Additional Reference is hardly used, but sender can mention anything as per requirement, just for Recipient&#39;s information. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</param>
         /// <param name="additionalReference2">Any tags or information that to be shown to Recipient, can be mentioned by Sender, which is not indicated on AdditionalReference1 field, e.g., PO No, Order No. etc.&lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</param>
         [JsonConstructor]
@@ -123,9 +123,9 @@ namespace com.pitneybowes.api360.Model
         public Option<string> PoNumberOption { get; private set; }
 
         /// <summary>
-        /// The Purchase Order Number. For FedEx, the PO number is passed in the Reference 2 field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.
+        /// The Purchase Order Number. For FedEx, the PO number is passed in the &#x60;reference4&#x60; field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.
         /// </summary>
-        /// <value>The Purchase Order Number. For FedEx, the PO number is passed in the Reference 2 field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</value>
+        /// <value>The Purchase Order Number. For FedEx, the PO number is passed in the &#x60;reference4&#x60; field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</value>
         /* <example>R2W 2H2</example> */
         [JsonPropertyName("poNumber")]
         public string PoNumber { get { return this.PoNumberOption; } set { this.PoNumberOption = new Option<string>(value); } }
@@ -138,9 +138,9 @@ namespace com.pitneybowes.api360.Model
         public Option<string> DepartmentOption { get; private set; }
 
         /// <summary>
-        /// The department of the Recipient.For FedEx, the Department is passed in reference4 field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.
+        /// The department of the Recipient.For FedEx, the Department is passed in &#x60;reference2&#x60; field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.
         /// </summary>
-        /// <value>The department of the Recipient.For FedEx, the Department is passed in reference4 field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</value>
+        /// <value>The department of the Recipient.For FedEx, the Department is passed in &#x60;reference2&#x60; field. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;.</value>
         /* <example>Name department</example> */
         [JsonPropertyName("department")]
         public string Department { get { return this.DepartmentOption; } set { this.DepartmentOption = new Option<string>(value); } }

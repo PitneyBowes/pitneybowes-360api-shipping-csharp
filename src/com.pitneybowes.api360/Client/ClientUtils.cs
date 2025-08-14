@@ -616,7 +616,9 @@ namespace com.pitneybowes.api360.Client
         /// <summary>
         /// The base path of the API
         /// </summary>
-        public const string BASE_ADDRESS = "https://api-dev.sendpro360.pitneycloud.com/shipping";
+        public const string BASE_ADDRESS = "https://api-qa.sendpro360.pitneycloud.com/shipping";
+        //public const string BASE_ADDRESS = "https://5ef6ab16-e48b-4e06-abb7-1904410c930c.mock.pstmn.io/shipping";
+
 
         /// <summary>
         /// The scheme of the API
