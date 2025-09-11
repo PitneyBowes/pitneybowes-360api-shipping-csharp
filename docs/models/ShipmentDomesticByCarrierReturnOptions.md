@@ -6,7 +6,7 @@ This object defines return shipment options. It should be passed when requesting
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | **string** | Specifies the return type. This is the value of special service code for the carrier-supported return service. | 
-**InputParameters** | [**List&lt;MilitaryMailShipmentsRequestV2ReturnOptionsInputParametersInner&gt;**](MilitaryMailShipmentsRequestV2ReturnOptionsInputParametersInner.md) | List of input parameters required for return processing. | 
+**InputParameters** | [**List&lt;ShipmentDomesticByCarrierReturnOptionsInputParametersInner&gt;**](ShipmentDomesticByCarrierReturnOptionsInputParametersInner.md) | List of input parameters required for return processing. | 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

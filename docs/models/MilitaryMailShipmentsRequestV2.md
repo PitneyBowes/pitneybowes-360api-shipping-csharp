@@ -12,13 +12,10 @@ Name | Type | Description | Notes
 **LabelSize** | **string** | Defines the label size of the Shipment, that is, the Shipping Label is available in different Doc Size. &lt;br /&gt; &#x60;Max length &#x3D; 10&#x60; | 
 **LabelType** | **string** | Defines the type of the Shipment. QR_CODE supported for carrier USPS only as of now. &lt;br /&gt; &#x60;Max length &#x3D; 14&#x60; | 
 **LabelFormat** | **string** | \&quot;Defines the file/format in which the label is printed.&lt;br /&gt; For ZPL2, DOC_4X6 will be supported, while for PDF, both the sizes are supported. QR_CODE can be generated only in GIF format. &#x60;Max length &#x3D; 14&#x60;\&quot;  | 
-**SoldToAddress** | [**SoldToAddressV2**](SoldToAddressV2.md) |  | [optional] 
-**AdditionalAddresses** | [**List&lt;AdditionalAddressesInner&gt;**](AdditionalAddressesInner.md) | A list of additional addresses associated with the shipment.  - Each object includes an address and its designated type, such as BROKER or other parties involved in customs or shipping processes.  - Additional address could be domestic or International both.   | [optional] 
-**AltReturnAddress** | [**MilitaryMailShipmentsRequestV2AltReturnAddress**](MilitaryMailShipmentsRequestV2AltReturnAddress.md) |  | [optional] 
+**Customs** | [**MilitaryMailShipmentsRequestV2Customs**](MilitaryMailShipmentsRequestV2Customs.md) |  | 
 **Parcel** | [**ParcelV2**](ParcelV2.md) |  | [optional] 
 **ByCarrier** | [**ByCarrierV2**](ByCarrierV2.md) |  | [optional] 
 **ShipmentOptions** | [**MilitaryMailShipmentsRequestV2ShipmentOptions**](MilitaryMailShipmentsRequestV2ShipmentOptions.md) |  | [optional] 
-**CarrierPayments** | [**List&lt;CarrierPaymentsInner&gt;**](CarrierPaymentsInner.md) | Defines how carrier charges are billed to a third party. Use this field to specify  account and charge type details for transportation and/or duties and taxes. This  field is optional and currently supported for FedEx, UPS, and DHL Express.  - If no &#x60;party&#x60; (who will pay for TRANSPORTATION_CHARGES or duties and taxes) is explicitly specified during shipment creation, the charges will automatically default to the sender (shipper). To direct charges to a different party, the appropriate bill-to details must be provided in the request.  | [optional] 
 **DeliveryConfirmation** | [**MilitaryMailShipmentsRequestV2DeliveryConfirmation**](MilitaryMailShipmentsRequestV2DeliveryConfirmation.md) |  | [optional] 
 **Handling** | [**MilitaryMailShipmentsRequestV2Handling**](MilitaryMailShipmentsRequestV2Handling.md) |  | [optional] 
 **Insurance** | [**MilitaryMailShipmentsRequestV2Insurance**](MilitaryMailShipmentsRequestV2Insurance.md) |  | [optional] 
@@ -28,8 +25,6 @@ Name | Type | Description | Notes
 **PrinterAliasName** | **string** | Refers to a printer connected (directly or via network) to a computer. &#x60;Max length &#x3D; 60&#x60; | [optional] 
 **DateOfShipment** | **DateTime** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
 **DeliveryOption** | [**MilitaryMailShipmentsRequestV2DeliveryOption**](MilitaryMailShipmentsRequestV2DeliveryOption.md) |  | [optional] 
-**ReturnOptions** | [**MilitaryMailShipmentsRequestV2ReturnOptions**](MilitaryMailShipmentsRequestV2ReturnOptions.md) |  | [optional] 
-**Customs** | [**MilitaryMailShipmentsCustoms**](MilitaryMailShipmentsCustoms.md) |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

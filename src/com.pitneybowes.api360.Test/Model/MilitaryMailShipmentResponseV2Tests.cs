@@ -153,39 +153,12 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'SoldToAddress'
-        /// </summary>
-        [Fact]
-        public void SoldToAddressTest()
-        {
-            // TODO unit test for the property 'SoldToAddress'
-        }
-
-        /// <summary>
-        /// Test the property 'AdditionalAddresses'
-        /// </summary>
-        [Fact]
-        public void AdditionalAddressesTest()
-        {
-            // TODO unit test for the property 'AdditionalAddresses'
-        }
-
-        /// <summary>
         /// Test the property 'ShipmentOptions'
         /// </summary>
         [Fact]
         public void ShipmentOptionsTest()
         {
             // TODO unit test for the property 'ShipmentOptions'
-        }
-
-        /// <summary>
-        /// Test the property 'CarrierPayments'
-        /// </summary>
-        [Fact]
-        public void CarrierPaymentsTest()
-        {
-            // TODO unit test for the property 'CarrierPayments'
         }
 
         /// <summary>

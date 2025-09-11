@@ -32,13 +32,11 @@ namespace com.pitneybowes.api360.Model
         /// Initializes a new instance of the <see cref="MilitaryMailShipmentsRequestV2ShipmentOptions" /> class.
         /// </summary>
         /// <param name="addToManifest">This option asks if the shipment is to be added for Manifest, so that the shipment will reflect in the Manifest Form while compilation. Supported for CPC and USPS carriers. &lt;br /&gt; The value can be &#39;true&#39; or &#39;false&#39;.</param>
-        /// <param name="minimalAddressValidation">Allows performing minimal address validation during shipment creation. the addressLine1 field is not validated if set to true. Minimal address validation is supported only for these APIs:   - Create Shipment   - Create Bulk Shipments   - Create Multipiece Shipment </param>
         /// <param name="shipperID">The unique identifier of the known shipper associated with this shipment.</param>
         [JsonConstructor]
-        public MilitaryMailShipmentsRequestV2ShipmentOptions(Option<bool?> addToManifest = default, Option<bool?> minimalAddressValidation = default, Option<string> shipperID = default)
+        public MilitaryMailShipmentsRequestV2ShipmentOptions(Option<bool?> addToManifest = default, Option<string> shipperID = default)
         {
             AddToManifestOption = addToManifest;
-            MinimalAddressValidationOption = minimalAddressValidation;
             ShipperIDOption = shipperID;
             OnCreated();
         }
@@ -59,21 +57,6 @@ namespace com.pitneybowes.api360.Model
         /* <example>true</example> */
         [JsonPropertyName("addToManifest")]
         public bool? AddToManifest { get { return this.AddToManifestOption; } set { this.AddToManifestOption = new Option<bool?>(value); } }
-
-        /// <summary>
-        /// Used to track the state of MinimalAddressValidation
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<bool?> MinimalAddressValidationOption { get; private set; }
-
-        /// <summary>
-        /// Allows performing minimal address validation during shipment creation. the addressLine1 field is not validated if set to true. Minimal address validation is supported only for these APIs:   - Create Shipment   - Create Bulk Shipments   - Create Multipiece Shipment 
-        /// </summary>
-        /// <value>Allows performing minimal address validation during shipment creation. the addressLine1 field is not validated if set to true. Minimal address validation is supported only for these APIs:   - Create Shipment   - Create Bulk Shipments   - Create Multipiece Shipment </value>
-        /* <example>true</example> */
-        [JsonPropertyName("minimalAddressValidation")]
-        public bool? MinimalAddressValidation { get { return this.MinimalAddressValidationOption; } set { this.MinimalAddressValidationOption = new Option<bool?>(value); } }
 
         /// <summary>
         /// Used to track the state of ShipperID
@@ -99,7 +82,6 @@ namespace com.pitneybowes.api360.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class MilitaryMailShipmentsRequestV2ShipmentOptions {\n");
             sb.Append("  AddToManifest: ").Append(AddToManifest).Append("\n");
-            sb.Append("  MinimalAddressValidation: ").Append(MinimalAddressValidation).Append("\n");
             sb.Append("  ShipperID: ").Append(ShipperID).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -139,7 +121,6 @@ namespace com.pitneybowes.api360.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<bool?> addToManifest = default;
-            Option<bool?> minimalAddressValidation = default;
             Option<string> shipperID = default;
 
             while (utf8JsonReader.Read())
@@ -160,9 +141,6 @@ namespace com.pitneybowes.api360.Model
                         case "addToManifest":
                             addToManifest = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
-                        case "minimalAddressValidation":
-                            minimalAddressValidation = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
                         case "shipperID":
                             shipperID = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -175,13 +153,10 @@ namespace com.pitneybowes.api360.Model
             if (addToManifest.IsSet && addToManifest.Value == null)
                 throw new ArgumentNullException(nameof(addToManifest), "Property is not nullable for class MilitaryMailShipmentsRequestV2ShipmentOptions.");
 
-            if (minimalAddressValidation.IsSet && minimalAddressValidation.Value == null)
-                throw new ArgumentNullException(nameof(minimalAddressValidation), "Property is not nullable for class MilitaryMailShipmentsRequestV2ShipmentOptions.");
-
             if (shipperID.IsSet && shipperID.Value == null)
                 throw new ArgumentNullException(nameof(shipperID), "Property is not nullable for class MilitaryMailShipmentsRequestV2ShipmentOptions.");
 
-            return new MilitaryMailShipmentsRequestV2ShipmentOptions(addToManifest, minimalAddressValidation, shipperID);
+            return new MilitaryMailShipmentsRequestV2ShipmentOptions(addToManifest, shipperID);
         }
 
         /// <summary>
@@ -213,9 +188,6 @@ namespace com.pitneybowes.api360.Model
 
             if (militaryMailShipmentsRequestV2ShipmentOptions.AddToManifestOption.IsSet)
                 writer.WriteBoolean("addToManifest", militaryMailShipmentsRequestV2ShipmentOptions.AddToManifestOption.Value.Value);
-
-            if (militaryMailShipmentsRequestV2ShipmentOptions.MinimalAddressValidationOption.IsSet)
-                writer.WriteBoolean("minimalAddressValidation", militaryMailShipmentsRequestV2ShipmentOptions.MinimalAddressValidationOption.Value.Value);
 
             if (militaryMailShipmentsRequestV2ShipmentOptions.ShipperIDOption.IsSet)
                 writer.WriteString("shipperID", militaryMailShipmentsRequestV2ShipmentOptions.ShipperID);

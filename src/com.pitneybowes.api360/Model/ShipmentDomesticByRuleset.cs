@@ -33,6 +33,7 @@ namespace com.pitneybowes.api360.Model
         /// </summary>
         /// <param name="fromAddress">fromAddress</param>
         /// <param name="toAddress">toAddress</param>
+        /// <param name="parcelType">Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; </param>
         /// <param name="labelSize">Defines the label size of the Shipment, that is, the Shipping Label is available in different Doc Size. &lt;br /&gt; &#x60;Max length &#x3D; 10&#x60;</param>
         /// <param name="labelType">Defines the type of the Shipment. QR_CODE supported for carrier USPS only as of now. &lt;br /&gt; &#x60;Max length &#x3D; 14&#x60;</param>
         /// <param name="labelFormat">\&quot;Defines the file/format in which the label is printed.&lt;br /&gt;  QR_CODE can be generated only in GIF format. &#x60;Max length &#x3D; 14&#x60;\&quot; </param>
@@ -40,7 +41,6 @@ namespace com.pitneybowes.api360.Model
         /// <param name="additionalAddresses">A list of additional addresses associated with the shipment.  - Each object includes an address and its designated type, such as BROKER or other parties involved in customs or shipping processes.  - Additional address could be domestic or International both.  </param>
         /// <param name="altReturnAddress">altReturnAddress</param>
         /// <param name="parcel">parcel</param>
-        /// <param name="parcelType">Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; </param>
         /// <param name="rateShopBy">RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</param>
         /// <param name="byRuleSet">byRuleSet</param>
         /// <param name="shipmentOptions">shipmentOptions</param>
@@ -56,10 +56,11 @@ namespace com.pitneybowes.api360.Model
         /// <param name="dateOfShipment">The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD.</param>
         /// <param name="deliveryOption">deliveryOption</param>
         [JsonConstructor]
-        public ShipmentDomesticByRuleset(FromAddressV2 fromAddress, ToAddressV2 toAddress, LabelSizeEnum labelSize, LabelTypeEnum labelType, LabelFormatEnum labelFormat, Option<SoldToAddressV2> soldToAddress = default, Option<List<AdditionalAddressesInner>> additionalAddresses = default, Option<ShipmentDomesticByRulesetAltReturnAddress> altReturnAddress = default, Option<ParcelV2> parcel = default, Option<string> parcelType = default, Option<RateShopByEnum?> rateShopBy = default, Option<ShipmentDomesticByRulesetByRuleSet> byRuleSet = default, Option<ShipmentDomesticByRulesetShipmentOptions> shipmentOptions = default, Option<List<CarrierPaymentsInner>> carrierPayments = default, Option<ShipmentDomesticByCarrierDocTab> docTab = default, Option<MilitaryMailShipmentsRequestV2DeliveryConfirmation> deliveryConfirmation = default, Option<MilitaryMailShipmentsRequestV2Handling> handling = default, Option<MilitaryMailShipmentsRequestV2Insurance> insurance = default, Option<ReferenceV2> references = default, Option<List<ShipmentDomesticByRulesetMetadataInner>> metadata = default, Option<ContentTypeEnum?> contentType = default, Option<string> printerAliasName = default, Option<DateTime?> dateOfShipment = default, Option<ShipmentDomesticByRulesetDeliveryOption> deliveryOption = default)
+        public ShipmentDomesticByRuleset(FromAddressV2 fromAddress, ToAddressV2 toAddress, string parcelType, LabelSizeEnum labelSize, LabelTypeEnum labelType, LabelFormatEnum labelFormat, Option<SoldToAddressV2> soldToAddress = default, Option<List<AdditionalAddressesInner>> additionalAddresses = default, Option<ShipmentDomesticByRulesetAltReturnAddress> altReturnAddress = default, Option<ParcelV2> parcel = default, Option<RateShopByEnum?> rateShopBy = default, Option<ShipmentDomesticByRulesetByRuleSet> byRuleSet = default, Option<ShipmentDomesticByRulesetShipmentOptions> shipmentOptions = default, Option<List<CarrierPaymentsInner>> carrierPayments = default, Option<ShipmentDomesticByCarrierDocTab> docTab = default, Option<MilitaryMailShipmentsRequestV2DeliveryConfirmation> deliveryConfirmation = default, Option<MilitaryMailShipmentsRequestV2Handling> handling = default, Option<MilitaryMailShipmentsRequestV2Insurance> insurance = default, Option<ReferenceV2> references = default, Option<List<ShipmentDomesticByRulesetMetadataInner>> metadata = default, Option<ContentTypeEnum?> contentType = default, Option<string> printerAliasName = default, Option<DateTime?> dateOfShipment = default, Option<ShipmentDomesticByRulesetDeliveryOption> deliveryOption = default)
         {
             FromAddress = fromAddress;
             ToAddress = toAddress;
+            ParcelType = parcelType;
             LabelSize = labelSize;
             LabelType = labelType;
             LabelFormat = labelFormat;
@@ -67,7 +68,6 @@ namespace com.pitneybowes.api360.Model
             AdditionalAddressesOption = additionalAddresses;
             AltReturnAddressOption = altReturnAddress;
             ParcelOption = parcel;
-            ParcelTypeOption = parcelType;
             RateShopByOption = rateShopBy;
             ByRuleSetOption = byRuleSet;
             ShipmentOptionsOption = shipmentOptions;
@@ -545,6 +545,14 @@ namespace com.pitneybowes.api360.Model
         public ToAddressV2 ToAddress { get; set; }
 
         /// <summary>
+        /// Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; 
+        /// </summary>
+        /// <value>Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; </value>
+        /* <example>PKG</example> */
+        [JsonPropertyName("parcelType")]
+        public string ParcelType { get; set; }
+
+        /// <summary>
         /// Used to track the state of SoldToAddress
         /// </summary>
         [JsonIgnore]
@@ -596,21 +604,6 @@ namespace com.pitneybowes.api360.Model
         /// </summary>
         [JsonPropertyName("parcel")]
         public ParcelV2 Parcel { get { return this.ParcelOption; } set { this.ParcelOption = new Option<ParcelV2>(value); } }
-
-        /// <summary>
-        /// Used to track the state of ParcelType
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> ParcelTypeOption { get; private set; }
-
-        /// <summary>
-        /// Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; 
-        /// </summary>
-        /// <value>Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; </value>
-        /* <example>PKG</example> */
-        [JsonPropertyName("parcelType")]
-        public string ParcelType { get { return this.ParcelTypeOption; } set { this.ParcelTypeOption = new Option<string>(value); } }
 
         /// <summary>
         /// Used to track the state of ByRuleSet
@@ -784,6 +777,7 @@ namespace com.pitneybowes.api360.Model
             sb.Append("class ShipmentDomesticByRuleset {\n");
             sb.Append("  FromAddress: ").Append(FromAddress).Append("\n");
             sb.Append("  ToAddress: ").Append(ToAddress).Append("\n");
+            sb.Append("  ParcelType: ").Append(ParcelType).Append("\n");
             sb.Append("  LabelSize: ").Append(LabelSize).Append("\n");
             sb.Append("  LabelType: ").Append(LabelType).Append("\n");
             sb.Append("  LabelFormat: ").Append(LabelFormat).Append("\n");
@@ -791,7 +785,6 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  AdditionalAddresses: ").Append(AdditionalAddresses).Append("\n");
             sb.Append("  AltReturnAddress: ").Append(AltReturnAddress).Append("\n");
             sb.Append("  Parcel: ").Append(Parcel).Append("\n");
-            sb.Append("  ParcelType: ").Append(ParcelType).Append("\n");
             sb.Append("  RateShopBy: ").Append(RateShopBy).Append("\n");
             sb.Append("  ByRuleSet: ").Append(ByRuleSet).Append("\n");
             sb.Append("  ShipmentOptions: ").Append(ShipmentOptions).Append("\n");
@@ -850,6 +843,7 @@ namespace com.pitneybowes.api360.Model
 
             Option<FromAddressV2> fromAddress = default;
             Option<ToAddressV2> toAddress = default;
+            Option<string> parcelType = default;
             Option<ShipmentDomesticByRuleset.LabelSizeEnum?> labelSize = default;
             Option<ShipmentDomesticByRuleset.LabelTypeEnum?> labelType = default;
             Option<ShipmentDomesticByRuleset.LabelFormatEnum?> labelFormat = default;
@@ -857,7 +851,6 @@ namespace com.pitneybowes.api360.Model
             Option<List<AdditionalAddressesInner>> additionalAddresses = default;
             Option<ShipmentDomesticByRulesetAltReturnAddress> altReturnAddress = default;
             Option<ParcelV2> parcel = default;
-            Option<string> parcelType = default;
             Option<ShipmentDomesticByRuleset.RateShopByEnum?> rateShopBy = default;
             Option<ShipmentDomesticByRulesetByRuleSet> byRuleSet = default;
             Option<ShipmentDomesticByRulesetShipmentOptions> shipmentOptions = default;
@@ -894,6 +887,9 @@ namespace com.pitneybowes.api360.Model
                         case "toAddress":
                             toAddress = new Option<ToAddressV2>(JsonSerializer.Deserialize<ToAddressV2>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "parcelType":
+                            parcelType = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         case "labelSize":
                             string labelSizeRawValue = utf8JsonReader.GetString();
                             if (labelSizeRawValue != null)
@@ -920,9 +916,6 @@ namespace com.pitneybowes.api360.Model
                             break;
                         case "parcel":
                             parcel = new Option<ParcelV2>(JsonSerializer.Deserialize<ParcelV2>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
-                        case "parcelType":
-                            parcelType = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "rateShopBy":
                             string rateShopByRawValue = utf8JsonReader.GetString();
@@ -982,6 +975,9 @@ namespace com.pitneybowes.api360.Model
             if (!toAddress.IsSet)
                 throw new ArgumentException("Property is required for class ShipmentDomesticByRuleset.", nameof(toAddress));
 
+            if (!parcelType.IsSet)
+                throw new ArgumentException("Property is required for class ShipmentDomesticByRuleset.", nameof(parcelType));
+
             if (!labelSize.IsSet)
                 throw new ArgumentException("Property is required for class ShipmentDomesticByRuleset.", nameof(labelSize));
 
@@ -996,6 +992,9 @@ namespace com.pitneybowes.api360.Model
 
             if (toAddress.IsSet && toAddress.Value == null)
                 throw new ArgumentNullException(nameof(toAddress), "Property is not nullable for class ShipmentDomesticByRuleset.");
+
+            if (parcelType.IsSet && parcelType.Value == null)
+                throw new ArgumentNullException(nameof(parcelType), "Property is not nullable for class ShipmentDomesticByRuleset.");
 
             if (labelSize.IsSet && labelSize.Value == null)
                 throw new ArgumentNullException(nameof(labelSize), "Property is not nullable for class ShipmentDomesticByRuleset.");
@@ -1017,9 +1016,6 @@ namespace com.pitneybowes.api360.Model
 
             if (parcel.IsSet && parcel.Value == null)
                 throw new ArgumentNullException(nameof(parcel), "Property is not nullable for class ShipmentDomesticByRuleset.");
-
-            if (parcelType.IsSet && parcelType.Value == null)
-                throw new ArgumentNullException(nameof(parcelType), "Property is not nullable for class ShipmentDomesticByRuleset.");
 
             if (rateShopBy.IsSet && rateShopBy.Value == null)
                 throw new ArgumentNullException(nameof(rateShopBy), "Property is not nullable for class ShipmentDomesticByRuleset.");
@@ -1063,7 +1059,7 @@ namespace com.pitneybowes.api360.Model
             if (deliveryOption.IsSet && deliveryOption.Value == null)
                 throw new ArgumentNullException(nameof(deliveryOption), "Property is not nullable for class ShipmentDomesticByRuleset.");
 
-            return new ShipmentDomesticByRuleset(fromAddress.Value, toAddress.Value, labelSize.Value.Value, labelType.Value.Value, labelFormat.Value.Value, soldToAddress, additionalAddresses, altReturnAddress, parcel, parcelType, rateShopBy, byRuleSet, shipmentOptions, carrierPayments, docTab, deliveryConfirmation, handling, insurance, references, metadata, contentType, printerAliasName, dateOfShipment, deliveryOption);
+            return new ShipmentDomesticByRuleset(fromAddress.Value, toAddress.Value, parcelType.Value, labelSize.Value.Value, labelType.Value.Value, labelFormat.Value.Value, soldToAddress, additionalAddresses, altReturnAddress, parcel, rateShopBy, byRuleSet, shipmentOptions, carrierPayments, docTab, deliveryConfirmation, handling, insurance, references, metadata, contentType, printerAliasName, dateOfShipment, deliveryOption);
         }
 
         /// <summary>
@@ -1096,6 +1092,9 @@ namespace com.pitneybowes.api360.Model
             if (shipmentDomesticByRuleset.ToAddress == null)
                 throw new ArgumentNullException(nameof(shipmentDomesticByRuleset.ToAddress), "Property is required for class ShipmentDomesticByRuleset.");
 
+            if (shipmentDomesticByRuleset.ParcelType == null)
+                throw new ArgumentNullException(nameof(shipmentDomesticByRuleset.ParcelType), "Property is required for class ShipmentDomesticByRuleset.");
+
             if (shipmentDomesticByRuleset.SoldToAddressOption.IsSet && shipmentDomesticByRuleset.SoldToAddress == null)
                 throw new ArgumentNullException(nameof(shipmentDomesticByRuleset.SoldToAddress), "Property is required for class ShipmentDomesticByRuleset.");
 
@@ -1107,9 +1106,6 @@ namespace com.pitneybowes.api360.Model
 
             if (shipmentDomesticByRuleset.ParcelOption.IsSet && shipmentDomesticByRuleset.Parcel == null)
                 throw new ArgumentNullException(nameof(shipmentDomesticByRuleset.Parcel), "Property is required for class ShipmentDomesticByRuleset.");
-
-            if (shipmentDomesticByRuleset.ParcelTypeOption.IsSet && shipmentDomesticByRuleset.ParcelType == null)
-                throw new ArgumentNullException(nameof(shipmentDomesticByRuleset.ParcelType), "Property is required for class ShipmentDomesticByRuleset.");
 
             if (shipmentDomesticByRuleset.ByRuleSetOption.IsSet && shipmentDomesticByRuleset.ByRuleSet == null)
                 throw new ArgumentNullException(nameof(shipmentDomesticByRuleset.ByRuleSet), "Property is required for class ShipmentDomesticByRuleset.");
@@ -1148,6 +1144,8 @@ namespace com.pitneybowes.api360.Model
             JsonSerializer.Serialize(writer, shipmentDomesticByRuleset.FromAddress, jsonSerializerOptions);
             writer.WritePropertyName("toAddress");
             JsonSerializer.Serialize(writer, shipmentDomesticByRuleset.ToAddress, jsonSerializerOptions);
+            writer.WriteString("parcelType", shipmentDomesticByRuleset.ParcelType);
+
             var labelSizeRawValue = ShipmentDomesticByRuleset.LabelSizeEnumToJsonValue(shipmentDomesticByRuleset.LabelSize);
             writer.WriteString("labelSize", labelSizeRawValue);
             var labelTypeRawValue = ShipmentDomesticByRuleset.LabelTypeEnumToJsonValue(shipmentDomesticByRuleset.LabelType);
@@ -1174,9 +1172,6 @@ namespace com.pitneybowes.api360.Model
                 writer.WritePropertyName("parcel");
                 JsonSerializer.Serialize(writer, shipmentDomesticByRuleset.Parcel, jsonSerializerOptions);
             }
-            if (shipmentDomesticByRuleset.ParcelTypeOption.IsSet)
-                writer.WriteString("parcelType", shipmentDomesticByRuleset.ParcelType);
-
             var rateShopByRawValue = ShipmentDomesticByRuleset.RateShopByEnumToJsonValue(shipmentDomesticByRuleset.RateShopByOption.Value.Value);
             writer.WriteString("rateShopBy", rateShopByRawValue);
             if (shipmentDomesticByRuleset.ByRuleSetOption.IsSet)
