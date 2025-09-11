@@ -63,15 +63,6 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'MinimalAddressValidation'
-        /// </summary>
-        [Fact]
-        public void MinimalAddressValidationTest()
-        {
-            // TODO unit test for the property 'MinimalAddressValidation'
-        }
-
-        /// <summary>
         /// Test the property 'ShipperID'
         /// </summary>
         [Fact]

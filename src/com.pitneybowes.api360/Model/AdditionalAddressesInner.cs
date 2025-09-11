@@ -32,7 +32,7 @@ namespace com.pitneybowes.api360.Model
         /// Initializes a new instance of the <see cref="AdditionalAddressesInner" /> class.
         /// </summary>
         /// <param name="address">address</param>
-        /// <param name="addressType">Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.</param>
+        /// <param name="addressType">Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. </param>
         [JsonConstructor]
         public AdditionalAddressesInner(Option<AdditionalAddressesInnerAddress> address = default, Option<AddressTypeEnum?> addressType = default)
         {
@@ -44,9 +44,9 @@ namespace com.pitneybowes.api360.Model
         partial void OnCreated();
 
         /// <summary>
-        /// Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.
+        /// Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. 
         /// </summary>
-        /// <value>Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.</value>
+        /// <value>Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. </value>
         public enum AddressTypeEnum
         {
             /// <summary>
@@ -188,9 +188,9 @@ namespace com.pitneybowes.api360.Model
         public Option<AddressTypeEnum?> AddressTypeOption { get; private set; }
 
         /// <summary>
-        /// Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.
+        /// Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. 
         /// </summary>
-        /// <value>Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.</value>
+        /// <value>Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. </value>
         /* <example>BROKER</example> */
         [JsonPropertyName("addressType")]
         public AddressTypeEnum? AddressType { get { return this.AddressTypeOption; } set { this.AddressTypeOption = new Option<AddressTypeEnum?>(value); } }

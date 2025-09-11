@@ -72,6 +72,15 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'ParcelType'
+        /// </summary>
+        [Fact]
+        public void ParcelTypeTest()
+        {
+            // TODO unit test for the property 'ParcelType'
+        }
+
+        /// <summary>
         /// Test the property 'LabelSize'
         /// </summary>
         [Fact]
@@ -132,15 +141,6 @@ namespace com.pitneybowes.api360.Test.Model
         public void ParcelTest()
         {
             // TODO unit test for the property 'Parcel'
-        }
-
-        /// <summary>
-        /// Test the property 'ParcelType'
-        /// </summary>
-        [Fact]
-        public void ParcelTypeTest()
-        {
-            // TODO unit test for the property 'ParcelType'
         }
 
         /// <summary>

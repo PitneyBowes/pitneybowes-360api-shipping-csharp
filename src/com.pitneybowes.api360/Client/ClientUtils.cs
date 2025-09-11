@@ -121,10 +121,6 @@ namespace com.pitneybowes.api360.Client
                 return DHLExpressCarrierPayment.TypeOfChargeEnumToJsonValue(dHLExpressCarrierPaymentTypeOfChargeEnum);
             if (obj is DomesticShipmentResponseLabelLayoutInner.ContentTypeEnum domesticShipmentResponseLabelLayoutInnerContentTypeEnum)
                 return DomesticShipmentResponseLabelLayoutInner.ContentTypeEnumToJsonValue(domesticShipmentResponseLabelLayoutInnerContentTypeEnum);
-            if (obj is DomesticShipmentResponseV2LabelLayoutInner.ContentTypeEnum domesticShipmentResponseV2LabelLayoutInnerContentTypeEnum)
-                return DomesticShipmentResponseV2LabelLayoutInner.ContentTypeEnumToJsonValue(domesticShipmentResponseV2LabelLayoutInnerContentTypeEnum);
-            if (obj is DomesticShipmentResponseV2LabelLayoutInner.TypeEnum domesticShipmentResponseV2LabelLayoutInnerTypeEnum)
-                return DomesticShipmentResponseV2LabelLayoutInner.TypeEnumToJsonValue(domesticShipmentResponseV2LabelLayoutInnerTypeEnum);
             if (obj is ErrCoversheetRequest.TypeEnum errCoversheetRequestTypeEnum)
                 return ErrCoversheetRequest.TypeEnumToJsonValue(errCoversheetRequestTypeEnum);
             if (obj is ErrCoversheetRequest.ParcelTypeEnum errCoversheetRequestParcelTypeEnum)
@@ -143,10 +139,6 @@ namespace com.pitneybowes.api360.Client
                 return GetAllShipmentsDataInnerParcel.DimUnitEnumToJsonValue(getAllShipmentsDataInnerParcelDimUnitEnum);
             if (obj is GetAllShipmentsDataInnerParcel.WeightUnitEnum getAllShipmentsDataInnerParcelWeightUnitEnum)
                 return GetAllShipmentsDataInnerParcel.WeightUnitEnumToJsonValue(getAllShipmentsDataInnerParcelWeightUnitEnum);
-            if (obj is GetAllShipmentsDataInnerShipmentOptions.ReceiptOptionEnum getAllShipmentsDataInnerShipmentOptionsReceiptOptionEnum)
-                return GetAllShipmentsDataInnerShipmentOptions.ReceiptOptionEnumToJsonValue(getAllShipmentsDataInnerShipmentOptionsReceiptOptionEnum);
-            if (obj is GetSingleShipmentShipmentOptions.ReceiptOptionEnum getSingleShipmentShipmentOptionsReceiptOptionEnum)
-                return GetSingleShipmentShipmentOptions.ReceiptOptionEnumToJsonValue(getSingleShipmentShipmentOptionsReceiptOptionEnum);
             if (obj is InternationalShipmentResponse.SizeEnum internationalShipmentResponseSizeEnum)
                 return InternationalShipmentResponse.SizeEnumToJsonValue(internationalShipmentResponseSizeEnum);
             if (obj is InternationalShipmentResponse.TypeEnum internationalShipmentResponseTypeEnum)
@@ -165,12 +157,14 @@ namespace com.pitneybowes.api360.Client
                 return InternationalShipmentResponseV2Parcel.DimUnitEnumToJsonValue(internationalShipmentResponseV2ParcelDimUnitEnum);
             if (obj is InternationalShipmentResponseV2Parcel.WeightUnitEnum internationalShipmentResponseV2ParcelWeightUnitEnum)
                 return InternationalShipmentResponseV2Parcel.WeightUnitEnumToJsonValue(internationalShipmentResponseV2ParcelWeightUnitEnum);
-            if (obj is MilitaryMailShipmentResponseV2AllOfCustomsCustomsInfo.ReasonForExportEnum militaryMailShipmentResponseV2AllOfCustomsCustomsInfoReasonForExportEnum)
-                return MilitaryMailShipmentResponseV2AllOfCustomsCustomsInfo.ReasonForExportEnumToJsonValue(militaryMailShipmentResponseV2AllOfCustomsCustomsInfoReasonForExportEnum);
-            if (obj is MilitaryMailShipmentResponseV2AllOfCustomsCustomsInfo.TermsOfSaleEnum militaryMailShipmentResponseV2AllOfCustomsCustomsInfoTermsOfSaleEnum)
-                return MilitaryMailShipmentResponseV2AllOfCustomsCustomsInfo.TermsOfSaleEnumToJsonValue(militaryMailShipmentResponseV2AllOfCustomsCustomsInfoTermsOfSaleEnum);
-            if (obj is MilitaryMailShipmentResponseV2AllOfCustomsCustomsItems.WeightUnitEnum militaryMailShipmentResponseV2AllOfCustomsCustomsItemsWeightUnitEnum)
-                return MilitaryMailShipmentResponseV2AllOfCustomsCustomsItems.WeightUnitEnumToJsonValue(militaryMailShipmentResponseV2AllOfCustomsCustomsItemsWeightUnitEnum);
+            if (obj is MilitaryMailShipmentResponseV2CustomsCustomsInfo.ReasonForExportEnum militaryMailShipmentResponseV2CustomsCustomsInfoReasonForExportEnum)
+                return MilitaryMailShipmentResponseV2CustomsCustomsInfo.ReasonForExportEnumToJsonValue(militaryMailShipmentResponseV2CustomsCustomsInfoReasonForExportEnum);
+            if (obj is MilitaryMailShipmentResponseV2CustomsCustomsItemsInner.WeightUnitEnum militaryMailShipmentResponseV2CustomsCustomsItemsInnerWeightUnitEnum)
+                return MilitaryMailShipmentResponseV2CustomsCustomsItemsInner.WeightUnitEnumToJsonValue(militaryMailShipmentResponseV2CustomsCustomsItemsInnerWeightUnitEnum);
+            if (obj is MilitaryMailShipmentResponseV2LabelLayoutInner.ContentTypeEnum militaryMailShipmentResponseV2LabelLayoutInnerContentTypeEnum)
+                return MilitaryMailShipmentResponseV2LabelLayoutInner.ContentTypeEnumToJsonValue(militaryMailShipmentResponseV2LabelLayoutInnerContentTypeEnum);
+            if (obj is MilitaryMailShipmentResponseV2LabelLayoutInner.TypeEnum militaryMailShipmentResponseV2LabelLayoutInnerTypeEnum)
+                return MilitaryMailShipmentResponseV2LabelLayoutInner.TypeEnumToJsonValue(militaryMailShipmentResponseV2LabelLayoutInnerTypeEnum);
             if (obj is MilitaryMailShipments.SizeEnum militaryMailShipmentsSizeEnum)
                 return MilitaryMailShipments.SizeEnumToJsonValue(militaryMailShipmentsSizeEnum);
             if (obj is MilitaryMailShipments.TypeEnum militaryMailShipmentsTypeEnum)
@@ -199,6 +193,8 @@ namespace com.pitneybowes.api360.Client
                 return MilitaryMailShipmentsRequestV2.LabelFormatEnumToJsonValue(militaryMailShipmentsRequestV2LabelFormatEnum);
             if (obj is MilitaryMailShipmentsRequestV2.ContentTypeEnum militaryMailShipmentsRequestV2ContentTypeEnum)
                 return MilitaryMailShipmentsRequestV2.ContentTypeEnumToJsonValue(militaryMailShipmentsRequestV2ContentTypeEnum);
+            if (obj is MilitaryMailShipmentsRequestV2CustomsCustomsInfo.ReasonForExportEnum militaryMailShipmentsRequestV2CustomsCustomsInfoReasonForExportEnum)
+                return MilitaryMailShipmentsRequestV2CustomsCustomsInfo.ReasonForExportEnumToJsonValue(militaryMailShipmentsRequestV2CustomsCustomsInfoReasonForExportEnum);
             if (obj is MilitaryMailShipmentsRequestV2DeliveryConfirmation.TypeEnum militaryMailShipmentsRequestV2DeliveryConfirmationTypeEnum)
                 return MilitaryMailShipmentsRequestV2DeliveryConfirmation.TypeEnumToJsonValue(militaryMailShipmentsRequestV2DeliveryConfirmationTypeEnum);
             if (obj is MilitaryMailShipmentsRequestV2Handling.TypeEnum militaryMailShipmentsRequestV2HandlingTypeEnum)
@@ -293,8 +289,6 @@ namespace com.pitneybowes.api360.Client
                 return ReprintShipmentParcel.DimUnitEnumToJsonValue(reprintShipmentParcelDimUnitEnum);
             if (obj is ReprintShipmentParcel.WeightUnitEnum reprintShipmentParcelWeightUnitEnum)
                 return ReprintShipmentParcel.WeightUnitEnumToJsonValue(reprintShipmentParcelWeightUnitEnum);
-            if (obj is ReprintShipmentShipmentOptions.ReceiptOptionEnum reprintShipmentShipmentOptionsReceiptOptionEnum)
-                return ReprintShipmentShipmentOptions.ReceiptOptionEnumToJsonValue(reprintShipmentShipmentOptionsReceiptOptionEnum);
             if (obj is ReprintShipmentV2LabelLayoutInner.ContentTypeEnum reprintShipmentV2LabelLayoutInnerContentTypeEnum)
                 return ReprintShipmentV2LabelLayoutInner.ContentTypeEnumToJsonValue(reprintShipmentV2LabelLayoutInnerContentTypeEnum);
             if (obj is ReprintShipmentV2LabelLayoutInner.FileFormatEnum reprintShipmentV2LabelLayoutInnerFileFormatEnum)
@@ -391,8 +385,6 @@ namespace com.pitneybowes.api360.Client
                 return ShipmentDomesticParcel.DimUnitEnumToJsonValue(shipmentDomesticParcelDimUnitEnum);
             if (obj is ShipmentDomesticParcel.WeightUnitEnum shipmentDomesticParcelWeightUnitEnum)
                 return ShipmentDomesticParcel.WeightUnitEnumToJsonValue(shipmentDomesticParcelWeightUnitEnum);
-            if (obj is ShipmentDomesticShipmentOptions.ReceiptOptionEnum shipmentDomesticShipmentOptionsReceiptOptionEnum)
-                return ShipmentDomesticShipmentOptions.ReceiptOptionEnumToJsonValue(shipmentDomesticShipmentOptionsReceiptOptionEnum);
             if (obj is ShipmentInternational.SizeEnum shipmentInternationalSizeEnum)
                 return ShipmentInternational.SizeEnumToJsonValue(shipmentInternationalSizeEnum);
             if (obj is ShipmentInternational.TypeEnum shipmentInternationalTypeEnum)
@@ -423,8 +415,6 @@ namespace com.pitneybowes.api360.Client
                 return ShipmentInternationalFromAddress.TaxIdTypeEnumToJsonValue(shipmentInternationalFromAddressTaxIdTypeEnum);
             if (obj is ShipmentInternationalToAddress.TaxIdTypeEnum shipmentInternationalToAddressTaxIdTypeEnum)
                 return ShipmentInternationalToAddress.TaxIdTypeEnumToJsonValue(shipmentInternationalToAddressTaxIdTypeEnum);
-            if (obj is ShipmentOptions.ReceiptOptionEnum shipmentOptionsReceiptOptionEnum)
-                return ShipmentOptions.ReceiptOptionEnumToJsonValue(shipmentOptionsReceiptOptionEnum);
             if (obj is SingleRateParcel.DimUnitEnum singleRateParcelDimUnitEnum)
                 return SingleRateParcel.DimUnitEnumToJsonValue(singleRateParcelDimUnitEnum);
             if (obj is SingleRateParcel.WeightUnitEnum singleRateParcelWeightUnitEnum)
@@ -616,7 +606,9 @@ namespace com.pitneybowes.api360.Client
         /// <summary>
         /// The base path of the API
         /// </summary>
-        public const string BASE_ADDRESS = "https://api-qa.sendpro360.pitneycloud.com/shipping";
+        //public const string BASE_ADDRESS = "https://api-qa.sendpro360.pitneycloud.com/shipping";
+        //public const string BASE_ADDRESS = "https://fba56e59-1c90-41a5-8a2e-0fd79d4ca8e7.mock.pstmn.io/shipping";
+        public const string BASE_ADDRESS = "https://8b5a300f-0cf2-456d-8e7e-c062d68bc5e6.mock.pstmn.io/shipping";
         //public const string BASE_ADDRESS = "https://5ef6ab16-e48b-4e06-abb7-1904410c930c.mock.pstmn.io/shipping";
 
 

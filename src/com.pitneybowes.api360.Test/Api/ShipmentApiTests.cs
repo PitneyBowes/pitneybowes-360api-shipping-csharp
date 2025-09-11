@@ -179,7 +179,7 @@ namespace com.pitneybowes.api360.Test.Api
             //printerAliasName: "test",
             dateOfShipment: DateTime.Today
         );
-
+            shipReqByCarrier.ShipmentOptions = new ShipmentDomesticByCarrierShipmentOptions(addToManifest: true, shipperID: "2000095148");
             CreateShipmentV2Request createShipmentV2Request = new CreateShipmentV2Request(shipReqByCarrier);
             Client.Option<string> xPBDeveloperPartnerId = "";
             Client.Option<string> xPBLocationId = "";

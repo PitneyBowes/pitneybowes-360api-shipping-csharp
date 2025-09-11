@@ -24,7 +24,7 @@ using com.pitneybowes.api360.Client;
 namespace com.pitneybowes.api360.Model
 {
     /// <summary>
-    /// The complete address of the Sender.
+    /// The complete address of the Reciepient.
     /// </summary>
     public partial class ToAddressV2Response : IValidatableObject
     {
