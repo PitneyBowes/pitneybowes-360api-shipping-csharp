@@ -1,5 +1,5 @@
 # com.pitneybowes.api360.Model.ToAddressV2Response
-The complete address of the Sender.
+The complete address of the Reciepient.
 
 ## Properties
 

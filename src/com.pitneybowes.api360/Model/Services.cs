@@ -53,7 +53,6 @@ namespace com.pitneybowes.api360.Model
         /// <summary>
         /// Gets or Sets VarServices
         /// </summary>
-        /* <example>{&quot;services&quot;:[{&quot;serviceId&quot;:&quot;EM&quot;,&quot;brandedName&quot;:&quot;Priority Mail Express™&quot;}]}</example> */
         [JsonPropertyName("services")]
         public List<ServicesServicesInner>? VarServices { get { return this.VarServicesOption; } set { this.VarServicesOption = new(value); } }
 

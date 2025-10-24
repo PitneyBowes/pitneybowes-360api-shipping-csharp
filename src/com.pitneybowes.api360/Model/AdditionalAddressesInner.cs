@@ -34,7 +34,7 @@ namespace com.pitneybowes.api360.Model
         /// Initializes a new instance of the <see cref="AdditionalAddressesInner" /> class.
         /// </summary>
         /// <param name="address">address</param>
-        /// <param name="addressType">Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.</param>
+        /// <param name="addressType">Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. </param>
         [JsonConstructor]
         public AdditionalAddressesInner(Option<AdditionalAddressesInnerAddress?> address = default, Option<AddressTypeEnum?> addressType = default)
         {
@@ -46,9 +46,9 @@ namespace com.pitneybowes.api360.Model
         partial void OnCreated();
 
         /// <summary>
-        /// Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.
+        /// Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. 
         /// </summary>
-        /// <value>Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.</value>
+        /// <value>Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. </value>
         public enum AddressTypeEnum
         {
             /// <summary>
@@ -79,7 +79,12 @@ namespace com.pitneybowes.api360.Model
             /// <summary>
             /// Enum ALTDELIVERY for value: ALT_DELIVERY
             /// </summary>
-            ALTDELIVERY = 6
+            ALTDELIVERY = 6,
+
+            /// <summary>
+            /// Enum SHIPPER for value: SHIPPER
+            /// </summary>
+            SHIPPER = 7
         }
 
         /// <summary>
@@ -108,6 +113,9 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("ALT_DELIVERY"))
                 return AddressTypeEnum.ALTDELIVERY;
 
+            if (value.Equals("SHIPPER"))
+                return AddressTypeEnum.SHIPPER;
+
             throw new NotImplementedException($"Could not convert value to type AddressTypeEnum: '{value}'");
         }
 
@@ -135,6 +143,9 @@ namespace com.pitneybowes.api360.Model
 
             if (value.Equals("ALT_DELIVERY"))
                 return AddressTypeEnum.ALTDELIVERY;
+
+            if (value.Equals("SHIPPER"))
+                return AddressTypeEnum.SHIPPER;
 
             return null;
         }
@@ -165,6 +176,9 @@ namespace com.pitneybowes.api360.Model
             if (value == AddressTypeEnum.ALTDELIVERY)
                 return "ALT_DELIVERY";
 
+            if (value == AddressTypeEnum.SHIPPER)
+                return "SHIPPER";
+
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
 
@@ -176,9 +190,9 @@ namespace com.pitneybowes.api360.Model
         public Option<AddressTypeEnum?> AddressTypeOption { get; private set; }
 
         /// <summary>
-        /// Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.
+        /// Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. 
         /// </summary>
-        /// <value>Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.</value>
+        /// <value>Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. </value>
         /* <example>BROKER</example> */
         [JsonPropertyName("addressType")]
         public AddressTypeEnum? AddressType { get { return this.AddressTypeOption; } set { this.AddressTypeOption = new(value); } }

@@ -49,7 +49,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="shipmentOptions">shipmentOptions</param>
         /// <param name="carrierPayments">Defines how carrier charges are billed to a third party. Use this field to specify  account and charge type details for transportation and/or duties and taxes. This  field is optional and currently supported for FedEx, UPS, and DHL Express.  - If no &#x60;party&#x60; (who will pay for TRANSPORTATION_CHARGES or duties and taxes) is explicitly specified during shipment creation, the charges will automatically default to the sender (shipper). To direct charges to a different party, the appropriate bill-to details must be provided in the request. </param>
         [JsonConstructor]
-        public DomesticShipmentResponseV2(Option<string?> correlationId = default, Option<string?> shipmentId = default, Option<string?> parcelTrackingNumber = default, Option<List<DomesticShipmentResponseV2LabelLayoutInner>?> labelLayout = default, Option<ParcelV2?> parcel = default, Option<DomesticShipmentResponseV2Rate?> rate = default, Option<ReferenceV2?> references = default, Option<string?> printStatus = default, Option<DomesticShipmentResponseV2PrintError?> printError = default, Option<FromAddressV2Response?> fromAddress = default, Option<ToAddressV2Response?> toAddress = default, Option<SoldToAddress?> soldToAddress = default, Option<List<AdditionalAddressesInner>?> additionalAddresses = default, Option<ReprintShipmentShipmentOptions?> shipmentOptions = default, Option<List<CarrierPaymentsInner>?> carrierPayments = default)
+        public DomesticShipmentResponseV2(Option<string?> correlationId = default, Option<string?> shipmentId = default, Option<string?> parcelTrackingNumber = default, Option<List<MilitaryMailShipmentResponseV2LabelLayoutInner>?> labelLayout = default, Option<ParcelV2?> parcel = default, Option<DomesticShipmentResponseV2Rate?> rate = default, Option<ReferenceV2?> references = default, Option<string?> printStatus = default, Option<MilitaryMailShipmentResponseV2PrintError?> printError = default, Option<FromAddressV2Response?> fromAddress = default, Option<ToAddressV2Response?> toAddress = default, Option<SoldToAddress?> soldToAddress = default, Option<List<AdditionalAddressesInner>?> additionalAddresses = default, Option<ReprintShipmentShipmentOptions?> shipmentOptions = default, Option<List<CarrierPaymentsInner>?> carrierPayments = default)
         {
             CorrelationIdOption = correlationId;
             ShipmentIdOption = shipmentId;
@@ -121,13 +121,13 @@ namespace com.pitneybowes.api360.Model
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<DomesticShipmentResponseV2LabelLayoutInner>?> LabelLayoutOption { get; private set; }
+        public Option<List<MilitaryMailShipmentResponseV2LabelLayoutInner>?> LabelLayoutOption { get; private set; }
 
         /// <summary>
         /// Gets or Sets LabelLayout
         /// </summary>
         [JsonPropertyName("labelLayout")]
-        public List<DomesticShipmentResponseV2LabelLayoutInner>? LabelLayout { get { return this.LabelLayoutOption; } set { this.LabelLayoutOption = new(value); } }
+        public List<MilitaryMailShipmentResponseV2LabelLayoutInner>? LabelLayout { get { return this.LabelLayoutOption; } set { this.LabelLayoutOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of Parcel
@@ -188,13 +188,13 @@ namespace com.pitneybowes.api360.Model
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<DomesticShipmentResponseV2PrintError?> PrintErrorOption { get; private set; }
+        public Option<MilitaryMailShipmentResponseV2PrintError?> PrintErrorOption { get; private set; }
 
         /// <summary>
         /// Gets or Sets PrintError
         /// </summary>
         [JsonPropertyName("printError")]
-        public DomesticShipmentResponseV2PrintError? PrintError { get { return this.PrintErrorOption; } set { this.PrintErrorOption = new(value); } }
+        public MilitaryMailShipmentResponseV2PrintError? PrintError { get { return this.PrintErrorOption; } set { this.PrintErrorOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of FromAddress
@@ -339,12 +339,12 @@ namespace com.pitneybowes.api360.Model
             Option<string?> correlationId = default;
             Option<string?> shipmentId = default;
             Option<string?> parcelTrackingNumber = default;
-            Option<List<DomesticShipmentResponseV2LabelLayoutInner>?> labelLayout = default;
+            Option<List<MilitaryMailShipmentResponseV2LabelLayoutInner>?> labelLayout = default;
             Option<ParcelV2?> parcel = default;
             Option<DomesticShipmentResponseV2Rate?> rate = default;
             Option<ReferenceV2?> references = default;
             Option<string?> printStatus = default;
-            Option<DomesticShipmentResponseV2PrintError?> printError = default;
+            Option<MilitaryMailShipmentResponseV2PrintError?> printError = default;
             Option<FromAddressV2Response?> fromAddress = default;
             Option<ToAddressV2Response?> toAddress = default;
             Option<SoldToAddress?> soldToAddress = default;
@@ -377,7 +377,7 @@ namespace com.pitneybowes.api360.Model
                             parcelTrackingNumber = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "labelLayout":
-                            labelLayout = new Option<List<DomesticShipmentResponseV2LabelLayoutInner>?>(JsonSerializer.Deserialize<List<DomesticShipmentResponseV2LabelLayoutInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            labelLayout = new Option<List<MilitaryMailShipmentResponseV2LabelLayoutInner>?>(JsonSerializer.Deserialize<List<MilitaryMailShipmentResponseV2LabelLayoutInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "parcel":
                             parcel = new Option<ParcelV2?>(JsonSerializer.Deserialize<ParcelV2>(ref utf8JsonReader, jsonSerializerOptions)!);
@@ -392,7 +392,7 @@ namespace com.pitneybowes.api360.Model
                             printStatus = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "printError":
-                            printError = new Option<DomesticShipmentResponseV2PrintError?>(JsonSerializer.Deserialize<DomesticShipmentResponseV2PrintError>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            printError = new Option<MilitaryMailShipmentResponseV2PrintError?>(JsonSerializer.Deserialize<MilitaryMailShipmentResponseV2PrintError>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "fromAddress":
                             fromAddress = new Option<FromAddressV2Response?>(JsonSerializer.Deserialize<FromAddressV2Response>(ref utf8JsonReader, jsonSerializerOptions)!);

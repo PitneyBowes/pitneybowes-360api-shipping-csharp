@@ -117,30 +117,12 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'SoldToAddress'
+        /// Test the property 'Customs'
         /// </summary>
         [Fact]
-        public void SoldToAddressTest()
+        public void CustomsTest()
         {
-            // TODO unit test for the property 'SoldToAddress'
-        }
-
-        /// <summary>
-        /// Test the property 'AdditionalAddresses'
-        /// </summary>
-        [Fact]
-        public void AdditionalAddressesTest()
-        {
-            // TODO unit test for the property 'AdditionalAddresses'
-        }
-
-        /// <summary>
-        /// Test the property 'AltReturnAddress'
-        /// </summary>
-        [Fact]
-        public void AltReturnAddressTest()
-        {
-            // TODO unit test for the property 'AltReturnAddress'
+            // TODO unit test for the property 'Customs'
         }
 
         /// <summary>
@@ -168,15 +150,6 @@ namespace com.pitneybowes.api360.Test.Model
         public void ShipmentOptionsTest()
         {
             // TODO unit test for the property 'ShipmentOptions'
-        }
-
-        /// <summary>
-        /// Test the property 'CarrierPayments'
-        /// </summary>
-        [Fact]
-        public void CarrierPaymentsTest()
-        {
-            // TODO unit test for the property 'CarrierPayments'
         }
 
         /// <summary>
@@ -258,24 +231,6 @@ namespace com.pitneybowes.api360.Test.Model
         public void DeliveryOptionTest()
         {
             // TODO unit test for the property 'DeliveryOption'
-        }
-
-        /// <summary>
-        /// Test the property 'ReturnOptions'
-        /// </summary>
-        [Fact]
-        public void ReturnOptionsTest()
-        {
-            // TODO unit test for the property 'ReturnOptions'
-        }
-
-        /// <summary>
-        /// Test the property 'Customs'
-        /// </summary>
-        [Fact]
-        public void CustomsTest()
-        {
-            // TODO unit test for the property 'Customs'
         }
     }
 }

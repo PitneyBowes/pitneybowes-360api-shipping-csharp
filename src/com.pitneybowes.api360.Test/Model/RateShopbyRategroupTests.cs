@@ -106,5 +106,14 @@ namespace com.pitneybowes.api360.Test.Model
         {
             // TODO unit test for the property 'ByRateGroup'
         }
+
+        /// <summary>
+        /// Test the property 'DeliveryOption'
+        /// </summary>
+        [Fact]
+        public void DeliveryOptionTest()
+        {
+            // TODO unit test for the property 'DeliveryOption'
+        }
     }
 }

@@ -40,13 +40,10 @@ namespace com.pitneybowes.api360.Model
         /// <param name="labelSize">Defines the label size of the Shipment, that is, the Shipping Label is available in different Doc Size. &lt;br /&gt; &#x60;Max length &#x3D; 10&#x60;</param>
         /// <param name="labelType">Defines the type of the Shipment. QR_CODE supported for carrier USPS only as of now. &lt;br /&gt; &#x60;Max length &#x3D; 14&#x60;</param>
         /// <param name="labelFormat">\&quot;Defines the file/format in which the label is printed.&lt;br /&gt; For ZPL2, DOC_4X6 will be supported, while for PDF, both the sizes are supported. QR_CODE can be generated only in GIF format. &#x60;Max length &#x3D; 14&#x60;\&quot; </param>
-        /// <param name="soldToAddress">soldToAddress</param>
-        /// <param name="additionalAddresses">A list of additional addresses associated with the shipment.  - Each object includes an address and its designated type, such as BROKER or other parties involved in customs or shipping processes.  - Additional address could be domestic or International both.  </param>
-        /// <param name="altReturnAddress">altReturnAddress</param>
+        /// <param name="customs">customs</param>
         /// <param name="parcel">parcel</param>
         /// <param name="byCarrier">byCarrier</param>
         /// <param name="shipmentOptions">shipmentOptions</param>
-        /// <param name="carrierPayments">Defines how carrier charges are billed to a third party. Use this field to specify  account and charge type details for transportation and/or duties and taxes. This  field is optional and currently supported for FedEx, UPS, and DHL Express.  - If no &#x60;party&#x60; (who will pay for TRANSPORTATION_CHARGES or duties and taxes) is explicitly specified during shipment creation, the charges will automatically default to the sender (shipper). To direct charges to a different party, the appropriate bill-to details must be provided in the request. </param>
         /// <param name="deliveryConfirmation">deliveryConfirmation</param>
         /// <param name="handling">handling</param>
         /// <param name="insurance">insurance</param>
@@ -56,10 +53,8 @@ namespace com.pitneybowes.api360.Model
         /// <param name="printerAliasName">Refers to a printer connected (directly or via network) to a computer. &#x60;Max length &#x3D; 60&#x60;</param>
         /// <param name="dateOfShipment">The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD.</param>
         /// <param name="deliveryOption">deliveryOption</param>
-        /// <param name="returnOptions">returnOptions</param>
-        /// <param name="customs">customs</param>
         [JsonConstructor]
-        public MilitaryMailShipmentsRequestV2(FromAddressV2 fromAddress, ToAddressV2 toAddress, string parcelType, RateShopByEnum rateShopBy, LabelSizeEnum labelSize, LabelTypeEnum labelType, LabelFormatEnum labelFormat, Option<SoldToAddressV2?> soldToAddress = default, Option<List<AdditionalAddressesInner>?> additionalAddresses = default, Option<MilitaryMailShipmentsRequestV2AltReturnAddress?> altReturnAddress = default, Option<ParcelV2?> parcel = default, Option<ByCarrierV2?> byCarrier = default, Option<MilitaryMailShipmentsRequestV2ShipmentOptions?> shipmentOptions = default, Option<List<CarrierPaymentsInner>?> carrierPayments = default, Option<MilitaryMailShipmentsRequestV2DeliveryConfirmation?> deliveryConfirmation = default, Option<MilitaryMailShipmentsRequestV2Handling?> handling = default, Option<MilitaryMailShipmentsRequestV2Insurance?> insurance = default, Option<ReferenceV2?> references = default, Option<List<MilitaryMailShipmentsRequestV2MetadataInner>?> metadata = default, Option<ContentTypeEnum?> contentType = default, Option<string?> printerAliasName = default, Option<DateOnly?> dateOfShipment = default, Option<MilitaryMailShipmentsRequestV2DeliveryOption?> deliveryOption = default, Option<MilitaryMailShipmentsRequestV2ReturnOptions?> returnOptions = default, Option<MilitaryMailShipmentsCustoms?> customs = default)
+        public MilitaryMailShipmentsRequestV2(FromAddressV2 fromAddress, MilitaryMailAddress toAddress, string parcelType, RateShopByEnum rateShopBy, LabelSizeEnum labelSize, LabelTypeEnum labelType, LabelFormatEnum labelFormat, MilitaryMailShipmentsRequestV2Customs customs, Option<ParcelV2?> parcel = default, Option<ByCarrierV2?> byCarrier = default, Option<MilitaryMailShipmentsRequestV2ShipmentOptions?> shipmentOptions = default, Option<MilitaryMailShipmentsRequestV2DeliveryConfirmation?> deliveryConfirmation = default, Option<MilitaryMailShipmentsRequestV2Handling?> handling = default, Option<MilitaryMailShipmentsRequestV2Insurance?> insurance = default, Option<ReferenceV2?> references = default, Option<List<MilitaryMailShipmentsRequestV2MetadataInner>?> metadata = default, Option<ContentTypeEnum?> contentType = default, Option<string?> printerAliasName = default, Option<DateOnly?> dateOfShipment = default, Option<MilitaryMailShipmentsRequestV2DeliveryOption?> deliveryOption = default)
         {
             FromAddress = fromAddress;
             ToAddress = toAddress;
@@ -68,13 +63,10 @@ namespace com.pitneybowes.api360.Model
             LabelSize = labelSize;
             LabelType = labelType;
             LabelFormat = labelFormat;
-            SoldToAddressOption = soldToAddress;
-            AdditionalAddressesOption = additionalAddresses;
-            AltReturnAddressOption = altReturnAddress;
+            Customs = customs;
             ParcelOption = parcel;
             ByCarrierOption = byCarrier;
             ShipmentOptionsOption = shipmentOptions;
-            CarrierPaymentsOption = carrierPayments;
             DeliveryConfirmationOption = deliveryConfirmation;
             HandlingOption = handling;
             InsuranceOption = insurance;
@@ -84,8 +76,6 @@ namespace com.pitneybowes.api360.Model
             PrinterAliasNameOption = printerAliasName;
             DateOfShipmentOption = dateOfShipment;
             DeliveryOptionOption = deliveryOption;
-            ReturnOptionsOption = returnOptions;
-            CustomsOption = customs;
             OnCreated();
         }
 
@@ -539,7 +529,7 @@ namespace com.pitneybowes.api360.Model
         /// Gets or Sets ToAddress
         /// </summary>
         [JsonPropertyName("toAddress")]
-        public ToAddressV2 ToAddress { get; set; }
+        public MilitaryMailAddress ToAddress { get; set; }
 
         /// <summary>
         /// Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; 
@@ -550,44 +540,10 @@ namespace com.pitneybowes.api360.Model
         public string ParcelType { get; set; }
 
         /// <summary>
-        /// Used to track the state of SoldToAddress
+        /// Gets or Sets Customs
         /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<SoldToAddressV2?> SoldToAddressOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets SoldToAddress
-        /// </summary>
-        [JsonPropertyName("soldToAddress")]
-        public SoldToAddressV2? SoldToAddress { get { return this.SoldToAddressOption; } set { this.SoldToAddressOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of AdditionalAddresses
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<AdditionalAddressesInner>?> AdditionalAddressesOption { get; private set; }
-
-        /// <summary>
-        /// A list of additional addresses associated with the shipment.  - Each object includes an address and its designated type, such as BROKER or other parties involved in customs or shipping processes.  - Additional address could be domestic or International both.  
-        /// </summary>
-        /// <value>A list of additional addresses associated with the shipment.  - Each object includes an address and its designated type, such as BROKER or other parties involved in customs or shipping processes.  - Additional address could be domestic or International both.  </value>
-        [JsonPropertyName("additionalAddresses")]
-        public List<AdditionalAddressesInner>? AdditionalAddresses { get { return this.AdditionalAddressesOption; } set { this.AdditionalAddressesOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of AltReturnAddress
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<MilitaryMailShipmentsRequestV2AltReturnAddress?> AltReturnAddressOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets AltReturnAddress
-        /// </summary>
-        [JsonPropertyName("altReturnAddress")]
-        public MilitaryMailShipmentsRequestV2AltReturnAddress? AltReturnAddress { get { return this.AltReturnAddressOption; } set { this.AltReturnAddressOption = new(value); } }
+        [JsonPropertyName("customs")]
+        public MilitaryMailShipmentsRequestV2Customs Customs { get; set; }
 
         /// <summary>
         /// Used to track the state of Parcel
@@ -627,20 +583,6 @@ namespace com.pitneybowes.api360.Model
         /// </summary>
         [JsonPropertyName("shipmentOptions")]
         public MilitaryMailShipmentsRequestV2ShipmentOptions? ShipmentOptions { get { return this.ShipmentOptionsOption; } set { this.ShipmentOptionsOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of CarrierPayments
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<CarrierPaymentsInner>?> CarrierPaymentsOption { get; private set; }
-
-        /// <summary>
-        /// Defines how carrier charges are billed to a third party. Use this field to specify  account and charge type details for transportation and/or duties and taxes. This  field is optional and currently supported for FedEx, UPS, and DHL Express.  - If no &#x60;party&#x60; (who will pay for TRANSPORTATION_CHARGES or duties and taxes) is explicitly specified during shipment creation, the charges will automatically default to the sender (shipper). To direct charges to a different party, the appropriate bill-to details must be provided in the request. 
-        /// </summary>
-        /// <value>Defines how carrier charges are billed to a third party. Use this field to specify  account and charge type details for transportation and/or duties and taxes. This  field is optional and currently supported for FedEx, UPS, and DHL Express.  - If no &#x60;party&#x60; (who will pay for TRANSPORTATION_CHARGES or duties and taxes) is explicitly specified during shipment creation, the charges will automatically default to the sender (shipper). To direct charges to a different party, the appropriate bill-to details must be provided in the request. </value>
-        [JsonPropertyName("carrierPayments")]
-        public List<CarrierPaymentsInner>? CarrierPayments { get { return this.CarrierPaymentsOption; } set { this.CarrierPaymentsOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of DeliveryConfirmation
@@ -752,32 +694,6 @@ namespace com.pitneybowes.api360.Model
         public MilitaryMailShipmentsRequestV2DeliveryOption? DeliveryOption { get { return this.DeliveryOptionOption; } set { this.DeliveryOptionOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of ReturnOptions
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<MilitaryMailShipmentsRequestV2ReturnOptions?> ReturnOptionsOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets ReturnOptions
-        /// </summary>
-        [JsonPropertyName("returnOptions")]
-        public MilitaryMailShipmentsRequestV2ReturnOptions? ReturnOptions { get { return this.ReturnOptionsOption; } set { this.ReturnOptionsOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of Customs
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<MilitaryMailShipmentsCustoms?> CustomsOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets Customs
-        /// </summary>
-        [JsonPropertyName("customs")]
-        public MilitaryMailShipmentsCustoms? Customs { get { return this.CustomsOption; } set { this.CustomsOption = new(value); } }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -792,13 +708,10 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  LabelSize: ").Append(LabelSize).Append("\n");
             sb.Append("  LabelType: ").Append(LabelType).Append("\n");
             sb.Append("  LabelFormat: ").Append(LabelFormat).Append("\n");
-            sb.Append("  SoldToAddress: ").Append(SoldToAddress).Append("\n");
-            sb.Append("  AdditionalAddresses: ").Append(AdditionalAddresses).Append("\n");
-            sb.Append("  AltReturnAddress: ").Append(AltReturnAddress).Append("\n");
+            sb.Append("  Customs: ").Append(Customs).Append("\n");
             sb.Append("  Parcel: ").Append(Parcel).Append("\n");
             sb.Append("  ByCarrier: ").Append(ByCarrier).Append("\n");
             sb.Append("  ShipmentOptions: ").Append(ShipmentOptions).Append("\n");
-            sb.Append("  CarrierPayments: ").Append(CarrierPayments).Append("\n");
             sb.Append("  DeliveryConfirmation: ").Append(DeliveryConfirmation).Append("\n");
             sb.Append("  Handling: ").Append(Handling).Append("\n");
             sb.Append("  Insurance: ").Append(Insurance).Append("\n");
@@ -808,8 +721,6 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  PrinterAliasName: ").Append(PrinterAliasName).Append("\n");
             sb.Append("  DateOfShipment: ").Append(DateOfShipment).Append("\n");
             sb.Append("  DeliveryOption: ").Append(DeliveryOption).Append("\n");
-            sb.Append("  ReturnOptions: ").Append(ReturnOptions).Append("\n");
-            sb.Append("  Customs: ").Append(Customs).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -853,19 +764,16 @@ namespace com.pitneybowes.api360.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<FromAddressV2?> fromAddress = default;
-            Option<ToAddressV2?> toAddress = default;
+            Option<MilitaryMailAddress?> toAddress = default;
             Option<string?> parcelType = default;
             Option<MilitaryMailShipmentsRequestV2.RateShopByEnum?> rateShopBy = default;
             Option<MilitaryMailShipmentsRequestV2.LabelSizeEnum?> labelSize = default;
             Option<MilitaryMailShipmentsRequestV2.LabelTypeEnum?> labelType = default;
             Option<MilitaryMailShipmentsRequestV2.LabelFormatEnum?> labelFormat = default;
-            Option<SoldToAddressV2?> soldToAddress = default;
-            Option<List<AdditionalAddressesInner>?> additionalAddresses = default;
-            Option<MilitaryMailShipmentsRequestV2AltReturnAddress?> altReturnAddress = default;
+            Option<MilitaryMailShipmentsRequestV2Customs?> customs = default;
             Option<ParcelV2?> parcel = default;
             Option<ByCarrierV2?> byCarrier = default;
             Option<MilitaryMailShipmentsRequestV2ShipmentOptions?> shipmentOptions = default;
-            Option<List<CarrierPaymentsInner>?> carrierPayments = default;
             Option<MilitaryMailShipmentsRequestV2DeliveryConfirmation?> deliveryConfirmation = default;
             Option<MilitaryMailShipmentsRequestV2Handling?> handling = default;
             Option<MilitaryMailShipmentsRequestV2Insurance?> insurance = default;
@@ -875,8 +783,6 @@ namespace com.pitneybowes.api360.Model
             Option<string?> printerAliasName = default;
             Option<DateOnly?> dateOfShipment = default;
             Option<MilitaryMailShipmentsRequestV2DeliveryOption?> deliveryOption = default;
-            Option<MilitaryMailShipmentsRequestV2ReturnOptions?> returnOptions = default;
-            Option<MilitaryMailShipmentsCustoms?> customs = default;
 
             while (utf8JsonReader.Read())
             {
@@ -897,7 +803,7 @@ namespace com.pitneybowes.api360.Model
                             fromAddress = new Option<FromAddressV2?>(JsonSerializer.Deserialize<FromAddressV2>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "toAddress":
-                            toAddress = new Option<ToAddressV2?>(JsonSerializer.Deserialize<ToAddressV2>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            toAddress = new Option<MilitaryMailAddress?>(JsonSerializer.Deserialize<MilitaryMailAddress>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "parcelType":
                             parcelType = new Option<string?>(utf8JsonReader.GetString()!);
@@ -922,14 +828,8 @@ namespace com.pitneybowes.api360.Model
                             if (labelFormatRawValue != null)
                                 labelFormat = new Option<MilitaryMailShipmentsRequestV2.LabelFormatEnum?>(MilitaryMailShipmentsRequestV2.LabelFormatEnumFromStringOrDefault(labelFormatRawValue));
                             break;
-                        case "soldToAddress":
-                            soldToAddress = new Option<SoldToAddressV2?>(JsonSerializer.Deserialize<SoldToAddressV2>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "additionalAddresses":
-                            additionalAddresses = new Option<List<AdditionalAddressesInner>?>(JsonSerializer.Deserialize<List<AdditionalAddressesInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "altReturnAddress":
-                            altReturnAddress = new Option<MilitaryMailShipmentsRequestV2AltReturnAddress?>(JsonSerializer.Deserialize<MilitaryMailShipmentsRequestV2AltReturnAddress>(ref utf8JsonReader, jsonSerializerOptions)!);
+                        case "customs":
+                            customs = new Option<MilitaryMailShipmentsRequestV2Customs?>(JsonSerializer.Deserialize<MilitaryMailShipmentsRequestV2Customs>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "parcel":
                             parcel = new Option<ParcelV2?>(JsonSerializer.Deserialize<ParcelV2>(ref utf8JsonReader, jsonSerializerOptions)!);
@@ -939,9 +839,6 @@ namespace com.pitneybowes.api360.Model
                             break;
                         case "shipmentOptions":
                             shipmentOptions = new Option<MilitaryMailShipmentsRequestV2ShipmentOptions?>(JsonSerializer.Deserialize<MilitaryMailShipmentsRequestV2ShipmentOptions>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "carrierPayments":
-                            carrierPayments = new Option<List<CarrierPaymentsInner>?>(JsonSerializer.Deserialize<List<CarrierPaymentsInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "deliveryConfirmation":
                             deliveryConfirmation = new Option<MilitaryMailShipmentsRequestV2DeliveryConfirmation?>(JsonSerializer.Deserialize<MilitaryMailShipmentsRequestV2DeliveryConfirmation>(ref utf8JsonReader, jsonSerializerOptions)!);
@@ -972,12 +869,6 @@ namespace com.pitneybowes.api360.Model
                         case "deliveryOption":
                             deliveryOption = new Option<MilitaryMailShipmentsRequestV2DeliveryOption?>(JsonSerializer.Deserialize<MilitaryMailShipmentsRequestV2DeliveryOption>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
-                        case "returnOptions":
-                            returnOptions = new Option<MilitaryMailShipmentsRequestV2ReturnOptions?>(JsonSerializer.Deserialize<MilitaryMailShipmentsRequestV2ReturnOptions>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "customs":
-                            customs = new Option<MilitaryMailShipmentsCustoms?>(JsonSerializer.Deserialize<MilitaryMailShipmentsCustoms>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
                         default:
                             break;
                     }
@@ -1005,6 +896,9 @@ namespace com.pitneybowes.api360.Model
             if (!labelFormat.IsSet)
                 throw new ArgumentException("Property is required for class MilitaryMailShipmentsRequestV2.", nameof(labelFormat));
 
+            if (!customs.IsSet)
+                throw new ArgumentException("Property is required for class MilitaryMailShipmentsRequestV2.", nameof(customs));
+
             if (fromAddress.IsSet && fromAddress.Value == null)
                 throw new ArgumentNullException(nameof(fromAddress), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
 
@@ -1026,14 +920,8 @@ namespace com.pitneybowes.api360.Model
             if (labelFormat.IsSet && labelFormat.Value == null)
                 throw new ArgumentNullException(nameof(labelFormat), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
 
-            if (soldToAddress.IsSet && soldToAddress.Value == null)
-                throw new ArgumentNullException(nameof(soldToAddress), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
-
-            if (additionalAddresses.IsSet && additionalAddresses.Value == null)
-                throw new ArgumentNullException(nameof(additionalAddresses), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
-
-            if (altReturnAddress.IsSet && altReturnAddress.Value == null)
-                throw new ArgumentNullException(nameof(altReturnAddress), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
+            if (customs.IsSet && customs.Value == null)
+                throw new ArgumentNullException(nameof(customs), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
 
             if (parcel.IsSet && parcel.Value == null)
                 throw new ArgumentNullException(nameof(parcel), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
@@ -1043,9 +931,6 @@ namespace com.pitneybowes.api360.Model
 
             if (shipmentOptions.IsSet && shipmentOptions.Value == null)
                 throw new ArgumentNullException(nameof(shipmentOptions), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
-
-            if (carrierPayments.IsSet && carrierPayments.Value == null)
-                throw new ArgumentNullException(nameof(carrierPayments), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
 
             if (deliveryConfirmation.IsSet && deliveryConfirmation.Value == null)
                 throw new ArgumentNullException(nameof(deliveryConfirmation), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
@@ -1074,13 +959,7 @@ namespace com.pitneybowes.api360.Model
             if (deliveryOption.IsSet && deliveryOption.Value == null)
                 throw new ArgumentNullException(nameof(deliveryOption), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
 
-            if (returnOptions.IsSet && returnOptions.Value == null)
-                throw new ArgumentNullException(nameof(returnOptions), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
-
-            if (customs.IsSet && customs.Value == null)
-                throw new ArgumentNullException(nameof(customs), "Property is not nullable for class MilitaryMailShipmentsRequestV2.");
-
-            return new MilitaryMailShipmentsRequestV2(fromAddress.Value!, toAddress.Value!, parcelType.Value!, rateShopBy.Value!.Value!, labelSize.Value!.Value!, labelType.Value!.Value!, labelFormat.Value!.Value!, soldToAddress, additionalAddresses, altReturnAddress, parcel, byCarrier, shipmentOptions, carrierPayments, deliveryConfirmation, handling, insurance, references, metadata, contentType, printerAliasName, dateOfShipment, deliveryOption, returnOptions, customs);
+            return new MilitaryMailShipmentsRequestV2(fromAddress.Value!, toAddress.Value!, parcelType.Value!, rateShopBy.Value!.Value!, labelSize.Value!.Value!, labelType.Value!.Value!, labelFormat.Value!.Value!, customs.Value!, parcel, byCarrier, shipmentOptions, deliveryConfirmation, handling, insurance, references, metadata, contentType, printerAliasName, dateOfShipment, deliveryOption);
         }
 
         /// <summary>
@@ -1116,14 +995,8 @@ namespace com.pitneybowes.api360.Model
             if (militaryMailShipmentsRequestV2.ParcelType == null)
                 throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.ParcelType), "Property is required for class MilitaryMailShipmentsRequestV2.");
 
-            if (militaryMailShipmentsRequestV2.SoldToAddressOption.IsSet && militaryMailShipmentsRequestV2.SoldToAddress == null)
-                throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.SoldToAddress), "Property is required for class MilitaryMailShipmentsRequestV2.");
-
-            if (militaryMailShipmentsRequestV2.AdditionalAddressesOption.IsSet && militaryMailShipmentsRequestV2.AdditionalAddresses == null)
-                throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.AdditionalAddresses), "Property is required for class MilitaryMailShipmentsRequestV2.");
-
-            if (militaryMailShipmentsRequestV2.AltReturnAddressOption.IsSet && militaryMailShipmentsRequestV2.AltReturnAddress == null)
-                throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.AltReturnAddress), "Property is required for class MilitaryMailShipmentsRequestV2.");
+            if (militaryMailShipmentsRequestV2.Customs == null)
+                throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.Customs), "Property is required for class MilitaryMailShipmentsRequestV2.");
 
             if (militaryMailShipmentsRequestV2.ParcelOption.IsSet && militaryMailShipmentsRequestV2.Parcel == null)
                 throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.Parcel), "Property is required for class MilitaryMailShipmentsRequestV2.");
@@ -1133,9 +1006,6 @@ namespace com.pitneybowes.api360.Model
 
             if (militaryMailShipmentsRequestV2.ShipmentOptionsOption.IsSet && militaryMailShipmentsRequestV2.ShipmentOptions == null)
                 throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.ShipmentOptions), "Property is required for class MilitaryMailShipmentsRequestV2.");
-
-            if (militaryMailShipmentsRequestV2.CarrierPaymentsOption.IsSet && militaryMailShipmentsRequestV2.CarrierPayments == null)
-                throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.CarrierPayments), "Property is required for class MilitaryMailShipmentsRequestV2.");
 
             if (militaryMailShipmentsRequestV2.DeliveryConfirmationOption.IsSet && militaryMailShipmentsRequestV2.DeliveryConfirmation == null)
                 throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.DeliveryConfirmation), "Property is required for class MilitaryMailShipmentsRequestV2.");
@@ -1158,12 +1028,6 @@ namespace com.pitneybowes.api360.Model
             if (militaryMailShipmentsRequestV2.DeliveryOptionOption.IsSet && militaryMailShipmentsRequestV2.DeliveryOption == null)
                 throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.DeliveryOption), "Property is required for class MilitaryMailShipmentsRequestV2.");
 
-            if (militaryMailShipmentsRequestV2.ReturnOptionsOption.IsSet && militaryMailShipmentsRequestV2.ReturnOptions == null)
-                throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.ReturnOptions), "Property is required for class MilitaryMailShipmentsRequestV2.");
-
-            if (militaryMailShipmentsRequestV2.CustomsOption.IsSet && militaryMailShipmentsRequestV2.Customs == null)
-                throw new ArgumentNullException(nameof(militaryMailShipmentsRequestV2.Customs), "Property is required for class MilitaryMailShipmentsRequestV2.");
-
             writer.WritePropertyName("fromAddress");
             JsonSerializer.Serialize(writer, militaryMailShipmentsRequestV2.FromAddress, jsonSerializerOptions);
             writer.WritePropertyName("toAddress");
@@ -1178,21 +1042,8 @@ namespace com.pitneybowes.api360.Model
             writer.WriteString("labelType", labelTypeRawValue);
             var labelFormatRawValue = MilitaryMailShipmentsRequestV2.LabelFormatEnumToJsonValue(militaryMailShipmentsRequestV2.LabelFormat);
             writer.WriteString("labelFormat", labelFormatRawValue);
-            if (militaryMailShipmentsRequestV2.SoldToAddressOption.IsSet)
-            {
-                writer.WritePropertyName("soldToAddress");
-                JsonSerializer.Serialize(writer, militaryMailShipmentsRequestV2.SoldToAddress, jsonSerializerOptions);
-            }
-            if (militaryMailShipmentsRequestV2.AdditionalAddressesOption.IsSet)
-            {
-                writer.WritePropertyName("additionalAddresses");
-                JsonSerializer.Serialize(writer, militaryMailShipmentsRequestV2.AdditionalAddresses, jsonSerializerOptions);
-            }
-            if (militaryMailShipmentsRequestV2.AltReturnAddressOption.IsSet)
-            {
-                writer.WritePropertyName("altReturnAddress");
-                JsonSerializer.Serialize(writer, militaryMailShipmentsRequestV2.AltReturnAddress, jsonSerializerOptions);
-            }
+            writer.WritePropertyName("customs");
+            JsonSerializer.Serialize(writer, militaryMailShipmentsRequestV2.Customs, jsonSerializerOptions);
             if (militaryMailShipmentsRequestV2.ParcelOption.IsSet)
             {
                 writer.WritePropertyName("parcel");
@@ -1207,11 +1058,6 @@ namespace com.pitneybowes.api360.Model
             {
                 writer.WritePropertyName("shipmentOptions");
                 JsonSerializer.Serialize(writer, militaryMailShipmentsRequestV2.ShipmentOptions, jsonSerializerOptions);
-            }
-            if (militaryMailShipmentsRequestV2.CarrierPaymentsOption.IsSet)
-            {
-                writer.WritePropertyName("carrierPayments");
-                JsonSerializer.Serialize(writer, militaryMailShipmentsRequestV2.CarrierPayments, jsonSerializerOptions);
             }
             if (militaryMailShipmentsRequestV2.DeliveryConfirmationOption.IsSet)
             {
@@ -1250,16 +1096,6 @@ namespace com.pitneybowes.api360.Model
             {
                 writer.WritePropertyName("deliveryOption");
                 JsonSerializer.Serialize(writer, militaryMailShipmentsRequestV2.DeliveryOption, jsonSerializerOptions);
-            }
-            if (militaryMailShipmentsRequestV2.ReturnOptionsOption.IsSet)
-            {
-                writer.WritePropertyName("returnOptions");
-                JsonSerializer.Serialize(writer, militaryMailShipmentsRequestV2.ReturnOptions, jsonSerializerOptions);
-            }
-            if (militaryMailShipmentsRequestV2.CustomsOption.IsSet)
-            {
-                writer.WritePropertyName("customs");
-                JsonSerializer.Serialize(writer, militaryMailShipmentsRequestV2.Customs, jsonSerializerOptions);
             }
         }
     }

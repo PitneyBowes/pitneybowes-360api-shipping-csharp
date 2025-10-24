@@ -52,5 +52,14 @@ namespace com.pitneybowes.api360.Test.Model
             // TODO uncomment below to test "IsType" MultipieceShipmentRequest
             //Assert.IsType<MultipieceShipmentRequest>(instance);
         }
+
+        /// <summary>
+        /// Test the property 'Format'
+        /// </summary>
+        [Fact]
+        public void FormatTest()
+        {
+            // TODO unit test for the property 'Format'
+        }
     }
 }

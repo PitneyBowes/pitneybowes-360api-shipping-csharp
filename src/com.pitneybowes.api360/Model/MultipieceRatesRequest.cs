@@ -101,6 +101,16 @@ namespace com.pitneybowes.api360.Model
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            return this.BaseValidate(validationContext);
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        protected IEnumerable<ValidationResult> BaseValidate(ValidationContext validationContext)
+        {
             yield break;
         }
     }
@@ -129,25 +139,36 @@ namespace com.pitneybowes.api360.Model
 
             Option<string?> serviceId = default;
 
-            MultipieceRateShopRequest? multipieceRateShopRequest = default;
-            MultipieceRatesRequest? varMultipieceRatesRequest = default;
+            MultipieceRateShopRequest? multipieceRateShopRequest = null;
+            MultipieceRatesRequest? multipieceRatesRequest = null;
 
-            Utf8JsonReader utf8JsonReaderOneOf = utf8JsonReader;
-            while (utf8JsonReaderOneOf.Read())
+            Utf8JsonReader utf8JsonReaderDiscriminator = utf8JsonReader;
+            while (utf8JsonReaderDiscriminator.Read())
             {
-                if (startingTokenType == JsonTokenType.StartObject && utf8JsonReaderOneOf.TokenType == JsonTokenType.EndObject && currentDepth == utf8JsonReaderOneOf.CurrentDepth)
+                if (startingTokenType == JsonTokenType.StartObject && utf8JsonReaderDiscriminator.TokenType == JsonTokenType.EndObject && currentDepth == utf8JsonReaderDiscriminator.CurrentDepth)
                     break;
 
-                if (startingTokenType == JsonTokenType.StartArray && utf8JsonReaderOneOf.TokenType == JsonTokenType.EndArray && currentDepth == utf8JsonReaderOneOf.CurrentDepth)
+                if (startingTokenType == JsonTokenType.StartArray && utf8JsonReaderDiscriminator.TokenType == JsonTokenType.EndArray && currentDepth == utf8JsonReaderDiscriminator.CurrentDepth)
                     break;
 
-                if (utf8JsonReaderOneOf.TokenType == JsonTokenType.PropertyName && currentDepth == utf8JsonReaderOneOf.CurrentDepth - 1)
+                if (utf8JsonReaderDiscriminator.TokenType == JsonTokenType.PropertyName && currentDepth == utf8JsonReaderDiscriminator.CurrentDepth - 1)
                 {
-                    Utf8JsonReader utf8JsonReaderMultipieceRateShopRequest = utf8JsonReader;
-                    ClientUtils.TryDeserialize<MultipieceRateShopRequest?>(ref utf8JsonReaderMultipieceRateShopRequest, jsonSerializerOptions, out multipieceRateShopRequest);
-
-                    Utf8JsonReader utf8JsonReaderVarMultipieceRatesRequest = utf8JsonReader;
-                    ClientUtils.TryDeserialize<MultipieceRatesRequest?>(ref utf8JsonReaderVarMultipieceRatesRequest, jsonSerializerOptions, out varMultipieceRatesRequest);
+                    string? localVarJsonPropertyName = utf8JsonReaderDiscriminator.GetString();
+                    utf8JsonReaderDiscriminator.Read();
+                    if (localVarJsonPropertyName?.Equals("format") ?? false)
+                    {
+                        string? discriminator = utf8JsonReaderDiscriminator.GetString();
+                        if (discriminator?.Equals("MultipieceRateShopRequest") ?? false)
+                        {
+                            Utf8JsonReader utf8JsonReaderMultipieceRateShopRequest = utf8JsonReader;
+                            multipieceRateShopRequest = JsonSerializer.Deserialize<MultipieceRateShopRequest>(ref utf8JsonReaderMultipieceRateShopRequest, jsonSerializerOptions);
+                        }
+                        if (discriminator?.Equals("MultipieceRatesRequest") ?? false)
+                        {
+                            Utf8JsonReader utf8JsonReaderMultipieceRatesRequest = utf8JsonReader;
+                            multipieceRatesRequest = JsonSerializer.Deserialize<MultipieceRatesRequest>(ref utf8JsonReaderMultipieceRatesRequest, jsonSerializerOptions);
+                        }
+                    }
                 }
             }
 
@@ -181,8 +202,8 @@ namespace com.pitneybowes.api360.Model
             if (multipieceRateShopRequest != null)
                 return new MultipieceRatesRequest(multipieceRateShopRequest, serviceId);
 
-            if (varMultipieceRatesRequest != null)
-                return new MultipieceRatesRequest(varMultipieceRatesRequest, serviceId);
+            if (multipieceRatesRequest != null)
+                return new MultipieceRatesRequest(multipieceRatesRequest, serviceId);
 
             throw new JsonException();
         }
@@ -197,6 +218,18 @@ namespace com.pitneybowes.api360.Model
         public override void Write(Utf8JsonWriter writer, MultipieceRatesRequest multipieceRatesRequest, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
+
+            if (multipieceRatesRequest.MultipieceRateShopRequest != null)
+            {
+                MultipieceRateShopRequestJsonConverter multipieceRateShopRequestJsonConverter = (MultipieceRateShopRequestJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(multipieceRatesRequest.MultipieceRateShopRequest.GetType()));
+                multipieceRateShopRequestJsonConverter.WriteProperties(writer, multipieceRatesRequest.MultipieceRateShopRequest, jsonSerializerOptions);
+            }
+
+            if (multipieceRatesRequest.VarMultipieceRatesRequest != null)
+            {
+                MultipieceRatesRequestJsonConverter multipieceRatesRequestJsonConverter = (MultipieceRatesRequestJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(multipieceRatesRequest.VarMultipieceRatesRequest.GetType()));
+                multipieceRatesRequestJsonConverter.WriteProperties(writer, multipieceRatesRequest.VarMultipieceRatesRequest, jsonSerializerOptions);
+            }
 
             WriteProperties(writer, multipieceRatesRequest, jsonSerializerOptions);
             writer.WriteEndObject();

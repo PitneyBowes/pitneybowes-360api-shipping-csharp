@@ -53,7 +53,6 @@ namespace com.pitneybowes.api360.Model
         /// <summary>
         /// Gets or Sets VarCountries
         /// </summary>
-        /* <example>{&quot;countries&quot;:[{&quot;countryCode&quot;:&quot;CA&quot;,&quot;countryName&quot;:&quot;Canada&quot;}]}</example> */
         [JsonPropertyName("countries")]
         public List<CountriesCountriesInner>? VarCountries { get { return this.VarCountriesOption; } set { this.VarCountriesOption = new(value); } }
 

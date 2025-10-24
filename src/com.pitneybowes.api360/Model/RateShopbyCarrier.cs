@@ -39,8 +39,9 @@ namespace com.pitneybowes.api360.Model
         /// <param name="parcelType">Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; \&quot;</param>
         /// <param name="rateShopBy">RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</param>
         /// <param name="byCarrier">byCarrier</param>
+        /// <param name="deliveryOption">deliveryOption</param>
         [JsonConstructor]
-        public RateShopbyCarrier(FromAddressV2 fromAddress, ToAddressV2 toAddress, RateShopbyCarrierParcel parcel, string parcelType, RateShopByEnum rateShopBy, Option<RateShopbyCarrierByCarrier?> byCarrier = default)
+        public RateShopbyCarrier(FromAddressV2 fromAddress, ToAddressV2 toAddress, RateShopbyCarrierParcel parcel, string parcelType, RateShopByEnum rateShopBy, Option<RateShopbyCarrierByCarrier?> byCarrier = default, Option<RateShopbyCarrierDeliveryOption?> deliveryOption = default)
         {
             FromAddress = fromAddress;
             ToAddress = toAddress;
@@ -48,6 +49,7 @@ namespace com.pitneybowes.api360.Model
             ParcelType = parcelType;
             RateShopBy = rateShopBy;
             ByCarrierOption = byCarrier;
+            DeliveryOptionOption = deliveryOption;
             OnCreated();
         }
 
@@ -182,6 +184,19 @@ namespace com.pitneybowes.api360.Model
         public RateShopbyCarrierByCarrier? ByCarrier { get { return this.ByCarrierOption; } set { this.ByCarrierOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of DeliveryOption
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<RateShopbyCarrierDeliveryOption?> DeliveryOptionOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets DeliveryOption
+        /// </summary>
+        [JsonPropertyName("deliveryOption")]
+        public RateShopbyCarrierDeliveryOption? DeliveryOption { get { return this.DeliveryOptionOption; } set { this.DeliveryOptionOption = new(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -195,6 +210,7 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  ParcelType: ").Append(ParcelType).Append("\n");
             sb.Append("  RateShopBy: ").Append(RateShopBy).Append("\n");
             sb.Append("  ByCarrier: ").Append(ByCarrier).Append("\n");
+            sb.Append("  DeliveryOption: ").Append(DeliveryOption).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -238,6 +254,7 @@ namespace com.pitneybowes.api360.Model
             Option<string?> parcelType = default;
             Option<RateShopbyCarrier.RateShopByEnum?> rateShopBy = default;
             Option<RateShopbyCarrierByCarrier?> byCarrier = default;
+            Option<RateShopbyCarrierDeliveryOption?> deliveryOption = default;
 
             while (utf8JsonReader.Read())
             {
@@ -273,6 +290,9 @@ namespace com.pitneybowes.api360.Model
                             break;
                         case "byCarrier":
                             byCarrier = new Option<RateShopbyCarrierByCarrier?>(JsonSerializer.Deserialize<RateShopbyCarrierByCarrier>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
+                        case "deliveryOption":
+                            deliveryOption = new Option<RateShopbyCarrierDeliveryOption?>(JsonSerializer.Deserialize<RateShopbyCarrierDeliveryOption>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
@@ -313,7 +333,10 @@ namespace com.pitneybowes.api360.Model
             if (byCarrier.IsSet && byCarrier.Value == null)
                 throw new ArgumentNullException(nameof(byCarrier), "Property is not nullable for class RateShopbyCarrier.");
 
-            return new RateShopbyCarrier(fromAddress.Value!, toAddress.Value!, parcel.Value!, parcelType.Value!, rateShopBy.Value!.Value!, byCarrier);
+            if (deliveryOption.IsSet && deliveryOption.Value == null)
+                throw new ArgumentNullException(nameof(deliveryOption), "Property is not nullable for class RateShopbyCarrier.");
+
+            return new RateShopbyCarrier(fromAddress.Value!, toAddress.Value!, parcel.Value!, parcelType.Value!, rateShopBy.Value!.Value!, byCarrier, deliveryOption);
         }
 
         /// <summary>
@@ -355,6 +378,9 @@ namespace com.pitneybowes.api360.Model
             if (rateShopbyCarrier.ByCarrierOption.IsSet && rateShopbyCarrier.ByCarrier == null)
                 throw new ArgumentNullException(nameof(rateShopbyCarrier.ByCarrier), "Property is required for class RateShopbyCarrier.");
 
+            if (rateShopbyCarrier.DeliveryOptionOption.IsSet && rateShopbyCarrier.DeliveryOption == null)
+                throw new ArgumentNullException(nameof(rateShopbyCarrier.DeliveryOption), "Property is required for class RateShopbyCarrier.");
+
             writer.WritePropertyName("fromAddress");
             JsonSerializer.Serialize(writer, rateShopbyCarrier.FromAddress, jsonSerializerOptions);
             writer.WritePropertyName("toAddress");
@@ -369,6 +395,11 @@ namespace com.pitneybowes.api360.Model
             {
                 writer.WritePropertyName("byCarrier");
                 JsonSerializer.Serialize(writer, rateShopbyCarrier.ByCarrier, jsonSerializerOptions);
+            }
+            if (rateShopbyCarrier.DeliveryOptionOption.IsSet)
+            {
+                writer.WritePropertyName("deliveryOption");
+                JsonSerializer.Serialize(writer, rateShopbyCarrier.DeliveryOption, jsonSerializerOptions);
             }
         }
     }

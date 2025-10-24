@@ -121,6 +121,10 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                countries:
+                - countryCode: CA
+                  countryName: Canada
               schema:
                 $ref: "#/components/schemas/countries"
           description: A list of Countries has been fetched.
@@ -193,6 +197,10 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                services:
+                - serviceId: EM
+                  brandedName: Priority Mail Express™
               schema:
                 $ref: "#/components/schemas/services"
           description: A list of services has been fetched.
@@ -265,6 +273,51 @@ paths:
         "200":
           content:
             application/json:
+              example:
+                parcels:
+                - brandedName: Box 1092
+                  carrier: USPS
+                  groupName: Specialty Boxes and Envelopes
+                  brandedDimensions:
+                    girth: 0
+                    length: 12.25
+                    width: 2.875
+                    height: 13.6875
+                    unitOfMeasurement: IN
+                  parcelId: B1092
+                  isBranded: true
+                  parcelType: LP
+                  serviceId: PM
+                  weightRules:
+                  - maxWeight: 1120
+                    minWeight: 0.01
+                    required: true
+                    unitOfMeasurement: OZ
+                - brandedName: My Box
+                  dimensionRules:
+                  - maxLengthPlusGirth: 130
+                    maxParcelDimensions:
+                      length: 120
+                      width: 38
+                      height: 41
+                      unitOfMeasurement: IN
+                    minParcelDimensions:
+                      length: 0.001
+                      width: 0.001
+                      height: 0.001
+                      unitOfMeasurement: IN
+                    required: true
+                    unitOfMeasurement: IN
+                  groupName: My Packaging
+                  parcelId: PKG
+                  isBranded: false
+                  parcelType: PKG
+                  suggestedTrackableSpecialserviceId: Sig
+                  weightRules:
+                  - maxWeight: 1120
+                    minWeight: 0.01
+                    required: true
+                    unitOfMeasurement: OZ
               schema:
                 $ref: "#/components/schemas/parcelTypes"
           description: A list of Parcel Types has been fetched.
@@ -491,41 +544,50 @@ paths:
       - Shipment
   /api/v2/shipments:
     post:
-      description: "The Create Shipment API is used to create shipments and generate\
-        \ shipment labels. A shipment refers to the process of packing and transporting\
-        \ an item from a source location to a destination location using a carrier\
-        \ service. The API supports both domestic and international shipments.<br>\n\
-        \n**Domestic Shipments** <br>\n\n  - Both the `toAddress` and `fromAddress`\
-        \ addresses must be within the same country.\n  - Requires carrier services\
-        \ and associated special services.\n\n**International Shipments**\n  - The\
-        \ `toAddress` must be in a different country than the `fromAddress`.\n  -\
-        \ Requires international carrier services, special services, and customs information.<br>\n\
-        \nThe V2 Create Shipment API compares shipping rates, services, and options\
-        \ across multiple carriers. It selects the best shipping solution based on\
-        \ criteria such as cost, delivery speed, or other business rules. This automates\
-        \ decision-making and eliminates the need for manual analysis of carrier data.\
-        \ It supports three RateShop types: <br>\n\n**1. By Carrier:**<br>\n\n  -\
-        \ Manually specify the carrier and service for shipment creation.\n  - Provides\
-        \ more customization than V1 Create Shipment.\n\n**2. By RuleSet**<br>\n\n\
-        \  - Automatically select the best carrier and service based on predefined\
-        \ rules (e.g., cheapest, fastest). For example: <br>\n  - Shipments weighing\
-        \ up to 3kg use a \"Standard\" service type with carrier A.\n  - Shipments\
-        \ exceeding 3kg use an \"Over-weight\" service type with carrier B.\n  - Rules\
-        \ are fully client-defined, allowing for dynamic decision-making based on\
-        \ shipment parameters like weight, dimensions, and destination.\n\n**3. By\
-        \ RateGroup**<br>\n\n  - Use predefined rate groups to select a carrier and\
-        \ service dynamically.For example:<br>\n  - Clients can choose between the\
-        \ fastest delivery or the cheapest service rate among a predefined group of\
-        \ carriers.\n  - The system automatically determines and selects the best\
-        \ carrier and service, without the need for manual comparisons.\n  \n**Notes**<br>\n\
-        \n  - The `rateShopBy` field determines the variant to use (`carrier`, `ruleset`,\
-        \ or `rategroup`).\n  - Ensure that variant-specific fields are correctly\
-        \ populated:\n    - **byCarrier:** `carrierAccountId`, `carrier`, and `service`\n\
-        \    - **byRuleSet:** `ruleType` and `shipOption`\n    - **byRateGroup:**\
-        \ `ruleType` and `rateGroupId`\n\n  - Define special services in one of two\
-        \ ways - by using a `specialServiceId` or by specifying  special service objects\
-        \ such as `deliveryConfirmation`, `handling`, `insurance`, or `returnOptions`.\
-        \ These two cannot be used together in the same request.\n"
+      description: "> **Note:** This Request sample includes the full set of supported\
+        \ fields across all carriers. However, not all fields are applicable to every\
+        \ carrier. When making API calls from the doc portal, ensure you include only\
+        \ the parameters supported by the specific carrier you are integrating with.\
+        \ If unsupported fields are included, the request may fail. <br/>\nTo simplify\
+        \ integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/).\
+        \ <br/>\nTo explore which label types, label formats, label sizes, parcel\
+        \ types, services, and special services are supported by each carrier, see\
+        \ the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed\
+        \ field descriptions are also provided below.\n\nThe Create Shipment API is\
+        \ used to create shipments and generate shipment labels. A shipment refers\
+        \ to the process of packing and transporting an item from a source location\
+        \ to a destination location using a carrier service. The API supports both\
+        \ domestic and international shipments.<br>\n\n**Domestic Shipments** <br>\n\
+        \n  - Both the `toAddress` and `fromAddress` addresses must be within the\
+        \ same country.\n  - Requires carrier services and associated special services.\n\
+        \n**International Shipments**\n  - The `toAddress` must be in a different\
+        \ country than the `fromAddress`.\n  - Requires international carrier services,\
+        \ special services, and customs information.<br>\n\nThe V2 Create Shipment\
+        \ API compares shipping rates, services, and options across multiple carriers.\
+        \ It selects the best shipping solution based on criteria such as cost, delivery\
+        \ speed, or other business rules. This automates decision-making and eliminates\
+        \ the need for manual analysis of carrier data. It supports three RateShop\
+        \ types: <br>\n\n**1. By Carrier:**<br>\n\n  - Manually specify the carrier\
+        \ and service for shipment creation.\n  - Provides more customization than\
+        \ V1 Create Shipment.\n\n**2. By RuleSet**<br>\n\n  - Automatically select\
+        \ the best carrier and service based on predefined rules (e.g., cheapest,\
+        \ fastest). For example: <br>\n  - Shipments weighing up to 3kg use a \"Standard\"\
+        \ service type with carrier A.\n  - Shipments exceeding 3kg use an \"Over-weight\"\
+        \ service type with carrier B.\n  - Rules are fully client-defined, allowing\
+        \ for dynamic decision-making based on shipment parameters like weight, dimensions,\
+        \ and destination.\n\n**3. By RateGroup**<br>\n\n  - Use predefined rate groups\
+        \ to select a carrier and service dynamically.For example:<br>\n  - Clients\
+        \ can choose between the fastest delivery or the cheapest service rate among\
+        \ a predefined group of carriers.\n  - The system automatically determines\
+        \ and selects the best carrier and service, without the need for manual comparisons.\n\
+        \  \n**Notes**<br>\n\n  - The `rateShopBy` field determines the variant to\
+        \ use (`carrier`, `ruleset`, or `rategroup`).\n  - Ensure that variant-specific\
+        \ fields are correctly populated:\n    - **byCarrier:** `carrierAccountId`,\
+        \ `carrier`, and `service`\n    - **byRuleSet:** `ruleType` and `shipOption`\n\
+        \    - **byRateGroup:** `ruleType` and `rateGroupId`\n\n  - Define special\
+        \ services in one of two ways - by using a `specialServiceId` or by specifying\
+        \  special service objects such as `deliveryConfirmation`, `handling`, `insurance`,\
+        \ or `returnOptions`. These two cannot be used together in the same request.\n"
       operationId: createShipmentV2
       parameters:
       - description: "The Developer Partner ID is assigned by PB to uniquely identify\
@@ -731,9 +793,11 @@ paths:
         \ other agencies receive electronically sent documents faster than paper copies\
         \ attached with your shipment. The customs clearance process is also optimized\
         \ as capturing and sharing of critical trade information is done at earlier\
-        \ stages of shipping.\n\n> Note:\n- In certain scenarios, the originals of\
-        \ specific international documents still need to be attached to the package.\
-        \ \n- For smooth customs clearance and to avoid delays, ensure that the documents\
+        \ stages of shipping.\n\n> Note:\n- FedEx supports ETD with the special service\
+        \ `ELECTRONIC_TRADE_DOCUMENTS`.\n- DHL Express supports ETD with the special\
+        \ service `PAPERLESS`.\n- In certain scenarios, the originals of specific\
+        \ international documents still need to be attached to the package. \n- For\
+        \ smooth customs clearance and to avoid delays, ensure that the documents\
         \ are visually clear and not distorted in any way.\n\n**How the Workflow Operates**<br/>\n\
         \n**Step 1: Submit Electronic Trade Document Metadata**<br/>\n\nInitiate the\
         \ process by making a POST request to the ETD Upload API with the document\
@@ -2175,6 +2239,72 @@ components:
       - toAddress
       - type
       type: object
+    MilitaryMailAddress:
+      properties:
+        addressLine1:
+          description: "The addressLine1 can contain the Flat number, Building or\
+            \ Apartment Name/number (if any) or company name (if not residential)."
+          example: UNIT 35007
+          type: string
+        addressLine2:
+          description: The addressLine2 contains Street address or Landmark (if any).
+          example: near abc street
+          type: string
+        addressLine3:
+          description: The addressLine3 contains P.O. Box (if any) near the address.
+          example: near xyz street
+          type: string
+        cityTown:
+          description: The name of the city or town to where the address belongs.
+          example: APO
+          type: string
+        countryCode:
+          description: "The two-character ISO Code of the destination country from\
+            \ this ISO country list.  The country in which the address is located.\
+            \ Use ISO 3166-1 Alpha-2 standard values. For best results this should\
+            \ be included, especially if the country name does not appear in any of\
+            \ the unparsedAddressLines."
+          example: US
+          type: string
+        name:
+          description: Name of the recipient to which this address points.
+          example: Recipient Name
+          type: string
+        phone:
+          description: 'This is recipient''s phone number. Enter the digits with or
+            without spaces or hyphens. The maximum limit of characters for Phone number
+            are 10 digits. '
+          example: 518-727-4964
+          type: string
+        company:
+          description: "The name of the company, in case if the receiver address is\
+            \ not residential."
+          example: PB
+          type: string
+        email:
+          description: This must be sender's valid email. Email is required if the
+            customer is using GoFor Carrier.
+          example: testuser@gmail.com
+          type: string
+        postalCode:
+          description: "The Postal Code or ZIP Code of the address. For US addresses,\
+            \ use either the 5-digit or 9-digit ZIP Code in one of the following formats:\
+            \ '12345' or '12345-6789'. If you use a different format, such as 12345-\
+            \ or 123451234, will receive an error."
+          example: 96376-5007
+          type: string
+        stateProvince:
+          description: "The State or Province of the address. For a US or Canadian\
+            \ address, it is the 2-letter state or province code. "
+          example: AP
+          type: string
+        residential:
+          description: "The specified address can be Residential or Official. In case\
+            \ if the address is Residential, the boolean value will be 'true', else\
+            \ it will take 'false'."
+          example: false
+          type: boolean
+      type: object
     MilitaryMailShipments:
       description: |
         For domestic USPS Military Mail shipments (APO/FPO/DPO Address), `customs` object is required if any of the following are true:
@@ -2375,23 +2505,92 @@ components:
           - Weight is greater than or equal to 16 ounces.
           - Weight is less than 16 ounces AND shipment contains items other than documents. Specify the items in customs.customsInfo.reasonForExport.
           - Shipment uses Priority Mail Express (EM). A customs form is always required for Priority Mail Express.
+      example:
+        fromAddress:
+          addressLine1: 1600 Amphitheatre Parkway
+          addressLine2: near abc street
+          addressLine3: near xyz street
+          company: PB
+          name: Sender Name
+          email: testuser@gmail.com
+          phone: "6502530000"
+          cityTown: Mountain View
+          stateProvince: CA
+          postalCode: "94043"
+          countryCode: US
+          residential: true
+        toAddress:
+          addressLine1: UNIT 35007
+          addressLine2: near abc street
+          addressLine3: near xyz street
+          cityTown: APO
+          countryCode: US
+          name: Recipient Name
+          phone: 518-727-4964
+          company: PB
+          email: testuser@gmail.com
+          postalCode: 96376-5007
+          stateProvince: AP
+          residential: false
+        parcel:
+          length: 2
+          width: 1
+          height: 1
+          dimUnit: IN
+          weightUnit: OZ
+          weight: 2
+          packageValue: 2
+        parcelType: PKG
+        rateShopBy: carrier
+        byCarrier:
+          carrierAccountId: "{{uspscarrierid}}"
+          carrier: USPS
+          service: PM
+        shipmentOptions:
+          addToManifest: true
+          shipperId: "2000084646"
+        references:
+          reference1: custome message
+          reference2: SendTech
+        metadata:
+        - name: costAccountName
+          value: cost1
+        labelSize: DOC_4X6
+        labelType: SHIPPING_LABEL
+        labelFormat: PDF
+        contentType: URL
+        printerAliasName: test
+        dateOfShipment: 2025-09-04
+        deliveryOption:
+          deliverBy: 2025-09-10
+          useBestNextDate: false
+        customs:
+          customsItems:
+          - description: T-shirt
+            hSTariffCode: "610910"
+            originCountryCode: US
+            quantity: 1
+            unitPrice: 10
+            weightUnit: OZ
+            weight: 1
+          customsInfo:
+            reasonForExport: GIFT
+            customsDeclaredValue: 10
+            currencyCode: USD
+            EELPFC: NOEEI 30.2D2
+            certificateNumber: "123456"
+            comments: This is a sample comment
+            fromCustomsReference: EFEFE4554545
+            importerCustomsReference: dff3433
+            invoiceNumber: "123456"
+            licenseNumber: "123456"
+            sdrValue: 10
+            termsOfSale: DDU
       properties:
         fromAddress:
           $ref: "#/components/schemas/fromAddressV2"
         toAddress:
-          $ref: "#/components/schemas/toAddressV2"
-        soldToAddress:
-          $ref: "#/components/schemas/soldToAddressV2"
-        additionalAddresses:
-          description: "A list of additional addresses associated with the shipment.\
-            \ \n- Each object includes an address and its designated type, such as\
-            \ BROKER or other parties involved in customs or shipping processes. \n\
-            - Additional address could be domestic or International both. \n"
-          items:
-            $ref: "#/components/schemas/additionalAddresses_inner"
-          type: array
-        altReturnAddress:
-          $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_altReturnAddress"
+          $ref: "#/components/schemas/MilitaryMailAddress"
         parcel:
           $ref: "#/components/schemas/parcelV2"
         parcelType:
@@ -2425,18 +2624,6 @@ components:
           $ref: "#/components/schemas/byCarrierV2"
         shipmentOptions:
           $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_shipmentOptions"
-        carrierPayments:
-          description: "Defines how carrier charges are billed to a third party. Use\
-            \ this field to specify \naccount and charge type details for transportation\
-            \ and/or duties and taxes. This \nfield is optional and currently supported\
-            \ for FedEx, UPS, and DHL Express.\n\n- If no `party` (who will pay for\
-            \ TRANSPORTATION_CHARGES or duties and taxes) is explicitly specified\
-            \ during shipment creation, the charges will automatically default to\
-            \ the sender (shipper). To direct charges to a different party, the appropriate\
-            \ bill-to details must be provided in the request.\n"
-          items:
-            $ref: "#/components/schemas/carrierPayments_inner"
-          type: array
         deliveryConfirmation:
           $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_deliveryConfirmation"
         handling:
@@ -2500,11 +2687,10 @@ components:
           type: string
         deliveryOption:
           $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_deliveryOption"
-        returnOptions:
-          $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_returnOptions"
         customs:
-          $ref: "#/components/schemas/MilitaryMailShipments_customs"
+          $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_customs"
       required:
+      - customs
       - fromAddress
       - labelFormat
       - labelSize
@@ -3210,12 +3396,12 @@ components:
           type: string
         poNumber:
           description: "The Purchase Order Number. For FedEx, the PO number is passed\
-            \ in the Reference 2 field. <br /> `Max length = 30`."
+            \ in the `reference4` field. <br /> `Max length = 30`."
           example: R2W 2H2
           type: string
         department:
           description: "The department of the Recipient.For FedEx, the Department\
-            \ is passed in reference4 field. <br /> `Max length = 30`."
+            \ is passed in `reference2` field. <br /> `Max length = 30`."
           example: Name department
           type: string
         additionalReference1:
@@ -3280,7 +3466,7 @@ components:
             $ref: "#/components/schemas/additionalAddresses_inner"
           type: array
         altReturnAddress:
-          $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_altReturnAddress"
+          $ref: "#/components/schemas/shipmentDomesticByRateGroup_altReturnAddress"
         parcel:
           $ref: "#/components/schemas/parcelV2"
         parcelType:
@@ -3397,6 +3583,7 @@ components:
       - labelFormat
       - labelSize
       - labelType
+      - parcelType
       - toAddress
       type: object
     shipmentDomesticByRuleset:
@@ -3533,6 +3720,7 @@ components:
       - labelFormat
       - labelSize
       - labelType
+      - parcelType
       - toAddress
       type: object
     shipmentInternationalByCarrier:
@@ -3936,6 +4124,8 @@ components:
           type: string
         byCarrier:
           $ref: "#/components/schemas/RateShopbyCarrier_byCarrier"
+        deliveryOption:
+          $ref: "#/components/schemas/RateShopbyCarrier_deliveryOption"
       required:
       - fromAddress
       - labelFormat
@@ -3983,6 +4173,8 @@ components:
           type: string
         byRateGroup:
           $ref: "#/components/schemas/shipmentDomesticByRateGroup_byRateGroup"
+        deliveryOption:
+          $ref: "#/components/schemas/RateShopbyCarrier_deliveryOption"
       required:
       - byRateGroup
       - fromAddress
@@ -4329,11 +4521,16 @@ components:
     countries:
       example:
         countries:
-        - countryCode: CA
-          countryName: Canada
-      items:
-        $ref: "#/components/schemas/countries_inner"
-      type: array
+        - countryCode: TV
+          countryName: Tuvalu
+        - countryCode: TV
+          countryName: Tuvalu
+      properties:
+        countries:
+          items:
+            $ref: "#/components/schemas/countries_countries_inner"
+          type: array
+      type: object
     carriers:
       example:
         carriers:
@@ -4360,11 +4557,16 @@ components:
     services:
       example:
         services:
-        - serviceId: EM
-          brandedName: Priority Mail Express™
-      items:
-        $ref: "#/components/schemas/services_inner"
-      type: array
+        - serviceId: serviceId
+          brandedName: brandedName
+        - serviceId: serviceId
+          brandedName: brandedName
+      properties:
+        services:
+          items:
+            $ref: "#/components/schemas/services_services_inner"
+          type: array
+      type: object
     specialServices:
       example:
         services:
@@ -5543,6 +5745,64 @@ components:
         pickupOptions:
           $ref: "#/components/schemas/schedulePickupFedexRequest_pickupOptions_inner"
       type: object
+    PickupAvailabilityRequest:
+      properties:
+        carrierAccountId:
+          description: Unique identifier of the carrier account under which pickup
+            is requested.
+          example: GkvvOE7vX1QxQkm
+          type: string
+        pickupAddress:
+          $ref: "#/components/schemas/PickupAvailabilityRequest_pickupAddress"
+        pickupSummary:
+          description: Summary of shipments for which pickup is requested.
+          items:
+            $ref: "#/components/schemas/PickupAvailabilityRequest_pickupSummary_inner"
+          type: array
+        pickupDateTime:
+          description: Requested pickup date and time in ISO 8601 format.
+          example: 2025-08-25T17:05:05Z
+          format: date-time
+          type: string
+        pickupOptions:
+          $ref: "#/components/schemas/PickupAvailabilityRequest_pickupOptions"
+      required:
+      - carrierAccountId
+      - pickupAddress
+      - pickupDateTime
+      - pickupSummary
+      type: object
+    PickupAvailabilityResponse:
+      properties:
+        carrierAccountId:
+          description: Carrier account ID returned for the request.
+          example: xxxxxxxxx
+          type: string
+        carrier:
+          description: Carrier that was validated for pickup availability.
+          example: UPS
+          type: string
+        pickupAddress:
+          $ref: "#/components/schemas/PickupAvailabilityResponse_pickupAddress"
+        pickupSummary:
+          items:
+            $ref: "#/components/schemas/PickupAvailabilityResponse_pickupSummary_inner"
+          type: array
+        pickupDateTime:
+          description: The pickup date/time
+          example: 2025-08-26T10:00:00Z
+          format: date-time
+          type: string
+        pickupOptions:
+          $ref: "#/components/schemas/PickupAvailabilityResponse_pickupOptions"
+        pickupAvailable:
+          description: Indicates if pickup is available for the requested location
+            and shipment..
+          example: true
+          type: boolean
+        pickupInformation:
+          $ref: "#/components/schemas/PickupAvailabilityResponse_pickupInformation"
+      type: object
     additionalAddresses:
       description: "A list of additional addresses associated with the shipment. \n\
         - Each object includes an address and its designated type, such as BROKER\
@@ -6719,6 +6979,7 @@ components:
             name: RESIDENTIAL
           serviceId: NDA
           currencyCode: USD
+          publishedTotalCarrierCharge: 73.12
         - deliveryCommitment:
             maxEstimatedNumberOfDays: "3"
             estimatedDeliveryDateTime: 2024-12-18 18:00:00.000
@@ -6766,6 +7027,7 @@ components:
             name: RESIDENTIAL
           serviceId: NDA
           currencyCode: USD
+          publishedTotalCarrierCharge: 73.12
         fromAddress:
           residential: true
           phone: 323 555-1212
@@ -7078,32 +7340,17 @@ components:
     parcelTypes:
       example:
         parcels:
-        - brandedName: Box 1092
-          carrier: USPS
+        - carrier: USPS
           groupName: Specialty Boxes and Envelopes
-          brandedDimensions:
-            girth: 0
-            length: 12.25
-            width: 2.875
-            height: 13.6875
-            unitOfMeasurement: IN
-          parcelId: B1092
-          isBranded: true
           parcelType: LP
-          serviceId: PM
-          weightRules:
-          - maxWeight: 1120
-            minWeight: 0.01
-            required: true
-            unitOfMeasurement: OZ
-        - brandedName: My Box
           dimensionRules:
-          - maxLengthPlusGirth: 130
+          - maxLengthPlusGirth: 58
             maxParcelDimensions:
-              length: 120
-              width: 38
-              height: 41
+              length: 18
+              width: 2
+              height: 18
               unitOfMeasurement: IN
+            minLengthPlusGirth: 0.001
             minParcelDimensions:
               length: 0.001
               width: 0.001
@@ -7111,19 +7358,64 @@ components:
               unitOfMeasurement: IN
             required: true
             unitOfMeasurement: IN
-          groupName: My Packaging
-          parcelId: PKG
-          isBranded: false
-          parcelType: PKG
-          suggestedTrackableSpecialserviceId: Sig
           weightRules:
           - maxWeight: 1120
             minWeight: 0.01
             required: true
             unitOfMeasurement: OZ
-      items:
-        $ref: "#/components/schemas/parcelTypes_inner"
-      type: array
+          brandedDimensions:
+            unitOfMeasurement: IN
+            girth: 0
+            length: 12.25
+            width: 2.875
+            height: 13.6875
+          isBranded: true
+          serviceId: PM
+          serviceName: Priority Mail®
+          suggestedTrackableSpecialserviceId: DelCon
+          brandedName: Box 1092
+          parcelId: B1092
+        - carrier: USPS
+          groupName: Specialty Boxes and Envelopes
+          parcelType: LP
+          dimensionRules:
+          - maxLengthPlusGirth: 58
+            maxParcelDimensions:
+              length: 18
+              width: 2
+              height: 18
+              unitOfMeasurement: IN
+            minLengthPlusGirth: 0.001
+            minParcelDimensions:
+              length: 0.001
+              width: 0.001
+              height: 0.001
+              unitOfMeasurement: IN
+            required: true
+            unitOfMeasurement: IN
+          weightRules:
+          - maxWeight: 1120
+            minWeight: 0.01
+            required: true
+            unitOfMeasurement: OZ
+          brandedDimensions:
+            unitOfMeasurement: IN
+            girth: 0
+            length: 12.25
+            width: 2.875
+            height: 13.6875
+          isBranded: true
+          serviceId: PM
+          serviceName: Priority Mail®
+          suggestedTrackableSpecialserviceId: DelCon
+          brandedName: Box 1092
+          parcelId: B1092
+      properties:
+        parcels:
+          items:
+            $ref: "#/components/schemas/parcelTypes_parcels_inner"
+          type: array
+      type: object
     getAllShipments:
       example:
         data:
@@ -7597,12 +7889,121 @@ components:
           $ref: "#/components/schemas/MilitaryMailShipments_customs"
       type: object
     MilitaryMailShipmentResponseV2:
-      allOf:
-      - $ref: "#/components/schemas/domesticShipmentResponseV2"
-      - properties:
-          customs:
-            $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_allOf_customs"
-        type: object
+      example:
+        correlationId: c68db9dd73114910910661b354667d16
+        shipmentId: USPS2200608348653900
+        parcelTrackingNumber: "9405509109628000023076"
+        labelLayout:
+        - contentType: URL
+          contents: https://stg-labels-cls.gcs.pitneybowes.com/usps/164770160/outbound/label/c68db9dd73114910910661b354667d16.pdf
+          fileFormat: PDF
+          size: DOC_4X6
+          type: SHIPPING_LABEL
+        parcel:
+          length: 2
+          height: 1
+          width: 1
+          dimUnit: IN
+          weightUnit: OZ
+          weight: 2
+          packageValue: 2
+        rate:
+          baseCharge: 12.17
+          carrier: USPS
+          currencyCode: USD
+          deliveryCommitment:
+            additionalDetails: By end of Day
+            estimatedDeliveryDateTime: 2025-09-08
+            guarantee: NONE
+            maxEstimatedNumberOfDays: "3"
+            minEstimatedNumberOfDays: "3"
+          inductionPostalCode: "94043"
+          parcelType: PKG
+          rateTypeId: COMMERCIAL
+          serviceId: PM
+          totalCarrierCharge: 12.17
+          destinationZone: "8"
+          isHazmat: false
+        references:
+          reference1: custome message
+          reference2: SendTech
+        print:
+          status: error
+          jobId: 2R7An27MQnJODvA
+          error:
+            code: not_found
+            message: "printer not found for given alias: test"
+            additionalCode: DH_NF_20002
+            additionalInfo: "Alias name not found, please create a printer mapping"
+        fromAddress:
+          addressLine1: 1600 Amphitheatre Pkwy
+          addressLine2: Near Abc Street Near Xyz Street
+          cityTown: Mountain View
+          company: PB
+          countryCode: US
+          email: testuser@gmail.com
+          name: Sender Name
+          phone: "6502530000"
+          postalCode: 94043-1351
+          residential: false
+          stateProvince: CA
+          status: VALIDATED_AND_NOT_CHANGED
+        toAddress:
+          addressLine1: Unit 35007
+          addressLine2: Near Abc Street Near Xyz Street
+          cityTown: APO
+          company: PB
+          countryCode: US
+          email: testuser@gmail.com
+          name: Recipient Name
+          phone: 518-727-4964
+          postalCode: 96376-5007
+          residential: false
+          stateProvince: AP
+          status: VALIDATED_AND_NOT_CHANGED
+        shipmentOptions:
+          addToManifest: true
+          receiptOption: noOptions
+          shipperId: "2000084646"
+      properties:
+        correlationId:
+          description: Key assigned by the shipping system to the transaction.
+          example: 3e2a71cc421e40b7970db9d540b1c7f2
+          type: string
+        shipmentId:
+          description: "The shipmentId, a unique identifier for an individual Shipment."
+          example: FEDEX2200626443337314
+          type: string
+        parcelTrackingNumber:
+          description: The Tracking number given to the Parcel for tracking purpose.
+          example: "329039098457"
+          type: string
+        labelLayout:
+          items:
+            $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_labelLayout_inner"
+          type: array
+        parcel:
+          $ref: "#/components/schemas/parcelV2"
+        rate:
+          allOf:
+          - $ref: "#/components/schemas/rateResponseV2"
+        references:
+          $ref: "#/components/schemas/referenceV2"
+        printStatus:
+          description: Status of the Printed Label.
+          example: submitted
+          type: string
+        printError:
+          $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_printError"
+        fromAddress:
+          $ref: "#/components/schemas/fromAddressV2Response"
+        toAddress:
+          $ref: "#/components/schemas/toAddressV2Response"
+        shipmentOptions:
+          $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_shipmentOptions"
+        customs:
+          $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_customs"
+      type: object
     internationalShipmentResponse:
       properties:
         correlationId:
@@ -8027,7 +8428,7 @@ components:
           type: string
         labelLayout:
           items:
-            $ref: "#/components/schemas/domesticShipmentResponseV2_labelLayout_inner"
+            $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_labelLayout_inner"
           type: array
         parcel:
           $ref: "#/components/schemas/parcelV2"
@@ -8040,7 +8441,7 @@ components:
           example: submitted
           type: string
         printError:
-          $ref: "#/components/schemas/domesticShipmentResponseV2_printError"
+          $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_printError"
         fromAddress:
           $ref: "#/components/schemas/fromAddressV2Response"
         toAddress:
@@ -8166,7 +8567,7 @@ components:
           type: boolean
       type: object
     toAddressV2Response:
-      description: The complete address of the Sender.
+      description: The complete address of the Reciepient.
       example:
         postalCode: "10118"
         stateProvince: NY
@@ -8352,10 +8753,6 @@ components:
           description: "It provides options to print receipt with shipping label.\
             \ Only applicable for USPS, and it can have the indicated possible/ enum\
             \ values."
-          enum:
-          - RECEIPT_ONLY
-          - RECEIPT_WITH_INSTRUCTIONS
-          - or NO_OPTIONS
           example: RECEIPT_WITH_INSTRUCTIONS
           type: string
         printDepartment:
@@ -9193,6 +9590,8 @@ components:
           type: array
       type: object
     createShipmentV2_request:
+      discriminator:
+        propertyName: rateShopBy
       oneOf:
       - $ref: "#/components/schemas/shipmentDomesticByCarrier"
       - $ref: "#/components/schemas/shipmentDomesticByRateGroup"
@@ -9205,6 +9604,8 @@ components:
       - $ref: "#/components/schemas/internationalShipmentResponseV2"
       - $ref: "#/components/schemas/MilitaryMailShipmentResponseV2"
     rateShipment_request:
+      discriminator:
+        propertyName: rateShopBy
       oneOf:
       - $ref: "#/components/schemas/RateShopbyCarrier"
       - $ref: "#/components/schemas/RateShopbyRategroup"
@@ -9275,12 +9676,6 @@ components:
       type: object
     rateShipment_200_response_rate_inner_deliveryCommitment:
       description: "Estimated delivery details, including any guarantee or commitment."
-      example:
-        maxEstimatedNumberOfDays: "2"
-        estimatedDeliveryDateTime: 2024-11-14 18:00:00.000
-        guarantee: FULL
-        minEstimatedNumberOfDays: "2"
-        additionalDetails: "Thu, Nov 14 by 6:00 PM"
       properties:
         additionalDetails:
           description: Additional information about the delivery timing.
@@ -9305,34 +9700,6 @@ components:
       type: object
     rateShipment_200_response_rate_inner:
       description: Carrier-provided rate details for the shipment.
-      example:
-        rateTypeId: CONTRACT_RATES
-        deliveryCommitment:
-          maxEstimatedNumberOfDays: "2"
-          estimatedDeliveryDateTime: 2024-11-14 18:00:00.000
-          guarantee: FULL
-          minEstimatedNumberOfDays: "2"
-          additionalDetails: "Thu, Nov 14 by 6:00 PM"
-        carrier: usps
-        parcelType: PKG
-        baseChargeTaxes:
-        - displayName: Canada goods and services
-          name: GST
-          taxAmount: 2.69
-        - displayName: Canada goods and services
-          name: GST
-          taxAmount: 2.69
-        baseCharge: 8.55
-        totalCarrierCharge: 12.7
-        surcharges:
-        - fee: 5.85
-          name: RESIDENTIAL
-        - fee: 4.66
-          name: FUEL
-        serviceId: PM
-        totalTaxAmount: 2.69
-        destinationZone: "8"
-        publishedTotalCarrierCharge: 73.12
       properties:
         baseCharge:
           description: "The base service charge payable to the carrier, excluding\
@@ -9422,60 +9789,36 @@ components:
           weightUnit: OZ
         references: {}
         rate:
-        - rateTypeId: CONTRACT_RATES
-          deliveryCommitment:
-            maxEstimatedNumberOfDays: "2"
-            estimatedDeliveryDateTime: 2024-11-14 18:00:00.000
-            guarantee: FULL
-            minEstimatedNumberOfDays: "2"
-            additionalDetails: "Thu, Nov 14 by 6:00 PM"
+        - baseCharge: 41.65
           carrier: usps
-          parcelType: PKG
-          baseChargeTaxes:
-          - displayName: Canada goods and services
-            name: GST
-            taxAmount: 2.69
-          - displayName: Canada goods and services
-            name: GST
-            taxAmount: 2.69
-          baseCharge: 8.55
-          totalCarrierCharge: 12.7
-          surcharges:
-          - fee: 5.85
-            name: RESIDENTIAL
-          - fee: 4.66
-            name: FUEL
-          serviceId: PM
-          totalTaxAmount: 2.69
-          destinationZone: "8"
-          publishedTotalCarrierCharge: 73.12
-        - rateTypeId: CONTRACT_RATES
+          carrierAccount: vpjoz235J1Wp
           deliveryCommitment:
-            maxEstimatedNumberOfDays: "2"
-            estimatedDeliveryDateTime: 2024-11-14 18:00:00.000
+            additionalDetails: "Tue, Aug 19 by 6:00 PM"
+            estimatedDeliveryDateTime: 2025-08-19 18:00:00.000
             guarantee: FULL
-            minEstimatedNumberOfDays: "2"
-            additionalDetails: "Thu, Nov 14 by 6:00 PM"
-          carrier: usps
+            maxEstimatedNumberOfDays: "1"
+            minEstimatedNumberOfDays: "1"
           parcelType: PKG
-          baseChargeTaxes:
-          - displayName: Canada goods and services
-            name: GST
-            taxAmount: 2.69
-          - displayName: Canada goods and services
-            name: GST
-            taxAmount: 2.69
-          baseCharge: 8.55
-          totalCarrierCharge: 12.7
-          surcharges:
-          - fee: 5.85
-            name: RESIDENTIAL
-          - fee: 4.66
-            name: FUEL
-          serviceId: PM
-          totalTaxAmount: 2.69
+          rateTypeId: CONTRACT_RATES
+          serviceId: EM
+          totalCarrierCharge: 41.65
           destinationZone: "8"
-          publishedTotalCarrierCharge: 73.12
+          isHazmat: true
+        - baseCharge: 47.8
+          carrier: usps
+          carrierAccount: vpjoz235J1Wp
+          deliveryCommitment:
+            additionalDetails: "Tue, Aug 19 by 6:00 PM"
+            estimatedDeliveryDateTime: 2025-08-19 18:00:00.000
+            guarantee: FULL
+            maxEstimatedNumberOfDays: "1"
+            minEstimatedNumberOfDays: "1"
+          parcelType: PKG
+          rateTypeId: RETAIL
+          serviceId: EM
+          totalCarrierCharge: 47.8
+          destinationZone: "8"
+          isHazmat: true
         fromAddress:
           postalCode: "94043"
           stateProvince: CA
@@ -9509,6 +9852,37 @@ components:
         parcel:
           $ref: "#/components/schemas/rateShipment_200_response_parcel"
         rate:
+          example:
+          - baseCharge: 41.65
+            carrier: usps
+            carrierAccount: vpjoz235J1Wp
+            deliveryCommitment:
+              additionalDetails: "Tue, Aug 19 by 6:00 PM"
+              estimatedDeliveryDateTime: 2025-08-19 18:00:00.000
+              guarantee: FULL
+              maxEstimatedNumberOfDays: "1"
+              minEstimatedNumberOfDays: "1"
+            parcelType: PKG
+            rateTypeId: CONTRACT_RATES
+            serviceId: EM
+            totalCarrierCharge: 41.65
+            destinationZone: "8"
+            isHazmat: true
+          - baseCharge: 47.8
+            carrier: usps
+            carrierAccount: vpjoz235J1Wp
+            deliveryCommitment:
+              additionalDetails: "Tue, Aug 19 by 6:00 PM"
+              estimatedDeliveryDateTime: 2025-08-19 18:00:00.000
+              guarantee: FULL
+              maxEstimatedNumberOfDays: "1"
+              minEstimatedNumberOfDays: "1"
+            parcelType: PKG
+            rateTypeId: RETAIL
+            serviceId: EM
+            totalCarrierCharge: 47.8
+            destinationZone: "8"
+            isHazmat: true
           items:
             $ref: "#/components/schemas/rateShipment_200_response_rate_inner"
           type: array
@@ -9586,6 +9960,8 @@ components:
           type: string
       type: object
     schedulePickup_request:
+      discriminator:
+        propertyName: carrierAccountId
       oneOf:
       - $ref: "#/components/schemas/schedulePickupDHLEXPRequest"
       - $ref: "#/components/schemas/schedulePickupUSPSRequest"
@@ -9598,6 +9974,8 @@ components:
       - $ref: "#/components/schemas/schedulePickupUPSResponse"
       - $ref: "#/components/schemas/schedulePickupFedexResponse"
     multipieceShipment_request:
+      discriminator:
+        propertyName: format
       oneOf:
       - $ref: "#/components/schemas/MultipieceShipmentRequest"
       - $ref: "#/components/schemas/MultipieceShipmentInternationalRequest"
@@ -9607,6 +9985,8 @@ components:
       - $ref: "#/components/schemas/MultipieceShipmentInternationalResponse"
       - $ref: "#/components/schemas/MultipieceShipmentSplitParcelLabelResponse"
     multipieceRates_request:
+      discriminator:
+        propertyName: format
       oneOf:
       - $ref: "#/components/schemas/MultipieceRateShopRequest"
       - $ref: "#/components/schemas/MultipieceRatesRequest"
@@ -10572,69 +10952,6 @@ components:
       - weightUnit
       - width
       type: object
-    MilitaryMailShipmentsRequestV2_altReturnAddress:
-      description: "This is an optional field. if a package shipped from Location_A\
-        \ to Location_B needs to return to Location_C. The alternate address will\
-        \ be printed on the label. Use this object to specify a return address different\
-        \ from the fromAddress. Supported by FedEx, UPS, and Purolator."
-      properties:
-        addressLine1:
-          description: "The first line of the alternate return address, such as a\
-            \ street address or PO Box."
-          example: 3010 Summer Street
-          type: string
-        addressLine2:
-          description: The addressLine2 contains Street address or Landmark (if any).
-          example: near abc street
-          type: string
-        addressLine3:
-          description: The addressLine3 contains P.O. Box (if any) near the address.
-          example: near xyz street
-          type: string
-        company:
-          description: "The name of the company for the alternate return address,\
-            \ in case if the recipient's address is not residential. <br /> `Max length\
-            \ = 30`."
-          example: PB
-          type: string
-        email:
-          description: The email address of the recipient. It can be person's email
-            address or company email address (for non-residential).
-          example: user@email.com
-          type: string
-        residential:
-          description: "The specified address can be Residential or Official. In case\
-            \ if the address is Residential, the boolean value will be 'true', else\
-            \ it will take 'false'."
-          example: true
-          type: boolean
-        cityTown:
-          description: The city or town for the alternate return address.
-          example: OTTAWA
-          type: string
-        countryCode:
-          description: The two-letter ISO country code for the alternate return address.
-          example: CA
-          type: string
-        name:
-          description: The name of the recipient or organization for the alternate
-            return address.
-          example: User Name
-          type: string
-        phone:
-          description: The phone number associated with the alternate return address.
-          example: "4161234567"
-          type: string
-        postalCode:
-          description: The postal or ZIP code for the alternate return address.
-          example: K1A0B2
-          type: string
-        stateProvince:
-          description: The 2-letter state or province code for the alternate return
-            address.
-          example: "ON"
-          type: string
-      type: object
     MilitaryMailShipmentsRequestV2_shipmentOptions:
       description: "Shipment Options have an added feature that is Manifest.<br />\
         \ With Manifest, the Mail Center agent can print the Manifest (End of day\
@@ -10645,15 +10962,6 @@ components:
             \ so that the shipment will reflect in the Manifest Form while compilation.\
             \ Supported for CPC and USPS carriers. <br /> The value can be 'true'\
             \ or 'false'."
-          example: true
-          type: boolean
-        minimalAddressValidation:
-          description: |
-            Allows performing minimal address validation during shipment creation. the addressLine1 field is not validated if set to true.
-            Minimal address validation is supported only for these APIs:
-              - Create Shipment
-              - Create Bulk Shipments
-              - Create Multipiece Shipment
           example: true
           type: boolean
         shipperID:
@@ -10770,37 +11078,86 @@ components:
           example: false
           type: boolean
       type: object
-    MilitaryMailShipmentsRequestV2_returnOptions_inputParameters_inner:
+    MilitaryMailShipmentsRequestV2_customs_customsInfo:
+      description: This is additional customs information required along with item
+        details.
       properties:
-        name:
-          description: The name of the parameter.
-          example: RMA_NUMBER
+        reasonForExport:
+          description: The reason the commodity is being exported.
+          enum:
+          - GIFT
+          - COMMERCIAL_SAMPLE
+          - MERCHANDISE
+          - DOCUMENTS
+          - RETURNED_GOODS
+          - OTHER
+          example: GIFT
           type: string
-        value:
-          description: The corresponding value for the parameter.
-          example: "123"
+        customsDeclaredValue:
+          description: Item value in mentioned currencyCode
+          example: 10
+          type: number
+        currencyCode:
+          description: "The currency used for declared value. Use three uppercase\
+            \ letters, per ISO 4217"
+          example: USD
           type: string
-      type: object
-    MilitaryMailShipmentsRequestV2_returnOptions:
-      description: "This object defines return shipment options. It should be passed\
-        \ when requesting return labels. Supported only for carriers UPS and FedEx\
-        \ as of now.</br> For UPS, this object is required. </br> For FedEx, this\
-        \ object is optional. </br> Note: The `returnOptions` object must be sent\
-        \ with the `isReturn` query parameter."
-      properties:
-        type:
-          description: Specifies the return type. This is the value of special service
-            code for the carrier-supported return service.
-          example: RETURN_BY_PRL
+        EELPFC:
+          description: |
+            A number provided by the Automated Export System (AES). <br/> Required if the item is more than $2,500 USD, per Schedule B export codes. <br/> Required if EELPFC  is AES ITN.
+            - AES ITN is a unique transaction number generated by the Automated Export System (AES) when export data is filed for international shipments from the U.S.
+            - The ITN format is AES XYYYYMMDDNNNNNN, where X indicates the type, YYYYMMDD is the filing date, and NNNNNN is a 6-digit number. Example: `AES X20250327123456`
+            - If the ITN is not available, an exemption format may be used: AESDOWN [Filer ID] [mm/dd/yyyy]. Example: `AESDOWN 12345678912 03/27/2025`
+          example: NOEEI 30.2D2
           type: string
-        inputParameters:
-          description: List of input parameters required for return processing.
-          items:
-            $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_returnOptions_inputParameters_inner"
-          type: array
+        certificateNumber:
+          description: The certificate number associated with the commodity.
+          example: "123456"
+          type: string
+        comments:
+          description: Free-form comments regarding the exported shipment.
+          example: This is a sample comment
+          type: string
+        fromCustomsReference:
+          description: Free-form reference information provided by the requestor of
+            the shipment. Depending on the carrier this information may or may not
+            be rendered on the customs documents.
+          example: EFEFE4554545
+          type: string
+        importerCustomsReference:
+          description: "A reference number used by the importer, such as a VAT number,\
+            \ PO number, or insured number."
+          example: dff3433
+          type: string
+        invoiceNumber:
+          description: The commercial invoice number assigned by the exporter.
+          example: "123456"
+          type: string
+        licenseNumber:
+          description: The export license number associated with the commodity.
+          example: "123456"
+          type: string
+        sdrValue:
+          description: "When an international parcel is insured, the insured value\
+            \ must be expressed in Special Drawing Rights values."
+          example: 10
+          type: number
       required:
-      - inputParameters
-      - type
+      - currencyCode
+      - customsDeclaredValue
+      - reasonForExport
+      type: object
+    MilitaryMailShipmentsRequestV2_customs:
+      properties:
+        customsItems:
+          items:
+            $ref: "#/components/schemas/MilitaryMailShipments_customs_customsItems_inner"
+          type: array
+        customsInfo:
+          $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_customs_customsInfo"
+      required:
+      - customsInfo
+      - customsItems
       type: object
     shipmentInternational_fromAddress:
       properties:
@@ -11559,6 +11916,17 @@ components:
           example: 200.0
           type: number
       type: object
+    shipmentDomesticByCarrier_returnOptions_inputParameters_inner:
+      properties:
+        name:
+          description: The name of the parameter.
+          example: RMA_NUMBER
+          type: string
+        value:
+          description: The corresponding value for the parameter.
+          example: "123"
+          type: string
+      type: object
     shipmentDomesticByCarrier_returnOptions:
       description: |
         This object defines return shipment options. It should be passed when requesting return labels. Supported only for carriers UPS and FedEx as of now.</br> For UPS, this object is required. </br> For FedEx, this object is optional. </br> Note: The `returnOptions` object must be sent with the `isReturn` query parameter.<br/>
@@ -11573,7 +11941,7 @@ components:
         inputParameters:
           description: List of input parameters required for return processing.
           items:
-            $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_returnOptions_inputParameters_inner"
+            $ref: "#/components/schemas/shipmentDomesticByCarrier_returnOptions_inputParameters_inner"
           type: array
       required:
       - inputParameters
@@ -11949,7 +12317,7 @@ components:
       title: DHL Express Carrier Payment
       type: object
     carrierPayments_inner:
-      oneOf:
+      anyOf:
       - $ref: "#/components/schemas/FedEx_Carrier_Payment"
       - $ref: "#/components/schemas/UPS_Carrier_Payment"
       - $ref: "#/components/schemas/DHL_Express_Carrier_Payment"
@@ -11971,6 +12339,69 @@ components:
             \ be mentioned by Sender, which is not indicated on AdditionalReference1\
             \ field, e.g., PO No, Order No. etc.<br /> `Max length = 30`."
           example: "989"
+          type: string
+      type: object
+    shipmentDomesticByRateGroup_altReturnAddress:
+      description: "This is an optional field. if a package shipped from Location_A\
+        \ to Location_B needs to return to Location_C. The alternate address will\
+        \ be printed on the label. Use this object to specify a return address different\
+        \ from the fromAddress. Supported by FedEx, UPS, and Purolator."
+      properties:
+        addressLine1:
+          description: "The first line of the alternate return address, such as a\
+            \ street address or PO Box."
+          example: 3010 Summer Street
+          type: string
+        addressLine2:
+          description: The addressLine2 contains Street address or Landmark (if any).
+          example: near abc street
+          type: string
+        addressLine3:
+          description: The addressLine3 contains P.O. Box (if any) near the address.
+          example: near xyz street
+          type: string
+        company:
+          description: "The name of the company for the alternate return address,\
+            \ in case if the recipient's address is not residential. <br /> `Max length\
+            \ = 30`."
+          example: PB
+          type: string
+        email:
+          description: The email address of the recipient. It can be person's email
+            address or company email address (for non-residential).
+          example: user@email.com
+          type: string
+        residential:
+          description: "The specified address can be Residential or Official. In case\
+            \ if the address is Residential, the boolean value will be 'true', else\
+            \ it will take 'false'."
+          example: true
+          type: boolean
+        cityTown:
+          description: The city or town for the alternate return address.
+          example: OTTAWA
+          type: string
+        countryCode:
+          description: The two-letter ISO country code for the alternate return address.
+          example: CA
+          type: string
+        name:
+          description: The name of the recipient or organization for the alternate
+            return address.
+          example: User Name
+          type: string
+        phone:
+          description: The phone number associated with the alternate return address.
+          example: "4161234567"
+          type: string
+        postalCode:
+          description: The postal or ZIP code for the alternate return address.
+          example: K1A0B2
+          type: string
+        stateProvince:
+          description: The 2-letter state or province code for the alternate return
+            address.
+          example: "ON"
           type: string
       type: object
     shipmentDomesticByRateGroup_byRateGroup:
@@ -12856,6 +13287,28 @@ components:
       - carrier
       - carrierAccountId
       - service
+      type: object
+    RateShopbyCarrier_deliveryOption:
+      description: "There are two options of delivery: deliverBy and useBestNextDate,\
+        \ where customer can schedule the delivery date in deliverBy. <br /> In case\
+        \ if the customer's scheduled `deliverBy` date falls under Holiday, then `useBestNextDate`\
+        \ will be used by our system. Then, we will mark the second option and deliver\
+        \ the same."
+      properties:
+        deliverBy:
+          description: "Delivery date is the target delivery date for the shipment.\
+            \ When specified, the API returns only those rate quotes that can commit\
+            \ to delivering the shipment on or before this date. The value must be\
+            \ in the YYYY-MM-DD format."
+          example: 2024-03-20
+          format: date
+          type: string
+        useBestNextDate:
+          description: "When set to true, if the specified Deliver By date falls on\
+            \ a holiday, the API will return rate quotes based on the next available\
+            \ business day delivery commitment."
+          example: false
+          type: boolean
       type: object
     RateShopbyRuleset_byRuleSet:
       description: User can create the Shipment using Rule Set.<br /> By Rule Set
@@ -14201,7 +14654,10 @@ components:
       - countryCode
       - postalCode
       type: object
-    countries_inner:
+    countries_countries_inner:
+      example:
+        countryCode: TV
+        countryName: Tuvalu
       properties:
         countryCode:
           description: "The two-character ISO Code of the country from this ISO country\
@@ -14266,7 +14722,10 @@ components:
         properties:
           $ref: "#/components/schemas/carriers_carriers_inner_properties"
       type: object
-    services_inner:
+    services_services_inner:
+      example:
+        serviceId: serviceId
+        brandedName: brandedName
       properties:
         brandedName:
           description: The branded name of service.
@@ -15727,6 +16186,282 @@ components:
           example: PKG
           type: string
       type: object
+    PickupAvailabilityRequest_pickupAddress:
+      description: Address where pickup is requested.
+      properties:
+        name:
+          description: Contact person name at the pickup location
+          example: John Doe
+          type: string
+        addressLine1:
+          description: Primary street address line
+          example: 27 Waterview Dr
+          type: string
+        cityTown:
+          description: City or town of the pickup location
+          example: Shelton
+          type: string
+        stateProvince:
+          description: State or province of the pickup location
+          example: CT
+          type: string
+        postalCode:
+          description: Postal or ZIP code of the pickup location
+          example: 06484-4301
+          type: string
+        countryCode:
+          description: Two-letter ISO country code
+          example: US
+          type: string
+        phone:
+          description: Contact phone number at the pickup location
+          example: "1234567890"
+          type: string
+        company:
+          description: Company name associated with the pickup locatio
+          example: PB
+          type: string
+        email:
+          description: Contact email at the pickup location
+          example: user@pb.com
+          type: string
+        residential:
+          description: Indicates if the address is residential.
+          example: false
+          type: boolean
+      type: object
+    PickupAvailabilityRequest_pickupSummary_inner_packageDetails_inner:
+      description: Dimensions of packages to be picked up.
+      properties:
+        height:
+          example: 5
+          type: number
+        length:
+          example: 6
+          type: number
+        width:
+          example: 4
+          type: number
+        dimUnit:
+          example: IN
+          type: string
+      type: object
+    PickupAvailabilityRequest_pickupSummary_inner_specialServices_inner:
+      properties:
+        specialserviceId:
+          example: COM
+          type: string
+      type: object
+    PickupAvailabilityRequest_pickupSummary_inner:
+      properties:
+        toAddressCountryCode:
+          description: Destination country code of the shipment
+          example: CA
+          type: string
+        serviceId:
+          description: "Identifier of the shipping service requested (e.g., GND)."
+          example: GND
+          type: string
+        parcelType:
+          description: "Type of parcel (e.g., PKG, LTR)"
+          example: PKG
+          type: string
+        totalWeight:
+          description: Total weight of all packages for pickup
+          example: 100
+          type: number
+        weightUnit:
+          description: Unit of measurement for weight
+          example: OZ
+          type: string
+        packageDetails:
+          items:
+            $ref: "#/components/schemas/PickupAvailabilityRequest_pickupSummary_inner_packageDetails_inner"
+          type: array
+        specialServices:
+          description: ' List of special services requested for the pickup.'
+          items:
+            $ref: "#/components/schemas/PickupAvailabilityRequest_pickupSummary_inner_specialServices_inner"
+          type: array
+      type: object
+    PickupAvailabilityRequest_pickupOptions:
+      description: Additional options for pickup eligibility.
+      properties:
+        countryRelationship:
+          example: INTERNATIONAL
+          type: string
+        carrier:
+          example: UPS
+          type: string
+      type: object
+    PickupAvailabilityResponse_pickupAddress:
+      description: Validated pickup address returned by the carrier/system.
+      properties:
+        name:
+          description: Contact person name at the pickup location
+          example: John Doe
+          type: string
+        addressLine1:
+          description: Primary street address line
+          example: 27 Waterview Dr
+          type: string
+        cityTown:
+          description: City or town of the pickup location
+          example: Shelton
+          type: string
+        stateProvince:
+          description: State or province of the pickup location
+          example: CT
+          type: string
+        postalCode:
+          description: Postal or ZIP code of the pickup location
+          example: 06484-4301
+          type: string
+        countryCode:
+          description: Two-letter ISO country code
+          example: US
+          type: string
+        phone:
+          description: Contact phone number at the pickup location
+          example: "1234567890"
+          type: string
+        company:
+          description: Company name associated with the pickup locatio
+          example: PB
+          type: string
+        email:
+          description: Contact email at the pickup location
+          example: user@pb.com
+          type: string
+        residential:
+          description: Indicates if the address is residential.
+          example: false
+          type: boolean
+      type: object
+    PickupAvailabilityResponse_pickupSummary_inner:
+      properties:
+        serviceId:
+          description: "Identifier of the shipping service requested (e.g., GND)."
+          example: GND
+          type: string
+        parcelType:
+          description: "Type of parcel (e.g., PKG, LTR)"
+          example: PKG
+          type: string
+        totalWeight:
+          description: Total weight of all packages for pickup
+          example: 100
+          type: number
+        weightUnit:
+          description: Unit of measurement for weight
+          example: OZ
+          type: string
+        packageDetails:
+          items:
+            $ref: "#/components/schemas/PickupAvailabilityRequest_pickupSummary_inner_packageDetails_inner"
+          type: array
+      type: object
+    PickupAvailabilityResponse_pickupOptions:
+      description: Pickup options
+      properties:
+        countryRelationship:
+          example: DOMESTIC
+          type: string
+        carrier:
+          example: UPS
+          type: string
+      type: object
+    PickupAvailabilityResponse_pickupInformation_startCloseTimeOptions:
+      description: Options for pickup start/close time windows.
+      properties:
+        minTimeWindow:
+          description: Minimum time window between pickup start and end
+          example: "210"
+          type: string
+        defaultStartTime:
+          description: Default pickup start time
+          example: 08:00:00
+          type: string
+        defaultCloseTime:
+          description: Default pickup close time
+          example: 18:00:00
+          type: string
+        startTimeOptions:
+          description: List of available pickup start times.
+          example:
+          - 07:00:00
+          - 07:30:00
+          - 08:00:00
+          items:
+            type: string
+          type: array
+        closeTimeOptions:
+          description: List of available pickup close times.
+          example:
+          - 18:30:00
+          - 19:00:00
+          - 19:30:00
+          items:
+            type: string
+          type: array
+      type: object
+    PickupAvailabilityResponse_pickupInformation_timeRangeOptions_defaultRange:
+      properties:
+        startTime:
+          description: Default pickup start time
+          example: 10:00:00
+          type: string
+        closeTime:
+          description: Default pickup close time
+          example: 18:00:00
+          type: string
+      type: object
+    PickupAvailabilityResponse_pickupInformation_timeRangeOptions_timeRanges_inner:
+      properties:
+        startTime:
+          description: Pickup start time
+          example: 10:00:00
+          type: string
+        closeTime:
+          description: Pickup close time
+          example: 18:00:00
+          type: string
+      type: object
+    PickupAvailabilityResponse_pickupInformation_timeRangeOptions:
+      description: Default and available pickup time ranges.
+      properties:
+        defaultRange:
+          $ref: "#/components/schemas/PickupAvailabilityResponse_pickupInformation_timeRangeOptions_defaultRange"
+        timeRanges:
+          description: Available pickup time ranges.
+          items:
+            $ref: "#/components/schemas/PickupAvailabilityResponse_pickupInformation_timeRangeOptions_timeRanges_inner"
+          type: array
+      type: object
+    PickupAvailabilityResponse_pickupInformation:
+      description: Detailed pickup availability information.
+      properties:
+        residentialAvailable:
+          description: Is residential pickup supported
+          example: true
+          type: boolean
+        onDemandAvailable:
+          description: Is on-demand pickup supported
+          example: true
+          type: boolean
+        scheduledAvailable:
+          description: Is scheduled pickup supported
+          example: true
+          type: boolean
+        cutoffTime:
+          description: Latest cutoff time for pickup requests
+          example: 06:00:00
+          type: string
+        startCloseTimeOptions:
+          $ref: "#/components/schemas/PickupAvailabilityResponse_pickupInformation_startCloseTimeOptions"
+        timeRangeOptions:
+          $ref: "#/components/schemas/PickupAvailabilityResponse_pickupInformation_timeRangeOptions"
+      type: object
     additionalAddresses_inner_address:
       description: The additional address details.
       example:
@@ -15795,7 +16530,8 @@ components:
           $ref: "#/components/schemas/additionalAddresses_inner_address"
         addressType:
           description: "Type of the additional address (e.g., BROKER). This is required\
-            \ if passing `additionalAddresses`."
+            \ if passing `additionalAddresses`.<br/> **Note:** The addressType `SHIPPER`\
+            \ is returned only in USPS responses. "
           enum:
           - HOLD
           - BROKER
@@ -15803,6 +16539,7 @@ components:
           - PICKUP
           - EXPORTER
           - ALT_DELIVERY
+          - SHIPPER
           example: BROKER
           type: string
       type: object
@@ -18615,6 +19352,12 @@ components:
           items:
             $ref: "#/components/schemas/MultipieceRatesResponse_rates_inner_surcharges_inner"
           type: array
+        publishedTotalCarrierCharge:
+          description: |
+            The total amount based on the carrier's standard (published) rates, including base charges, surcharges, special services, discounts, and applicable taxes. This value reflects the amount the carrier would charge without any negotiated discounts or platform-specific rate adjustments.
+            - Returned only when supported by the carrier (e.g., FedEx, UPS, DHL, USPS)."
+          example: 73.12
+          type: number
       type: object
     MultipieceRateShopResponse_fromAddress:
       description: Details of the sender's address.
@@ -18935,6 +19678,7 @@ components:
           name: RESIDENTIAL
         serviceId: NDA
         currencyCode: USD
+        publishedTotalCarrierCharge: 73.12
       properties:
         totalCarrierCharge:
           description: "The total amount payable to the carrier, including base charges,\
@@ -18969,8 +19713,14 @@ components:
           items:
             $ref: "#/components/schemas/MultipieceRateShopResponse_rates_inner_surcharges_inner"
           type: array
+        publishedTotalCarrierCharge:
+          description: |
+            The total amount based on the carrier's standard (published) rates, including base charges, surcharges, special services, discounts, and applicable taxes. This value reflects the amount the carrier would charge without any negotiated discounts or platform-specific rate adjustments.
+            - Returned only when supported by the carrier (e.g., FedEx, UPS, DHL, USPS)."
+          example: 73.12
+          type: number
       type: object
-    parcelTypes_inner_dimensionRules_inner_maxParcelDimensions:
+    parcelTypes_parcels_inner_dimensionRules_inner_maxParcelDimensions:
       properties:
         length:
           description: "Length is a part of Dimension object having highest numeric\
@@ -18995,7 +19745,7 @@ components:
           example: IN
           type: string
       type: object
-    parcelTypes_inner_dimensionRules_inner_minParcelDimensions:
+    parcelTypes_parcels_inner_dimensionRules_inner_minParcelDimensions:
       properties:
         length:
           description: "Length is a part of Dimension object having highest numeric\
@@ -19020,7 +19770,7 @@ components:
           example: IN
           type: string
       type: object
-    parcelTypes_inner_dimensionRules_inner:
+    parcelTypes_parcels_inner_dimensionRules_inner:
       properties:
         maxLengthPlusGirth:
           description: This measures the parcel's maximum length and determine parcel’s
@@ -19028,14 +19778,14 @@ components:
           example: 58
           type: number
         maxParcelDimensions:
-          $ref: "#/components/schemas/parcelTypes_inner_dimensionRules_inner_maxParcelDimensions"
+          $ref: "#/components/schemas/parcelTypes_parcels_inner_dimensionRules_inner_maxParcelDimensions"
         minLengthPlusGirth:
           description: This measures the parcel's minimum length and determine parcel’s
             girth.
           example: 0.001
           type: number
         minParcelDimensions:
-          $ref: "#/components/schemas/parcelTypes_inner_dimensionRules_inner_minParcelDimensions"
+          $ref: "#/components/schemas/parcelTypes_parcels_inner_dimensionRules_inner_minParcelDimensions"
         required:
           example: true
           type: boolean
@@ -19045,8 +19795,14 @@ components:
           example: IN
           type: string
       type: object
-    parcelTypes_inner_brandedDimensions:
+    parcelTypes_parcels_inner_brandedDimensions:
       description: This will be available for parcels with Parcel Type as branded.
+      example:
+        unitOfMeasurement: IN
+        girth: 0
+        length: 12.25
+        width: 2.875
+        height: 13.6875
       properties:
         girth:
           description: This is the measure around parcel by area or circumference.
@@ -19075,7 +19831,7 @@ components:
           example: IN
           type: string
       type: object
-    parcelTypes_inner_weightRules_inner:
+    parcelTypes_parcels_inner_weightRules_inner:
       properties:
         maxWeight:
           description: "Defines maximum weight, which can be considered."
@@ -19094,7 +19850,43 @@ components:
           example: OZ
           type: string
       type: object
-    parcelTypes_inner:
+    parcelTypes_parcels_inner:
+      example:
+        carrier: USPS
+        groupName: Specialty Boxes and Envelopes
+        parcelType: LP
+        dimensionRules:
+        - maxLengthPlusGirth: 58
+          maxParcelDimensions:
+            length: 18
+            width: 2
+            height: 18
+            unitOfMeasurement: IN
+          minLengthPlusGirth: 0.001
+          minParcelDimensions:
+            length: 0.001
+            width: 0.001
+            height: 0.001
+            unitOfMeasurement: IN
+          required: true
+          unitOfMeasurement: IN
+        weightRules:
+        - maxWeight: 1120
+          minWeight: 0.01
+          required: true
+          unitOfMeasurement: OZ
+        brandedDimensions:
+          unitOfMeasurement: IN
+          girth: 0
+          length: 12.25
+          width: 2.875
+          height: 13.6875
+        isBranded: true
+        serviceId: PM
+        serviceName: Priority Mail®
+        suggestedTrackableSpecialserviceId: DelCon
+        brandedName: Box 1092
+        parcelId: B1092
       properties:
         brandedName:
           description: The branded name of parcel type
@@ -19123,13 +19915,13 @@ components:
             required: true
             unitOfMeasurement: IN
           items:
-            $ref: "#/components/schemas/parcelTypes_inner_dimensionRules_inner"
+            $ref: "#/components/schemas/parcelTypes_parcels_inner_dimensionRules_inner"
           type: array
         groupName:
           example: Specialty Boxes and Envelopes
           type: string
         brandedDimensions:
-          $ref: "#/components/schemas/parcelTypes_inner_brandedDimensions"
+          $ref: "#/components/schemas/parcelTypes_parcels_inner_brandedDimensions"
         parcelId:
           description: A unique identifier associated with the Parcel.
           example: B1092
@@ -19164,7 +19956,7 @@ components:
             required: true
             unitOfMeasurement: OZ
           items:
-            $ref: "#/components/schemas/parcelTypes_inner_weightRules_inner"
+            $ref: "#/components/schemas/parcelTypes_parcels_inner_weightRules_inner"
           type: array
       type: object
     getAllShipments_pageInfo:
@@ -20855,16 +21647,70 @@ components:
           example: AP
           type: string
       type: object
-    MilitaryMailShipmentResponseV2_allOf_customs_hSTariffCode:
-      description: "The destination country’s tariff-classification number (HS code)\
-        \ for the commodity. Most countries use the six-digit Harmonized System (HS)\
-        \ as the basis for their tariff classifications and then add digits for more\
-        \ detail. The maximum length for an HS code is 14 characters. The HS code\
-        \ will appear on the customs form. If the shipment has multiple types of items,\
-        \ create a separate customsItems object for each."
-      example: "610910"
+    MilitaryMailShipmentResponseV2_labelLayout_inner:
+      example:
+        size: DOC_4X6
+        contents: XlhBCl5MSDE2LDEyCl5MTDEyMTIKXkZUIDU4MSwgNDAzIF5BVU4gIF5GRDAwMDNeRlMgXkZYIENvbmZpZ3VyYWJsZSBUZXh0IDEK...
+        type: SHIPPING_LABEL
+        contentType: BASE64
+        fileFormat: ZPL2
+      properties:
+        contentType:
+          description: Specifies how the label content is encoded.
+          enum:
+          - BASE64
+          - URL
+          example: BASE64
+          type: string
+        contents:
+          description: "The URL to access the label document if the content type is\
+            \ `URL`, or the Base64-encoded data if the content type is `BASE64`"
+          example: XlhBCl5MSDE2LDEyCl5MTDEyMTIKXkZUIDU4MSwgNDAzIF5BVU4gIF5GRDAwMDNeRlMgXkZYIENvbmZpZ3VyYWJsZSBUZXh0IDEK...
+          type: string
+        fileFormat:
+          description: "Defines the type of the shipment which is printed. For example,\
+            \ Shipping label prints in PDF form."
+          example: ZPL2
+          type: string
+        size:
+          description: "Defines the label size of the Shipment, that is, the Shipping\
+            \ Label is available in different Doc Size."
+          example: DOC_4X6
+          type: string
+        type:
+          description: Defines the type of the Shipment.
+          enum:
+          - SHIPPING_LABEL
+          example: SHIPPING_LABEL
+          type: string
       type: object
-    MilitaryMailShipmentResponseV2_allOf_customs_customsItems:
+    MilitaryMailShipmentResponseV2_printError:
+      example:
+        code: validation_error
+        message: Api is not supported for your 1.10.15 version please install latest
+          dh version
+      properties:
+        code:
+          description: indicates error code of print
+          example: validation_error
+          type: string
+        message:
+          description: 'Error message if print failed '
+          example: Api is not supported for your 1.10.15 version please install latest
+            dh version
+          type: string
+      type: object
+    MilitaryMailShipmentResponseV2_shipmentOptions:
+      allOf:
+      - $ref: "#/components/schemas/shipmentOptions"
+      - properties:
+          billingWeight:
+            description: |
+              The weight used by the carrier to calculate the shipping cost. This value is determined as the greater of the actual weight and the dimensional weight.
+            example: "128.0"
+            type: string
+        type: object
+    MilitaryMailShipmentResponseV2_customs_customsItems_inner:
       properties:
         description:
           description: "A detailed description of the commodity, up to 255 characters.\
@@ -20907,7 +21753,7 @@ components:
           example: 1
           type: number
       type: object
-    MilitaryMailShipmentResponseV2_allOf_customs_customsInfo:
+    MilitaryMailShipmentResponseV2_customs_customsInfo:
       description: This is additional customs information required along with item
         details.
       properties:
@@ -20971,38 +21817,15 @@ components:
             \ must be expressed in Special Drawing Rights values."
           example: 10
           type: number
-        termsOfSale:
-          description: |
-            Defines the delivery and payment terms between the shipper and recipient. Currenty supported by carriers - UPS, FedEx and DHL. - Common values include:
-              - CIP: Carriage and Insurance Paid to
-              - CPT: Carriage Paid To
-              - DAP: Delivered at Place
-              - DAT: Delivered at Terminal
-              - DDP: Delivered Duty Paid
-              - EXW: Ex Works
-              - FCA: Free Carrier
-          enum:
-          - CIP
-          - CPT
-          - DAP
-          - DAT
-          - DDP
-          - EXW
-          - FCA
-          example: DDU
-          type: string
       type: object
-    MilitaryMailShipmentResponseV2_allOf_customs:
+    MilitaryMailShipmentResponseV2_customs:
       properties:
         customsItems:
           items:
-            $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_allOf_customs_customsItems"
+            $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_customs_customsItems_inner"
           type: array
         customsInfo:
-          $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_allOf_customs_customsInfo"
-      required:
-      - customsInfo
-      - customsItems
+          $ref: "#/components/schemas/MilitaryMailShipmentResponseV2_customs_customsInfo"
       type: object
     internationalShipmentResponse_fromAddress:
       properties:
@@ -21542,43 +22365,6 @@ components:
           example: None
           type: string
       type: object
-    domesticShipmentResponseV2_labelLayout_inner:
-      example:
-        size: DOC_4X6
-        contents: XlhBCl5MSDE2LDEyCl5MTDEyMTIKXkZUIDU4MSwgNDAzIF5BVU4gIF5GRDAwMDNeRlMgXkZYIENvbmZpZ3VyYWJsZSBUZXh0IDEK...
-        type: SHIPPING_LABEL
-        contentType: BASE64
-        fileFormat: ZPL2
-      properties:
-        contentType:
-          description: Specifies how the label content is encoded.
-          enum:
-          - BASE64
-          - URL
-          example: BASE64
-          type: string
-        contents:
-          description: "The URL to access the label document if the content type is\
-            \ `URL`, or the Base64-encoded data if the content type is `BASE64`"
-          example: XlhBCl5MSDE2LDEyCl5MTDEyMTIKXkZUIDU4MSwgNDAzIF5BVU4gIF5GRDAwMDNeRlMgXkZYIENvbmZpZ3VyYWJsZSBUZXh0IDEK...
-          type: string
-        fileFormat:
-          description: "Defines the type of the shipment which is printed. For example,\
-            \ Shipping label prints in PDF form."
-          example: ZPL2
-          type: string
-        size:
-          description: "Defines the label size of the Shipment, that is, the Shipping\
-            \ Label is available in different Doc Size."
-          example: DOC_4X6
-          type: string
-        type:
-          description: Defines the type of the Shipment.
-          enum:
-          - SHIPPING_LABEL
-          example: SHIPPING_LABEL
-          type: string
-      type: object
     domesticShipmentResponseV2_rate:
       allOf:
       - $ref: "#/components/schemas/rateResponseV2"
@@ -21629,22 +22415,6 @@ components:
         totalTaxAmount: 2.69
         currencyCode: CAD
         publishedTotalCarrierCharge: 73.12
-    domesticShipmentResponseV2_printError:
-      example:
-        code: validation_error
-        message: Api is not supported for your 1.10.15 version please install latest
-          dh version
-      properties:
-        code:
-          description: indicates error code of print
-          example: validation_error
-          type: string
-        message:
-          description: 'Error message if print failed '
-          example: Api is not supported for your 1.10.15 version please install latest
-            dh version
-          type: string
-      type: object
     PrintDocumentRequest_reference:
       description: "- Contains key value map for passing references. Max references\
         \ allowed is 6. <br /> - References are tags or information that is printed\

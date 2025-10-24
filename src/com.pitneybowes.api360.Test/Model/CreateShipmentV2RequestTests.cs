@@ -52,5 +52,14 @@ namespace com.pitneybowes.api360.Test.Model
             // TODO uncomment below to test "IsType" CreateShipmentV2Request
             //Assert.IsType<CreateShipmentV2Request>(instance);
         }
+
+        /// <summary>
+        /// Test the property 'RateShopBy'
+        /// </summary>
+        [Fact]
+        public void RateShopByTest()
+        {
+            // TODO unit test for the property 'RateShopBy'
+        }
     }
 }

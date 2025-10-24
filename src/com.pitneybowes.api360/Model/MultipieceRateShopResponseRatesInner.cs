@@ -41,8 +41,9 @@ namespace com.pitneybowes.api360.Model
         /// <param name="serviceId">The identifier for the shipping service to be used.</param>
         /// <param name="multiPieceParcels">Details of each parcel within the multipiece shipment.</param>
         /// <param name="surcharges">A list of surcharges applied to the entire shipment.</param>
+        /// <param name="publishedTotalCarrierCharge">The total amount based on the carrier&#39;s standard (published) rates, including base charges, surcharges, special services, discounts, and applicable taxes. This value reflects the amount the carrier would charge without any negotiated discounts or platform-specific rate adjustments. - Returned only when supported by the carrier (e.g., FedEx, UPS, DHL, USPS).\&quot; </param>
         [JsonConstructor]
-        public MultipieceRateShopResponseRatesInner(Option<decimal?> totalCarrierCharge = default, Option<string?> carrier = default, Option<string?> currencyCode = default, Option<MultipieceRateShopResponseRatesInnerDeliveryCommitment?> deliveryCommitment = default, Option<string?> rateTypeId = default, Option<string?> serviceId = default, Option<List<MultipieceRateShopResponseRatesInnerMultiPieceParcelsInner>?> multiPieceParcels = default, Option<List<MultipieceRateShopResponseRatesInnerSurchargesInner>?> surcharges = default)
+        public MultipieceRateShopResponseRatesInner(Option<decimal?> totalCarrierCharge = default, Option<string?> carrier = default, Option<string?> currencyCode = default, Option<MultipieceRateShopResponseRatesInnerDeliveryCommitment?> deliveryCommitment = default, Option<string?> rateTypeId = default, Option<string?> serviceId = default, Option<List<MultipieceRateShopResponseRatesInnerMultiPieceParcelsInner>?> multiPieceParcels = default, Option<List<MultipieceRateShopResponseRatesInnerSurchargesInner>?> surcharges = default, Option<decimal?> publishedTotalCarrierCharge = default)
         {
             TotalCarrierChargeOption = totalCarrierCharge;
             CarrierOption = carrier;
@@ -52,6 +53,7 @@ namespace com.pitneybowes.api360.Model
             ServiceIdOption = serviceId;
             MultiPieceParcelsOption = multiPieceParcels;
             SurchargesOption = surcharges;
+            PublishedTotalCarrierChargeOption = publishedTotalCarrierCharge;
             OnCreated();
         }
 
@@ -174,6 +176,21 @@ namespace com.pitneybowes.api360.Model
         public List<MultipieceRateShopResponseRatesInnerSurchargesInner>? Surcharges { get { return this.SurchargesOption; } set { this.SurchargesOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of PublishedTotalCarrierCharge
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> PublishedTotalCarrierChargeOption { get; private set; }
+
+        /// <summary>
+        /// The total amount based on the carrier&#39;s standard (published) rates, including base charges, surcharges, special services, discounts, and applicable taxes. This value reflects the amount the carrier would charge without any negotiated discounts or platform-specific rate adjustments. - Returned only when supported by the carrier (e.g., FedEx, UPS, DHL, USPS).\&quot; 
+        /// </summary>
+        /// <value>The total amount based on the carrier&#39;s standard (published) rates, including base charges, surcharges, special services, discounts, and applicable taxes. This value reflects the amount the carrier would charge without any negotiated discounts or platform-specific rate adjustments. - Returned only when supported by the carrier (e.g., FedEx, UPS, DHL, USPS).\&quot; </value>
+        /* <example>73.12</example> */
+        [JsonPropertyName("publishedTotalCarrierCharge")]
+        public decimal? PublishedTotalCarrierCharge { get { return this.PublishedTotalCarrierChargeOption; } set { this.PublishedTotalCarrierChargeOption = new(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -189,6 +206,7 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  ServiceId: ").Append(ServiceId).Append("\n");
             sb.Append("  MultiPieceParcels: ").Append(MultiPieceParcels).Append("\n");
             sb.Append("  Surcharges: ").Append(Surcharges).Append("\n");
+            sb.Append("  PublishedTotalCarrierCharge: ").Append(PublishedTotalCarrierCharge).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -234,6 +252,7 @@ namespace com.pitneybowes.api360.Model
             Option<string?> serviceId = default;
             Option<List<MultipieceRateShopResponseRatesInnerMultiPieceParcelsInner>?> multiPieceParcels = default;
             Option<List<MultipieceRateShopResponseRatesInnerSurchargesInner>?> surcharges = default;
+            Option<decimal?> publishedTotalCarrierCharge = default;
 
             while (utf8JsonReader.Read())
             {
@@ -274,6 +293,9 @@ namespace com.pitneybowes.api360.Model
                         case "surcharges":
                             surcharges = new Option<List<MultipieceRateShopResponseRatesInnerSurchargesInner>?>(JsonSerializer.Deserialize<List<MultipieceRateShopResponseRatesInnerSurchargesInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
+                        case "publishedTotalCarrierCharge":
+                            publishedTotalCarrierCharge = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
                         default:
                             break;
                     }
@@ -304,7 +326,10 @@ namespace com.pitneybowes.api360.Model
             if (surcharges.IsSet && surcharges.Value == null)
                 throw new ArgumentNullException(nameof(surcharges), "Property is not nullable for class MultipieceRateShopResponseRatesInner.");
 
-            return new MultipieceRateShopResponseRatesInner(totalCarrierCharge, carrier, currencyCode, deliveryCommitment, rateTypeId, serviceId, multiPieceParcels, surcharges);
+            if (publishedTotalCarrierCharge.IsSet && publishedTotalCarrierCharge.Value == null)
+                throw new ArgumentNullException(nameof(publishedTotalCarrierCharge), "Property is not nullable for class MultipieceRateShopResponseRatesInner.");
+
+            return new MultipieceRateShopResponseRatesInner(totalCarrierCharge, carrier, currencyCode, deliveryCommitment, rateTypeId, serviceId, multiPieceParcels, surcharges, publishedTotalCarrierCharge);
         }
 
         /// <summary>
@@ -382,6 +407,8 @@ namespace com.pitneybowes.api360.Model
                 writer.WritePropertyName("surcharges");
                 JsonSerializer.Serialize(writer, multipieceRateShopResponseRatesInner.Surcharges, jsonSerializerOptions);
             }
+            if (multipieceRateShopResponseRatesInner.PublishedTotalCarrierChargeOption.IsSet)
+                writer.WriteNumber("publishedTotalCarrierCharge", multipieceRateShopResponseRatesInner.PublishedTotalCarrierChargeOption.Value!.Value);
         }
     }
 }

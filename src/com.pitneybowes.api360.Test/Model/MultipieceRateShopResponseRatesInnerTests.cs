@@ -124,5 +124,14 @@ namespace com.pitneybowes.api360.Test.Model
         {
             // TODO unit test for the property 'Surcharges'
         }
+
+        /// <summary>
+        /// Test the property 'PublishedTotalCarrierCharge'
+        /// </summary>
+        [Fact]
+        public void PublishedTotalCarrierChargeTest()
+        {
+            // TODO unit test for the property 'PublishedTotalCarrierCharge'
+        }
     }
 }

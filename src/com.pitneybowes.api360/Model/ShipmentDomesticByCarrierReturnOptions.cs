@@ -36,7 +36,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="type">Specifies the return type. This is the value of special service code for the carrier-supported return service.</param>
         /// <param name="inputParameters">List of input parameters required for return processing.</param>
         [JsonConstructor]
-        public ShipmentDomesticByCarrierReturnOptions(string type, List<MilitaryMailShipmentsRequestV2ReturnOptionsInputParametersInner> inputParameters)
+        public ShipmentDomesticByCarrierReturnOptions(string type, List<ShipmentDomesticByCarrierReturnOptionsInputParametersInner> inputParameters)
         {
             Type = type;
             InputParameters = inputParameters;
@@ -58,7 +58,7 @@ namespace com.pitneybowes.api360.Model
         /// </summary>
         /// <value>List of input parameters required for return processing.</value>
         [JsonPropertyName("inputParameters")]
-        public List<MilitaryMailShipmentsRequestV2ReturnOptionsInputParametersInner> InputParameters { get; set; }
+        public List<ShipmentDomesticByCarrierReturnOptionsInputParametersInner> InputParameters { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -108,7 +108,7 @@ namespace com.pitneybowes.api360.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<string?> type = default;
-            Option<List<MilitaryMailShipmentsRequestV2ReturnOptionsInputParametersInner>?> inputParameters = default;
+            Option<List<ShipmentDomesticByCarrierReturnOptionsInputParametersInner>?> inputParameters = default;
 
             while (utf8JsonReader.Read())
             {
@@ -129,7 +129,7 @@ namespace com.pitneybowes.api360.Model
                             type = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "inputParameters":
-                            inputParameters = new Option<List<MilitaryMailShipmentsRequestV2ReturnOptionsInputParametersInner>?>(JsonSerializer.Deserialize<List<MilitaryMailShipmentsRequestV2ReturnOptionsInputParametersInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            inputParameters = new Option<List<ShipmentDomesticByCarrierReturnOptionsInputParametersInner>?>(JsonSerializer.Deserialize<List<ShipmentDomesticByCarrierReturnOptionsInputParametersInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;

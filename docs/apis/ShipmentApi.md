@@ -149,7 +149,7 @@ This API generates a single coversheet for a parcel, with support for Electronic
 
 Create Shipment
 
-The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.<br>  **Domestic Shipments** <br>    - Both the `toAddress` and `fromAddress` addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The `toAddress` must be in a different country than the `fromAddress`.   - Requires international carrier services, special services, and customs information.<br>  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports three RateShop types: <br>  **1. By Carrier:**<br>    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**<br>    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: <br>   - Shipments weighing up to 3kg use a \"Standard\" service type with carrier A.   - Shipments exceeding 3kg use an \"Over-weight\" service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**<br>    - Use predefined rate groups to select a carrier and service dynamically.For example:<br>   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.    **Notes**<br>    - The `rateShopBy` field determines the variant to use (`carrier`, `ruleset`, or `rategroup`).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** `carrierAccountId`, `carrier`, and `service`     - **byRuleSet:** `ruleType` and `shipOption`     - **byRateGroup:** `ruleType` and `rateGroupId`    - Define special services in one of two ways - by using a `specialServiceId` or by specifying  special service objects such as `deliveryConfirmation`, `handling`, `insurance`, or `returnOptions`. These two cannot be used together in the same request. 
+> **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. <br/> To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). <br/> To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.<br>  **Domestic Shipments** <br>    - Both the `toAddress` and `fromAddress` addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The `toAddress` must be in a different country than the `fromAddress`.   - Requires international carrier services, special services, and customs information.<br>  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports three RateShop types: <br>  **1. By Carrier:**<br>    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**<br>    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: <br>   - Shipments weighing up to 3kg use a \"Standard\" service type with carrier A.   - Shipments exceeding 3kg use an \"Over-weight\" service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**<br>    - Use predefined rate groups to select a carrier and service dynamically.For example:<br>   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.    **Notes**<br>    - The `rateShopBy` field determines the variant to use (`carrier`, `ruleset`, or `rategroup`).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** `carrierAccountId`, `carrier`, and `service`     - **byRuleSet:** `ruleType` and `shipOption`     - **byRateGroup:** `ruleType` and `rateGroupId`    - Define special services in one of two ways - by using a `specialServiceId` or by specifying  special service objects such as `deliveryConfirmation`, `handling`, `insurance`, or `returnOptions`. These two cannot be used together in the same request. 
 
 
 ### Parameters
@@ -353,7 +353,7 @@ The operation fetches all supported carriers. This service is used to get list o
 
 <a id="getcountries"></a>
 # **GetCountries**
-> List&lt;CountriesInner&gt; GetCountries (string xPBDeveloperPartnerId = null, string carrier = null, string originCountryCode = null)
+> Countries GetCountries (string xPBDeveloperPartnerId = null, string carrier = null, string originCountryCode = null)
 
 Get Countries
 
@@ -370,7 +370,7 @@ The operation fetches list of supported destination countries for a provided car
 
 ### Return type
 
-[**List&lt;CountriesInner&gt;**](CountriesInner.md)
+[**Countries**](Countries.md)
 
 ### Authorization
 
@@ -394,7 +394,7 @@ The operation fetches list of supported destination countries for a provided car
 
 <a id="getparceltypes"></a>
 # **GetParcelTypes**
-> List&lt;ParcelTypesInner&gt; GetParcelTypes (string xPBDeveloperPartnerId = null, string carrier = null, string originCountryCode = null, string destinationCountryCode = null)
+> ParcelTypes GetParcelTypes (string xPBDeveloperPartnerId = null, string carrier = null, string originCountryCode = null, string destinationCountryCode = null)
 
 Get Parcel Types
 
@@ -412,7 +412,7 @@ The operation fetches Parcel Types based on the provided carrier, origin county,
 
 ### Return type
 
-[**List&lt;ParcelTypesInner&gt;**](ParcelTypesInner.md)
+[**ParcelTypes**](ParcelTypes.md)
 
 ### Authorization
 
@@ -436,7 +436,7 @@ The operation fetches Parcel Types based on the provided carrier, origin county,
 
 <a id="getservices"></a>
 # **GetServices**
-> List&lt;ServicesInner&gt; GetServices (string xPBDeveloperPartnerId = null, string carrier = null, string originCountryCode = null, string destinationCountryCode = null)
+> Services GetServices (string xPBDeveloperPartnerId = null, string carrier = null, string originCountryCode = null, string destinationCountryCode = null)
 
 Get Services
 
@@ -454,7 +454,7 @@ The operation fetches a list of supported services for a carrier with respect to
 
 ### Return type
 
-[**List&lt;ServicesInner&gt;**](ServicesInner.md)
+[**Services**](Services.md)
 
 ### Authorization
 
