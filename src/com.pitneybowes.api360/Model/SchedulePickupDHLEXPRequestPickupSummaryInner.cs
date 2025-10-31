@@ -38,15 +38,17 @@ namespace com.pitneybowes.api360.Model
         /// <param name="totalWeight">The total weight of all packages to be picked up, measured in units supported by the carrier in the origin country. The value is a decimal with up to 2 decimal places.</param>
         /// <param name="weightUnit">The unit of measurement for the total package weight.</param>
         /// <param name="currencyCode">The currency code (e.g., &#39;USD&#39;) for the cost of the pickup service, if applicable.</param>
+        /// <param name="totalCustomsDeclaredValue">Total customs declared value</param>
         /// <param name="packageDetails">Details of each package being picked up, including package dimensions and weight.</param>
         [JsonConstructor]
-        public SchedulePickupDHLEXPRequestPickupSummaryInner(Option<string?> serviceId = default, Option<decimal?> packageCount = default, Option<decimal?> totalWeight = default, Option<string?> weightUnit = default, Option<string?> currencyCode = default, Option<List<SchedulePickupDHLEXPRequestPickupSummaryInnerPackageDetailsInner>?> packageDetails = default)
+        public SchedulePickupDHLEXPRequestPickupSummaryInner(Option<string?> serviceId = default, Option<decimal?> packageCount = default, Option<decimal?> totalWeight = default, Option<string?> weightUnit = default, Option<string?> currencyCode = default, Option<decimal?> totalCustomsDeclaredValue = default, Option<List<SchedulePickupDHLEXPRequestPickupSummaryInnerPackageDetailsInner>?> packageDetails = default)
         {
             ServiceIdOption = serviceId;
             PackageCountOption = packageCount;
             TotalWeightOption = totalWeight;
             WeightUnitOption = weightUnit;
             CurrencyCodeOption = currencyCode;
+            TotalCustomsDeclaredValueOption = totalCustomsDeclaredValue;
             PackageDetailsOption = packageDetails;
             OnCreated();
         }
@@ -129,6 +131,20 @@ namespace com.pitneybowes.api360.Model
         public string? CurrencyCode { get { return this.CurrencyCodeOption; } set { this.CurrencyCodeOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of TotalCustomsDeclaredValue
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> TotalCustomsDeclaredValueOption { get; private set; }
+
+        /// <summary>
+        /// Total customs declared value
+        /// </summary>
+        /// <value>Total customs declared value</value>
+        [JsonPropertyName("totalCustomsDeclaredValue")]
+        public decimal? TotalCustomsDeclaredValue { get { return this.TotalCustomsDeclaredValueOption; } set { this.TotalCustomsDeclaredValueOption = new(value); } }
+
+        /// <summary>
         /// Used to track the state of PackageDetails
         /// </summary>
         [JsonIgnore]
@@ -155,6 +171,7 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  TotalWeight: ").Append(TotalWeight).Append("\n");
             sb.Append("  WeightUnit: ").Append(WeightUnit).Append("\n");
             sb.Append("  CurrencyCode: ").Append(CurrencyCode).Append("\n");
+            sb.Append("  TotalCustomsDeclaredValue: ").Append(TotalCustomsDeclaredValue).Append("\n");
             sb.Append("  PackageDetails: ").Append(PackageDetails).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -198,6 +215,7 @@ namespace com.pitneybowes.api360.Model
             Option<decimal?> totalWeight = default;
             Option<string?> weightUnit = default;
             Option<string?> currencyCode = default;
+            Option<decimal?> totalCustomsDeclaredValue = default;
             Option<List<SchedulePickupDHLEXPRequestPickupSummaryInnerPackageDetailsInner>?> packageDetails = default;
 
             while (utf8JsonReader.Read())
@@ -230,6 +248,9 @@ namespace com.pitneybowes.api360.Model
                         case "currencyCode":
                             currencyCode = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
+                        case "totalCustomsDeclaredValue":
+                            totalCustomsDeclaredValue = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
                         case "packageDetails":
                             packageDetails = new Option<List<SchedulePickupDHLEXPRequestPickupSummaryInnerPackageDetailsInner>?>(JsonSerializer.Deserialize<List<SchedulePickupDHLEXPRequestPickupSummaryInnerPackageDetailsInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
@@ -254,10 +275,13 @@ namespace com.pitneybowes.api360.Model
             if (currencyCode.IsSet && currencyCode.Value == null)
                 throw new ArgumentNullException(nameof(currencyCode), "Property is not nullable for class SchedulePickupDHLEXPRequestPickupSummaryInner.");
 
+            if (totalCustomsDeclaredValue.IsSet && totalCustomsDeclaredValue.Value == null)
+                throw new ArgumentNullException(nameof(totalCustomsDeclaredValue), "Property is not nullable for class SchedulePickupDHLEXPRequestPickupSummaryInner.");
+
             if (packageDetails.IsSet && packageDetails.Value == null)
                 throw new ArgumentNullException(nameof(packageDetails), "Property is not nullable for class SchedulePickupDHLEXPRequestPickupSummaryInner.");
 
-            return new SchedulePickupDHLEXPRequestPickupSummaryInner(serviceId, packageCount, totalWeight, weightUnit, currencyCode, packageDetails);
+            return new SchedulePickupDHLEXPRequestPickupSummaryInner(serviceId, packageCount, totalWeight, weightUnit, currencyCode, totalCustomsDeclaredValue, packageDetails);
         }
 
         /// <summary>
@@ -310,6 +334,9 @@ namespace com.pitneybowes.api360.Model
 
             if (schedulePickupDHLEXPRequestPickupSummaryInner.CurrencyCodeOption.IsSet)
                 writer.WriteString("currencyCode", schedulePickupDHLEXPRequestPickupSummaryInner.CurrencyCode);
+
+            if (schedulePickupDHLEXPRequestPickupSummaryInner.TotalCustomsDeclaredValueOption.IsSet)
+                writer.WriteNumber("totalCustomsDeclaredValue", schedulePickupDHLEXPRequestPickupSummaryInner.TotalCustomsDeclaredValueOption.Value!.Value);
 
             if (schedulePickupDHLEXPRequestPickupSummaryInner.PackageDetailsOption.IsSet)
             {

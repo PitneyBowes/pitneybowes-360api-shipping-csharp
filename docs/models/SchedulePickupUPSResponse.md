@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **PickupDateTime** | **string** | The date and time of the pickup. | [optional] 
 **PickupTotalWeight** | **decimal** | The total weight of all packages being picked up. | [optional] 
 **PickupTotalWeightUnit** | **string** | The unit of measurement for the total package weight. | [optional] 
-**PickupOptions** | [**SchedulePickupDHLEXPRequestPickupOptions**](SchedulePickupDHLEXPRequestPickupOptions.md) |  | [optional] 
+**PickupOptions** | [**SchedulePickupUSPSRequestPickupOptions**](SchedulePickupUSPSRequestPickupOptions.md) |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

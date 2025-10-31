@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **RecipientEORI** | **string** | Recipient&#39;s EORI number. ORI is a unique identification number used for customs clearance in the European Union. This Number can be 14 characters long in Alphanumeric format. **Required for RMG B2B shipments**. | [optional] 
 **SenderUKIMSNumber** | **string** | UKIMS (UK Internal Market Scheme) is an authorization that allows businesses to move goods between Great Britain (GB) and Northern Ireland (NI) without paying EU (European) duty. UKIMS Number can be 32 characters long in Alphanumeric format. Required if the package value value is over £135. | [optional] 
 **ExportLicenceRequired** | **bool** | Specifies whether the shipment includes goods that require an official export license. - applies to both RMG B2B and B2C shipments - Required as part of customs compliance under the Windsor Agreement  | [optional] 
+**DeclarationId** | **string** | Required for CPC shipments originating in Canada and destined for the US when X_ACCESS_KEY was not provided during CPC carrier onboarding; if X_ACCESS_KEY is configured, omit this field. Each declarationId is unique to a single shipment. | [optional] 
 **ShipperID** | **string** | The unique identifier of the known shipper associated with this shipment. | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)

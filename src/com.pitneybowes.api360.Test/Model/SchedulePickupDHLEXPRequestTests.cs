@@ -81,6 +81,15 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'PickupOptions'
+        /// </summary>
+        [Fact]
+        public void PickupOptionsTest()
+        {
+            // TODO unit test for the property 'PickupOptions'
+        }
+
+        /// <summary>
         /// Test the property 'PickupSummary'
         /// </summary>
         [Fact]
@@ -108,12 +117,12 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'PickupOptions'
+        /// Test the property 'ShipmentIds'
         /// </summary>
         [Fact]
-        public void PickupOptionsTest()
+        public void ShipmentIdsTest()
         {
-            // TODO unit test for the property 'PickupOptions'
+            // TODO unit test for the property 'ShipmentIds'
         }
     }
 }

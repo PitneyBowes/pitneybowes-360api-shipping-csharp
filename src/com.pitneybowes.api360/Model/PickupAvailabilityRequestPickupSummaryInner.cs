@@ -36,20 +36,14 @@ namespace com.pitneybowes.api360.Model
         /// <param name="toAddressCountryCode">Destination country code of the shipment</param>
         /// <param name="serviceId">Identifier of the shipping service requested (e.g., GND).</param>
         /// <param name="parcelType">Type of parcel (e.g., PKG, LTR)</param>
-        /// <param name="totalWeight">Total weight of all packages for pickup</param>
-        /// <param name="weightUnit">Unit of measurement for weight</param>
         /// <param name="packageDetails">packageDetails</param>
-        /// <param name="specialServices"> List of special services requested for the pickup.</param>
         [JsonConstructor]
-        public PickupAvailabilityRequestPickupSummaryInner(Option<string?> toAddressCountryCode = default, Option<string?> serviceId = default, Option<string?> parcelType = default, Option<decimal?> totalWeight = default, Option<string?> weightUnit = default, Option<List<PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner>?> packageDetails = default, Option<List<PickupAvailabilityRequestPickupSummaryInnerSpecialServicesInner>?> specialServices = default)
+        public PickupAvailabilityRequestPickupSummaryInner(Option<string?> toAddressCountryCode = default, Option<string?> serviceId = default, Option<string?> parcelType = default, Option<List<PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner>?> packageDetails = default)
         {
             ToAddressCountryCodeOption = toAddressCountryCode;
             ServiceIdOption = serviceId;
             ParcelTypeOption = parcelType;
-            TotalWeightOption = totalWeight;
-            WeightUnitOption = weightUnit;
             PackageDetailsOption = packageDetails;
-            SpecialServicesOption = specialServices;
             OnCreated();
         }
 
@@ -81,7 +75,7 @@ namespace com.pitneybowes.api360.Model
         /// Identifier of the shipping service requested (e.g., GND).
         /// </summary>
         /// <value>Identifier of the shipping service requested (e.g., GND).</value>
-        /* <example>GND</example> */
+        /* <example>2DA</example> */
         [JsonPropertyName("serviceId")]
         public string? ServiceId { get { return this.ServiceIdOption; } set { this.ServiceIdOption = new(value); } }
 
@@ -101,36 +95,6 @@ namespace com.pitneybowes.api360.Model
         public string? ParcelType { get { return this.ParcelTypeOption; } set { this.ParcelTypeOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of TotalWeight
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<decimal?> TotalWeightOption { get; private set; }
-
-        /// <summary>
-        /// Total weight of all packages for pickup
-        /// </summary>
-        /// <value>Total weight of all packages for pickup</value>
-        /* <example>100</example> */
-        [JsonPropertyName("totalWeight")]
-        public decimal? TotalWeight { get { return this.TotalWeightOption; } set { this.TotalWeightOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of WeightUnit
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> WeightUnitOption { get; private set; }
-
-        /// <summary>
-        /// Unit of measurement for weight
-        /// </summary>
-        /// <value>Unit of measurement for weight</value>
-        /* <example>OZ</example> */
-        [JsonPropertyName("weightUnit")]
-        public string? WeightUnit { get { return this.WeightUnitOption; } set { this.WeightUnitOption = new(value); } }
-
-        /// <summary>
         /// Used to track the state of PackageDetails
         /// </summary>
         [JsonIgnore]
@@ -144,20 +108,6 @@ namespace com.pitneybowes.api360.Model
         public List<PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner>? PackageDetails { get { return this.PackageDetailsOption; } set { this.PackageDetailsOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of SpecialServices
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<PickupAvailabilityRequestPickupSummaryInnerSpecialServicesInner>?> SpecialServicesOption { get; private set; }
-
-        /// <summary>
-        ///  List of special services requested for the pickup.
-        /// </summary>
-        /// <value> List of special services requested for the pickup.</value>
-        [JsonPropertyName("specialServices")]
-        public List<PickupAvailabilityRequestPickupSummaryInnerSpecialServicesInner>? SpecialServices { get { return this.SpecialServicesOption; } set { this.SpecialServicesOption = new(value); } }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -168,10 +118,7 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  ToAddressCountryCode: ").Append(ToAddressCountryCode).Append("\n");
             sb.Append("  ServiceId: ").Append(ServiceId).Append("\n");
             sb.Append("  ParcelType: ").Append(ParcelType).Append("\n");
-            sb.Append("  TotalWeight: ").Append(TotalWeight).Append("\n");
-            sb.Append("  WeightUnit: ").Append(WeightUnit).Append("\n");
             sb.Append("  PackageDetails: ").Append(PackageDetails).Append("\n");
-            sb.Append("  SpecialServices: ").Append(SpecialServices).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -212,10 +159,7 @@ namespace com.pitneybowes.api360.Model
             Option<string?> toAddressCountryCode = default;
             Option<string?> serviceId = default;
             Option<string?> parcelType = default;
-            Option<decimal?> totalWeight = default;
-            Option<string?> weightUnit = default;
             Option<List<PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner>?> packageDetails = default;
-            Option<List<PickupAvailabilityRequestPickupSummaryInnerSpecialServicesInner>?> specialServices = default;
 
             while (utf8JsonReader.Read())
             {
@@ -241,17 +185,8 @@ namespace com.pitneybowes.api360.Model
                         case "parcelType":
                             parcelType = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
-                        case "totalWeight":
-                            totalWeight = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
-                            break;
-                        case "weightUnit":
-                            weightUnit = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
                         case "packageDetails":
                             packageDetails = new Option<List<PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner>?>(JsonSerializer.Deserialize<List<PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
-                            break;
-                        case "specialServices":
-                            specialServices = new Option<List<PickupAvailabilityRequestPickupSummaryInnerSpecialServicesInner>?>(JsonSerializer.Deserialize<List<PickupAvailabilityRequestPickupSummaryInnerSpecialServicesInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
@@ -268,19 +203,10 @@ namespace com.pitneybowes.api360.Model
             if (parcelType.IsSet && parcelType.Value == null)
                 throw new ArgumentNullException(nameof(parcelType), "Property is not nullable for class PickupAvailabilityRequestPickupSummaryInner.");
 
-            if (totalWeight.IsSet && totalWeight.Value == null)
-                throw new ArgumentNullException(nameof(totalWeight), "Property is not nullable for class PickupAvailabilityRequestPickupSummaryInner.");
-
-            if (weightUnit.IsSet && weightUnit.Value == null)
-                throw new ArgumentNullException(nameof(weightUnit), "Property is not nullable for class PickupAvailabilityRequestPickupSummaryInner.");
-
             if (packageDetails.IsSet && packageDetails.Value == null)
                 throw new ArgumentNullException(nameof(packageDetails), "Property is not nullable for class PickupAvailabilityRequestPickupSummaryInner.");
 
-            if (specialServices.IsSet && specialServices.Value == null)
-                throw new ArgumentNullException(nameof(specialServices), "Property is not nullable for class PickupAvailabilityRequestPickupSummaryInner.");
-
-            return new PickupAvailabilityRequestPickupSummaryInner(toAddressCountryCode, serviceId, parcelType, totalWeight, weightUnit, packageDetails, specialServices);
+            return new PickupAvailabilityRequestPickupSummaryInner(toAddressCountryCode, serviceId, parcelType, packageDetails);
         }
 
         /// <summary>
@@ -316,14 +242,8 @@ namespace com.pitneybowes.api360.Model
             if (pickupAvailabilityRequestPickupSummaryInner.ParcelTypeOption.IsSet && pickupAvailabilityRequestPickupSummaryInner.ParcelType == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupSummaryInner.ParcelType), "Property is required for class PickupAvailabilityRequestPickupSummaryInner.");
 
-            if (pickupAvailabilityRequestPickupSummaryInner.WeightUnitOption.IsSet && pickupAvailabilityRequestPickupSummaryInner.WeightUnit == null)
-                throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupSummaryInner.WeightUnit), "Property is required for class PickupAvailabilityRequestPickupSummaryInner.");
-
             if (pickupAvailabilityRequestPickupSummaryInner.PackageDetailsOption.IsSet && pickupAvailabilityRequestPickupSummaryInner.PackageDetails == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupSummaryInner.PackageDetails), "Property is required for class PickupAvailabilityRequestPickupSummaryInner.");
-
-            if (pickupAvailabilityRequestPickupSummaryInner.SpecialServicesOption.IsSet && pickupAvailabilityRequestPickupSummaryInner.SpecialServices == null)
-                throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupSummaryInner.SpecialServices), "Property is required for class PickupAvailabilityRequestPickupSummaryInner.");
 
             if (pickupAvailabilityRequestPickupSummaryInner.ToAddressCountryCodeOption.IsSet)
                 writer.WriteString("toAddressCountryCode", pickupAvailabilityRequestPickupSummaryInner.ToAddressCountryCode);
@@ -334,21 +254,10 @@ namespace com.pitneybowes.api360.Model
             if (pickupAvailabilityRequestPickupSummaryInner.ParcelTypeOption.IsSet)
                 writer.WriteString("parcelType", pickupAvailabilityRequestPickupSummaryInner.ParcelType);
 
-            if (pickupAvailabilityRequestPickupSummaryInner.TotalWeightOption.IsSet)
-                writer.WriteNumber("totalWeight", pickupAvailabilityRequestPickupSummaryInner.TotalWeightOption.Value!.Value);
-
-            if (pickupAvailabilityRequestPickupSummaryInner.WeightUnitOption.IsSet)
-                writer.WriteString("weightUnit", pickupAvailabilityRequestPickupSummaryInner.WeightUnit);
-
             if (pickupAvailabilityRequestPickupSummaryInner.PackageDetailsOption.IsSet)
             {
                 writer.WritePropertyName("packageDetails");
                 JsonSerializer.Serialize(writer, pickupAvailabilityRequestPickupSummaryInner.PackageDetails, jsonSerializerOptions);
-            }
-            if (pickupAvailabilityRequestPickupSummaryInner.SpecialServicesOption.IsSet)
-            {
-                writer.WritePropertyName("specialServices");
-                JsonSerializer.Serialize(writer, pickupAvailabilityRequestPickupSummaryInner.SpecialServices, jsonSerializerOptions);
             }
         }
     }

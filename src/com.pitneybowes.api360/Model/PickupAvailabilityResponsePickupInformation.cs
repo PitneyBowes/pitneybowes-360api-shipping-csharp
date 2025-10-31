@@ -26,25 +26,19 @@ using com.pitneybowes.api360.Client;
 namespace com.pitneybowes.api360.Model
 {
     /// <summary>
-    /// Detailed pickup availability information.
+    /// Detailed pickup availability options as returned by the requested carrier.
     /// </summary>
     public partial class PickupAvailabilityResponsePickupInformation : IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PickupAvailabilityResponsePickupInformation" /> class.
         /// </summary>
-        /// <param name="residentialAvailable">Is residential pickup supported</param>
-        /// <param name="onDemandAvailable">Is on-demand pickup supported</param>
-        /// <param name="scheduledAvailable">Is scheduled pickup supported</param>
-        /// <param name="cutoffTime">Latest cutoff time for pickup requests</param>
+        /// <param name="cutoffTime">Latest cutoff time for submitting pickup requests (HH:MM:SS).</param>
         /// <param name="startCloseTimeOptions">startCloseTimeOptions</param>
-        /// <param name="timeRangeOptions">timeRangeOptions</param>
+        /// <param name="timeRangeOptions">Container for default/available time ranges; may be empty depending on carrier.</param>
         [JsonConstructor]
-        public PickupAvailabilityResponsePickupInformation(Option<bool?> residentialAvailable = default, Option<bool?> onDemandAvailable = default, Option<bool?> scheduledAvailable = default, Option<string?> cutoffTime = default, Option<PickupAvailabilityResponsePickupInformationStartCloseTimeOptions?> startCloseTimeOptions = default, Option<PickupAvailabilityResponsePickupInformationTimeRangeOptions?> timeRangeOptions = default)
+        public PickupAvailabilityResponsePickupInformation(Option<string?> cutoffTime = default, Option<PickupAvailabilityResponsePickupInformationStartCloseTimeOptions?> startCloseTimeOptions = default, Option<Object?> timeRangeOptions = default)
         {
-            ResidentialAvailableOption = residentialAvailable;
-            OnDemandAvailableOption = onDemandAvailable;
-            ScheduledAvailableOption = scheduledAvailable;
             CutoffTimeOption = cutoffTime;
             StartCloseTimeOptionsOption = startCloseTimeOptions;
             TimeRangeOptionsOption = timeRangeOptions;
@@ -54,51 +48,6 @@ namespace com.pitneybowes.api360.Model
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of ResidentialAvailable
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<bool?> ResidentialAvailableOption { get; private set; }
-
-        /// <summary>
-        /// Is residential pickup supported
-        /// </summary>
-        /// <value>Is residential pickup supported</value>
-        /* <example>true</example> */
-        [JsonPropertyName("residentialAvailable")]
-        public bool? ResidentialAvailable { get { return this.ResidentialAvailableOption; } set { this.ResidentialAvailableOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of OnDemandAvailable
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<bool?> OnDemandAvailableOption { get; private set; }
-
-        /// <summary>
-        /// Is on-demand pickup supported
-        /// </summary>
-        /// <value>Is on-demand pickup supported</value>
-        /* <example>true</example> */
-        [JsonPropertyName("onDemandAvailable")]
-        public bool? OnDemandAvailable { get { return this.OnDemandAvailableOption; } set { this.OnDemandAvailableOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of ScheduledAvailable
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<bool?> ScheduledAvailableOption { get; private set; }
-
-        /// <summary>
-        /// Is scheduled pickup supported
-        /// </summary>
-        /// <value>Is scheduled pickup supported</value>
-        /* <example>true</example> */
-        [JsonPropertyName("scheduledAvailable")]
-        public bool? ScheduledAvailable { get { return this.ScheduledAvailableOption; } set { this.ScheduledAvailableOption = new(value); } }
-
-        /// <summary>
         /// Used to track the state of CutoffTime
         /// </summary>
         [JsonIgnore]
@@ -106,10 +55,10 @@ namespace com.pitneybowes.api360.Model
         public Option<string?> CutoffTimeOption { get; private set; }
 
         /// <summary>
-        /// Latest cutoff time for pickup requests
+        /// Latest cutoff time for submitting pickup requests (HH:MM:SS).
         /// </summary>
-        /// <value>Latest cutoff time for pickup requests</value>
-        /* <example>06:00:00</example> */
+        /// <value>Latest cutoff time for submitting pickup requests (HH:MM:SS).</value>
+        /* <example>13:00:00</example> */
         [JsonPropertyName("cutoffTime")]
         public string? CutoffTime { get { return this.CutoffTimeOption; } set { this.CutoffTimeOption = new(value); } }
 
@@ -131,13 +80,15 @@ namespace com.pitneybowes.api360.Model
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<PickupAvailabilityResponsePickupInformationTimeRangeOptions?> TimeRangeOptionsOption { get; private set; }
+        public Option<Object?> TimeRangeOptionsOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets TimeRangeOptions
+        /// Container for default/available time ranges; may be empty depending on carrier.
         /// </summary>
+        /// <value>Container for default/available time ranges; may be empty depending on carrier.</value>
+        /* <example>{}</example> */
         [JsonPropertyName("timeRangeOptions")]
-        public PickupAvailabilityResponsePickupInformationTimeRangeOptions? TimeRangeOptions { get { return this.TimeRangeOptionsOption; } set { this.TimeRangeOptionsOption = new(value); } }
+        public Object? TimeRangeOptions { get { return this.TimeRangeOptionsOption; } set { this.TimeRangeOptionsOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -147,9 +98,6 @@ namespace com.pitneybowes.api360.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class PickupAvailabilityResponsePickupInformation {\n");
-            sb.Append("  ResidentialAvailable: ").Append(ResidentialAvailable).Append("\n");
-            sb.Append("  OnDemandAvailable: ").Append(OnDemandAvailable).Append("\n");
-            sb.Append("  ScheduledAvailable: ").Append(ScheduledAvailable).Append("\n");
             sb.Append("  CutoffTime: ").Append(CutoffTime).Append("\n");
             sb.Append("  StartCloseTimeOptions: ").Append(StartCloseTimeOptions).Append("\n");
             sb.Append("  TimeRangeOptions: ").Append(TimeRangeOptions).Append("\n");
@@ -190,12 +138,9 @@ namespace com.pitneybowes.api360.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<bool?> residentialAvailable = default;
-            Option<bool?> onDemandAvailable = default;
-            Option<bool?> scheduledAvailable = default;
             Option<string?> cutoffTime = default;
             Option<PickupAvailabilityResponsePickupInformationStartCloseTimeOptions?> startCloseTimeOptions = default;
-            Option<PickupAvailabilityResponsePickupInformationTimeRangeOptions?> timeRangeOptions = default;
+            Option<Object?> timeRangeOptions = default;
 
             while (utf8JsonReader.Read())
             {
@@ -212,15 +157,6 @@ namespace com.pitneybowes.api360.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "residentialAvailable":
-                            residentialAvailable = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "onDemandAvailable":
-                            onDemandAvailable = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "scheduledAvailable":
-                            scheduledAvailable = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
                         case "cutoffTime":
                             cutoffTime = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -228,22 +164,13 @@ namespace com.pitneybowes.api360.Model
                             startCloseTimeOptions = new Option<PickupAvailabilityResponsePickupInformationStartCloseTimeOptions?>(JsonSerializer.Deserialize<PickupAvailabilityResponsePickupInformationStartCloseTimeOptions>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "timeRangeOptions":
-                            timeRangeOptions = new Option<PickupAvailabilityResponsePickupInformationTimeRangeOptions?>(JsonSerializer.Deserialize<PickupAvailabilityResponsePickupInformationTimeRangeOptions>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            timeRangeOptions = new Option<Object?>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
                     }
                 }
             }
-
-            if (residentialAvailable.IsSet && residentialAvailable.Value == null)
-                throw new ArgumentNullException(nameof(residentialAvailable), "Property is not nullable for class PickupAvailabilityResponsePickupInformation.");
-
-            if (onDemandAvailable.IsSet && onDemandAvailable.Value == null)
-                throw new ArgumentNullException(nameof(onDemandAvailable), "Property is not nullable for class PickupAvailabilityResponsePickupInformation.");
-
-            if (scheduledAvailable.IsSet && scheduledAvailable.Value == null)
-                throw new ArgumentNullException(nameof(scheduledAvailable), "Property is not nullable for class PickupAvailabilityResponsePickupInformation.");
 
             if (cutoffTime.IsSet && cutoffTime.Value == null)
                 throw new ArgumentNullException(nameof(cutoffTime), "Property is not nullable for class PickupAvailabilityResponsePickupInformation.");
@@ -254,7 +181,7 @@ namespace com.pitneybowes.api360.Model
             if (timeRangeOptions.IsSet && timeRangeOptions.Value == null)
                 throw new ArgumentNullException(nameof(timeRangeOptions), "Property is not nullable for class PickupAvailabilityResponsePickupInformation.");
 
-            return new PickupAvailabilityResponsePickupInformation(residentialAvailable, onDemandAvailable, scheduledAvailable, cutoffTime, startCloseTimeOptions, timeRangeOptions);
+            return new PickupAvailabilityResponsePickupInformation(cutoffTime, startCloseTimeOptions, timeRangeOptions);
         }
 
         /// <summary>
@@ -289,15 +216,6 @@ namespace com.pitneybowes.api360.Model
 
             if (pickupAvailabilityResponsePickupInformation.TimeRangeOptionsOption.IsSet && pickupAvailabilityResponsePickupInformation.TimeRangeOptions == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityResponsePickupInformation.TimeRangeOptions), "Property is required for class PickupAvailabilityResponsePickupInformation.");
-
-            if (pickupAvailabilityResponsePickupInformation.ResidentialAvailableOption.IsSet)
-                writer.WriteBoolean("residentialAvailable", pickupAvailabilityResponsePickupInformation.ResidentialAvailableOption.Value!.Value);
-
-            if (pickupAvailabilityResponsePickupInformation.OnDemandAvailableOption.IsSet)
-                writer.WriteBoolean("onDemandAvailable", pickupAvailabilityResponsePickupInformation.OnDemandAvailableOption.Value!.Value);
-
-            if (pickupAvailabilityResponsePickupInformation.ScheduledAvailableOption.IsSet)
-                writer.WriteBoolean("scheduledAvailable", pickupAvailabilityResponsePickupInformation.ScheduledAvailableOption.Value!.Value);
 
             if (pickupAvailabilityResponsePickupInformation.CutoffTimeOption.IsSet)
                 writer.WriteString("cutoffTime", pickupAvailabilityResponsePickupInformation.CutoffTime);

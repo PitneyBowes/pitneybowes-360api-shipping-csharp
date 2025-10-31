@@ -1,5 +1,5 @@
 # com.pitneybowes.api360.Model.MilitaryMailShipmentsRequestV2MetadataInner
-The data that provides information about other inter-related/ required data.<br /> Here, metadata details consists of CostAccount Name and Value.
+The data that provides information about other inter-related/ required data.
 
 ## Properties
 

@@ -193,7 +193,7 @@ namespace com.pitneybowes.api360.Model
         /// Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. 
         /// </summary>
         /// <value>Type of the additional address (e.g., BROKER). This is required if passing &#x60;additionalAddresses&#x60;.&lt;br/&gt; **Note:** The addressType &#x60;SHIPPER&#x60; is returned only in USPS responses. </value>
-        /* <example>BROKER</example> */
+        /* <example>EXPORTER</example> */
         [JsonPropertyName("addressType")]
         public AddressTypeEnum? AddressType { get { return this.AddressTypeOption; } set { this.AddressTypeOption = new(value); } }
 

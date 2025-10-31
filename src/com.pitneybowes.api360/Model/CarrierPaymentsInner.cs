@@ -200,20 +200,20 @@ namespace com.pitneybowes.api360.Model
 
             if (carrierPaymentsInner.FedExCarrierPaymentOption.IsSet && carrierPaymentsInner.FedExCarrierPaymentOption.Value != null)
             {
-                FedExCarrierPaymentJsonConverter FedExCarrierPaymentJsonConverter = (FedExCarrierPaymentJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(carrierPaymentsInner.FedExCarrierPaymentOption.Value.GetType()));
-                FedExCarrierPaymentJsonConverter.WriteProperties(writer, carrierPaymentsInner.FedExCarrierPaymentOption.Value, jsonSerializerOptions);
+                FedExCarrierPaymentJsonConverter fedExCarrierPaymentJsonConverter = (FedExCarrierPaymentJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(carrierPaymentsInner.FedExCarrierPaymentOption.Value.GetType()));
+                fedExCarrierPaymentJsonConverter.WriteProperties(writer, carrierPaymentsInner.FedExCarrierPaymentOption.Value, jsonSerializerOptions);
             }
 
             if (carrierPaymentsInner.UPSCarrierPaymentOption.IsSet && carrierPaymentsInner.UPSCarrierPaymentOption.Value != null)
             {
-                UPSCarrierPaymentJsonConverter UPSCarrierPaymentJsonConverter = (UPSCarrierPaymentJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(carrierPaymentsInner.UPSCarrierPaymentOption.Value.GetType()));
-                UPSCarrierPaymentJsonConverter.WriteProperties(writer, carrierPaymentsInner.UPSCarrierPaymentOption.Value, jsonSerializerOptions);
+                UPSCarrierPaymentJsonConverter uPSCarrierPaymentJsonConverter = (UPSCarrierPaymentJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(carrierPaymentsInner.UPSCarrierPaymentOption.Value.GetType()));
+                uPSCarrierPaymentJsonConverter.WriteProperties(writer, carrierPaymentsInner.UPSCarrierPaymentOption.Value, jsonSerializerOptions);
             }
 
             if (carrierPaymentsInner.DHLExpressCarrierPaymentOption.IsSet && carrierPaymentsInner.DHLExpressCarrierPaymentOption.Value != null)
             {
-                DHLExpressCarrierPaymentJsonConverter DHLExpressCarrierPaymentJsonConverter = (DHLExpressCarrierPaymentJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(carrierPaymentsInner.DHLExpressCarrierPaymentOption.Value.GetType()));
-                DHLExpressCarrierPaymentJsonConverter.WriteProperties(writer, carrierPaymentsInner.DHLExpressCarrierPaymentOption.Value, jsonSerializerOptions);
+                DHLExpressCarrierPaymentJsonConverter dHLExpressCarrierPaymentJsonConverter = (DHLExpressCarrierPaymentJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(carrierPaymentsInner.DHLExpressCarrierPaymentOption.Value.GetType()));
+                dHLExpressCarrierPaymentJsonConverter.WriteProperties(writer, carrierPaymentsInner.DHLExpressCarrierPaymentOption.Value, jsonSerializerOptions);
             }
 
             WriteProperties(writer, carrierPaymentsInner, jsonSerializerOptions);

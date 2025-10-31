@@ -607,11 +607,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<CreateDefaultsApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<CreateDefaultsApiResponse>();
+                        CreateDefaultsApiResponse apiResponseLocalVar;
 
-                        CreateDefaultsApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/defaults", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/defaults", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterCreateDefaultsDefaultImplementation(apiResponseLocalVar, createDefaults);
 
@@ -654,6 +660,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public CreateDefaultsApiResponse(ILogger<CreateDefaultsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="CreateDefaultsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CreateDefaultsApiResponse(ILogger<CreateDefaultsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -952,11 +974,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<DeleteDefaultsByIdApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<DeleteDefaultsByIdApiResponse>();
+                        DeleteDefaultsByIdApiResponse apiResponseLocalVar;
 
-                        DeleteDefaultsByIdApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/defaults/{defaultID}", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/defaults/{defaultID}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterDeleteDefaultsByIdDefaultImplementation(apiResponseLocalVar, defaultID);
 
@@ -999,6 +1027,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public DeleteDefaultsByIdApiResponse(ILogger<DeleteDefaultsByIdApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="DeleteDefaultsByIdApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public DeleteDefaultsByIdApiResponse(ILogger<DeleteDefaultsByIdApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1297,11 +1341,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetAllDefaultsApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetAllDefaultsApiResponse>();
+                        GetAllDefaultsApiResponse apiResponseLocalVar;
 
-                        GetAllDefaultsApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/defaults", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/defaults", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetAllDefaultsDefaultImplementation(apiResponseLocalVar, xPBDeveloperPartnerID, page, size);
 
@@ -1344,6 +1394,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetAllDefaultsApiResponse(ILogger<GetAllDefaultsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetAllDefaultsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetAllDefaultsApiResponse(ILogger<GetAllDefaultsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1642,11 +1708,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetDefaultsByIdApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetDefaultsByIdApiResponse>();
+                        GetDefaultsByIdApiResponse apiResponseLocalVar;
 
-                        GetDefaultsByIdApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/defaults/{defaultID}", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/defaults/{defaultID}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetDefaultsByIdDefaultImplementation(apiResponseLocalVar, defaultID);
 
@@ -1689,6 +1761,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetDefaultsByIdApiResponse(ILogger<GetDefaultsByIdApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetDefaultsByIdApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetDefaultsByIdApiResponse(ILogger<GetDefaultsByIdApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2010,11 +2098,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<PutDefaultsByIdApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<PutDefaultsByIdApiResponse>();
+                        PutDefaultsByIdApiResponse apiResponseLocalVar;
 
-                        PutDefaultsByIdApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/defaults/{defaultID}", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/defaults/{defaultID}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterPutDefaultsByIdDefaultImplementation(apiResponseLocalVar, defaultID, createDefaults);
 
@@ -2057,6 +2151,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public PutDefaultsByIdApiResponse(ILogger<PutDefaultsByIdApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="PutDefaultsByIdApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public PutDefaultsByIdApiResponse(ILogger<PutDefaultsByIdApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);

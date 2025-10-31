@@ -344,7 +344,7 @@ namespace com.pitneybowes.api360.Model
         /// Defines the delivery and payment terms between the shipper and recipient. Currenty supported by carriers - UPS, FedEx and DHL. - Common values include:   - CIP: Carriage and Insurance Paid to   - CPT: Carriage Paid To   - DAP: Delivered at Place   - DAT: Delivered at Terminal   - DDP: Delivered Duty Paid   - EXW: Ex Works   - FCA: Free Carrier 
         /// </summary>
         /// <value>Defines the delivery and payment terms between the shipper and recipient. Currenty supported by carriers - UPS, FedEx and DHL. - Common values include:   - CIP: Carriage and Insurance Paid to   - CPT: Carriage Paid To   - DAP: Delivered at Place   - DAT: Delivered at Terminal   - DDP: Delivered Duty Paid   - EXW: Ex Works   - FCA: Free Carrier </value>
-        /* <example>DDU</example> */
+        /* <example>DDP</example> */
         [JsonPropertyName("termsOfSale")]
         public TermsOfSaleEnum? TermsOfSale { get { return this.TermsOfSaleOption; } set { this.TermsOfSaleOption = new(value); } }
 

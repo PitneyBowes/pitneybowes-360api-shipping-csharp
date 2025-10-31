@@ -78,6 +78,19 @@ namespace com.pitneybowes.api360.Test.Api
         }
 
         /// <summary>
+        /// Test CheckPickupAvailability
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task CheckPickupAvailabilityAsyncTest()
+        {
+            string acceptLanguage = default!;
+            PickupAvailabilityRequest pickupAvailabilityRequest = default!;
+            var response = await _instance.CheckPickupAvailabilityAsync(acceptLanguage, pickupAvailabilityRequest);
+            var model = response.Ok();
+            Assert.IsType<PickupAvailabilityResponse>(model);
+        }
+
+        /// <summary>
         /// Test GetPickupDocument
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -96,12 +109,12 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task GetPickupsAsyncTest()
         {
-            string carrier = default!;
-            string startDate = default!;
-            string endDate = default!;
-            string status = default!;
             Client.Option<string> xPBDeveloperPartnerId = default!;
-            var response = await _instance.GetPickupsAsync(carrier, startDate, endDate, status, xPBDeveloperPartnerId);
+            Client.Option<string> carrier = default!;
+            Client.Option<string> startDate = default!;
+            Client.Option<string> endDate = default!;
+            Client.Option<string> status = default!;
+            var response = await _instance.GetPickupsAsync(xPBDeveloperPartnerId, carrier, startDate, endDate, status);
             var model = response.Ok();
             Assert.IsType<GetAllPickups>(model);
         }

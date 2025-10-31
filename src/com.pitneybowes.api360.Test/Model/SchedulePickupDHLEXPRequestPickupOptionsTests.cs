@@ -79,5 +79,14 @@ namespace com.pitneybowes.api360.Test.Model
         {
             // TODO unit test for the property 'Overweight'
         }
+
+        /// <summary>
+        /// Test the property 'CarrierType'
+        /// </summary>
+        [Fact]
+        public void CarrierTypeTest()
+        {
+            // TODO unit test for the property 'CarrierType'
+        }
     }
 }

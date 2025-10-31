@@ -63,6 +63,16 @@ namespace com.pitneybowes.api360.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateShipmentV2Request" /> class.
         /// </summary>
+        /// <param name="shipmentDomesticByCustomCarrierCode"></param>
+        public CreateShipmentV2Request(ShipmentDomesticByCustomCarrierCode shipmentDomesticByCustomCarrierCode)
+        {
+            ShipmentDomesticByCustomCarrierCode = shipmentDomesticByCustomCarrierCode;
+            OnCreated();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateShipmentV2Request" /> class.
+        /// </summary>
         /// <param name="shipmentInternationalByCarrier"></param>
         public CreateShipmentV2Request(ShipmentInternationalByCarrier shipmentInternationalByCarrier)
         {
@@ -83,9 +93,9 @@ namespace com.pitneybowes.api360.Model
         partial void OnCreated();
 
         /// <summary>
-        /// RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.
+        /// RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup. &lt;br/&gt; Through customCarrierCode, customers can create a shipment using a single code (Custom Carrier Code) that represents a specific combination of carrier, carrier account, parcel type, service, and special services.
         /// </summary>
-        /// <value>RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</value>
+        /// <value>RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup. &lt;br/&gt; Through customCarrierCode, customers can create a shipment using a single code (Custom Carrier Code) that represents a specific combination of carrier, carrier account, parcel type, service, and special services.</value>
         public enum RateShopByEnum
         {
             /// <summary>
@@ -99,9 +109,14 @@ namespace com.pitneybowes.api360.Model
             RateGroup = 2,
 
             /// <summary>
-            /// Enum Ruleset for value: ruleset
+            /// Enum RuleSet for value: ruleSet
             /// </summary>
-            Ruleset = 3
+            RuleSet = 3,
+
+            /// <summary>
+            /// Enum CustomCarrierCode for value: customCarrierCode
+            /// </summary>
+            CustomCarrierCode = 4
         }
 
         /// <summary>
@@ -118,8 +133,11 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("rateGroup"))
                 return RateShopByEnum.RateGroup;
 
-            if (value.Equals("ruleset"))
-                return RateShopByEnum.Ruleset;
+            if (value.Equals("ruleSet"))
+                return RateShopByEnum.RuleSet;
+
+            if (value.Equals("customCarrierCode"))
+                return RateShopByEnum.CustomCarrierCode;
 
             throw new NotImplementedException($"Could not convert value to type RateShopByEnum: '{value}'");
         }
@@ -137,8 +155,11 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("rateGroup"))
                 return RateShopByEnum.RateGroup;
 
-            if (value.Equals("ruleset"))
-                return RateShopByEnum.Ruleset;
+            if (value.Equals("ruleSet"))
+                return RateShopByEnum.RuleSet;
+
+            if (value.Equals("customCarrierCode"))
+                return RateShopByEnum.CustomCarrierCode;
 
             return null;
         }
@@ -157,8 +178,11 @@ namespace com.pitneybowes.api360.Model
             if (value == RateShopByEnum.RateGroup)
                 return "rateGroup";
 
-            if (value == RateShopByEnum.Ruleset)
-                return "ruleset";
+            if (value == RateShopByEnum.RuleSet)
+                return "ruleSet";
+
+            if (value == RateShopByEnum.CustomCarrierCode)
+                return "customCarrierCode";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -177,6 +201,11 @@ namespace com.pitneybowes.api360.Model
         /// Gets or Sets ShipmentDomesticByRuleset
         /// </summary>
         public ShipmentDomesticByRuleset? ShipmentDomesticByRuleset { get; set; }
+
+        /// <summary>
+        /// Gets or Sets ShipmentDomesticByCustomCarrierCode
+        /// </summary>
+        public ShipmentDomesticByCustomCarrierCode? ShipmentDomesticByCustomCarrierCode { get; set; }
 
         /// <summary>
         /// Gets or Sets ShipmentInternationalByCarrier
@@ -247,6 +276,7 @@ namespace com.pitneybowes.api360.Model
 
             MilitaryMailShipmentsRequestV2? militaryMailShipmentsRequestV2 = null;
             ShipmentDomesticByCarrier? shipmentDomesticByCarrier = null;
+            ShipmentDomesticByCustomCarrierCode? shipmentDomesticByCustomCarrierCode = null;
             ShipmentDomesticByRateGroup? shipmentDomesticByRateGroup = null;
             ShipmentDomesticByRuleset? shipmentDomesticByRuleset = null;
             ShipmentInternationalByCarrier? shipmentInternationalByCarrier = null;
@@ -276,6 +306,11 @@ namespace com.pitneybowes.api360.Model
                         {
                             Utf8JsonReader utf8JsonReaderShipmentDomesticByCarrier = utf8JsonReader;
                             shipmentDomesticByCarrier = JsonSerializer.Deserialize<ShipmentDomesticByCarrier>(ref utf8JsonReaderShipmentDomesticByCarrier, jsonSerializerOptions);
+                        }
+                        if (discriminator?.Equals("shipmentDomesticByCustomCarrierCode") ?? false)
+                        {
+                            Utf8JsonReader utf8JsonReaderShipmentDomesticByCustomCarrierCode = utf8JsonReader;
+                            shipmentDomesticByCustomCarrierCode = JsonSerializer.Deserialize<ShipmentDomesticByCustomCarrierCode>(ref utf8JsonReaderShipmentDomesticByCustomCarrierCode, jsonSerializerOptions);
                         }
                         if (discriminator?.Equals("shipmentDomesticByRateGroup") ?? false)
                         {
@@ -334,6 +369,9 @@ namespace com.pitneybowes.api360.Model
             if (shipmentDomesticByCarrier != null)
                 return new CreateShipmentV2Request(shipmentDomesticByCarrier);
 
+            if (shipmentDomesticByCustomCarrierCode != null)
+                return new CreateShipmentV2Request(shipmentDomesticByCustomCarrierCode);
+
             if (shipmentDomesticByRateGroup != null)
                 return new CreateShipmentV2Request(shipmentDomesticByRateGroup);
 
@@ -373,6 +411,12 @@ namespace com.pitneybowes.api360.Model
             {
                 ShipmentDomesticByRulesetJsonConverter shipmentDomesticByRulesetJsonConverter = (ShipmentDomesticByRulesetJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(createShipmentV2Request.ShipmentDomesticByRuleset.GetType()));
                 shipmentDomesticByRulesetJsonConverter.WriteProperties(writer, createShipmentV2Request.ShipmentDomesticByRuleset, jsonSerializerOptions);
+            }
+
+            if (createShipmentV2Request.ShipmentDomesticByCustomCarrierCode != null)
+            {
+                ShipmentDomesticByCustomCarrierCodeJsonConverter shipmentDomesticByCustomCarrierCodeJsonConverter = (ShipmentDomesticByCustomCarrierCodeJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(createShipmentV2Request.ShipmentDomesticByCustomCarrierCode.GetType()));
+                shipmentDomesticByCustomCarrierCodeJsonConverter.WriteProperties(writer, createShipmentV2Request.ShipmentDomesticByCustomCarrierCode, jsonSerializerOptions);
             }
 
             if (createShipmentV2Request.ShipmentInternationalByCarrier != null)

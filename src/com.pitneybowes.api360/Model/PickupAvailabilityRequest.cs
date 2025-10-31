@@ -39,13 +39,13 @@ namespace com.pitneybowes.api360.Model
         /// <param name="pickupDateTime">Requested pickup date and time in ISO 8601 format.</param>
         /// <param name="pickupOptions">pickupOptions</param>
         [JsonConstructor]
-        public PickupAvailabilityRequest(string carrierAccountId, PickupAvailabilityRequestPickupAddress pickupAddress, List<PickupAvailabilityRequestPickupSummaryInner> pickupSummary, DateTime pickupDateTime, Option<PickupAvailabilityRequestPickupOptions?> pickupOptions = default)
+        public PickupAvailabilityRequest(string carrierAccountId, PickupAvailabilityRequestPickupAddress pickupAddress, List<PickupAvailabilityRequestPickupSummaryInner> pickupSummary, DateTime pickupDateTime, PickupAvailabilityRequestPickupOptions pickupOptions)
         {
             CarrierAccountId = carrierAccountId;
             PickupAddress = pickupAddress;
             PickupSummary = pickupSummary;
             PickupDateTime = pickupDateTime;
-            PickupOptionsOption = pickupOptions;
+            PickupOptions = pickupOptions;
             OnCreated();
         }
 
@@ -81,17 +81,10 @@ namespace com.pitneybowes.api360.Model
         public DateTime PickupDateTime { get; set; }
 
         /// <summary>
-        /// Used to track the state of PickupOptions
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<PickupAvailabilityRequestPickupOptions?> PickupOptionsOption { get; private set; }
-
-        /// <summary>
         /// Gets or Sets PickupOptions
         /// </summary>
         [JsonPropertyName("pickupOptions")]
-        public PickupAvailabilityRequestPickupOptions? PickupOptions { get { return this.PickupOptionsOption; } set { this.PickupOptionsOption = new(value); } }
+        public PickupAvailabilityRequestPickupOptions PickupOptions { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -202,6 +195,9 @@ namespace com.pitneybowes.api360.Model
             if (!pickupDateTime.IsSet)
                 throw new ArgumentException("Property is required for class PickupAvailabilityRequest.", nameof(pickupDateTime));
 
+            if (!pickupOptions.IsSet)
+                throw new ArgumentException("Property is required for class PickupAvailabilityRequest.", nameof(pickupOptions));
+
             if (carrierAccountId.IsSet && carrierAccountId.Value == null)
                 throw new ArgumentNullException(nameof(carrierAccountId), "Property is not nullable for class PickupAvailabilityRequest.");
 
@@ -217,7 +213,7 @@ namespace com.pitneybowes.api360.Model
             if (pickupOptions.IsSet && pickupOptions.Value == null)
                 throw new ArgumentNullException(nameof(pickupOptions), "Property is not nullable for class PickupAvailabilityRequest.");
 
-            return new PickupAvailabilityRequest(carrierAccountId.Value!, pickupAddress.Value!, pickupSummary.Value!, pickupDateTime.Value!.Value!, pickupOptions);
+            return new PickupAvailabilityRequest(carrierAccountId.Value!, pickupAddress.Value!, pickupSummary.Value!, pickupDateTime.Value!.Value!, pickupOptions.Value!);
         }
 
         /// <summary>
@@ -253,7 +249,7 @@ namespace com.pitneybowes.api360.Model
             if (pickupAvailabilityRequest.PickupSummary == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequest.PickupSummary), "Property is required for class PickupAvailabilityRequest.");
 
-            if (pickupAvailabilityRequest.PickupOptionsOption.IsSet && pickupAvailabilityRequest.PickupOptions == null)
+            if (pickupAvailabilityRequest.PickupOptions == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequest.PickupOptions), "Property is required for class PickupAvailabilityRequest.");
 
             writer.WriteString("carrierAccountId", pickupAvailabilityRequest.CarrierAccountId);
@@ -264,11 +260,8 @@ namespace com.pitneybowes.api360.Model
             JsonSerializer.Serialize(writer, pickupAvailabilityRequest.PickupSummary, jsonSerializerOptions);
             writer.WriteString("pickupDateTime", pickupAvailabilityRequest.PickupDateTime.ToString(PickupDateTimeFormat));
 
-            if (pickupAvailabilityRequest.PickupOptionsOption.IsSet)
-            {
-                writer.WritePropertyName("pickupOptions");
-                JsonSerializer.Serialize(writer, pickupAvailabilityRequest.PickupOptions, jsonSerializerOptions);
-            }
+            writer.WritePropertyName("pickupOptions");
+            JsonSerializer.Serialize(writer, pickupAvailabilityRequest.PickupOptions, jsonSerializerOptions);
         }
     }
 }

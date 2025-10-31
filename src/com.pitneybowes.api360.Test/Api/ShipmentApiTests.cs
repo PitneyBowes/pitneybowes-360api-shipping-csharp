@@ -114,7 +114,7 @@ namespace com.pitneybowes.api360.Test.Api
             Client.Option<string> xPBTransactionId = Guid.NewGuid().ToString();
             Client.Option<string> xPBDefaultID = "";
             Client.Option<string> includeDeliveryCommitment = "No";
-            var response = await _instance.CreateShipmentV2Async(isReturn, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment);
+            var response = await _instance.CreateShipmentV2Async(createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
             var model = response.Ok();
             Assert.IsType<CreateShipmentV2200Response>(model);
         }
@@ -167,7 +167,7 @@ namespace com.pitneybowes.api360.Test.Api
             Client.Option<string> xPBTransactionId = Guid.NewGuid().ToString();
             Client.Option<string> xPBDefaultID = "";
             Client.Option<string> includeDeliveryCommitment = "No";
-            var response = await _instance.CreateShipmentV2Async(isReturn, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment);
+            var response = await _instance.CreateShipmentV2Async(createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
             var model = response.Ok();
             Assert.IsType<CreateShipmentV2200Response>(model);
         }
@@ -236,7 +236,7 @@ namespace com.pitneybowes.api360.Test.Api
             Client.Option<string> xPBTransactionId = Guid.NewGuid().ToString();
             Client.Option<string> xPBDefaultID = "";
             Client.Option<string> includeDeliveryCommitment = "No";
-            var response = await _instance.CreateShipmentV2Async(isReturn, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment);
+            var response = await _instance.CreateShipmentV2Async(createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
             var model = response.Ok();
             Assert.IsType<CreateShipmentV2200Response>(model);
         }
@@ -246,10 +246,10 @@ namespace com.pitneybowes.api360.Test.Api
         public async Task CreateShipmentV2EdexCarrierPaymentAsyncTest()
         {
             bool isReturn = false;
-            Client.Option<ByCarrierV2> byCarrier = new ByCarrierV2("86V9MGxGa7z0ROz", "Fedex", "3DA");
+            Client.Option<ByCarrierV2> byCarrier = new ByCarrierV2("97wroboxVgbzK4N", "Fedex", "2DA");
             ShipmentDomesticByCarrier shipReqByCarrier = new ShipmentDomesticByCarrier(
                 new FromAddressV2("Name", "24182 Kathy Ave", "203-555-1213", "Lake Forest", "CA", "92630-1827", "US"),
-                new ToAddressV2("Paul Wright", "55 Pharr Rd NW, Apt E104", "Atlanta", "GA", "30305-2151", "US", "203-555-1213"), "PKG",
+                new ToAddressV2("Paul Wright", "55 Pharr Rd NW, Apt E104", "Atlanta", "GA", "30305-2151", "US", "203-555-1213"), "LTR",
                 ShipmentDomesticByCarrier.RateShopByEnum.Carrier, ShipmentDomesticByCarrier.LabelSizeEnum.DOC4X6,
                 ShipmentDomesticByCarrier.LabelTypeEnum.SHIPPINGLABEL, ShipmentDomesticByCarrier.LabelFormatEnum.PDF);
             shipReqByCarrier.ByCarrier = byCarrier;
@@ -260,12 +260,13 @@ namespace com.pitneybowes.api360.Test.Api
             Client.Option<FedExCarrierPayment> fedexPayment = new FedExCarrierPayment("602684342", "US", "14609", FedExCarrierPayment.PartyEnum.BILLTHIRDPARTY, FedExCarrierPayment.TypeOfChargeEnum.TRANSPORTATIONCHARGES);
             shipReqByCarrier.CarrierPayments = new List<CarrierPaymentsInner> {new CarrierPaymentsInner(fedexPayment, null, null)};
             CreateShipmentV2Request createShipmentV2Request = new CreateShipmentV2Request(shipReqByCarrier);
+            shipReqByCarrier.RateTypeId = "ONE_RATE";
             Client.Option<string> xPBDeveloperPartnerId = "";
             Client.Option<string> xPBLocationId = "";
             Client.Option<string> xPBTransactionId = Guid.NewGuid().ToString();
             Client.Option<string> xPBDefaultID = "";
             Client.Option<string> includeDeliveryCommitment = "No";
-            var response = await _instance.CreateShipmentV2Async(isReturn, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment);
+            var response = await _instance.CreateShipmentV2Async(createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
             var model = response.Ok();
             Assert.IsType<CreateShipmentV2200Response>(model);
         }
@@ -342,7 +343,7 @@ namespace com.pitneybowes.api360.Test.Api
         /// <summary>
         /// Test GetParcelTypes
         /// </summary>
-        [Fact]
+        [Fact (Skip = "not implemented")]
         public async Task GetParcelTypesAsyncTest()
         {
             Client.Option<string> xPBDeveloperPartnerId = default!;
@@ -429,6 +430,17 @@ namespace com.pitneybowes.api360.Test.Api
             var response = await _instance.ReprintShipmentByIdV2Async(shipmentReprintV2, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId);
             var model = response.Ok();
             Assert.IsType<ReprintShipmentV2>(model);
+        }
+
+        /// <summary>
+        /// Test SetSubscriptionCapabilities
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task SetSubscriptionCapabilitiesAsyncTest()
+        {
+            string carrier = default!;
+            SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest = default!;
+            await _instance.SetSubscriptionCapabilitiesAsync(carrier, subscriptionCapabilitiesRequest);
         }
 
         /// <summary>

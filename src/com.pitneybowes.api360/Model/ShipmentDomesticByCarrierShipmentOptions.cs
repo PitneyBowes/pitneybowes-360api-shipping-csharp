@@ -41,9 +41,10 @@ namespace com.pitneybowes.api360.Model
         /// <param name="recipientEORI">Recipient&#39;s EORI number. ORI is a unique identification number used for customs clearance in the European Union. This Number can be 14 characters long in Alphanumeric format. **Required for RMG B2B shipments**.</param>
         /// <param name="senderUKIMSNumber">UKIMS (UK Internal Market Scheme) is an authorization that allows businesses to move goods between Great Britain (GB) and Northern Ireland (NI) without paying EU (European) duty. UKIMS Number can be 32 characters long in Alphanumeric format. Required if the package value value is over £135.</param>
         /// <param name="exportLicenceRequired">Specifies whether the shipment includes goods that require an official export license. - applies to both RMG B2B and B2C shipments - Required as part of customs compliance under the Windsor Agreement </param>
+        /// <param name="declarationId">Required for CPC shipments originating in Canada and destined for the US when X_ACCESS_KEY was not provided during CPC carrier onboarding; if X_ACCESS_KEY is configured, omit this field. Each declarationId is unique to a single shipment.</param>
         /// <param name="shipperID">The unique identifier of the known shipper associated with this shipment.</param>
         [JsonConstructor]
-        public ShipmentDomesticByCarrierShipmentOptions(Option<bool?> addToManifest = default, Option<bool?> minimalAddressValidation = default, Option<string?> bookingConfirmationNumber = default, Option<bool?> b2b = default, Option<string?> senderEORI = default, Option<string?> recipientEORI = default, Option<string?> senderUKIMSNumber = default, Option<bool?> exportLicenceRequired = default, Option<string?> shipperID = default)
+        public ShipmentDomesticByCarrierShipmentOptions(Option<bool?> addToManifest = default, Option<bool?> minimalAddressValidation = default, Option<string?> bookingConfirmationNumber = default, Option<bool?> b2b = default, Option<string?> senderEORI = default, Option<string?> recipientEORI = default, Option<string?> senderUKIMSNumber = default, Option<bool?> exportLicenceRequired = default, Option<string?> declarationId = default, Option<string?> shipperID = default)
         {
             AddToManifestOption = addToManifest;
             MinimalAddressValidationOption = minimalAddressValidation;
@@ -53,6 +54,7 @@ namespace com.pitneybowes.api360.Model
             RecipientEORIOption = recipientEORI;
             SenderUKIMSNumberOption = senderUKIMSNumber;
             ExportLicenceRequiredOption = exportLicenceRequired;
+            DeclarationIdOption = declarationId;
             ShipperIDOption = shipperID;
             OnCreated();
         }
@@ -180,6 +182,21 @@ namespace com.pitneybowes.api360.Model
         public bool? ExportLicenceRequired { get { return this.ExportLicenceRequiredOption; } set { this.ExportLicenceRequiredOption = new(value); } }
 
         /// <summary>
+        /// Used to track the state of DeclarationId
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string?> DeclarationIdOption { get; private set; }
+
+        /// <summary>
+        /// Required for CPC shipments originating in Canada and destined for the US when X_ACCESS_KEY was not provided during CPC carrier onboarding; if X_ACCESS_KEY is configured, omit this field. Each declarationId is unique to a single shipment.
+        /// </summary>
+        /// <value>Required for CPC shipments originating in Canada and destined for the US when X_ACCESS_KEY was not provided during CPC carrier onboarding; if X_ACCESS_KEY is configured, omit this field. Each declarationId is unique to a single shipment.</value>
+        /* <example>USA1006189</example> */
+        [JsonPropertyName("declarationId")]
+        public string? DeclarationId { get { return this.DeclarationIdOption; } set { this.DeclarationIdOption = new(value); } }
+
+        /// <summary>
         /// Used to track the state of ShipperID
         /// </summary>
         [JsonIgnore]
@@ -210,6 +227,7 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  RecipientEORI: ").Append(RecipientEORI).Append("\n");
             sb.Append("  SenderUKIMSNumber: ").Append(SenderUKIMSNumber).Append("\n");
             sb.Append("  ExportLicenceRequired: ").Append(ExportLicenceRequired).Append("\n");
+            sb.Append("  DeclarationId: ").Append(DeclarationId).Append("\n");
             sb.Append("  ShipperID: ").Append(ShipperID).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -256,6 +274,7 @@ namespace com.pitneybowes.api360.Model
             Option<string?> recipientEORI = default;
             Option<string?> senderUKIMSNumber = default;
             Option<bool?> exportLicenceRequired = default;
+            Option<string?> declarationId = default;
             Option<string?> shipperID = default;
 
             while (utf8JsonReader.Read())
@@ -297,6 +316,9 @@ namespace com.pitneybowes.api360.Model
                         case "exportLicenceRequired":
                             exportLicenceRequired = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
+                        case "declarationId":
+                            declarationId = new Option<string?>(utf8JsonReader.GetString()!);
+                            break;
                         case "shipperID":
                             shipperID = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
@@ -330,10 +352,13 @@ namespace com.pitneybowes.api360.Model
             if (exportLicenceRequired.IsSet && exportLicenceRequired.Value == null)
                 throw new ArgumentNullException(nameof(exportLicenceRequired), "Property is not nullable for class ShipmentDomesticByCarrierShipmentOptions.");
 
+            if (declarationId.IsSet && declarationId.Value == null)
+                throw new ArgumentNullException(nameof(declarationId), "Property is not nullable for class ShipmentDomesticByCarrierShipmentOptions.");
+
             if (shipperID.IsSet && shipperID.Value == null)
                 throw new ArgumentNullException(nameof(shipperID), "Property is not nullable for class ShipmentDomesticByCarrierShipmentOptions.");
 
-            return new ShipmentDomesticByCarrierShipmentOptions(addToManifest, minimalAddressValidation, bookingConfirmationNumber, b2b, senderEORI, recipientEORI, senderUKIMSNumber, exportLicenceRequired, shipperID);
+            return new ShipmentDomesticByCarrierShipmentOptions(addToManifest, minimalAddressValidation, bookingConfirmationNumber, b2b, senderEORI, recipientEORI, senderUKIMSNumber, exportLicenceRequired, declarationId, shipperID);
         }
 
         /// <summary>
@@ -372,6 +397,9 @@ namespace com.pitneybowes.api360.Model
             if (shipmentDomesticByCarrierShipmentOptions.SenderUKIMSNumberOption.IsSet && shipmentDomesticByCarrierShipmentOptions.SenderUKIMSNumber == null)
                 throw new ArgumentNullException(nameof(shipmentDomesticByCarrierShipmentOptions.SenderUKIMSNumber), "Property is required for class ShipmentDomesticByCarrierShipmentOptions.");
 
+            if (shipmentDomesticByCarrierShipmentOptions.DeclarationIdOption.IsSet && shipmentDomesticByCarrierShipmentOptions.DeclarationId == null)
+                throw new ArgumentNullException(nameof(shipmentDomesticByCarrierShipmentOptions.DeclarationId), "Property is required for class ShipmentDomesticByCarrierShipmentOptions.");
+
             if (shipmentDomesticByCarrierShipmentOptions.ShipperIDOption.IsSet && shipmentDomesticByCarrierShipmentOptions.ShipperID == null)
                 throw new ArgumentNullException(nameof(shipmentDomesticByCarrierShipmentOptions.ShipperID), "Property is required for class ShipmentDomesticByCarrierShipmentOptions.");
 
@@ -398,6 +426,9 @@ namespace com.pitneybowes.api360.Model
 
             if (shipmentDomesticByCarrierShipmentOptions.ExportLicenceRequiredOption.IsSet)
                 writer.WriteBoolean("exportLicenceRequired", shipmentDomesticByCarrierShipmentOptions.ExportLicenceRequiredOption.Value!.Value);
+
+            if (shipmentDomesticByCarrierShipmentOptions.DeclarationIdOption.IsSet)
+                writer.WriteString("declarationId", shipmentDomesticByCarrierShipmentOptions.DeclarationId);
 
             if (shipmentDomesticByCarrierShipmentOptions.ShipperIDOption.IsSet)
                 writer.WriteString("shipperID", shipmentDomesticByCarrierShipmentOptions.ShipperID);

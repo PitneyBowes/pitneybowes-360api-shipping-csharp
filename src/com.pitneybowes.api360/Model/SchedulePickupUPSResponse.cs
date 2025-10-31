@@ -47,7 +47,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="pickupTotalWeightUnit">The unit of measurement for the total package weight.</param>
         /// <param name="pickupOptions">pickupOptions</param>
         [JsonConstructor]
-        public SchedulePickupUPSResponse(Option<string?> packageLocation = default, Option<string?> pickupConfirmationNumber = default, Option<string?> pickupId = default, Option<string?> carrier = default, Option<string?> carrierAccountId = default, Option<SchedulePickupDHLEXPResponsePickupAddress?> pickupAddress = default, Option<List<SchedulePickupUPSResponsePickupSummaryInner>?> pickupSummary = default, Option<string?> additionalnotes = default, Option<string?> reference = default, Option<string?> pickupDateTime = default, Option<decimal?> pickupTotalWeight = default, Option<string?> pickupTotalWeightUnit = default, Option<SchedulePickupDHLEXPRequestPickupOptions?> pickupOptions = default)
+        public SchedulePickupUPSResponse(Option<string?> packageLocation = default, Option<string?> pickupConfirmationNumber = default, Option<string?> pickupId = default, Option<string?> carrier = default, Option<string?> carrierAccountId = default, Option<SchedulePickupDHLEXPResponsePickupAddress?> pickupAddress = default, Option<List<SchedulePickupUPSResponsePickupSummaryInner>?> pickupSummary = default, Option<string?> additionalnotes = default, Option<string?> reference = default, Option<string?> pickupDateTime = default, Option<decimal?> pickupTotalWeight = default, Option<string?> pickupTotalWeightUnit = default, Option<SchedulePickupUSPSRequestPickupOptions?> pickupOptions = default)
         {
             PackageLocationOption = packageLocation;
             PickupConfirmationNumberOption = pickupConfirmationNumber;
@@ -249,13 +249,13 @@ namespace com.pitneybowes.api360.Model
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<SchedulePickupDHLEXPRequestPickupOptions?> PickupOptionsOption { get; private set; }
+        public Option<SchedulePickupUSPSRequestPickupOptions?> PickupOptionsOption { get; private set; }
 
         /// <summary>
         /// Gets or Sets PickupOptions
         /// </summary>
         [JsonPropertyName("pickupOptions")]
-        public SchedulePickupDHLEXPRequestPickupOptions? PickupOptions { get { return this.PickupOptionsOption; } set { this.PickupOptionsOption = new(value); } }
+        public SchedulePickupUSPSRequestPickupOptions? PickupOptions { get { return this.PickupOptionsOption; } set { this.PickupOptionsOption = new(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -327,7 +327,7 @@ namespace com.pitneybowes.api360.Model
             Option<string?> pickupDateTime = default;
             Option<decimal?> pickupTotalWeight = default;
             Option<string?> pickupTotalWeightUnit = default;
-            Option<SchedulePickupDHLEXPRequestPickupOptions?> pickupOptions = default;
+            Option<SchedulePickupUSPSRequestPickupOptions?> pickupOptions = default;
 
             while (utf8JsonReader.Read())
             {
@@ -381,7 +381,7 @@ namespace com.pitneybowes.api360.Model
                             pickupTotalWeightUnit = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "pickupOptions":
-                            pickupOptions = new Option<SchedulePickupDHLEXPRequestPickupOptions?>(JsonSerializer.Deserialize<SchedulePickupDHLEXPRequestPickupOptions>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            pickupOptions = new Option<SchedulePickupUSPSRequestPickupOptions?>(JsonSerializer.Deserialize<SchedulePickupUSPSRequestPickupOptions>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;

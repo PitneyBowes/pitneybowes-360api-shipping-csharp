@@ -37,11 +37,11 @@ namespace com.pitneybowes.api360.Model
         /// <param name="carrierAccountId">The unique identifier of the carrier account being used to process the pickup.</param>
         /// <param name="pickupAddress">pickupAddress</param>
         /// <param name="pickupSummary">An array of the pickup details, including the number of packages, total weight, and carrier service information.</param>
-        /// <param name="pickupOptions">description</param>
+        /// <param name="pickupOptions">pickupOptions</param>
         /// <param name="additionalnotes">Additional instructions or notes for the carrier regarding the pickup. &lt;br /&gt; Value is required when packageLocation is set to other.</param>
         /// <param name="reference">An optional Reference related to the pickup.</param>
         [JsonConstructor]
-        public SchedulePickupFedexRequest(PackageLocationEnum packageLocation, string carrierAccountId, SchedulePickupUSPSRequestPickupAddress pickupAddress, List<SchedulePickupFedexRequestPickupSummaryInner> pickupSummary, List<SchedulePickupFedexRequestPickupOptionsInner> pickupOptions, Option<string?> additionalnotes = default, Option<string?> reference = default)
+        public SchedulePickupFedexRequest(PackageLocationEnum packageLocation, string carrierAccountId, SchedulePickupUSPSRequestPickupAddress pickupAddress, List<SchedulePickupFedexRequestPickupSummaryInner> pickupSummary, SchedulePickupFedexRequestPickupOptions pickupOptions, Option<string?> additionalnotes = default, Option<string?> reference = default)
         {
             PackageLocation = packageLocation;
             CarrierAccountId = carrierAccountId;
@@ -180,11 +180,10 @@ namespace com.pitneybowes.api360.Model
         public List<SchedulePickupFedexRequestPickupSummaryInner> PickupSummary { get; set; }
 
         /// <summary>
-        /// description
+        /// Gets or Sets PickupOptions
         /// </summary>
-        /// <value>description</value>
         [JsonPropertyName("pickupOptions")]
-        public List<SchedulePickupFedexRequestPickupOptionsInner> PickupOptions { get; set; }
+        public SchedulePickupFedexRequestPickupOptions PickupOptions { get; set; }
 
         /// <summary>
         /// Used to track the state of Additionalnotes
@@ -272,7 +271,7 @@ namespace com.pitneybowes.api360.Model
             Option<string?> carrierAccountId = default;
             Option<SchedulePickupUSPSRequestPickupAddress?> pickupAddress = default;
             Option<List<SchedulePickupFedexRequestPickupSummaryInner>?> pickupSummary = default;
-            Option<List<SchedulePickupFedexRequestPickupOptionsInner>?> pickupOptions = default;
+            Option<SchedulePickupFedexRequestPickupOptions?> pickupOptions = default;
             Option<string?> additionalnotes = default;
             Option<string?> reference = default;
 
@@ -306,7 +305,7 @@ namespace com.pitneybowes.api360.Model
                             pickupSummary = new Option<List<SchedulePickupFedexRequestPickupSummaryInner>?>(JsonSerializer.Deserialize<List<SchedulePickupFedexRequestPickupSummaryInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "pickupOptions":
-                            pickupOptions = new Option<List<SchedulePickupFedexRequestPickupOptionsInner>?>(JsonSerializer.Deserialize<List<SchedulePickupFedexRequestPickupOptionsInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            pickupOptions = new Option<SchedulePickupFedexRequestPickupOptions?>(JsonSerializer.Deserialize<SchedulePickupFedexRequestPickupOptions>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "additionalnotes":
                             additionalnotes = new Option<string?>(utf8JsonReader.GetString()!);

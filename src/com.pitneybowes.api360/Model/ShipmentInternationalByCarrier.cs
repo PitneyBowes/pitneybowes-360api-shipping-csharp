@@ -50,13 +50,13 @@ namespace com.pitneybowes.api360.Model
         /// <param name="carrierPayments">Defines how carrier charges are billed to a third party. Use this field to specify  account and charge type details for transportation and/or duties and taxes. This  field is optional and currently supported for FedEx, UPS, and DHL Express.  - If no &#x60;party&#x60; (who will pay for TRANSPORTATION_CHARGES or duties and taxes) is explicitly specified during shipment creation, the charges will automatically default to the sender (shipper). To direct charges to a different party, the appropriate bill-to details must be provided in the request. </param>
         /// <param name="specialServices">It provides a carrier based special or extra service, which also varies as per selected service and parcel type. User can override this value by defining it at shipment level.&lt;br/&gt;  &gt; Provide either the specialserviceId or the specialservice objects such as deliveryConfirmation, handling, insurance and returnOptions, but not both. </param>
         /// <param name="references">references</param>
-        /// <param name="metadata">Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; For now, &#39;Cost Account Name&#39; is supported.</param>
+        /// <param name="metadata">Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/), [Account Code](/openapi/billingcodes/operation/createAccountCode/) and [Company Code](/openapi/billingcodes/operation/createCompanyCode/)</param>
         /// <param name="contentType">Specifies how the label content is encoded.&lt;br/&gt; URL is supported for &#x60;PDF&#x60; and &#x60;GIF&#x60;. &lt;br/&gt; BASE64 is supported for &#x60;ZPL2&#x60;, &#x60;PNG&#x60;, and &#x60;GIF&#x60;. </param>
         /// <param name="printerAliasName">Refers to a printer connected (directly or via network) to a computer. &#x60;Max length &#x3D; 60&#x60;</param>
         /// <param name="dateOfShipment">The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD.</param>
         /// <param name="deliveryOption">deliveryOption</param>
         [JsonConstructor]
-        public ShipmentInternationalByCarrier(ShipmentInternationalByCarrierFromAddress fromAddress, ShipmentInternationalByCarrierToAddress toAddress, string parcelType, RateShopByEnum rateShopBy, ByCarrierV2 byCarrier, string labelSize, LabelTypeEnum labelType, LabelFormatEnum labelFormat, ShipmentInternationalByCarrierCustoms customs, Option<SoldToAddressV2?> soldToAddress = default, Option<List<AdditionalAddressesInner>?> additionalAddresses = default, Option<ShipmentInternationalAltReturnAddress?> altReturnAddress = default, Option<ParcelV2?> parcel = default, Option<ShipmentInternationalByCarrierShipmentOptions?> shipmentOptions = default, Option<List<CarrierPaymentsInner>?> carrierPayments = default, Option<List<SpecialService>?> specialServices = default, Option<ReferenceV2?> references = default, Option<List<MilitaryMailShipmentsRequestV2MetadataInner>?> metadata = default, Option<ContentTypeEnum?> contentType = default, Option<string?> printerAliasName = default, Option<DateOnly?> dateOfShipment = default, Option<ShipmentInternationalByCarrierDeliveryOption?> deliveryOption = default)
+        public ShipmentInternationalByCarrier(ShipmentInternationalByCarrierFromAddress fromAddress, ShipmentInternationalByCarrierToAddress toAddress, string parcelType, RateShopByEnum rateShopBy, ByCarrierV2 byCarrier, string labelSize, LabelTypeEnum labelType, LabelFormatEnum labelFormat, ShipmentInternationalByCarrierCustoms customs, Option<SoldToAddressV2?> soldToAddress = default, Option<List<AdditionalAddressesInner>?> additionalAddresses = default, Option<ShipmentInternationalAltReturnAddress?> altReturnAddress = default, Option<ParcelV2?> parcel = default, Option<ShipmentInternationalByCarrierShipmentOptions?> shipmentOptions = default, Option<List<CarrierPaymentsInner>?> carrierPayments = default, Option<List<SpecialService>?> specialServices = default, Option<ReferenceV2?> references = default, Option<List<ShipmentDomesticByCustomCarrierCodeMetadataInner>?> metadata = default, Option<ContentTypeEnum?> contentType = default, Option<string?> printerAliasName = default, Option<DateOnly?> dateOfShipment = default, Option<ShipmentInternationalByCarrierDeliveryOption?> deliveryOption = default)
         {
             FromAddress = fromAddress;
             ToAddress = toAddress;
@@ -102,9 +102,9 @@ namespace com.pitneybowes.api360.Model
             RateGroup = 2,
 
             /// <summary>
-            /// Enum Ruleset for value: ruleset
+            /// Enum RuleSet for value: ruleSet
             /// </summary>
-            Ruleset = 3
+            RuleSet = 3
         }
 
         /// <summary>
@@ -121,8 +121,8 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("rateGroup"))
                 return RateShopByEnum.RateGroup;
 
-            if (value.Equals("ruleset"))
-                return RateShopByEnum.Ruleset;
+            if (value.Equals("ruleSet"))
+                return RateShopByEnum.RuleSet;
 
             throw new NotImplementedException($"Could not convert value to type RateShopByEnum: '{value}'");
         }
@@ -140,8 +140,8 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("rateGroup"))
                 return RateShopByEnum.RateGroup;
 
-            if (value.Equals("ruleset"))
-                return RateShopByEnum.Ruleset;
+            if (value.Equals("ruleSet"))
+                return RateShopByEnum.RuleSet;
 
             return null;
         }
@@ -160,8 +160,8 @@ namespace com.pitneybowes.api360.Model
             if (value == RateShopByEnum.RateGroup)
                 return "rateGroup";
 
-            if (value == RateShopByEnum.Ruleset)
-                return "ruleset";
+            if (value == RateShopByEnum.RuleSet)
+                return "ruleSet";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -572,14 +572,14 @@ namespace com.pitneybowes.api360.Model
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<List<MilitaryMailShipmentsRequestV2MetadataInner>?> MetadataOption { get; private set; }
+        public Option<List<ShipmentDomesticByCustomCarrierCodeMetadataInner>?> MetadataOption { get; private set; }
 
         /// <summary>
-        /// Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; For now, &#39;Cost Account Name&#39; is supported.
+        /// Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/), [Account Code](/openapi/billingcodes/operation/createAccountCode/) and [Company Code](/openapi/billingcodes/operation/createCompanyCode/)
         /// </summary>
-        /// <value>Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; For now, &#39;Cost Account Name&#39; is supported.</value>
+        /// <value>Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/), [Account Code](/openapi/billingcodes/operation/createAccountCode/) and [Company Code](/openapi/billingcodes/operation/createCompanyCode/)</value>
         [JsonPropertyName("metadata")]
-        public List<MilitaryMailShipmentsRequestV2MetadataInner>? Metadata { get { return this.MetadataOption; } set { this.MetadataOption = new(value); } }
+        public List<ShipmentDomesticByCustomCarrierCodeMetadataInner>? Metadata { get { return this.MetadataOption; } set { this.MetadataOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of PrinterAliasName
@@ -713,7 +713,7 @@ namespace com.pitneybowes.api360.Model
             Option<List<CarrierPaymentsInner>?> carrierPayments = default;
             Option<List<SpecialService>?> specialServices = default;
             Option<ReferenceV2?> references = default;
-            Option<List<MilitaryMailShipmentsRequestV2MetadataInner>?> metadata = default;
+            Option<List<ShipmentDomesticByCustomCarrierCodeMetadataInner>?> metadata = default;
             Option<ShipmentInternationalByCarrier.ContentTypeEnum?> contentType = default;
             Option<string?> printerAliasName = default;
             Option<DateOnly?> dateOfShipment = default;
@@ -792,7 +792,7 @@ namespace com.pitneybowes.api360.Model
                             references = new Option<ReferenceV2?>(JsonSerializer.Deserialize<ReferenceV2>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "metadata":
-                            metadata = new Option<List<MilitaryMailShipmentsRequestV2MetadataInner>?>(JsonSerializer.Deserialize<List<MilitaryMailShipmentsRequestV2MetadataInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            metadata = new Option<List<ShipmentDomesticByCustomCarrierCodeMetadataInner>?>(JsonSerializer.Deserialize<List<ShipmentDomesticByCustomCarrierCodeMetadataInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "contentType":
                             string? contentTypeRawValue = utf8JsonReader.GetString();

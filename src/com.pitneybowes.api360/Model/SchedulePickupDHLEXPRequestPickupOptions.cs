@@ -36,16 +36,100 @@ namespace com.pitneybowes.api360.Model
         /// <param name="pickupStartDateTime">The start date and time for the pickup in ISO 8601 format. This indicates when the pickup window begins.</param>
         /// <param name="pickupEndDateTime">The end date and time for the pickup in ISO 8601 format. This indicates when the pickup window closes.</param>
         /// <param name="overweight">The number of overweight packages in the pickup. This represents the number of packages that exceed the carrier&#39;s weight limit.</param>
+        /// <param name="carrierType">The type of carrier used for the pickup.</param>
         [JsonConstructor]
-        public SchedulePickupDHLEXPRequestPickupOptions(Option<DateTime?> pickupStartDateTime = default, Option<DateTime?> pickupEndDateTime = default, Option<int?> overweight = default)
+        public SchedulePickupDHLEXPRequestPickupOptions(Option<DateTime?> pickupStartDateTime = default, Option<DateTime?> pickupEndDateTime = default, Option<int?> overweight = default, Option<CarrierTypeEnum?> carrierType = default)
         {
             PickupStartDateTimeOption = pickupStartDateTime;
             PickupEndDateTimeOption = pickupEndDateTime;
             OverweightOption = overweight;
+            CarrierTypeOption = carrierType;
             OnCreated();
         }
 
         partial void OnCreated();
+
+        /// <summary>
+        /// The type of carrier used for the pickup.
+        /// </summary>
+        /// <value>The type of carrier used for the pickup.</value>
+        public enum CarrierTypeEnum
+        {
+            /// <summary>
+            /// Enum EXPRESS for value: EXPRESS
+            /// </summary>
+            EXPRESS = 1,
+
+            /// <summary>
+            /// Enum GROUND for value: GROUND
+            /// </summary>
+            GROUND = 2
+        }
+
+        /// <summary>
+        /// Returns a <see cref="CarrierTypeEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static CarrierTypeEnum CarrierTypeEnumFromString(string value)
+        {
+            if (value.Equals("EXPRESS"))
+                return CarrierTypeEnum.EXPRESS;
+
+            if (value.Equals("GROUND"))
+                return CarrierTypeEnum.GROUND;
+
+            throw new NotImplementedException($"Could not convert value to type CarrierTypeEnum: '{value}'");
+        }
+
+        /// <summary>
+        /// Returns a <see cref="CarrierTypeEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static CarrierTypeEnum? CarrierTypeEnumFromStringOrDefault(string value)
+        {
+            if (value.Equals("EXPRESS"))
+                return CarrierTypeEnum.EXPRESS;
+
+            if (value.Equals("GROUND"))
+                return CarrierTypeEnum.GROUND;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="CarrierTypeEnum"/> to the json value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static string CarrierTypeEnumToJsonValue(CarrierTypeEnum? value)
+        {
+            if (value == CarrierTypeEnum.EXPRESS)
+                return "EXPRESS";
+
+            if (value == CarrierTypeEnum.GROUND)
+                return "GROUND";
+
+            throw new NotImplementedException($"Value could not be handled: '{value}'");
+        }
+
+        /// <summary>
+        /// Used to track the state of CarrierType
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<CarrierTypeEnum?> CarrierTypeOption { get; private set; }
+
+        /// <summary>
+        /// The type of carrier used for the pickup.
+        /// </summary>
+        /// <value>The type of carrier used for the pickup.</value>
+        /* <example>EXPRESS</example> */
+        [JsonPropertyName("carrierType")]
+        public CarrierTypeEnum? CarrierType { get { return this.CarrierTypeOption; } set { this.CarrierTypeOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of PickupStartDateTime
@@ -103,6 +187,7 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  PickupStartDateTime: ").Append(PickupStartDateTime).Append("\n");
             sb.Append("  PickupEndDateTime: ").Append(PickupEndDateTime).Append("\n");
             sb.Append("  Overweight: ").Append(Overweight).Append("\n");
+            sb.Append("  CarrierType: ").Append(CarrierType).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -153,6 +238,7 @@ namespace com.pitneybowes.api360.Model
             Option<DateTime?> pickupStartDateTime = default;
             Option<DateTime?> pickupEndDateTime = default;
             Option<int?> overweight = default;
+            Option<SchedulePickupDHLEXPRequestPickupOptions.CarrierTypeEnum?> carrierType = default;
 
             while (utf8JsonReader.Read())
             {
@@ -178,6 +264,11 @@ namespace com.pitneybowes.api360.Model
                         case "overweight":
                             overweight = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
+                        case "carrierType":
+                            string? carrierTypeRawValue = utf8JsonReader.GetString();
+                            if (carrierTypeRawValue != null)
+                                carrierType = new Option<SchedulePickupDHLEXPRequestPickupOptions.CarrierTypeEnum?>(SchedulePickupDHLEXPRequestPickupOptions.CarrierTypeEnumFromStringOrDefault(carrierTypeRawValue));
+                            break;
                         default:
                             break;
                     }
@@ -193,7 +284,10 @@ namespace com.pitneybowes.api360.Model
             if (overweight.IsSet && overweight.Value == null)
                 throw new ArgumentNullException(nameof(overweight), "Property is not nullable for class SchedulePickupDHLEXPRequestPickupOptions.");
 
-            return new SchedulePickupDHLEXPRequestPickupOptions(pickupStartDateTime, pickupEndDateTime, overweight);
+            if (carrierType.IsSet && carrierType.Value == null)
+                throw new ArgumentNullException(nameof(carrierType), "Property is not nullable for class SchedulePickupDHLEXPRequestPickupOptions.");
+
+            return new SchedulePickupDHLEXPRequestPickupOptions(pickupStartDateTime, pickupEndDateTime, overweight, carrierType);
         }
 
         /// <summary>
@@ -228,6 +322,9 @@ namespace com.pitneybowes.api360.Model
 
             if (schedulePickupDHLEXPRequestPickupOptions.OverweightOption.IsSet)
                 writer.WriteNumber("overweight", schedulePickupDHLEXPRequestPickupOptions.OverweightOption.Value!.Value);
+
+            var carrierTypeRawValue = SchedulePickupDHLEXPRequestPickupOptions.CarrierTypeEnumToJsonValue(schedulePickupDHLEXPRequestPickupOptions.CarrierTypeOption.Value!.Value);
+            writer.WriteString("carrierType", carrierTypeRawValue);
         }
     }
 }

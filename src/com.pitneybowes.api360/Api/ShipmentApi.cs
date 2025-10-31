@@ -116,36 +116,36 @@ namespace com.pitneybowes.api360.Api
         /// Create Shipment
         /// </summary>
         /// <remarks>
-        /// &gt; **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. &lt;br/&gt; To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). &lt;br/&gt; To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.&lt;br&gt;  **Domestic Shipments** &lt;br&gt;    - Both the &#x60;toAddress&#x60; and &#x60;fromAddress&#x60; addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The &#x60;toAddress&#x60; must be in a different country than the &#x60;fromAddress&#x60;.   - Requires international carrier services, special services, and customs information.&lt;br&gt;  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports three RateShop types: &lt;br&gt;  **1. By Carrier:**&lt;br&gt;    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**&lt;br&gt;    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: &lt;br&gt;   - Shipments weighing up to 3kg use a \&quot;Standard\&quot; service type with carrier A.   - Shipments exceeding 3kg use an \&quot;Over-weight\&quot; service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**&lt;br&gt;    - Use predefined rate groups to select a carrier and service dynamically.For example:&lt;br&gt;   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.    **Notes**&lt;br&gt;    - The &#x60;rateShopBy&#x60; field determines the variant to use (&#x60;carrier&#x60;, &#x60;ruleset&#x60;, or &#x60;rategroup&#x60;).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** &#x60;carrierAccountId&#x60;, &#x60;carrier&#x60;, and &#x60;service&#x60;     - **byRuleSet:** &#x60;ruleType&#x60; and &#x60;shipOption&#x60;     - **byRateGroup:** &#x60;ruleType&#x60; and &#x60;rateGroupId&#x60;    - Define special services in one of two ways - by using a &#x60;specialServiceId&#x60; or by specifying  special service objects such as &#x60;deliveryConfirmation&#x60;, &#x60;handling&#x60;, &#x60;insurance&#x60;, or &#x60;returnOptions&#x60;. These two cannot be used together in the same request. 
+        /// &gt; **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. &lt;br/&gt; To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). &lt;br/&gt; To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.&lt;br&gt;  **Domestic Shipments** &lt;br&gt;    - Both the &#x60;toAddress&#x60; and &#x60;fromAddress&#x60; addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The &#x60;toAddress&#x60; must be in a different country than the &#x60;fromAddress&#x60;.   - Requires international carrier services, special services, and customs information.&lt;br&gt;  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports four RateShop types: &lt;br&gt;  **1. By Carrier:**&lt;br&gt;    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**&lt;br&gt;    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: &lt;br&gt;   - Shipments weighing up to 3kg use a \&quot;Standard\&quot; service type with carrier A.   - Shipments exceeding 3kg use an \&quot;Over-weight\&quot; service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**&lt;br&gt;    - Use predefined rate groups to select a carrier and service dynamically.For example:&lt;br&gt;   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.  **4. By CustomCarrierCode**&lt;br&gt;    - Instead of passing multiple fields (carrier, carrier account, parcel type, service, and special services) every time in your request payload, you can:      - Generate a [Custom Carrier Code](/openapi/customcode/operation/createCustomCode/) once, with all those values defined.      - Use that single code in your create shipment requests.      - The carrier, account, service, parcel type, and special service values from that code will then automatically apply.    - If parcel type, service, or special services are also passed in the request payload, they will be overridden by the values defined in the Custom Carrier Code.    **Notes**&lt;br&gt;    - The &#x60;rateShopBy&#x60; field determines the variant to use (&#x60;carrier&#x60;, &#x60;ruleSet&#x60;, or &#x60;rateGroup&#x60;).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** &#x60;carrierAccountId&#x60;, &#x60;carrier&#x60;, and &#x60;service&#x60;     - **byRuleSet:** &#x60;ruleType&#x60; and &#x60;shipOption&#x60;     - **byRateGroup:** &#x60;ruleType&#x60; and &#x60;rateGroupId&#x60;     - **byCustomCarrierCode:** &#x60;code&#x60;     - Define special services in one of two ways - by using a &#x60;specialServiceId&#x60; or by specifying  special service objects such as &#x60;deliveryConfirmation&#x60;, &#x60;handling&#x60;, &#x60;insurance&#x60;, or &#x60;returnOptions&#x60;. These two cannot be used together in the same request. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="isReturn">Applies only to carriers UPS and FedEx; For UPS, if &#x60;isReturn&#x60; is passed, you must either include the &#x60;returnOptions&#x60; object (when using individual service objects) or specify the &#x60;serviceId:PRL&#x60; (when using specialService), or an error will occur. For FedEx, If &#x60;isReturn&#x60; is set to &#x60;true&#x60;, the &#x60;returnOptions&#x60; object is optional.</param>
         /// <param name="createShipmentV2Request"></param>
         /// <param name="xPBDeveloperPartnerId">The Developer Partner ID is assigned by PB to uniquely identify a Developer&#39;s strategic business partners. If the developer is the sole business partner, this field isn&#39;t required. (optional)</param>
         /// <param name="xPBLocationId">This is the Location ID assigned as per the Developer&#39;s and Partner&#39;s parsed locations, to which all transactions will be billed. &lt;br /&gt; Partner&#39;s location will be used for billing if it is configured, however, in case Partner&#39;s location is not given, then the Developer&#39;s location will be taken. Developer&#39;s location will be the default value. &lt;br /&gt; Additionally, Developers and Partners can use carriers belong to this location only. (optional)</param>
         /// <param name="xPBTransactionId">A unique Transaction ID provided by the partner, which is used to enable debugging and linking between the client&#39;s transaction and the system. (optional)</param>
         /// <param name="xPBDefaultID">A unique identifier assigned to the Default while its creation using CreateDefaults API. (optional)</param>
+        /// <param name="isReturn">Applies only to carriers UPS and FedEx; For UPS, if &#x60;isReturn&#x60; is passed, you must either include the &#x60;returnOptions&#x60; object (when using individual service objects) or specify the &#x60;serviceId:PRL&#x60; (when using specialService), or an error will occur. For FedEx, If &#x60;isReturn&#x60; is set to &#x60;true&#x60;, the &#x60;returnOptions&#x60; object is optional. (optional)</param>
         /// <param name="includeDeliveryCommitment">When set to true (default), the response includes delivery commitment information. Set to false to exclude delivery commitment details from the response. (optional, default to &quot;true&quot;)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateShipmentV2ApiResponse"/>&gt;</returns>
-        Task<ICreateShipmentV2ApiResponse> CreateShipmentV2Async(bool isReturn, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId = default, Option<string> xPBLocationId = default, Option<string> xPBTransactionId = default, Option<string> xPBDefaultID = default, Option<string> includeDeliveryCommitment = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICreateShipmentV2ApiResponse> CreateShipmentV2Async(CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId = default, Option<string> xPBLocationId = default, Option<string> xPBTransactionId = default, Option<string> xPBDefaultID = default, Option<bool> isReturn = default, Option<string> includeDeliveryCommitment = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create Shipment
         /// </summary>
         /// <remarks>
-        /// &gt; **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. &lt;br/&gt; To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). &lt;br/&gt; To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.&lt;br&gt;  **Domestic Shipments** &lt;br&gt;    - Both the &#x60;toAddress&#x60; and &#x60;fromAddress&#x60; addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The &#x60;toAddress&#x60; must be in a different country than the &#x60;fromAddress&#x60;.   - Requires international carrier services, special services, and customs information.&lt;br&gt;  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports three RateShop types: &lt;br&gt;  **1. By Carrier:**&lt;br&gt;    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**&lt;br&gt;    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: &lt;br&gt;   - Shipments weighing up to 3kg use a \&quot;Standard\&quot; service type with carrier A.   - Shipments exceeding 3kg use an \&quot;Over-weight\&quot; service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**&lt;br&gt;    - Use predefined rate groups to select a carrier and service dynamically.For example:&lt;br&gt;   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.    **Notes**&lt;br&gt;    - The &#x60;rateShopBy&#x60; field determines the variant to use (&#x60;carrier&#x60;, &#x60;ruleset&#x60;, or &#x60;rategroup&#x60;).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** &#x60;carrierAccountId&#x60;, &#x60;carrier&#x60;, and &#x60;service&#x60;     - **byRuleSet:** &#x60;ruleType&#x60; and &#x60;shipOption&#x60;     - **byRateGroup:** &#x60;ruleType&#x60; and &#x60;rateGroupId&#x60;    - Define special services in one of two ways - by using a &#x60;specialServiceId&#x60; or by specifying  special service objects such as &#x60;deliveryConfirmation&#x60;, &#x60;handling&#x60;, &#x60;insurance&#x60;, or &#x60;returnOptions&#x60;. These two cannot be used together in the same request. 
+        /// &gt; **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. &lt;br/&gt; To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). &lt;br/&gt; To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.&lt;br&gt;  **Domestic Shipments** &lt;br&gt;    - Both the &#x60;toAddress&#x60; and &#x60;fromAddress&#x60; addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The &#x60;toAddress&#x60; must be in a different country than the &#x60;fromAddress&#x60;.   - Requires international carrier services, special services, and customs information.&lt;br&gt;  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports four RateShop types: &lt;br&gt;  **1. By Carrier:**&lt;br&gt;    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**&lt;br&gt;    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: &lt;br&gt;   - Shipments weighing up to 3kg use a \&quot;Standard\&quot; service type with carrier A.   - Shipments exceeding 3kg use an \&quot;Over-weight\&quot; service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**&lt;br&gt;    - Use predefined rate groups to select a carrier and service dynamically.For example:&lt;br&gt;   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.  **4. By CustomCarrierCode**&lt;br&gt;    - Instead of passing multiple fields (carrier, carrier account, parcel type, service, and special services) every time in your request payload, you can:      - Generate a [Custom Carrier Code](/openapi/customcode/operation/createCustomCode/) once, with all those values defined.      - Use that single code in your create shipment requests.      - The carrier, account, service, parcel type, and special service values from that code will then automatically apply.    - If parcel type, service, or special services are also passed in the request payload, they will be overridden by the values defined in the Custom Carrier Code.    **Notes**&lt;br&gt;    - The &#x60;rateShopBy&#x60; field determines the variant to use (&#x60;carrier&#x60;, &#x60;ruleSet&#x60;, or &#x60;rateGroup&#x60;).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** &#x60;carrierAccountId&#x60;, &#x60;carrier&#x60;, and &#x60;service&#x60;     - **byRuleSet:** &#x60;ruleType&#x60; and &#x60;shipOption&#x60;     - **byRateGroup:** &#x60;ruleType&#x60; and &#x60;rateGroupId&#x60;     - **byCustomCarrierCode:** &#x60;code&#x60;     - Define special services in one of two ways - by using a &#x60;specialServiceId&#x60; or by specifying  special service objects such as &#x60;deliveryConfirmation&#x60;, &#x60;handling&#x60;, &#x60;insurance&#x60;, or &#x60;returnOptions&#x60;. These two cannot be used together in the same request. 
         /// </remarks>
-        /// <param name="isReturn">Applies only to carriers UPS and FedEx; For UPS, if &#x60;isReturn&#x60; is passed, you must either include the &#x60;returnOptions&#x60; object (when using individual service objects) or specify the &#x60;serviceId:PRL&#x60; (when using specialService), or an error will occur. For FedEx, If &#x60;isReturn&#x60; is set to &#x60;true&#x60;, the &#x60;returnOptions&#x60; object is optional.</param>
         /// <param name="createShipmentV2Request"></param>
         /// <param name="xPBDeveloperPartnerId">The Developer Partner ID is assigned by PB to uniquely identify a Developer&#39;s strategic business partners. If the developer is the sole business partner, this field isn&#39;t required. (optional)</param>
         /// <param name="xPBLocationId">This is the Location ID assigned as per the Developer&#39;s and Partner&#39;s parsed locations, to which all transactions will be billed. &lt;br /&gt; Partner&#39;s location will be used for billing if it is configured, however, in case Partner&#39;s location is not given, then the Developer&#39;s location will be taken. Developer&#39;s location will be the default value. &lt;br /&gt; Additionally, Developers and Partners can use carriers belong to this location only. (optional)</param>
         /// <param name="xPBTransactionId">A unique Transaction ID provided by the partner, which is used to enable debugging and linking between the client&#39;s transaction and the system. (optional)</param>
         /// <param name="xPBDefaultID">A unique identifier assigned to the Default while its creation using CreateDefaults API. (optional)</param>
+        /// <param name="isReturn">Applies only to carriers UPS and FedEx; For UPS, if &#x60;isReturn&#x60; is passed, you must either include the &#x60;returnOptions&#x60; object (when using individual service objects) or specify the &#x60;serviceId:PRL&#x60; (when using specialService), or an error will occur. For FedEx, If &#x60;isReturn&#x60; is set to &#x60;true&#x60;, the &#x60;returnOptions&#x60; object is optional. (optional)</param>
         /// <param name="includeDeliveryCommitment">When set to true (default), the response includes delivery commitment information. Set to false to exclude delivery commitment details from the response. (optional, default to &quot;true&quot;)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateShipmentV2ApiResponse"/>?&gt;</returns>
-        Task<ICreateShipmentV2ApiResponse?> CreateShipmentV2OrDefaultAsync(bool isReturn, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId = default, Option<string> xPBLocationId = default, Option<string> xPBTransactionId = default, Option<string> xPBDefaultID = default, Option<string> includeDeliveryCommitment = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICreateShipmentV2ApiResponse?> CreateShipmentV2OrDefaultAsync(CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId = default, Option<string> xPBLocationId = default, Option<string> xPBTransactionId = default, Option<string> xPBDefaultID = default, Option<bool> isReturn = default, Option<string> includeDeliveryCommitment = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Download BPOD Files
@@ -447,6 +447,31 @@ namespace com.pitneybowes.api360.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IReprintShipmentByIdV2ApiResponse"/>?&gt;</returns>
         Task<IReprintShipmentByIdV2ApiResponse?> ReprintShipmentByIdV2OrDefaultAsync(ShipmentReprintV2 shipmentReprintV2, Option<string> xPBDeveloperPartnerId = default, Option<string> xPBLocationId = default, Option<string> xPBTransactionId = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Update Carriers
+        /// </summary>
+        /// <remarks>
+        /// Sets the allowed capabilities—services, packages, and special services - for a subscription and carrier. By default, all carrier-provided capabilities are available. After this call, only the specified capabilities are permitted for Rate Shop and Create Shipment operations. Requests that use capabilities not in this allowlist are rejected with an error.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="carrier">Carrier name whose capabilities are to be allowlisted for this subscription.</param>
+        /// <param name="subscriptionCapabilitiesRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ISetSubscriptionCapabilitiesApiResponse"/>&gt;</returns>
+        Task<ISetSubscriptionCapabilitiesApiResponse> SetSubscriptionCapabilitiesAsync(string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Update Carriers
+        /// </summary>
+        /// <remarks>
+        /// Sets the allowed capabilities—services, packages, and special services - for a subscription and carrier. By default, all carrier-provided capabilities are available. After this call, only the specified capabilities are permitted for Rate Shop and Create Shipment operations. Requests that use capabilities not in this allowlist are rejected with an error.
+        /// </remarks>
+        /// <param name="carrier">Carrier name whose capabilities are to be allowlisted for this subscription.</param>
+        /// <param name="subscriptionCapabilitiesRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ISetSubscriptionCapabilitiesApiResponse"/>?&gt;</returns>
+        Task<ISetSubscriptionCapabilitiesApiResponse?> SetSubscriptionCapabilitiesOrDefaultAsync(string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get Shipment by Id
@@ -937,6 +962,36 @@ namespace com.pitneybowes.api360.Api
     }
 
     /// <summary>
+    /// The <see cref="ISetSubscriptionCapabilitiesApiResponse"/>
+    /// </summary>
+    public interface ISetSubscriptionCapabilitiesApiResponse : com.pitneybowes.api360.Client.IApiResponse, IBadRequest<List<InvalidErrorsInner>?>, IUnauthorized<com.pitneybowes.api360.Model.UnauthorizedError?>, IInternalServerError<com.pitneybowes.api360.Model.ServerError?>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 500 InternalServerError
+        /// </summary>
+        /// <returns></returns>
+        bool IsInternalServerError { get; }
+    }
+
+    /// <summary>
     /// The <see cref="IShipmentByIdApiResponse"/>
     /// </summary>
     public interface IShipmentByIdApiResponse : com.pitneybowes.api360.Client.IApiResponse, IOk<com.pitneybowes.api360.Model.GetSingleShipment?>, IBadRequest<List<InvalidErrorsInner>?>, IUnauthorized<com.pitneybowes.api360.Model.UnauthorizedError?>, INotFound<List<NotFoundErrorsInner>?>, IInternalServerError<com.pitneybowes.api360.Model.ServerError?>
@@ -1280,6 +1335,26 @@ namespace com.pitneybowes.api360.Api
         /// <summary>
         /// The event raised after the server response
         /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnSetSubscriptionCapabilities;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorSetSubscriptionCapabilities;
+
+        internal void ExecuteOnSetSubscriptionCapabilities(ShipmentApi.SetSubscriptionCapabilitiesApiResponse apiResponse)
+        {
+            OnSetSubscriptionCapabilities?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorSetSubscriptionCapabilities(Exception exception)
+        {
+            OnErrorSetSubscriptionCapabilities?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
         public event EventHandler<ApiResponseEventArgs>? OnShipmentById;
 
         /// <summary>
@@ -1531,11 +1606,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<CancelShipmentByIdV2ApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<CancelShipmentByIdV2ApiResponse>();
+                        CancelShipmentByIdV2ApiResponse apiResponseLocalVar;
 
-                        CancelShipmentByIdV2ApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v2/shipments/cancel", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v2/shipments/cancel", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterCancelShipmentByIdV2DefaultImplementation(apiResponseLocalVar, shipmentCancelV2, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId);
 
@@ -1578,6 +1659,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public CancelShipmentByIdV2ApiResponse(ILogger<CancelShipmentByIdV2ApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="CancelShipmentByIdV2ApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CancelShipmentByIdV2ApiResponse(ILogger<CancelShipmentByIdV2ApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1939,11 +2036,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<CancelStampsERRApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<CancelStampsERRApiResponse>();
+                        CancelStampsERRApiResponse apiResponseLocalVar;
 
-                        CancelStampsERRApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/err/stamps/void", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/err/stamps/void", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterCancelStampsERRDefaultImplementation(apiResponseLocalVar, cancelStampsRequestERR, xPBDeveloperPartnerID);
 
@@ -1986,6 +2089,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public CancelStampsERRApiResponse(ILogger<CancelStampsERRApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="CancelStampsERRApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CancelStampsERRApiResponse(ILogger<CancelStampsERRApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2296,11 +2415,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<CreateErrCoversheetApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<CreateErrCoversheetApiResponse>();
+                        CreateErrCoversheetApiResponse apiResponseLocalVar;
 
-                        CreateErrCoversheetApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/err/coverSheet", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/err/coverSheet", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterCreateErrCoversheetDefaultImplementation(apiResponseLocalVar, errCoversheetRequest);
 
@@ -2343,6 +2468,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public CreateErrCoversheetApiResponse(ILogger<CreateErrCoversheetApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="CreateErrCoversheetApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CreateErrCoversheetApiResponse(ILogger<CreateErrCoversheetApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2513,7 +2654,7 @@ namespace com.pitneybowes.api360.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatCreateShipmentV2(ref bool isReturn, CreateShipmentV2Request createShipmentV2Request, ref Option<string> xPBDeveloperPartnerId, ref Option<string> xPBLocationId, ref Option<string> xPBTransactionId, ref Option<string> xPBDefaultID, ref Option<string> includeDeliveryCommitment);
+        partial void FormatCreateShipmentV2(CreateShipmentV2Request createShipmentV2Request, ref Option<string> xPBDeveloperPartnerId, ref Option<string> xPBLocationId, ref Option<string> xPBTransactionId, ref Option<string> xPBDefaultID, ref Option<bool> isReturn, ref Option<string> includeDeliveryCommitment);
 
         /// <summary>
         /// Validates the request parameters
@@ -2550,17 +2691,17 @@ namespace com.pitneybowes.api360.Api
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="isReturn"></param>
         /// <param name="createShipmentV2Request"></param>
         /// <param name="xPBDeveloperPartnerId"></param>
         /// <param name="xPBLocationId"></param>
         /// <param name="xPBTransactionId"></param>
         /// <param name="xPBDefaultID"></param>
+        /// <param name="isReturn"></param>
         /// <param name="includeDeliveryCommitment"></param>
-        private void AfterCreateShipmentV2DefaultImplementation(ICreateShipmentV2ApiResponse apiResponseLocalVar, bool isReturn, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId, Option<string> xPBLocationId, Option<string> xPBTransactionId, Option<string> xPBDefaultID, Option<string> includeDeliveryCommitment)
+        private void AfterCreateShipmentV2DefaultImplementation(ICreateShipmentV2ApiResponse apiResponseLocalVar, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId, Option<string> xPBLocationId, Option<string> xPBTransactionId, Option<string> xPBDefaultID, Option<bool> isReturn, Option<string> includeDeliveryCommitment)
         {
             bool suppressDefaultLog = false;
-            AfterCreateShipmentV2(ref suppressDefaultLog, apiResponseLocalVar, isReturn, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment);
+            AfterCreateShipmentV2(ref suppressDefaultLog, apiResponseLocalVar, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
             if (!suppressDefaultLog)
                 Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -2570,14 +2711,14 @@ namespace com.pitneybowes.api360.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="isReturn"></param>
         /// <param name="createShipmentV2Request"></param>
         /// <param name="xPBDeveloperPartnerId"></param>
         /// <param name="xPBLocationId"></param>
         /// <param name="xPBTransactionId"></param>
         /// <param name="xPBDefaultID"></param>
+        /// <param name="isReturn"></param>
         /// <param name="includeDeliveryCommitment"></param>
-        partial void AfterCreateShipmentV2(ref bool suppressDefaultLog, ICreateShipmentV2ApiResponse apiResponseLocalVar, bool isReturn, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId, Option<string> xPBLocationId, Option<string> xPBTransactionId, Option<string> xPBDefaultID, Option<string> includeDeliveryCommitment);
+        partial void AfterCreateShipmentV2(ref bool suppressDefaultLog, ICreateShipmentV2ApiResponse apiResponseLocalVar, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId, Option<string> xPBLocationId, Option<string> xPBTransactionId, Option<string> xPBDefaultID, Option<bool> isReturn, Option<string> includeDeliveryCommitment);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -2585,17 +2726,17 @@ namespace com.pitneybowes.api360.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="isReturn"></param>
         /// <param name="createShipmentV2Request"></param>
         /// <param name="xPBDeveloperPartnerId"></param>
         /// <param name="xPBLocationId"></param>
         /// <param name="xPBTransactionId"></param>
         /// <param name="xPBDefaultID"></param>
+        /// <param name="isReturn"></param>
         /// <param name="includeDeliveryCommitment"></param>
-        private void OnErrorCreateShipmentV2DefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, bool isReturn, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId, Option<string> xPBLocationId, Option<string> xPBTransactionId, Option<string> xPBDefaultID, Option<string> includeDeliveryCommitment)
+        private void OnErrorCreateShipmentV2DefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId, Option<string> xPBLocationId, Option<string> xPBTransactionId, Option<string> xPBDefaultID, Option<bool> isReturn, Option<string> includeDeliveryCommitment)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCreateShipmentV2(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, isReturn, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment);
+            OnErrorCreateShipmentV2(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -2607,32 +2748,32 @@ namespace com.pitneybowes.api360.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="isReturn"></param>
         /// <param name="createShipmentV2Request"></param>
         /// <param name="xPBDeveloperPartnerId"></param>
         /// <param name="xPBLocationId"></param>
         /// <param name="xPBTransactionId"></param>
         /// <param name="xPBDefaultID"></param>
+        /// <param name="isReturn"></param>
         /// <param name="includeDeliveryCommitment"></param>
-        partial void OnErrorCreateShipmentV2(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, bool isReturn, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId, Option<string> xPBLocationId, Option<string> xPBTransactionId, Option<string> xPBDefaultID, Option<string> includeDeliveryCommitment);
+        partial void OnErrorCreateShipmentV2(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId, Option<string> xPBLocationId, Option<string> xPBTransactionId, Option<string> xPBDefaultID, Option<bool> isReturn, Option<string> includeDeliveryCommitment);
 
         /// <summary>
-        /// Create Shipment &gt; **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. &lt;br/&gt; To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). &lt;br/&gt; To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.&lt;br&gt;  **Domestic Shipments** &lt;br&gt;    - Both the &#x60;toAddress&#x60; and &#x60;fromAddress&#x60; addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The &#x60;toAddress&#x60; must be in a different country than the &#x60;fromAddress&#x60;.   - Requires international carrier services, special services, and customs information.&lt;br&gt;  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports three RateShop types: &lt;br&gt;  **1. By Carrier:**&lt;br&gt;    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**&lt;br&gt;    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: &lt;br&gt;   - Shipments weighing up to 3kg use a \&quot;Standard\&quot; service type with carrier A.   - Shipments exceeding 3kg use an \&quot;Over-weight\&quot; service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**&lt;br&gt;    - Use predefined rate groups to select a carrier and service dynamically.For example:&lt;br&gt;   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.    **Notes**&lt;br&gt;    - The &#x60;rateShopBy&#x60; field determines the variant to use (&#x60;carrier&#x60;, &#x60;ruleset&#x60;, or &#x60;rategroup&#x60;).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** &#x60;carrierAccountId&#x60;, &#x60;carrier&#x60;, and &#x60;service&#x60;     - **byRuleSet:** &#x60;ruleType&#x60; and &#x60;shipOption&#x60;     - **byRateGroup:** &#x60;ruleType&#x60; and &#x60;rateGroupId&#x60;    - Define special services in one of two ways - by using a &#x60;specialServiceId&#x60; or by specifying  special service objects such as &#x60;deliveryConfirmation&#x60;, &#x60;handling&#x60;, &#x60;insurance&#x60;, or &#x60;returnOptions&#x60;. These two cannot be used together in the same request. 
+        /// Create Shipment &gt; **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. &lt;br/&gt; To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). &lt;br/&gt; To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.&lt;br&gt;  **Domestic Shipments** &lt;br&gt;    - Both the &#x60;toAddress&#x60; and &#x60;fromAddress&#x60; addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The &#x60;toAddress&#x60; must be in a different country than the &#x60;fromAddress&#x60;.   - Requires international carrier services, special services, and customs information.&lt;br&gt;  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports four RateShop types: &lt;br&gt;  **1. By Carrier:**&lt;br&gt;    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**&lt;br&gt;    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: &lt;br&gt;   - Shipments weighing up to 3kg use a \&quot;Standard\&quot; service type with carrier A.   - Shipments exceeding 3kg use an \&quot;Over-weight\&quot; service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**&lt;br&gt;    - Use predefined rate groups to select a carrier and service dynamically.For example:&lt;br&gt;   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.  **4. By CustomCarrierCode**&lt;br&gt;    - Instead of passing multiple fields (carrier, carrier account, parcel type, service, and special services) every time in your request payload, you can:      - Generate a [Custom Carrier Code](/openapi/customcode/operation/createCustomCode/) once, with all those values defined.      - Use that single code in your create shipment requests.      - The carrier, account, service, parcel type, and special service values from that code will then automatically apply.    - If parcel type, service, or special services are also passed in the request payload, they will be overridden by the values defined in the Custom Carrier Code.    **Notes**&lt;br&gt;    - The &#x60;rateShopBy&#x60; field determines the variant to use (&#x60;carrier&#x60;, &#x60;ruleSet&#x60;, or &#x60;rateGroup&#x60;).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** &#x60;carrierAccountId&#x60;, &#x60;carrier&#x60;, and &#x60;service&#x60;     - **byRuleSet:** &#x60;ruleType&#x60; and &#x60;shipOption&#x60;     - **byRateGroup:** &#x60;ruleType&#x60; and &#x60;rateGroupId&#x60;     - **byCustomCarrierCode:** &#x60;code&#x60;     - Define special services in one of two ways - by using a &#x60;specialServiceId&#x60; or by specifying  special service objects such as &#x60;deliveryConfirmation&#x60;, &#x60;handling&#x60;, &#x60;insurance&#x60;, or &#x60;returnOptions&#x60;. These two cannot be used together in the same request. 
         /// </summary>
-        /// <param name="isReturn">Applies only to carriers UPS and FedEx; For UPS, if &#x60;isReturn&#x60; is passed, you must either include the &#x60;returnOptions&#x60; object (when using individual service objects) or specify the &#x60;serviceId:PRL&#x60; (when using specialService), or an error will occur. For FedEx, If &#x60;isReturn&#x60; is set to &#x60;true&#x60;, the &#x60;returnOptions&#x60; object is optional.</param>
         /// <param name="createShipmentV2Request"></param>
         /// <param name="xPBDeveloperPartnerId">The Developer Partner ID is assigned by PB to uniquely identify a Developer&#39;s strategic business partners. If the developer is the sole business partner, this field isn&#39;t required. (optional)</param>
         /// <param name="xPBLocationId">This is the Location ID assigned as per the Developer&#39;s and Partner&#39;s parsed locations, to which all transactions will be billed. &lt;br /&gt; Partner&#39;s location will be used for billing if it is configured, however, in case Partner&#39;s location is not given, then the Developer&#39;s location will be taken. Developer&#39;s location will be the default value. &lt;br /&gt; Additionally, Developers and Partners can use carriers belong to this location only. (optional)</param>
         /// <param name="xPBTransactionId">A unique Transaction ID provided by the partner, which is used to enable debugging and linking between the client&#39;s transaction and the system. (optional)</param>
         /// <param name="xPBDefaultID">A unique identifier assigned to the Default while its creation using CreateDefaults API. (optional)</param>
+        /// <param name="isReturn">Applies only to carriers UPS and FedEx; For UPS, if &#x60;isReturn&#x60; is passed, you must either include the &#x60;returnOptions&#x60; object (when using individual service objects) or specify the &#x60;serviceId:PRL&#x60; (when using specialService), or an error will occur. For FedEx, If &#x60;isReturn&#x60; is set to &#x60;true&#x60;, the &#x60;returnOptions&#x60; object is optional. (optional)</param>
         /// <param name="includeDeliveryCommitment">When set to true (default), the response includes delivery commitment information. Set to false to exclude delivery commitment details from the response. (optional, default to &quot;true&quot;)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateShipmentV2ApiResponse"/>&gt;</returns>
-        public async Task<ICreateShipmentV2ApiResponse?> CreateShipmentV2OrDefaultAsync(bool isReturn, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId = default, Option<string> xPBLocationId = default, Option<string> xPBTransactionId = default, Option<string> xPBDefaultID = default, Option<string> includeDeliveryCommitment = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICreateShipmentV2ApiResponse?> CreateShipmentV2OrDefaultAsync(CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId = default, Option<string> xPBLocationId = default, Option<string> xPBTransactionId = default, Option<string> xPBDefaultID = default, Option<bool> isReturn = default, Option<string> includeDeliveryCommitment = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CreateShipmentV2Async(isReturn, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment, cancellationToken).ConfigureAwait(false);
+                return await CreateShipmentV2Async(createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -2641,19 +2782,19 @@ namespace com.pitneybowes.api360.Api
         }
 
         /// <summary>
-        /// Create Shipment &gt; **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. &lt;br/&gt; To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). &lt;br/&gt; To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.&lt;br&gt;  **Domestic Shipments** &lt;br&gt;    - Both the &#x60;toAddress&#x60; and &#x60;fromAddress&#x60; addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The &#x60;toAddress&#x60; must be in a different country than the &#x60;fromAddress&#x60;.   - Requires international carrier services, special services, and customs information.&lt;br&gt;  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports three RateShop types: &lt;br&gt;  **1. By Carrier:**&lt;br&gt;    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**&lt;br&gt;    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: &lt;br&gt;   - Shipments weighing up to 3kg use a \&quot;Standard\&quot; service type with carrier A.   - Shipments exceeding 3kg use an \&quot;Over-weight\&quot; service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**&lt;br&gt;    - Use predefined rate groups to select a carrier and service dynamically.For example:&lt;br&gt;   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.    **Notes**&lt;br&gt;    - The &#x60;rateShopBy&#x60; field determines the variant to use (&#x60;carrier&#x60;, &#x60;ruleset&#x60;, or &#x60;rategroup&#x60;).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** &#x60;carrierAccountId&#x60;, &#x60;carrier&#x60;, and &#x60;service&#x60;     - **byRuleSet:** &#x60;ruleType&#x60; and &#x60;shipOption&#x60;     - **byRateGroup:** &#x60;ruleType&#x60; and &#x60;rateGroupId&#x60;    - Define special services in one of two ways - by using a &#x60;specialServiceId&#x60; or by specifying  special service objects such as &#x60;deliveryConfirmation&#x60;, &#x60;handling&#x60;, &#x60;insurance&#x60;, or &#x60;returnOptions&#x60;. These two cannot be used together in the same request. 
+        /// Create Shipment &gt; **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. &lt;br/&gt; To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). &lt;br/&gt; To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.&lt;br&gt;  **Domestic Shipments** &lt;br&gt;    - Both the &#x60;toAddress&#x60; and &#x60;fromAddress&#x60; addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The &#x60;toAddress&#x60; must be in a different country than the &#x60;fromAddress&#x60;.   - Requires international carrier services, special services, and customs information.&lt;br&gt;  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports four RateShop types: &lt;br&gt;  **1. By Carrier:**&lt;br&gt;    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**&lt;br&gt;    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: &lt;br&gt;   - Shipments weighing up to 3kg use a \&quot;Standard\&quot; service type with carrier A.   - Shipments exceeding 3kg use an \&quot;Over-weight\&quot; service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**&lt;br&gt;    - Use predefined rate groups to select a carrier and service dynamically.For example:&lt;br&gt;   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.  **4. By CustomCarrierCode**&lt;br&gt;    - Instead of passing multiple fields (carrier, carrier account, parcel type, service, and special services) every time in your request payload, you can:      - Generate a [Custom Carrier Code](/openapi/customcode/operation/createCustomCode/) once, with all those values defined.      - Use that single code in your create shipment requests.      - The carrier, account, service, parcel type, and special service values from that code will then automatically apply.    - If parcel type, service, or special services are also passed in the request payload, they will be overridden by the values defined in the Custom Carrier Code.    **Notes**&lt;br&gt;    - The &#x60;rateShopBy&#x60; field determines the variant to use (&#x60;carrier&#x60;, &#x60;ruleSet&#x60;, or &#x60;rateGroup&#x60;).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** &#x60;carrierAccountId&#x60;, &#x60;carrier&#x60;, and &#x60;service&#x60;     - **byRuleSet:** &#x60;ruleType&#x60; and &#x60;shipOption&#x60;     - **byRateGroup:** &#x60;ruleType&#x60; and &#x60;rateGroupId&#x60;     - **byCustomCarrierCode:** &#x60;code&#x60;     - Define special services in one of two ways - by using a &#x60;specialServiceId&#x60; or by specifying  special service objects such as &#x60;deliveryConfirmation&#x60;, &#x60;handling&#x60;, &#x60;insurance&#x60;, or &#x60;returnOptions&#x60;. These two cannot be used together in the same request. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="isReturn">Applies only to carriers UPS and FedEx; For UPS, if &#x60;isReturn&#x60; is passed, you must either include the &#x60;returnOptions&#x60; object (when using individual service objects) or specify the &#x60;serviceId:PRL&#x60; (when using specialService), or an error will occur. For FedEx, If &#x60;isReturn&#x60; is set to &#x60;true&#x60;, the &#x60;returnOptions&#x60; object is optional.</param>
         /// <param name="createShipmentV2Request"></param>
         /// <param name="xPBDeveloperPartnerId">The Developer Partner ID is assigned by PB to uniquely identify a Developer&#39;s strategic business partners. If the developer is the sole business partner, this field isn&#39;t required. (optional)</param>
         /// <param name="xPBLocationId">This is the Location ID assigned as per the Developer&#39;s and Partner&#39;s parsed locations, to which all transactions will be billed. &lt;br /&gt; Partner&#39;s location will be used for billing if it is configured, however, in case Partner&#39;s location is not given, then the Developer&#39;s location will be taken. Developer&#39;s location will be the default value. &lt;br /&gt; Additionally, Developers and Partners can use carriers belong to this location only. (optional)</param>
         /// <param name="xPBTransactionId">A unique Transaction ID provided by the partner, which is used to enable debugging and linking between the client&#39;s transaction and the system. (optional)</param>
         /// <param name="xPBDefaultID">A unique identifier assigned to the Default while its creation using CreateDefaults API. (optional)</param>
+        /// <param name="isReturn">Applies only to carriers UPS and FedEx; For UPS, if &#x60;isReturn&#x60; is passed, you must either include the &#x60;returnOptions&#x60; object (when using individual service objects) or specify the &#x60;serviceId:PRL&#x60; (when using specialService), or an error will occur. For FedEx, If &#x60;isReturn&#x60; is set to &#x60;true&#x60;, the &#x60;returnOptions&#x60; object is optional. (optional)</param>
         /// <param name="includeDeliveryCommitment">When set to true (default), the response includes delivery commitment information. Set to false to exclude delivery commitment details from the response. (optional, default to &quot;true&quot;)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateShipmentV2ApiResponse"/>&gt;</returns>
-        public async Task<ICreateShipmentV2ApiResponse> CreateShipmentV2Async(bool isReturn, CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId = default, Option<string> xPBLocationId = default, Option<string> xPBTransactionId = default, Option<string> xPBDefaultID = default, Option<string> includeDeliveryCommitment = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICreateShipmentV2ApiResponse> CreateShipmentV2Async(CreateShipmentV2Request createShipmentV2Request, Option<string> xPBDeveloperPartnerId = default, Option<string> xPBLocationId = default, Option<string> xPBTransactionId = default, Option<string> xPBDefaultID = default, Option<bool> isReturn = default, Option<string> includeDeliveryCommitment = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -2661,7 +2802,7 @@ namespace com.pitneybowes.api360.Api
             {
                 ValidateCreateShipmentV2(createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment);
 
-                FormatCreateShipmentV2(ref isReturn, createShipmentV2Request, ref xPBDeveloperPartnerId, ref xPBLocationId, ref xPBTransactionId, ref xPBDefaultID, ref includeDeliveryCommitment);
+                FormatCreateShipmentV2(createShipmentV2Request, ref xPBDeveloperPartnerId, ref xPBLocationId, ref xPBTransactionId, ref xPBDefaultID, ref isReturn, ref includeDeliveryCommitment);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -2674,7 +2815,8 @@ namespace com.pitneybowes.api360.Api
 
                     System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
 
-                    parseQueryStringLocalVar["isReturn"] = ClientUtils.ParameterToString(isReturn);
+                    if (isReturn.IsSet)
+                        parseQueryStringLocalVar["isReturn"] = ClientUtils.ParameterToString(isReturn.Value);
 
                     if (includeDeliveryCommitment.IsSet)
                         parseQueryStringLocalVar["includeDeliveryCommitment"] = ClientUtils.ParameterToString(includeDeliveryCommitment.Value);
@@ -2730,13 +2872,19 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<CreateShipmentV2ApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<CreateShipmentV2ApiResponse>();
+                        CreateShipmentV2ApiResponse apiResponseLocalVar;
 
-                        CreateShipmentV2ApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v2/shipments", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v2/shipments", requestedAtLocalVar, _jsonSerializerOptions);
 
-                        AfterCreateShipmentV2DefaultImplementation(apiResponseLocalVar, isReturn, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment);
+                                break;
+                            }
+                        }
+
+                        AfterCreateShipmentV2DefaultImplementation(apiResponseLocalVar, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
 
                         Events.ExecuteOnCreateShipmentV2(apiResponseLocalVar);
 
@@ -2750,7 +2898,7 @@ namespace com.pitneybowes.api360.Api
             }
             catch(Exception e)
             {
-                OnErrorCreateShipmentV2DefaultImplementation(e, "/api/v2/shipments", uriBuilderLocalVar.Path, isReturn, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, includeDeliveryCommitment);
+                OnErrorCreateShipmentV2DefaultImplementation(e, "/api/v2/shipments", uriBuilderLocalVar.Path, createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
                 Events.ExecuteOnErrorCreateShipmentV2(e);
                 throw;
             }
@@ -2777,6 +2925,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public CreateShipmentV2ApiResponse(ILogger<CreateShipmentV2ApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="CreateShipmentV2ApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CreateShipmentV2ApiResponse(ILogger<CreateShipmentV2ApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -3131,11 +3295,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<DownloadBpodFilesApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<DownloadBpodFilesApiResponse>();
+                        DownloadBpodFilesApiResponse apiResponseLocalVar;
 
-                        DownloadBpodFilesApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/err/shipments/bpod", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/err/shipments/bpod", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterDownloadBpodFilesDefaultImplementation(apiResponseLocalVar, xPBDeveloperPartnerID, startDate, endDate, body);
 
@@ -3178,6 +3348,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public DownloadBpodFilesApiResponse(ILogger<DownloadBpodFilesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="DownloadBpodFilesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public DownloadBpodFilesApiResponse(ILogger<DownloadBpodFilesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -3534,11 +3720,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetAllShipmentsApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetAllShipmentsApiResponse>();
+                        GetAllShipmentsApiResponse apiResponseLocalVar;
 
-                        GetAllShipmentsApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/shipments", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/shipments", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetAllShipmentsDefaultImplementation(apiResponseLocalVar, xPBDeveloperPartnerId, startDate, endDate, page, size);
 
@@ -3581,6 +3773,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetAllShipmentsApiResponse(ILogger<GetAllShipmentsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetAllShipmentsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetAllShipmentsApiResponse(ILogger<GetAllShipmentsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -3881,11 +4089,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetCarrierAccountApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetCarrierAccountApiResponse>();
+                        GetCarrierAccountApiResponse apiResponseLocalVar;
 
-                        GetCarrierAccountApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/carrierAccounts", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/carrierAccounts", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetCarrierAccountDefaultImplementation(apiResponseLocalVar, xPBDeveloperPartnerId);
 
@@ -3928,6 +4142,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetCarrierAccountApiResponse(ILogger<GetCarrierAccountApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetCarrierAccountApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetCarrierAccountApiResponse(ILogger<GetCarrierAccountApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -4228,11 +4458,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetCarriersApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetCarriersApiResponse>();
+                        GetCarriersApiResponse apiResponseLocalVar;
 
-                        GetCarriersApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/carriers", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/carriers", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetCarriersDefaultImplementation(apiResponseLocalVar, xPBDeveloperPartnerId);
 
@@ -4275,6 +4511,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetCarriersApiResponse(ILogger<GetCarriersApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetCarriersApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetCarriersApiResponse(ILogger<GetCarriersApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -4605,11 +4857,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetCountriesApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetCountriesApiResponse>();
+                        GetCountriesApiResponse apiResponseLocalVar;
 
-                        GetCountriesApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/countries", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/countries", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetCountriesDefaultImplementation(apiResponseLocalVar, xPBDeveloperPartnerId, carrier, originCountryCode);
 
@@ -4652,6 +4910,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetCountriesApiResponse(ILogger<GetCountriesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetCountriesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetCountriesApiResponse(ILogger<GetCountriesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -4995,11 +5269,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetParcelTypesApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetParcelTypesApiResponse>();
+                        GetParcelTypesApiResponse apiResponseLocalVar;
 
-                        GetParcelTypesApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/parcelTypes", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/parcelTypes", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetParcelTypesDefaultImplementation(apiResponseLocalVar, xPBDeveloperPartnerId, carrier, originCountryCode, destinationCountryCode);
 
@@ -5042,6 +5322,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetParcelTypesApiResponse(ILogger<GetParcelTypesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetParcelTypesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetParcelTypesApiResponse(ILogger<GetParcelTypesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -5385,11 +5681,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetServicesApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetServicesApiResponse>();
+                        GetServicesApiResponse apiResponseLocalVar;
 
-                        GetServicesApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/services", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/services", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetServicesDefaultImplementation(apiResponseLocalVar, xPBDeveloperPartnerId, carrier, originCountryCode, destinationCountryCode);
 
@@ -5432,6 +5734,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetServicesApiResponse(ILogger<GetServicesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetServicesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetServicesApiResponse(ILogger<GetServicesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -5743,11 +6061,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetSignatureImageERRApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetSignatureImageERRApiResponse>();
+                        GetSignatureImageERRApiResponse apiResponseLocalVar;
 
-                        GetSignatureImageERRApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/err/shipments/{shipmentId}/signaturefile", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/err/shipments/{shipmentId}/signaturefile", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetSignatureImageERRDefaultImplementation(apiResponseLocalVar, shipmentId, xPBDeveloperPartnerID);
 
@@ -5790,6 +6114,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetSignatureImageERRApiResponse(ILogger<GetSignatureImageERRApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetSignatureImageERRApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetSignatureImageERRApiResponse(ILogger<GetSignatureImageERRApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -6159,11 +6499,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetSpecialServicesApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetSpecialServicesApiResponse>();
+                        GetSpecialServicesApiResponse apiResponseLocalVar;
 
-                        GetSpecialServicesApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/specialServices", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/specialServices", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetSpecialServicesDefaultImplementation(apiResponseLocalVar, xPBDeveloperPartnerId, service, parcel, carrier, originCountryCode, destinationCountryCode);
 
@@ -6206,6 +6552,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetSpecialServicesApiResponse(ILogger<GetSpecialServicesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetSpecialServicesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetSpecialServicesApiResponse(ILogger<GetSpecialServicesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -6516,11 +6878,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<RateShipmentApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<RateShipmentApiResponse>();
+                        RateShipmentApiResponse apiResponseLocalVar;
 
-                        RateShipmentApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v2/rates", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v2/rates", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterRateShipmentDefaultImplementation(apiResponseLocalVar, rateShipmentRequest);
 
@@ -6563,6 +6931,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public RateShipmentApiResponse(ILogger<RateShipmentApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="RateShipmentApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public RateShipmentApiResponse(ILogger<RateShipmentApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -6912,11 +7296,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<ReprintShipmentByIdV2ApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<ReprintShipmentByIdV2ApiResponse>();
+                        ReprintShipmentByIdV2ApiResponse apiResponseLocalVar;
 
-                        ReprintShipmentByIdV2ApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v2/shipments/reprint", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v2/shipments/reprint", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterReprintShipmentByIdV2DefaultImplementation(apiResponseLocalVar, shipmentReprintV2, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId);
 
@@ -6959,6 +7349,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public ReprintShipmentByIdV2ApiResponse(ILogger<ReprintShipmentByIdV2ApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="ReprintShipmentByIdV2ApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public ReprintShipmentByIdV2ApiResponse(ILogger<ReprintShipmentByIdV2ApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -7167,6 +7573,364 @@ namespace com.pitneybowes.api360.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatSetSubscriptionCapabilities(ref string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="carrier"></param>
+        /// <param name="subscriptionCapabilitiesRequest"></param>
+        /// <returns></returns>
+        private void ValidateSetSubscriptionCapabilities(string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest)
+        {
+            if (carrier == null)
+                throw new ArgumentNullException(nameof(carrier));
+
+            if (subscriptionCapabilitiesRequest == null)
+                throw new ArgumentNullException(nameof(subscriptionCapabilitiesRequest));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="carrier"></param>
+        /// <param name="subscriptionCapabilitiesRequest"></param>
+        private void AfterSetSubscriptionCapabilitiesDefaultImplementation(ISetSubscriptionCapabilitiesApiResponse apiResponseLocalVar, string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest)
+        {
+            bool suppressDefaultLog = false;
+            AfterSetSubscriptionCapabilities(ref suppressDefaultLog, apiResponseLocalVar, carrier, subscriptionCapabilitiesRequest);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="carrier"></param>
+        /// <param name="subscriptionCapabilitiesRequest"></param>
+        partial void AfterSetSubscriptionCapabilities(ref bool suppressDefaultLog, ISetSubscriptionCapabilitiesApiResponse apiResponseLocalVar, string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="carrier"></param>
+        /// <param name="subscriptionCapabilitiesRequest"></param>
+        private void OnErrorSetSubscriptionCapabilitiesDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorSetSubscriptionCapabilities(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, carrier, subscriptionCapabilitiesRequest);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="carrier"></param>
+        /// <param name="subscriptionCapabilitiesRequest"></param>
+        partial void OnErrorSetSubscriptionCapabilities(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest);
+
+        /// <summary>
+        /// Update Carriers Sets the allowed capabilities—services, packages, and special services - for a subscription and carrier. By default, all carrier-provided capabilities are available. After this call, only the specified capabilities are permitted for Rate Shop and Create Shipment operations. Requests that use capabilities not in this allowlist are rejected with an error.
+        /// </summary>
+        /// <param name="carrier">Carrier name whose capabilities are to be allowlisted for this subscription.</param>
+        /// <param name="subscriptionCapabilitiesRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ISetSubscriptionCapabilitiesApiResponse"/>&gt;</returns>
+        public async Task<ISetSubscriptionCapabilitiesApiResponse?> SetSubscriptionCapabilitiesOrDefaultAsync(string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await SetSubscriptionCapabilitiesAsync(carrier, subscriptionCapabilitiesRequest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Update Carriers Sets the allowed capabilities—services, packages, and special services - for a subscription and carrier. By default, all carrier-provided capabilities are available. After this call, only the specified capabilities are permitted for Rate Shop and Create Shipment operations. Requests that use capabilities not in this allowlist are rejected with an error.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="carrier">Carrier name whose capabilities are to be allowlisted for this subscription.</param>
+        /// <param name="subscriptionCapabilitiesRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ISetSubscriptionCapabilitiesApiResponse"/>&gt;</returns>
+        public async Task<ISetSubscriptionCapabilitiesApiResponse> SetSubscriptionCapabilitiesAsync(string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateSetSubscriptionCapabilities(carrier, subscriptionCapabilitiesRequest);
+
+                FormatSetSubscriptionCapabilities(ref carrier, subscriptionCapabilitiesRequest);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/api/v1/carriers/{carrier}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/api/v1/carriers/{carrier}");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bcarrier%7D", Uri.EscapeDataString(carrier.ToString()));
+
+                    httpRequestMessageLocalVar.Content = (subscriptionCapabilitiesRequest as object) is System.IO.Stream stream
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(stream)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(subscriptionCapabilitiesRequest, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BearerToken bearerTokenLocalVar1 = (BearerToken) await BearerTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(bearerTokenLocalVar1);
+
+                    bearerTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string? contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Put;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<SetSubscriptionCapabilitiesApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<SetSubscriptionCapabilitiesApiResponse>();
+                        SetSubscriptionCapabilitiesApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/carriers/{carrier}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterSetSubscriptionCapabilitiesDefaultImplementation(apiResponseLocalVar, carrier, subscriptionCapabilitiesRequest);
+
+                        Events.ExecuteOnSetSubscriptionCapabilities(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorSetSubscriptionCapabilitiesDefaultImplementation(e, "/api/v1/carriers/{carrier}", uriBuilderLocalVar.Path, carrier, subscriptionCapabilitiesRequest);
+                Events.ExecuteOnErrorSetSubscriptionCapabilities(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetSubscriptionCapabilitiesApiResponse"/>
+        /// </summary>
+        public partial class SetSubscriptionCapabilitiesApiResponse : com.pitneybowes.api360.Client.ApiResponse, ISetSubscriptionCapabilitiesApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<SetSubscriptionCapabilitiesApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="SetSubscriptionCapabilitiesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public SetSubscriptionCapabilitiesApiResponse(ILogger<SetSubscriptionCapabilitiesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="SetSubscriptionCapabilitiesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public SetSubscriptionCapabilitiesApiResponse(ILogger<SetSubscriptionCapabilitiesApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public List<InvalidErrorsInner>? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<List<InvalidErrorsInner>>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out List<InvalidErrorsInner>? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public com.pitneybowes.api360.Model.UnauthorizedError? Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<com.pitneybowes.api360.Model.UnauthorizedError>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized([NotNullWhen(true)]out com.pitneybowes.api360.Model.UnauthorizedError? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public bool IsInternalServerError => 500 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public com.pitneybowes.api360.Model.ServerError? InternalServerError()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsInternalServerError
+                    ? System.Text.Json.JsonSerializer.Deserialize<com.pitneybowes.api360.Model.ServerError>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryInternalServerError([NotNullWhen(true)]out com.pitneybowes.api360.Model.ServerError? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = InternalServerError();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
         partial void FormatShipmentById(ref string shipmentId, ref Option<string> xPBDeveloperPartnerId);
 
         /// <summary>
@@ -7308,11 +8072,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<ShipmentByIdApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<ShipmentByIdApiResponse>();
+                        ShipmentByIdApiResponse apiResponseLocalVar;
 
-                        ShipmentByIdApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/shipments/{shipmentId}", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/shipments/{shipmentId}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterShipmentByIdDefaultImplementation(apiResponseLocalVar, shipmentId, xPBDeveloperPartnerId);
 
@@ -7355,6 +8125,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public ShipmentByIdApiResponse(ILogger<ShipmentByIdApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="ShipmentByIdApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public ShipmentByIdApiResponse(ILogger<ShipmentByIdApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);

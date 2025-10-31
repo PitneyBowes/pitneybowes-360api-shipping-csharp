@@ -37,7 +37,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="toAddress">toAddress</param>
         /// <param name="parcel">parcel</param>
         /// <param name="parcelType">Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; \&quot;</param>
-        /// <param name="rateShopBy">RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</param>
+        /// <param name="rateShopBy">RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</param>
         /// <param name="byRuleSet">byRuleSet</param>
         [JsonConstructor]
         public RateShopbyRuleset(FromAddressV2 fromAddress, ToAddressV2 toAddress, RateShopbyCarrierParcel parcel, string parcelType, RateShopByEnum rateShopBy, RateShopbyRulesetByRuleSet byRuleSet)
@@ -54,9 +54,9 @@ namespace com.pitneybowes.api360.Model
         partial void OnCreated();
 
         /// <summary>
-        /// RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.
+        /// RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.
         /// </summary>
-        /// <value>RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</value>
+        /// <value>RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</value>
         public enum RateShopByEnum
         {
             /// <summary>
@@ -65,14 +65,14 @@ namespace com.pitneybowes.api360.Model
             Carrier = 1,
 
             /// <summary>
-            /// Enum Rategroup for value: rategroup
+            /// Enum RateGroup for value: rateGroup
             /// </summary>
-            Rategroup = 2,
+            RateGroup = 2,
 
             /// <summary>
-            /// Enum Ruleset for value: ruleset
+            /// Enum RuleSet for value: ruleSet
             /// </summary>
-            Ruleset = 3
+            RuleSet = 3
         }
 
         /// <summary>
@@ -86,11 +86,11 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("carrier"))
                 return RateShopByEnum.Carrier;
 
-            if (value.Equals("rategroup"))
-                return RateShopByEnum.Rategroup;
+            if (value.Equals("rateGroup"))
+                return RateShopByEnum.RateGroup;
 
-            if (value.Equals("ruleset"))
-                return RateShopByEnum.Ruleset;
+            if (value.Equals("ruleSet"))
+                return RateShopByEnum.RuleSet;
 
             throw new NotImplementedException($"Could not convert value to type RateShopByEnum: '{value}'");
         }
@@ -105,11 +105,11 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("carrier"))
                 return RateShopByEnum.Carrier;
 
-            if (value.Equals("rategroup"))
-                return RateShopByEnum.Rategroup;
+            if (value.Equals("rateGroup"))
+                return RateShopByEnum.RateGroup;
 
-            if (value.Equals("ruleset"))
-                return RateShopByEnum.Ruleset;
+            if (value.Equals("ruleSet"))
+                return RateShopByEnum.RuleSet;
 
             return null;
         }
@@ -125,20 +125,20 @@ namespace com.pitneybowes.api360.Model
             if (value == RateShopByEnum.Carrier)
                 return "carrier";
 
-            if (value == RateShopByEnum.Rategroup)
-                return "rategroup";
+            if (value == RateShopByEnum.RateGroup)
+                return "rateGroup";
 
-            if (value == RateShopByEnum.Ruleset)
-                return "ruleset";
+            if (value == RateShopByEnum.RuleSet)
+                return "ruleSet";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
 
         /// <summary>
-        /// RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.
+        /// RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.
         /// </summary>
-        /// <value>RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</value>
-        /* <example>ruleset</example> */
+        /// <value>RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</value>
+        /* <example>ruleSet</example> */
         [JsonPropertyName("rateShopBy")]
         public RateShopByEnum RateShopBy { get; set; }
 

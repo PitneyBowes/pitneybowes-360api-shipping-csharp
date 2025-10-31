@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **CorrelationId** | **string** | Key assigned by the shipping system to the transaction. | [optional] 
 **FromAddress** | [**GetSingleShipmentFromAddress**](GetSingleShipmentFromAddress.md) |  | [optional] 
 **Parcel** | [**ReturnLabelParcel**](ReturnLabelParcel.md) |  | [optional] 
-**Metadata** | [**List&lt;GetAllShipmentsDataInnerMetadataInner&gt;**](GetAllShipmentsDataInnerMetadataInner.md) | Additional metadata that needs to be stored for this shipment can be added here. For now, &#39;Cost Account Name&#39; is supported. | [optional] 
+**Metadata** | [**List&lt;GetAllShipmentsDataInnerMetadataInner&gt;**](GetAllShipmentsDataInnerMetadataInner.md) | Additional metadata that needs to be stored for this shipment can be added here.  | [optional] 
 **ParcelId** | **string** | A unique identifier associated with the Parcel. | [optional] 
 **ParcelTrackingNumber** | **string** | The Tracking number given to the Parcel for tracking purpose. | [optional] 
 **Rate** | [**GetSingleShipmentRate**](GetSingleShipmentRate.md) |  | [optional] 

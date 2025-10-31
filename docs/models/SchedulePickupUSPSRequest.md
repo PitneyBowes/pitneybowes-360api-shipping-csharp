@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **Additionalnotes** | **string** | Additional instructions or notes for the carrier regarding the pickup. &lt;br /&gt; Value is required when packageLocation is set to other. | [optional] 
 **Reference** | **string** | An optional Reference related to the pickup. | [optional] 
 **ShipmentIds** | **List&lt;string&gt;** | A comma-separated list of shipment IDs associated with the pickup request.  | [optional] 
-**PickupOptions** | [**SchedulePickupDHLEXPRequestPickupOptions**](SchedulePickupDHLEXPRequestPickupOptions.md) |  | [optional] 
+**PickupOptions** | [**SchedulePickupUSPSRequestPickupOptions**](SchedulePickupUSPSRequestPickupOptions.md) |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

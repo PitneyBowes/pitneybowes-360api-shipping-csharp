@@ -43,7 +43,7 @@ namespace com.pitneybowes.api360.Client
             string value = reader.GetString()!;
 
             foreach(string format in Formats)
-                if (DateOnly.TryParseExact(value, format, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal, out DateOnly result))
+                if (DateOnly.TryParseExact(value, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly result))
                     return result;
 
             throw new NotSupportedException();

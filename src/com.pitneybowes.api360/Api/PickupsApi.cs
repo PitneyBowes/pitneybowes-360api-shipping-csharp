@@ -88,6 +88,31 @@ namespace com.pitneybowes.api360.Api
         Task<ICancelledPickupDocumentApiResponse?> CancelledPickupDocumentOrDefaultAsync(string type, GetPickupCancelledDocumentRequest getPickupCancelledDocumentRequest, Option<string> xPBDeveloperPartnerId = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Check Pickup Availability
+        /// </summary>
+        /// <remarks>
+        /// Validates if the requested carrier can perform a pickup at the provided address, given the shipment details and requested pickup date/time.  The response also indicates: - If pickup is available at the location. - What types of pickup (residential, on-demand, scheduled) are supported. - Cutoff times and valid pickup time windows. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="acceptLanguage">Locale for response messages, BCP-47 format (language-region), e.g., en-US. </param>
+        /// <param name="pickupAvailabilityRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICheckPickupAvailabilityApiResponse"/>&gt;</returns>
+        Task<ICheckPickupAvailabilityApiResponse> CheckPickupAvailabilityAsync(string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Check Pickup Availability
+        /// </summary>
+        /// <remarks>
+        /// Validates if the requested carrier can perform a pickup at the provided address, given the shipment details and requested pickup date/time.  The response also indicates: - If pickup is available at the location. - What types of pickup (residential, on-demand, scheduled) are supported. - Cutoff times and valid pickup time windows. 
+        /// </remarks>
+        /// <param name="acceptLanguage">Locale for response messages, BCP-47 format (language-region), e.g., en-US. </param>
+        /// <param name="pickupAvailabilityRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICheckPickupAvailabilityApiResponse"/>?&gt;</returns>
+        Task<ICheckPickupAvailabilityApiResponse?> CheckPickupAvailabilityOrDefaultAsync(string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Get Pickup Document
         /// </summary>
         /// <remarks>
@@ -119,14 +144,14 @@ namespace com.pitneybowes.api360.Api
         /// Get Pickups
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="carrier">Name of the carrier to retrieve pickups for.</param>
-        /// <param name="startDate">The start date for filtering pickups. Format: YYYY-MM-DD.</param>
-        /// <param name="endDate">The end date for filtering pickups. Format: YYYY-MM-DD.</param>
-        /// <param name="status">The status of the pickups to retrieve (scheduled or cancelled).</param>
         /// <param name="xPBDeveloperPartnerId">This is the Developer Partner ID. When the developer is the only partner, this field is not required. (optional)</param>
+        /// <param name="carrier">Name of the carrier to retrieve pickups for. (optional)</param>
+        /// <param name="startDate">The start date for filtering pickups. Format: YYYY-MM-DD. (optional)</param>
+        /// <param name="endDate">The end date for filtering pickups. Format: YYYY-MM-DD. (optional)</param>
+        /// <param name="status">The status of the pickups to retrieve (scheduled or cancelled). (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetPickupsApiResponse"/>&gt;</returns>
-        Task<IGetPickupsApiResponse> GetPickupsAsync(string carrier, string startDate, string endDate, string status, Option<string> xPBDeveloperPartnerId = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IGetPickupsApiResponse> GetPickupsAsync(Option<string> xPBDeveloperPartnerId = default, Option<string> carrier = default, Option<string> startDate = default, Option<string> endDate = default, Option<string> status = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get Pickups
@@ -134,20 +159,20 @@ namespace com.pitneybowes.api360.Api
         /// <remarks>
         /// Get Pickups
         /// </remarks>
-        /// <param name="carrier">Name of the carrier to retrieve pickups for.</param>
-        /// <param name="startDate">The start date for filtering pickups. Format: YYYY-MM-DD.</param>
-        /// <param name="endDate">The end date for filtering pickups. Format: YYYY-MM-DD.</param>
-        /// <param name="status">The status of the pickups to retrieve (scheduled or cancelled).</param>
         /// <param name="xPBDeveloperPartnerId">This is the Developer Partner ID. When the developer is the only partner, this field is not required. (optional)</param>
+        /// <param name="carrier">Name of the carrier to retrieve pickups for. (optional)</param>
+        /// <param name="startDate">The start date for filtering pickups. Format: YYYY-MM-DD. (optional)</param>
+        /// <param name="endDate">The end date for filtering pickups. Format: YYYY-MM-DD. (optional)</param>
+        /// <param name="status">The status of the pickups to retrieve (scheduled or cancelled). (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetPickupsApiResponse"/>?&gt;</returns>
-        Task<IGetPickupsApiResponse?> GetPickupsOrDefaultAsync(string carrier, string startDate, string endDate, string status, Option<string> xPBDeveloperPartnerId = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IGetPickupsApiResponse?> GetPickupsOrDefaultAsync(Option<string> xPBDeveloperPartnerId = default, Option<string> carrier = default, Option<string> startDate = default, Option<string> endDate = default, Option<string> status = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Schedule Pickup
         /// </summary>
         /// <remarks>
-        /// Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments that you have already created.
+        /// Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments.  The pickup schedule scope is determined by what you provide in the request:   - **If pickupSummary is provided:** a pickup is scheduled for the packages described in the summary.   - **If ShipmentIds is provided:** a pickup is scheduled for the specified shipments.   - **If both pickupSummary and ShipmentIds are provided:** a pickup is scheduled for all shipments including by both inputs.   - **If neither is provided:** a pickup is scheduled for all shipments created on the given carrier account by that time of the day. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="schedulePickupRequest"></param>
@@ -160,7 +185,7 @@ namespace com.pitneybowes.api360.Api
         /// Schedule Pickup
         /// </summary>
         /// <remarks>
-        /// Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments that you have already created.
+        /// Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments.  The pickup schedule scope is determined by what you provide in the request:   - **If pickupSummary is provided:** a pickup is scheduled for the packages described in the summary.   - **If ShipmentIds is provided:** a pickup is scheduled for the specified shipments.   - **If both pickupSummary and ShipmentIds are provided:** a pickup is scheduled for all shipments including by both inputs.   - **If neither is provided:** a pickup is scheduled for all shipments created on the given carrier account by that time of the day. 
         /// </remarks>
         /// <param name="schedulePickupRequest"></param>
         /// <param name="xPBDeveloperPartnerId">This is the Developer Partner ID. When the developer is the only partner, this field is not required. (optional)</param>
@@ -203,6 +228,36 @@ namespace com.pitneybowes.api360.Api
     /// The <see cref="ICancelledPickupDocumentApiResponse"/>
     /// </summary>
     public interface ICancelledPickupDocumentApiResponse : com.pitneybowes.api360.Client.IApiResponse, IOk<com.pitneybowes.api360.Model.GetPickupCancelledDocumentResponse?>, IBadRequest<List<InvalidErrorsInner>?>, IUnauthorized<com.pitneybowes.api360.Model.UnauthorizedError?>, IInternalServerError<com.pitneybowes.api360.Model.ServerError?>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 400 BadRequest
+        /// </summary>
+        /// <returns></returns>
+        bool IsBadRequest { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 500 InternalServerError
+        /// </summary>
+        /// <returns></returns>
+        bool IsInternalServerError { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="ICheckPickupAvailabilityApiResponse"/>
+    /// </summary>
+    public interface ICheckPickupAvailabilityApiResponse : com.pitneybowes.api360.Client.IApiResponse, IOk<com.pitneybowes.api360.Model.PickupAvailabilityResponse?>, IBadRequest<List<InvalidErrorsInner>?>, IUnauthorized<com.pitneybowes.api360.Model.UnauthorizedError?>, IInternalServerError<com.pitneybowes.api360.Model.ServerError?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -362,6 +417,26 @@ namespace com.pitneybowes.api360.Api
         internal void ExecuteOnErrorCancelledPickupDocument(Exception exception)
         {
             OnErrorCancelledPickupDocument?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnCheckPickupAvailability;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorCheckPickupAvailability;
+
+        internal void ExecuteOnCheckPickupAvailability(PickupsApi.CheckPickupAvailabilityApiResponse apiResponse)
+        {
+            OnCheckPickupAvailability?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorCheckPickupAvailability(Exception exception)
+        {
+            OnErrorCheckPickupAvailability?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -632,11 +707,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<CancelPickupsApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<CancelPickupsApiResponse>();
+                        CancelPickupsApiResponse apiResponseLocalVar;
 
-                        CancelPickupsApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups/cancel", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups/cancel", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterCancelPickupsDefaultImplementation(apiResponseLocalVar, schedulePickupCancelRequest, xPBDeveloperPartnerId);
 
@@ -679,6 +760,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public CancelPickupsApiResponse(ILogger<CancelPickupsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="CancelPickupsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CancelPickupsApiResponse(ILogger<CancelPickupsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -969,8 +1066,8 @@ namespace com.pitneybowes.api360.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/api/v1/pickups/document/cancelled"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/api/v1/pickups/document/cancelled");
+                        ? "/api/v1/pickups/document"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/api/v1/pickups/document");
 
                     System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
 
@@ -1018,11 +1115,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<CancelledPickupDocumentApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<CancelledPickupDocumentApiResponse>();
+                        CancelledPickupDocumentApiResponse apiResponseLocalVar;
 
-                        CancelledPickupDocumentApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups/document/cancelled", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups/document", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterCancelledPickupDocumentDefaultImplementation(apiResponseLocalVar, type, getPickupCancelledDocumentRequest, xPBDeveloperPartnerId);
 
@@ -1038,7 +1141,7 @@ namespace com.pitneybowes.api360.Api
             }
             catch(Exception e)
             {
-                OnErrorCancelledPickupDocumentDefaultImplementation(e, "/api/v1/pickups/document/cancelled", uriBuilderLocalVar.Path, type, getPickupCancelledDocumentRequest, xPBDeveloperPartnerId);
+                OnErrorCancelledPickupDocumentDefaultImplementation(e, "/api/v1/pickups/document", uriBuilderLocalVar.Path, type, getPickupCancelledDocumentRequest, xPBDeveloperPartnerId);
                 Events.ExecuteOnErrorCancelledPickupDocument(e);
                 throw;
             }
@@ -1070,6 +1173,22 @@ namespace com.pitneybowes.api360.Api
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
+            /// <summary>
+            /// The <see cref="CancelledPickupDocumentApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CancelledPickupDocumentApiResponse(ILogger<CancelledPickupDocumentApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
             partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
 
             /// <summary>
@@ -1096,6 +1215,397 @@ namespace com.pitneybowes.api360.Api
             /// <param name="result"></param>
             /// <returns></returns>
             public bool TryOk([NotNullWhen(true)]out com.pitneybowes.api360.Model.GetPickupCancelledDocumentResponse? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public bool IsBadRequest => 400 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 400 BadRequest
+            /// </summary>
+            /// <returns></returns>
+            public List<InvalidErrorsInner>? BadRequest()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsBadRequest
+                    ? System.Text.Json.JsonSerializer.Deserialize<List<InvalidErrorsInner>>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryBadRequest([NotNullWhen(true)]out List<InvalidErrorsInner>? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = BadRequest();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public com.pitneybowes.api360.Model.UnauthorizedError? Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<com.pitneybowes.api360.Model.UnauthorizedError>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized([NotNullWhen(true)]out com.pitneybowes.api360.Model.UnauthorizedError? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public bool IsInternalServerError => 500 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 500 InternalServerError
+            /// </summary>
+            /// <returns></returns>
+            public com.pitneybowes.api360.Model.ServerError? InternalServerError()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsInternalServerError
+                    ? System.Text.Json.JsonSerializer.Deserialize<com.pitneybowes.api360.Model.ServerError>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 500 InternalServerError and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryInternalServerError([NotNullWhen(true)]out com.pitneybowes.api360.Model.ServerError? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = InternalServerError();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)500);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatCheckPickupAvailability(ref string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="acceptLanguage"></param>
+        /// <param name="pickupAvailabilityRequest"></param>
+        /// <returns></returns>
+        private void ValidateCheckPickupAvailability(string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest)
+        {
+            if (acceptLanguage == null)
+                throw new ArgumentNullException(nameof(acceptLanguage));
+
+            if (pickupAvailabilityRequest == null)
+                throw new ArgumentNullException(nameof(pickupAvailabilityRequest));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="acceptLanguage"></param>
+        /// <param name="pickupAvailabilityRequest"></param>
+        private void AfterCheckPickupAvailabilityDefaultImplementation(ICheckPickupAvailabilityApiResponse apiResponseLocalVar, string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest)
+        {
+            bool suppressDefaultLog = false;
+            AfterCheckPickupAvailability(ref suppressDefaultLog, apiResponseLocalVar, acceptLanguage, pickupAvailabilityRequest);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="acceptLanguage"></param>
+        /// <param name="pickupAvailabilityRequest"></param>
+        partial void AfterCheckPickupAvailability(ref bool suppressDefaultLog, ICheckPickupAvailabilityApiResponse apiResponseLocalVar, string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="acceptLanguage"></param>
+        /// <param name="pickupAvailabilityRequest"></param>
+        private void OnErrorCheckPickupAvailabilityDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorCheckPickupAvailability(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, acceptLanguage, pickupAvailabilityRequest);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="acceptLanguage"></param>
+        /// <param name="pickupAvailabilityRequest"></param>
+        partial void OnErrorCheckPickupAvailability(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest);
+
+        /// <summary>
+        /// Check Pickup Availability Validates if the requested carrier can perform a pickup at the provided address, given the shipment details and requested pickup date/time.  The response also indicates: - If pickup is available at the location. - What types of pickup (residential, on-demand, scheduled) are supported. - Cutoff times and valid pickup time windows. 
+        /// </summary>
+        /// <param name="acceptLanguage">Locale for response messages, BCP-47 format (language-region), e.g., en-US. </param>
+        /// <param name="pickupAvailabilityRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICheckPickupAvailabilityApiResponse"/>&gt;</returns>
+        public async Task<ICheckPickupAvailabilityApiResponse?> CheckPickupAvailabilityOrDefaultAsync(string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await CheckPickupAvailabilityAsync(acceptLanguage, pickupAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Check Pickup Availability Validates if the requested carrier can perform a pickup at the provided address, given the shipment details and requested pickup date/time.  The response also indicates: - If pickup is available at the location. - What types of pickup (residential, on-demand, scheduled) are supported. - Cutoff times and valid pickup time windows. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="acceptLanguage">Locale for response messages, BCP-47 format (language-region), e.g., en-US. </param>
+        /// <param name="pickupAvailabilityRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICheckPickupAvailabilityApiResponse"/>&gt;</returns>
+        public async Task<ICheckPickupAvailabilityApiResponse> CheckPickupAvailabilityAsync(string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateCheckPickupAvailability(acceptLanguage, pickupAvailabilityRequest);
+
+                FormatCheckPickupAvailability(ref acceptLanguage, pickupAvailabilityRequest);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/api/v1/pickups/availability"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, "/api/v1/pickups/availability");
+
+                    httpRequestMessageLocalVar.Headers.Add("Accept-Language", ClientUtils.ParameterToString(acceptLanguage));
+
+                    httpRequestMessageLocalVar.Content = (pickupAvailabilityRequest as object) is System.IO.Stream stream
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(stream)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(pickupAvailabilityRequest, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BearerToken bearerTokenLocalVar1 = (BearerToken) await BearerTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(bearerTokenLocalVar1);
+
+                    bearerTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string? contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string? acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Post;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<CheckPickupAvailabilityApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<CheckPickupAvailabilityApiResponse>();
+                        CheckPickupAvailabilityApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups/availability", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterCheckPickupAvailabilityDefaultImplementation(apiResponseLocalVar, acceptLanguage, pickupAvailabilityRequest);
+
+                        Events.ExecuteOnCheckPickupAvailability(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorCheckPickupAvailabilityDefaultImplementation(e, "/api/v1/pickups/availability", uriBuilderLocalVar.Path, acceptLanguage, pickupAvailabilityRequest);
+                Events.ExecuteOnErrorCheckPickupAvailability(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CheckPickupAvailabilityApiResponse"/>
+        /// </summary>
+        public partial class CheckPickupAvailabilityApiResponse : com.pitneybowes.api360.Client.ApiResponse, ICheckPickupAvailabilityApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<CheckPickupAvailabilityApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="CheckPickupAvailabilityApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CheckPickupAvailabilityApiResponse(ILogger<CheckPickupAvailabilityApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="CheckPickupAvailabilityApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CheckPickupAvailabilityApiResponse(ILogger<CheckPickupAvailabilityApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public com.pitneybowes.api360.Model.PickupAvailabilityResponse? Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<com.pitneybowes.api360.Model.PickupAvailabilityResponse>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out com.pitneybowes.api360.Model.PickupAvailabilityResponse? result)
             {
                 result = null;
 
@@ -1376,11 +1886,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetPickupDocumentApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetPickupDocumentApiResponse>();
+                        GetPickupDocumentApiResponse apiResponseLocalVar;
 
-                        GetPickupDocumentApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups/{pickupId}/document", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups/{pickupId}/document", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterGetPickupDocumentDefaultImplementation(apiResponseLocalVar, pickupId, xPBDeveloperPartnerId);
 
@@ -1423,6 +1939,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetPickupDocumentApiResponse(ILogger<GetPickupDocumentApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetPickupDocumentApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetPickupDocumentApiResponse(ILogger<GetPickupDocumentApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1593,48 +2125,48 @@ namespace com.pitneybowes.api360.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatGetPickups(ref string carrier, ref string startDate, ref string endDate, ref string status, ref Option<string> xPBDeveloperPartnerId);
+        partial void FormatGetPickups(ref Option<string> xPBDeveloperPartnerId, ref Option<string> carrier, ref Option<string> startDate, ref Option<string> endDate, ref Option<string> status);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
+        /// <param name="xPBDeveloperPartnerId"></param>
         /// <param name="carrier"></param>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <param name="status"></param>
-        /// <param name="xPBDeveloperPartnerId"></param>
         /// <returns></returns>
-        private void ValidateGetPickups(string carrier, string startDate, string endDate, string status, Option<string> xPBDeveloperPartnerId)
+        private void ValidateGetPickups(Option<string> xPBDeveloperPartnerId, Option<string> carrier, Option<string> startDate, Option<string> endDate, Option<string> status)
         {
-            if (carrier == null)
-                throw new ArgumentNullException(nameof(carrier));
-
-            if (startDate == null)
-                throw new ArgumentNullException(nameof(startDate));
-
-            if (endDate == null)
-                throw new ArgumentNullException(nameof(endDate));
-
-            if (status == null)
-                throw new ArgumentNullException(nameof(status));
-
             if (xPBDeveloperPartnerId.IsSet && xPBDeveloperPartnerId.Value == null)
                 throw new ArgumentNullException(nameof(xPBDeveloperPartnerId));
+
+            if (carrier.IsSet && carrier.Value == null)
+                throw new ArgumentNullException(nameof(carrier));
+
+            if (startDate.IsSet && startDate.Value == null)
+                throw new ArgumentNullException(nameof(startDate));
+
+            if (endDate.IsSet && endDate.Value == null)
+                throw new ArgumentNullException(nameof(endDate));
+
+            if (status.IsSet && status.Value == null)
+                throw new ArgumentNullException(nameof(status));
         }
 
         /// <summary>
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
+        /// <param name="xPBDeveloperPartnerId"></param>
         /// <param name="carrier"></param>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <param name="status"></param>
-        /// <param name="xPBDeveloperPartnerId"></param>
-        private void AfterGetPickupsDefaultImplementation(IGetPickupsApiResponse apiResponseLocalVar, string carrier, string startDate, string endDate, string status, Option<string> xPBDeveloperPartnerId)
+        private void AfterGetPickupsDefaultImplementation(IGetPickupsApiResponse apiResponseLocalVar, Option<string> xPBDeveloperPartnerId, Option<string> carrier, Option<string> startDate, Option<string> endDate, Option<string> status)
         {
             bool suppressDefaultLog = false;
-            AfterGetPickups(ref suppressDefaultLog, apiResponseLocalVar, carrier, startDate, endDate, status, xPBDeveloperPartnerId);
+            AfterGetPickups(ref suppressDefaultLog, apiResponseLocalVar, xPBDeveloperPartnerId, carrier, startDate, endDate, status);
             if (!suppressDefaultLog)
                 Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1644,12 +2176,12 @@ namespace com.pitneybowes.api360.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
+        /// <param name="xPBDeveloperPartnerId"></param>
         /// <param name="carrier"></param>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <param name="status"></param>
-        /// <param name="xPBDeveloperPartnerId"></param>
-        partial void AfterGetPickups(ref bool suppressDefaultLog, IGetPickupsApiResponse apiResponseLocalVar, string carrier, string startDate, string endDate, string status, Option<string> xPBDeveloperPartnerId);
+        partial void AfterGetPickups(ref bool suppressDefaultLog, IGetPickupsApiResponse apiResponseLocalVar, Option<string> xPBDeveloperPartnerId, Option<string> carrier, Option<string> startDate, Option<string> endDate, Option<string> status);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1657,15 +2189,15 @@ namespace com.pitneybowes.api360.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
+        /// <param name="xPBDeveloperPartnerId"></param>
         /// <param name="carrier"></param>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <param name="status"></param>
-        /// <param name="xPBDeveloperPartnerId"></param>
-        private void OnErrorGetPickupsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string carrier, string startDate, string endDate, string status, Option<string> xPBDeveloperPartnerId)
+        private void OnErrorGetPickupsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> xPBDeveloperPartnerId, Option<string> carrier, Option<string> startDate, Option<string> endDate, Option<string> status)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetPickups(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, carrier, startDate, endDate, status, xPBDeveloperPartnerId);
+            OnErrorGetPickups(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, xPBDeveloperPartnerId, carrier, startDate, endDate, status);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1677,28 +2209,28 @@ namespace com.pitneybowes.api360.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
+        /// <param name="xPBDeveloperPartnerId"></param>
         /// <param name="carrier"></param>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <param name="status"></param>
-        /// <param name="xPBDeveloperPartnerId"></param>
-        partial void OnErrorGetPickups(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string carrier, string startDate, string endDate, string status, Option<string> xPBDeveloperPartnerId);
+        partial void OnErrorGetPickups(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> xPBDeveloperPartnerId, Option<string> carrier, Option<string> startDate, Option<string> endDate, Option<string> status);
 
         /// <summary>
         /// Get Pickups Get Pickups
         /// </summary>
-        /// <param name="carrier">Name of the carrier to retrieve pickups for.</param>
-        /// <param name="startDate">The start date for filtering pickups. Format: YYYY-MM-DD.</param>
-        /// <param name="endDate">The end date for filtering pickups. Format: YYYY-MM-DD.</param>
-        /// <param name="status">The status of the pickups to retrieve (scheduled or cancelled).</param>
         /// <param name="xPBDeveloperPartnerId">This is the Developer Partner ID. When the developer is the only partner, this field is not required. (optional)</param>
+        /// <param name="carrier">Name of the carrier to retrieve pickups for. (optional)</param>
+        /// <param name="startDate">The start date for filtering pickups. Format: YYYY-MM-DD. (optional)</param>
+        /// <param name="endDate">The end date for filtering pickups. Format: YYYY-MM-DD. (optional)</param>
+        /// <param name="status">The status of the pickups to retrieve (scheduled or cancelled). (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetPickupsApiResponse"/>&gt;</returns>
-        public async Task<IGetPickupsApiResponse?> GetPickupsOrDefaultAsync(string carrier, string startDate, string endDate, string status, Option<string> xPBDeveloperPartnerId = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IGetPickupsApiResponse?> GetPickupsOrDefaultAsync(Option<string> xPBDeveloperPartnerId = default, Option<string> carrier = default, Option<string> startDate = default, Option<string> endDate = default, Option<string> status = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetPickupsAsync(carrier, startDate, endDate, status, xPBDeveloperPartnerId, cancellationToken).ConfigureAwait(false);
+                return await GetPickupsAsync(xPBDeveloperPartnerId, carrier, startDate, endDate, status, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1710,22 +2242,22 @@ namespace com.pitneybowes.api360.Api
         /// Get Pickups Get Pickups
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="carrier">Name of the carrier to retrieve pickups for.</param>
-        /// <param name="startDate">The start date for filtering pickups. Format: YYYY-MM-DD.</param>
-        /// <param name="endDate">The end date for filtering pickups. Format: YYYY-MM-DD.</param>
-        /// <param name="status">The status of the pickups to retrieve (scheduled or cancelled).</param>
         /// <param name="xPBDeveloperPartnerId">This is the Developer Partner ID. When the developer is the only partner, this field is not required. (optional)</param>
+        /// <param name="carrier">Name of the carrier to retrieve pickups for. (optional)</param>
+        /// <param name="startDate">The start date for filtering pickups. Format: YYYY-MM-DD. (optional)</param>
+        /// <param name="endDate">The end date for filtering pickups. Format: YYYY-MM-DD. (optional)</param>
+        /// <param name="status">The status of the pickups to retrieve (scheduled or cancelled). (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetPickupsApiResponse"/>&gt;</returns>
-        public async Task<IGetPickupsApiResponse> GetPickupsAsync(string carrier, string startDate, string endDate, string status, Option<string> xPBDeveloperPartnerId = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IGetPickupsApiResponse> GetPickupsAsync(Option<string> xPBDeveloperPartnerId = default, Option<string> carrier = default, Option<string> startDate = default, Option<string> endDate = default, Option<string> status = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateGetPickups(carrier, startDate, endDate, status, xPBDeveloperPartnerId);
+                ValidateGetPickups(xPBDeveloperPartnerId, carrier, startDate, endDate, status);
 
-                FormatGetPickups(ref carrier, ref startDate, ref endDate, ref status, ref xPBDeveloperPartnerId);
+                FormatGetPickups(ref xPBDeveloperPartnerId, ref carrier, ref startDate, ref endDate, ref status);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1738,10 +2270,17 @@ namespace com.pitneybowes.api360.Api
 
                     System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
 
-                    parseQueryStringLocalVar["carrier"] = ClientUtils.ParameterToString(carrier);
-                    parseQueryStringLocalVar["startDate"] = ClientUtils.ParameterToString(startDate);
-                    parseQueryStringLocalVar["endDate"] = ClientUtils.ParameterToString(endDate);
-                    parseQueryStringLocalVar["status"] = ClientUtils.ParameterToString(status);
+                    if (carrier.IsSet)
+                        parseQueryStringLocalVar["carrier"] = ClientUtils.ParameterToString(carrier.Value);
+
+                    if (startDate.IsSet)
+                        parseQueryStringLocalVar["startDate"] = ClientUtils.ParameterToString(startDate.Value);
+
+                    if (endDate.IsSet)
+                        parseQueryStringLocalVar["endDate"] = ClientUtils.ParameterToString(endDate.Value);
+
+                    if (status.IsSet)
+                        parseQueryStringLocalVar["status"] = ClientUtils.ParameterToString(status.Value);
 
                     uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
 
@@ -1772,13 +2311,19 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<GetPickupsApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetPickupsApiResponse>();
+                        GetPickupsApiResponse apiResponseLocalVar;
 
-                        GetPickupsApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups", requestedAtLocalVar, _jsonSerializerOptions);
 
-                        AfterGetPickupsDefaultImplementation(apiResponseLocalVar, carrier, startDate, endDate, status, xPBDeveloperPartnerId);
+                                break;
+                            }
+                        }
+
+                        AfterGetPickupsDefaultImplementation(apiResponseLocalVar, xPBDeveloperPartnerId, carrier, startDate, endDate, status);
 
                         Events.ExecuteOnGetPickups(apiResponseLocalVar);
 
@@ -1792,7 +2337,7 @@ namespace com.pitneybowes.api360.Api
             }
             catch(Exception e)
             {
-                OnErrorGetPickupsDefaultImplementation(e, "/api/v1/pickups", uriBuilderLocalVar.Path, carrier, startDate, endDate, status, xPBDeveloperPartnerId);
+                OnErrorGetPickupsDefaultImplementation(e, "/api/v1/pickups", uriBuilderLocalVar.Path, xPBDeveloperPartnerId, carrier, startDate, endDate, status);
                 Events.ExecuteOnErrorGetPickups(e);
                 throw;
             }
@@ -1819,6 +2364,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetPickupsApiResponse(ILogger<GetPickupsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetPickupsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetPickupsApiResponse(ILogger<GetPickupsApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2057,7 +2618,7 @@ namespace com.pitneybowes.api360.Api
         partial void OnErrorSchedulePickup(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, SchedulePickupRequest schedulePickupRequest, Option<string> xPBDeveloperPartnerId);
 
         /// <summary>
-        /// Schedule Pickup Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments that you have already created.
+        /// Schedule Pickup Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments.  The pickup schedule scope is determined by what you provide in the request:   - **If pickupSummary is provided:** a pickup is scheduled for the packages described in the summary.   - **If ShipmentIds is provided:** a pickup is scheduled for the specified shipments.   - **If both pickupSummary and ShipmentIds are provided:** a pickup is scheduled for all shipments including by both inputs.   - **If neither is provided:** a pickup is scheduled for all shipments created on the given carrier account by that time of the day. 
         /// </summary>
         /// <param name="schedulePickupRequest"></param>
         /// <param name="xPBDeveloperPartnerId">This is the Developer Partner ID. When the developer is the only partner, this field is not required. (optional)</param>
@@ -2076,7 +2637,7 @@ namespace com.pitneybowes.api360.Api
         }
 
         /// <summary>
-        /// Schedule Pickup Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments that you have already created.
+        /// Schedule Pickup Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments.  The pickup schedule scope is determined by what you provide in the request:   - **If pickupSummary is provided:** a pickup is scheduled for the packages described in the summary.   - **If ShipmentIds is provided:** a pickup is scheduled for the specified shipments.   - **If both pickupSummary and ShipmentIds are provided:** a pickup is scheduled for all shipments including by both inputs.   - **If neither is provided:** a pickup is scheduled for all shipments created on the given carrier account by that time of the day. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="schedulePickupRequest"></param>
@@ -2142,11 +2703,17 @@ namespace com.pitneybowes.api360.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
                         ILogger<SchedulePickupApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<SchedulePickupApiResponse>();
+                        SchedulePickupApiResponse apiResponseLocalVar;
 
-                        SchedulePickupApiResponse apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups", requestedAtLocalVar, _jsonSerializerOptions);
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/api/v1/pickups", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
 
                         AfterSchedulePickupDefaultImplementation(apiResponseLocalVar, schedulePickupRequest, xPBDeveloperPartnerId);
 
@@ -2189,6 +2756,22 @@ namespace com.pitneybowes.api360.Api
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public SchedulePickupApiResponse(ILogger<SchedulePickupApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="SchedulePickupApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public SchedulePickupApiResponse(ILogger<SchedulePickupApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);

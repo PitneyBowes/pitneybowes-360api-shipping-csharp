@@ -43,7 +43,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="addressLine2">The addressLine2 contains Street address or Landmark (if any).</param>
         /// <param name="addressLine3">The addressLine3 contains P.O. Box (if any) near the address.</param>
         /// <param name="company">The name of the company, in case if the recipient address is not residential. Recipient company is required for RMG b2b shipment.</param>
-        /// <param name="email">This must be recipient&#39;s valid email. Email is required if the customer is using GoFor Carrier. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; </param>
+        /// <param name="email">This must be recipient&#39;s valid email. Email is required if the customer is using GoFor Carrier. &lt;br /&gt; &#x60;Max length &#x3D; 50&#x60; </param>
         /// <param name="residential">The specified address can be Residential or Official. In case if the address is Residential, the boolean value will be &#39;true&#39;, else it will take &#39;false&#39;.</param>
         /// <param name="isPOBox">Checks if the specified address has the PO Box. In case if Yes, the boolean value will be &#39;true&#39;, else it will take &#39;false&#39;.</param>
         [JsonConstructor]
@@ -176,9 +176,9 @@ namespace com.pitneybowes.api360.Model
         public Option<string?> EmailOption { get; private set; }
 
         /// <summary>
-        /// This must be recipient&#39;s valid email. Email is required if the customer is using GoFor Carrier. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; 
+        /// This must be recipient&#39;s valid email. Email is required if the customer is using GoFor Carrier. &lt;br /&gt; &#x60;Max length &#x3D; 50&#x60; 
         /// </summary>
-        /// <value>This must be recipient&#39;s valid email. Email is required if the customer is using GoFor Carrier. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; </value>
+        /// <value>This must be recipient&#39;s valid email. Email is required if the customer is using GoFor Carrier. &lt;br /&gt; &#x60;Max length &#x3D; 50&#x60; </value>
         /* <example>recipient@gmail.com</example> */
         [JsonPropertyName("email")]
         public string? Email { get { return this.EmailOption; } set { this.EmailOption = new(value); } }

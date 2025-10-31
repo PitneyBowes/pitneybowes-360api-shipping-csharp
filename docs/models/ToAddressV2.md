@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **AddressLine2** | **string** | The addressLine2 contains Street address or Landmark (if any). | [optional] 
 **AddressLine3** | **string** | The addressLine3 contains P.O. Box (if any) near the address. | [optional] 
 **Company** | **string** | The name of the company, in case if the recipient address is not residential. Recipient company is required for RMG b2b shipment. | [optional] 
-**Email** | **string** | This must be recipient&#39;s valid email. Email is required if the customer is using GoFor Carrier. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;  | [optional] 
+**Email** | **string** | This must be recipient&#39;s valid email. Email is required if the customer is using GoFor Carrier. &lt;br /&gt; &#x60;Max length &#x3D; 50&#x60;  | [optional] 
 **Residential** | **bool** | The specified address can be Residential or Official. In case if the address is Residential, the boolean value will be &#39;true&#39;, else it will take &#39;false&#39;. | [optional] 
 **IsPOBox** | **bool** | Checks if the specified address has the PO Box. In case if Yes, the boolean value will be &#39;true&#39;, else it will take &#39;false&#39;. | [optional] 
 

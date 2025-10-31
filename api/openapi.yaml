@@ -74,11 +74,23 @@ paths:
                 type: string
               style: simple
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get Carriers
@@ -139,11 +151,23 @@ paths:
                 type: string
               style: simple
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get Countries
@@ -215,11 +239,23 @@ paths:
                 type: string
               style: simple
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get Services
@@ -331,11 +367,23 @@ paths:
                 type: string
               style: simple
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get Parcel Types
@@ -420,11 +468,23 @@ paths:
                 type: string
               style: simple
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get Special Services
@@ -462,11 +522,23 @@ paths:
                 $ref: "#/components/schemas/getCarrierAccount_200_response"
           description: A list of Carrier Accounts has been fetched.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get Carrier Accounts
@@ -532,11 +604,23 @@ paths:
                 $ref: "#/components/schemas/getAllShipments"
           description: List of shipments.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get All Shipments
@@ -566,7 +650,7 @@ paths:
         \ API compares shipping rates, services, and options across multiple carriers.\
         \ It selects the best shipping solution based on criteria such as cost, delivery\
         \ speed, or other business rules. This automates decision-making and eliminates\
-        \ the need for manual analysis of carrier data. It supports three RateShop\
+        \ the need for manual analysis of carrier data. It supports four RateShop\
         \ types: <br>\n\n**1. By Carrier:**<br>\n\n  - Manually specify the carrier\
         \ and service for shipment creation.\n  - Provides more customization than\
         \ V1 Create Shipment.\n\n**2. By RuleSet**<br>\n\n  - Automatically select\
@@ -580,14 +664,24 @@ paths:
         \ can choose between the fastest delivery or the cheapest service rate among\
         \ a predefined group of carriers.\n  - The system automatically determines\
         \ and selects the best carrier and service, without the need for manual comparisons.\n\
-        \  \n**Notes**<br>\n\n  - The `rateShopBy` field determines the variant to\
-        \ use (`carrier`, `ruleset`, or `rategroup`).\n  - Ensure that variant-specific\
-        \ fields are correctly populated:\n    - **byCarrier:** `carrierAccountId`,\
-        \ `carrier`, and `service`\n    - **byRuleSet:** `ruleType` and `shipOption`\n\
-        \    - **byRateGroup:** `ruleType` and `rateGroupId`\n\n  - Define special\
-        \ services in one of two ways - by using a `specialServiceId` or by specifying\
-        \  special service objects such as `deliveryConfirmation`, `handling`, `insurance`,\
-        \ or `returnOptions`. These two cannot be used together in the same request.\n"
+        \n**4. By CustomCarrierCode**<br>\n\n  - Instead of passing multiple fields\
+        \ (carrier, carrier account, parcel type, service, and special services) every\
+        \ time in your request payload, you can:\n\n    - Generate a [Custom Carrier\
+        \ Code](/openapi/customcode/operation/createCustomCode/) once, with all those\
+        \ values defined.\n\n    - Use that single code in your create shipment requests.\n\
+        \n    - The carrier, account, service, parcel type, and special service values\
+        \ from that code will then automatically apply.\n\n  - If parcel type, service,\
+        \ or special services are also passed in the request payload, they will be\
+        \ overridden by the values defined in the Custom Carrier Code.\n  \n**Notes**<br>\n\
+        \n  - The `rateShopBy` field determines the variant to use (`carrier`, `ruleSet`,\
+        \ or `rateGroup`).\n  - Ensure that variant-specific fields are correctly\
+        \ populated:\n    - **byCarrier:** `carrierAccountId`, `carrier`, and `service`\n\
+        \    - **byRuleSet:** `ruleType` and `shipOption`\n    - **byRateGroup:**\
+        \ `ruleType` and `rateGroupId`\n    - **byCustomCarrierCode:** `code` \n\n\
+        \  - Define special services in one of two ways - by using a `specialServiceId`\
+        \ or by specifying  special service objects such as `deliveryConfirmation`,\
+        \ `handling`, `insurance`, or `returnOptions`. These two cannot be used together\
+        \ in the same request.\n"
       operationId: createShipmentV2
       parameters:
       - description: "The Developer Partner ID is assigned by PB to uniquely identify\
@@ -641,7 +735,7 @@ paths:
         explode: true
         in: query
         name: isReturn
-        required: true
+        required: false
         schema:
           type: boolean
         style: form
@@ -670,11 +764,23 @@ paths:
                 $ref: "#/components/schemas/createShipmentV2_200_response"
           description: The shipment has been created successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Create Shipment
@@ -699,11 +805,23 @@ paths:
                 $ref: "#/components/schemas/rateShipment_200_response"
           description: Rate Shop has been generated successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Rate Shipment
@@ -728,11 +846,23 @@ paths:
                 $ref: "#/components/schemas/ErrCoversheetResponse"
           description: The ERR coversheet has been successfully created.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Create ERR Single Coversheet
@@ -769,13 +899,29 @@ paths:
                 $ref: "#/components/schemas/getSingleShipment"
           description: The shipment has been retrieved.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "404":
-          $ref: "#/components/responses/NotFoundError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/notFoundErrors"
+          description: The requested resource was not found.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get Shipment by Id
@@ -828,13 +974,29 @@ paths:
                 $ref: "#/components/schemas/uploadETD_200_response"
           description: The pre-signed S3 upload url is generated successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "404":
-          $ref: "#/components/responses/NotFoundError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/notFoundErrors"
+          description: The requested resource was not found.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Upload Electronic Trade Document
@@ -905,13 +1067,29 @@ paths:
                 $ref: "#/components/schemas/reprintShipmentV2"
           description: The shipment has been reprinted.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "404":
-          $ref: "#/components/responses/NotFoundError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/notFoundErrors"
+          description: The requested resource was not found.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Reprint Shipment
@@ -985,13 +1163,29 @@ paths:
                 $ref: "#/components/schemas/cancelShipmentV2"
           description: The Shipment has been cancelled.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "404":
-          $ref: "#/components/responses/NotFoundError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/notFoundErrors"
+          description: The requested resource was not found.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Cancel Shipment
@@ -1015,7 +1209,7 @@ paths:
         explode: true
         in: query
         name: carrier
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -1023,7 +1217,7 @@ paths:
         explode: true
         in: query
         name: startDate
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -1031,7 +1225,7 @@ paths:
         explode: true
         in: query
         name: endDate
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -1039,7 +1233,7 @@ paths:
         explode: true
         in: query
         name: status
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -1051,11 +1245,23 @@ paths:
                 $ref: "#/components/schemas/getAllPickups"
           description: List of pickups.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get Pickups
@@ -1063,8 +1269,14 @@ paths:
       - Pickups
     post:
       description: "Pickups endpoint allows you to schedule pickups with USPS, DHL\
-        \ Express, UPS and FedEx carriers for eligible shipments that you have already\
-        \ created."
+        \ Express, UPS and FedEx carriers for eligible shipments. \nThe pickup schedule\
+        \ scope is determined by what you provide in the request:\n  - **If pickupSummary\
+        \ is provided:** a pickup is scheduled for the packages described in the summary.\n\
+        \  - **If ShipmentIds is provided:** a pickup is scheduled for the specified\
+        \ shipments.\n  - **If both pickupSummary and ShipmentIds are provided:**\
+        \ a pickup is scheduled for all shipments including by both inputs.\n  - **If\
+        \ neither is provided:** a pickup is scheduled for all shipments created on\
+        \ the given carrier account by that time of the day.\n"
       operationId: schedulePickup
       parameters:
       - description: "This is the Developer Partner ID. When the developer is the\
@@ -1090,11 +1302,23 @@ paths:
                 $ref: "#/components/schemas/schedulePickup_200_response"
           description: The Pickup has been created successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Schedule Pickup
@@ -1128,11 +1352,23 @@ paths:
                 $ref: "#/components/schemas/schedulePickupCancelResponse"
           description: Pick up cancelled successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Cancel Pickups
@@ -1178,17 +1414,29 @@ paths:
                 type: string
               style: simple
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get Pickup Document
       tags:
       - Pickups
-  /api/v1/pickups/document/cancelled:
+  /api/v1/pickups/document:
     post:
       description: This operation generates a PDF receipt for pickup cancellations.
         It supports creating receipts for multiple cancelled pickups.
@@ -1226,14 +1474,85 @@ paths:
                 $ref: "#/components/schemas/getPickupCancelledDocumentResponse"
           description: The pickup has been cancelled.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Cancelled Pickup Document
+      tags:
+      - Pickups
+  /api/v1/pickups/availability:
+    post:
+      description: |
+        Validates if the requested carrier can perform a pickup at the provided address,
+        given the shipment details and requested pickup date/time.
+
+        The response also indicates:
+        - If pickup is available at the location.
+        - What types of pickup (residential, on-demand, scheduled) are supported.
+        - Cutoff times and valid pickup time windows.
+      operationId: checkPickupAvailability
+      parameters:
+      - description: |
+          Locale for response messages, BCP-47 format (language-region), e.g., en-US.
+        explode: false
+        in: header
+        name: Accept-Language
+        required: true
+        schema:
+          example: en-US
+          pattern: "^[a-z]{2}-[A-Z]{2}$"
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PickupAvailabilityRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PickupAvailabilityResponse"
+          description: Pickup availability details returned successfully.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
+      security:
+      - bearerAuth: []
+      summary: Check Pickup Availability
       tags:
       - Pickups
   /api/v1/err/shipments/{shipmentId}/signaturefile:
@@ -1279,11 +1598,23 @@ paths:
                 $ref: "#/components/schemas/SignatureFileResponse"
           description: Signature image as proof of delivered shipment.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Signature Image ERR
@@ -1321,11 +1652,23 @@ paths:
                 $ref: "#/components/schemas/CancelStampsResponseERR"
           description: Stamps Refund Form has been generated.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Cancel Stamps ERR
@@ -1390,11 +1733,23 @@ paths:
                 $ref: "#/components/schemas/BPODDownloadResponse"
           description: The ZIP URL for BPOD files has been created for download.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Download BPOD Files
@@ -1460,11 +1815,23 @@ paths:
                 $ref: "#/components/schemas/multipieceShipment_200_response"
           description: The Multipiece Shipment created successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Multipiece Shipment
@@ -1510,11 +1877,23 @@ paths:
                 $ref: "#/components/schemas/multipieceRates_200_response"
           description: The Multipiece Rates created successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Multipiece Rates
@@ -1554,11 +1933,23 @@ paths:
                 $ref: "#/components/schemas/ReprintMultipieceShipmentResponse"
           description: The Multipiece Shipment created successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Reprint Multipiece Shipment
@@ -1596,11 +1987,23 @@ paths:
                 $ref: "#/components/schemas/cancelShipment"
           description: The Multipiece Shipment created successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Cancel Multipiece Shipment
@@ -1661,11 +2064,23 @@ paths:
                 $ref: "#/components/schemas/PrintDocumentResponse"
           description: The document has been printed successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Print Document
@@ -1723,7 +2138,11 @@ paths:
         "200":
           description: Successfully deleted printer mapping
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
       security:
       - bearerAuth: []
       summary: Delete Printer mapping
@@ -1784,7 +2203,11 @@ paths:
                 $ref: "#/components/schemas/PrinterMappingGetResponse"
           description: Mapping printer Get Successfully
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
       security:
       - bearerAuth: []
       summary: Get Printer mapping
@@ -1842,7 +2265,11 @@ paths:
                 $ref: "#/components/schemas/PrinterMappingResponse"
           description: Successfully mapped printer
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
       security:
       - bearerAuth: []
       summary: Printer mapping
@@ -1903,11 +2330,23 @@ paths:
                 $ref: "#/components/schemas/JobStatus"
           description: The document has been printed successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Job status
@@ -1954,11 +2393,23 @@ paths:
                 $ref: "#/components/schemas/AllDefaults"
           description: List of Defaults.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get All Defaults
@@ -1986,11 +2437,23 @@ paths:
                 $ref: "#/components/schemas/CreateDefaultsResponse"
           description: "Defaults (i.e., default values) have been created successfully."
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Create Defaults
@@ -2014,11 +2477,23 @@ paths:
         "200":
           description: "Defaults (i.e., default values) have been deleted successfully."
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Delete Defaults by ID
@@ -2045,11 +2520,23 @@ paths:
                 $ref: "#/components/schemas/DefaultResponse"
           description: Defaults values have been retrieved successfully.
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Get Defaults By ID
@@ -2078,16 +2565,88 @@ paths:
         "200":
           description: "Defaults (i.e., default values) have been updated successfully."
         "400":
-          $ref: "#/components/responses/BadRequestError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
         "401":
-          $ref: "#/components/responses/UnauthorizedError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
         "500":
-          $ref: "#/components/responses/InternalServerError"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
       security:
       - bearerAuth: []
       summary: Update Defaults
       tags:
       - Defaults
+  /api/v1/carriers/{carrier}:
+    put:
+      description: "Sets the allowed capabilities—services, packages, and special\
+        \ services - for a subscription and carrier. By default, all carrier-provided\
+        \ capabilities are available. After this call, only the specified capabilities\
+        \ are permitted for Rate Shop and Create Shipment operations. Requests that\
+        \ use capabilities not in this allowlist are rejected with an error."
+      operationId: setSubscriptionCapabilities
+      parameters:
+      - description: Carrier name whose capabilities are to be allowlisted for this
+          subscription.
+        example: USPS
+        explode: false
+        in: path
+        name: carrier
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              originCountryCode: US
+              capabilities:
+                parcelTypes:
+                - LP
+                services:
+                - NDA
+                specialServices:
+                - INS
+            schema:
+              $ref: "#/components/schemas/SubscriptionCapabilitiesRequest"
+        required: true
+      responses:
+        "200":
+          description: Subscription capabilities have been updated successfully.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
+      security:
+      - bearerAuth: []
+      summary: Update Carriers
+      tags:
+      - Shipment
 components:
   responses:
     UnauthorizedError:
@@ -2585,7 +3144,7 @@ components:
             invoiceNumber: "123456"
             licenseNumber: "123456"
             sdrValue: 10
-            termsOfSale: DDU
+            termsOfSale: DDP
       properties:
         fromAddress:
           $ref: "#/components/schemas/fromAddressV2"
@@ -2602,22 +3161,26 @@ components:
           type: string
         rateShopBy:
           description: "RateShop, which is attached to an Enterprise or Location,\
-            \ is done through three approaches: by Carrier, by RateGroup, and by Ruleset.\
-            \ <br />  Through Carrier, customers can choose the carriers as per requirement,\
-            \ based on which services, parcel types, and special services can be selected,\
-            \ and RateShop is done. <br /> Through RateGroup, customers can select\
-            \ the RateGroup, which has been divided into two categories: Cheapest\
-            \ (w.r.t. price) and Fastest (w.r.t. delivery hours). <br /> Through Ruleset,\
-            \ customers can define the Condition/rule for selecting carriers and their\
-            \ services, so they do not need to worry for Rate Shopping every time\
-            \ they create Shipment. For example, For a particular location, they can\
-            \ set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly,\
-            \ for a particular amount like below $1000 Dollars, they can select a\
-            \ definite carrier service, based on RateGroup."
+            \ is done through four approaches: by Carrier, by RateGroup, by RuleSet\
+            \ and by CustomCarrierCode. <br />  Through Carrier, customers can choose\
+            \ the carriers as per requirement, based on which services, parcel types,\
+            \ and special services can be selected, and RateShop is done. <br /> Through\
+            \ RateGroup, customers can select the RateGroup, which has been divided\
+            \ into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery\
+            \ hours). <br /> Through RuleSet, customers can define the Condition/rule\
+            \ for selecting carriers and their services, so they do not need to worry\
+            \ for Rate Shopping every time they create Shipment. For example, For\
+            \ a particular location, they can set one definite carrier, or apply RateGroup\
+            \ - Cheapest/Fastest. Similarly, for a particular amount like below $1000\
+            \ Dollars, they can select a definite carrier service, based on RateGroup.\
+            \ <br/> Through customCarrierCode, customers can create a shipment using\
+            \ a single code (Custom Carrier Code) that represents a specific combination\
+            \ of carrier, carrier account, parcel type, service, and special services."
           enum:
           - carrier
           - rateGroup
-          - ruleset
+          - ruleSet
+          - customCarrierCode
           example: carrier
           type: string
         byCarrier:
@@ -2634,7 +3197,9 @@ components:
           $ref: "#/components/schemas/referenceV2"
         metadata:
           description: "Additional metadata that needs to be stored for this shipment\
-            \ can be added here.<br /> For now, 'Cost Account Name' is supported."
+            \ can be added here.<br /> Supported values are [Cost Account Name](/openapi/costaccount/operation/addCostAccount/),\
+            \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
           items:
             $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_metadata_inner"
           type: array
@@ -2813,6 +3378,68 @@ components:
       - type
       type: object
     shipmentDomesticByCarrier:
+      example:
+        fromAddress:
+          name: Sender Name
+          addressLine1: 1600 Amphitheatre Parkway
+          addressLine2: near abc street
+          addressLine3: near xyz street
+          company: PB
+          email: testuser@gmail.com
+          phone: "6502530000"
+          cityTown: Mountain View
+          stateProvince: CA
+          postalCode: "94043"
+          inductionPostalCode: "06905"
+          countryCode: US
+          residential: true
+        toAddress:
+          name: Recipient Name
+          addressLine1: 350 Fifth Avenue
+          addressLine2: near abc street
+          addressLine3: near xyz street
+          cityTown: New York
+          stateProvince: NY
+          postalCode: "10118"
+          countryCode: US
+          company: PB
+          phone: "2127363100"
+          email: recipient@gmail.com
+          residential: true
+          isPOBox: true
+        parcel:
+          length: 10
+          width: 10
+          height: 10
+          dimUnit: IN
+          weightUnit: OZ
+          weight: 10
+          packageValue: 10
+        parcelType: PKG
+        rateShopBy: carrier
+        byCarrier:
+          carrierAccountId: YNp3883Bap3L
+          carrier: USPS
+          service: EM
+        shipmentOptions:
+          addToManifest: true
+          shipperID: "1234567890"
+        specialServices:
+        - inputParameters:
+          - name: INPUT_VALUE
+            value: "100"
+          specialserviceId: Ins
+        references:
+          reference1: custome message
+          reference2: SendTech
+        labelSize: DOC_4X6
+        labelType: SHIPPING_LABEL
+        labelFormat: PDF
+        contentType: URL
+        dateOfShipment: 2025-10-28
+        deliveryOption:
+          deliverBy: 2025-10-30
+          useBestNextDate: false
       properties:
         fromAddress:
           $ref: "#/components/schemas/fromAddressV2"
@@ -2839,24 +3466,31 @@ components:
             \ /> `Max length = 30` "
           example: PKG
           type: string
+        rateTypeId:
+          description: "Type of rate requested like COMMERCIAL, ONE_RATE, RETAIL,"
+          type: string
         rateShopBy:
           description: "RateShop, which is attached to an Enterprise or Location,\
-            \ is done through three approaches: by Carrier, by RateGroup, and by Ruleset.\
-            \ <br />  Through Carrier, customers can choose the carriers as per requirement,\
-            \ based on which services, parcel types, and special services can be selected,\
-            \ and RateShop is done. <br /> Through RateGroup, customers can select\
-            \ the RateGroup, which has been divided into two categories: Cheapest\
-            \ (w.r.t. price) and Fastest (w.r.t. delivery hours). <br /> Through Ruleset,\
-            \ customers can define the Condition/rule for selecting carriers and their\
-            \ services, so they do not need to worry for Rate Shopping every time\
-            \ they create Shipment. For example, For a particular location, they can\
-            \ set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly,\
-            \ for a particular amount like below $1000 Dollars, they can select a\
-            \ definite carrier service, based on RateGroup."
+            \ is done through four approaches: by Carrier, by RateGroup, by RuleSet\
+            \ and by CustomCarrierCode**. <br />  Through Carrier, customers can choose\
+            \ the carriers as per requirement, based on which services, parcel types,\
+            \ and special services can be selected, and RateShop is done. <br /> Through\
+            \ RateGroup, customers can select the RateGroup, which has been divided\
+            \ into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery\
+            \ hours). <br /> Through RuleSet, customers can define the Condition/rule\
+            \ for selecting carriers and their services, so they do not need to worry\
+            \ for Rate Shopping every time they create Shipment. For example, For\
+            \ a particular location, they can set one definite carrier, or apply RateGroup\
+            \ - Cheapest/Fastest. Similarly, for a particular amount like below $1000\
+            \ Dollars, they can select a definite carrier service, based on RateGroup.\
+            \ <br/> Through customCarrierCode, customers can create a shipment using\
+            \ a single code (Custom Carrier Code) that represents a specific combination\
+            \ of carrier, carrier account, parcel type, service, and special services."
           enum:
           - carrier
           - rateGroup
-          - ruleset
+          - ruleSet
+          - customCarrierCode
           example: carrier
           type: string
         byCarrier:
@@ -2895,7 +3529,21 @@ components:
           $ref: "#/components/schemas/referenceV2"
         metadata:
           description: "Additional metadata that needs to be stored for this shipment\
-            \ can be added here.<br /> For now, 'Cost Account Name' is supported."
+            \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
+            \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
+            \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
+          example:
+          - name: costAccountName
+            value: costAccountName
+          - name: costAccountId
+            value: costAccountId
+          - name: costAccountCode
+            value: Code
+          - name: accountCode
+            value: code
+          - name: companyCode
+            value: code
           items:
             $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_metadata_inner"
           type: array
@@ -2961,6 +3609,317 @@ components:
       - rateShopBy
       - toAddress
       type: object
+    shipmentDomesticByCustomCarrierCode:
+      example:
+        fromAddress:
+          addressLine1: 24182 Kathy Ave
+          cityTown: Lake Forest
+          countryCode: US
+          name: Paul Wright
+          phone: 203-555-1213
+          postalCode: 92630-1827
+          stateProvince: CA
+        toAddress:
+          addressLine1: "55 Pharr Rd NW, Apt E104"
+          cityTown: Atlanta
+          countryCode: US
+          name: Paul Wright
+          phone: 203-555-1213
+          postalCode: 30305-2151
+          stateProvince: GA
+        altReturnAddress:
+          addressLine1: 27 Waterview Dr
+          cityTown: Shelton
+          countryCode: US
+          name: Paul Wright
+          phone: 203-555-1213
+          postalCode: "06484"
+          stateProvince: CT
+        parcel:
+          length: 2
+          width: 1
+          height: 1
+          dimUnit: IN
+          weightUnit: OZ
+          weight: 2
+          packageValue: 2
+        rateShopBy: customCarrierCode
+        byCustomCarrierCode:
+          code: FEDEX-custom-code1
+        shipmentOptions:
+          minimalAddressValidation: true
+          bypassAddressValidation: toAddress
+          bookingConfirmationNumber: XXXX56789812
+        references:
+          reference1: "123456"
+          reference2: SendTech
+          reference3: "98437"
+          reference4: FedEx Overnight Shipping
+          poNumber: R2W 2H2
+          department: Name department
+          additionalReference1: "612987641"
+          additionalReference2: "989"
+        carrierPayments:
+        - typeOfCharge: TRANSPORTATION_CHARGES
+          party: BILL_THIRD_PARTY
+          accountNumber: "602684342"
+          postalCode: "14609"
+          countryCode: US
+        docTab:
+          templateName: "1"
+          toAddressName:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          parcelTrackingNumber:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          carrier:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          serviceId:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          dateOfShipment:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          pieceNumber:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          packageTotalCarrierCharge:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          totalCarrierCharge:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          packageWeight:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          totalWeight:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          customField1:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          customField2:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          customField3:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          customField4:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+        metadata:
+        - name: accountCode
+          value: "280002"
+        - name: companyCode
+          value: 280002-cc
+        deliveryConfirmation:
+          type: ADULT_SIGNATURE
+          value: amit
+        handling:
+          type: ADDITIONAL_HANDLING
+          value: HOLD
+        insurance:
+          type: INSURANCE
+          amount: 200.0
+        labelSize: DOC_4X6_75
+        labelType: SHIPPING_LABEL
+        labelFormat: ZPL2
+        printerAliasName: test
+        dateOfShipment: "{{todayDate}}"
+        deliveryOption:
+          deliverBy: "{{tomorrowDate}}"
+          useBestNextDate: false
+      properties:
+        fromAddress:
+          $ref: "#/components/schemas/fromAddressV2"
+        toAddress:
+          $ref: "#/components/schemas/toAddressV2"
+        soldToAddress:
+          $ref: "#/components/schemas/soldToAddressV2"
+        additionalAddresses:
+          description: "A list of additional addresses associated with the shipment.\
+            \ \n- Each object includes an address and its designated type, such as\
+            \ BROKER or other parties involved in customs or shipping processes. \n\
+            - Additional address could be domestic or International both. \n"
+          items:
+            $ref: "#/components/schemas/additionalAddresses_inner"
+          type: array
+        altReturnAddress:
+          $ref: "#/components/schemas/shipmentDomesticByCarrier_altReturnAddress"
+        parcel:
+          $ref: "#/components/schemas/parcelV2"
+        parcelType:
+          description: "Parcel Type is required for creating a shipment while rating\
+            \ a parcel, which varies as per Carrier selection.<br /> ParcelType can\
+            \ have categories like Package, Envelopes, Paks, Boxes, Tube, etc. <br\
+            \ /> `Max length = 30` \n- For Rate Shop by Custom Carrier Code, the parcelType\
+            \ field in the request payload is optional:\n\n  - If the parcel type\
+            \ is defined in the Custom Carrier Code metadata, it does not need to\
+            \ be provided in the request payload.\n\n  - If the parcel type is not\
+            \ defined in the Custom Carrier Code, it must be provided in the request\
+            \ payload.\n\n  - If parcel type is provided in both the request payload\
+            \ and Custom Carrier Code, then  request payload value will be overridden\
+            \ by the values defined in the Custom Carrier Code.\n"
+          example: PKG
+          type: string
+        rateShopBy:
+          description: "RateShop, which is attached to an Enterprise or Location,\
+            \ is done through four approaches: by Carrier, by RateGroup, by RuleSet\
+            \  and by CustomCarrierCode. <br />  Through Carrier, customers can choose\
+            \ the carriers as per requirement, based on which services, parcel types,\
+            \ and special services can be selected, and RateShop is done. <br /> Through\
+            \ RateGroup, customers can select the RateGroup, which has been divided\
+            \ into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery\
+            \ hours). <br /> Through RuleSet, customers can define the Condition/rule\
+            \ for selecting carriers and their services, so they do not need to worry\
+            \ for Rate Shopping every time they create Shipment. For example, For\
+            \ a particular location, they can set one definite carrier, or apply RateGroup\
+            \ - Cheapest/Fastest. Similarly, for a particular amount like below $1000\
+            \ Dollars, they can select a definite carrier service, based on RateGroup.\
+            \ <br/> Through customCarrierCode, customers can create a shipment using\
+            \ a single code (Custom Carrier Code) that represents a specific combination\
+            \ of carrier, carrier account, parcel type, service, and special services. "
+          enum:
+          - carrier
+          - rateGroup
+          - ruleSet
+          - customCarrierCode
+          example: carrier
+          type: string
+        byCustomCarrierCode:
+          $ref: "#/components/schemas/byCustomCarrierCodeV2"
+        shipmentOptions:
+          $ref: "#/components/schemas/shipmentDomesticByCarrier_shipmentOptions"
+        carrierPayments:
+          description: "Defines how carrier charges are billed to a third party. Use\
+            \ this field to specify \naccount and charge type details for transportation\
+            \ and/or duties and taxes. This \nfield is optional and currently supported\
+            \ for FedEx, UPS, and DHL Express.\n\n- If no `party` (who will pay for\
+            \ TRANSPORTATION_CHARGES or duties and taxes) is explicitly specified\
+            \ during shipment creation, the charges will automatically default to\
+            \ the sender (shipper). To direct charges to a different party, the appropriate\
+            \ bill-to details must be provided in the request.\n"
+          items:
+            $ref: "#/components/schemas/carrierPayments_inner"
+          type: array
+        docTab:
+          $ref: "#/components/schemas/shipmentDomesticByCarrier_docTab"
+        specialServices:
+          description: |
+            It provides a carrier based special or extra service, which also varies as per selected service and parcel type. User can override this value by defining it at shipment level.<br/>
+
+            > Provide either the specialserviceId or the specialservice objects such as deliveryConfirmation, handling, insurance and returnOptions, but not both.
+          items:
+            $ref: "#/components/schemas/SpecialService"
+          type: array
+        deliveryConfirmation:
+          $ref: "#/components/schemas/shipmentDomesticByCarrier_deliveryConfirmation"
+        handling:
+          $ref: "#/components/schemas/shipmentDomesticByCarrier_handling"
+        insurance:
+          $ref: "#/components/schemas/shipmentDomesticByCarrier_insurance"
+        references:
+          $ref: "#/components/schemas/referenceV2"
+        metadata:
+          description: "Additional metadata that needs to be stored for this shipment\
+            \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
+            \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
+            \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
+          items:
+            $ref: "#/components/schemas/shipmentDomesticByCustomCarrierCode_metadata_inner"
+          type: array
+        labelSize:
+          description: "Defines the label size of the Shipment, that is, the Shipping\
+            \ Label is available in different Doc Size. <br /> `Max length = 10`"
+          enum:
+          - DOC_8X11
+          - DOC_4X8
+          - DOC_4X6
+          example: DOC_4X6
+          type: string
+        labelType:
+          description: Defines the type of the Shipment. QR_CODE supported for carrier
+            USPS only as of now. <br /> `Max length = 14`
+          enum:
+          - SHIPPING_LABEL
+          - QR_CODE
+          example: SHIPPING_LABEL
+          type: string
+        labelFormat:
+          description: |
+            "Defines the file/format in which the label is printed.<br /> For ZPL2, DOC_4X6 will be supported, while for PDF, both the sizes are supported. QR_CODE can be generated only in GIF format. `Max length = 14`"
+          enum:
+          - PDF
+          - ZPL2
+          - PNG
+          - GIF
+          example: ZPL2
+          type: string
+        contentType:
+          description: "Specifies how the label content is encoded.<br/> URL is supported\
+            \ for `PDF` and `GIF`. <br/> BASE64 is supported for `ZPL2`, `PNG`, and\
+            \ `GIF`. "
+          enum:
+          - URL
+          - BASE64
+          example: BASE64
+          type: string
+        printerAliasName:
+          description: Refers to a printer connected (directly or via network) to
+            a computer. `Max length = 60`
+          example: test
+          type: string
+        dateOfShipment:
+          description: The date when shipment is created/shipped. The format of the
+            Date is YYYY-MM-DD.
+          example: 2024-03-20
+          format: date
+          type: string
+        deliveryOption:
+          $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_deliveryOption"
+        returnOptions:
+          $ref: "#/components/schemas/shipmentDomesticByCarrier_returnOptions"
+        customs:
+          $ref: "#/components/schemas/shipmentDomesticByCarrier_customs"
+      required:
+      - fromAddress
+      - labelFormat
+      - labelSize
+      - labelType
+      - rateShopBy
+      - toAddress
+      type: object
     fromAddressV2:
       description: The complete address of the Sender.
       example:
@@ -3004,7 +3963,7 @@ components:
         email:
           description: 'This must be senders''s valid email. Email is required if
             the customer is using GoFor Carrier. Sender email is required for RMG
-            b2b shipment. <br /> `Max length = 30` '
+            b2b shipment. <br /> `Max length = 50` '
           example: testuser@gmail.com
           type: string
         phone:
@@ -3128,7 +4087,7 @@ components:
           type: string
         email:
           description: 'This must be recipient''s valid email. Email is required if
-            the customer is using GoFor Carrier. <br /> `Max length = 30` '
+            the customer is using GoFor Carrier. <br /> `Max length = 50` '
           example: recipient@gmail.com
           type: string
         residential:
@@ -3315,6 +4274,19 @@ components:
       - carrierAccountId
       - service
       type: object
+    byCustomCarrierCodeV2:
+      description: The shipment is generated by using a predefined custom Carrier
+        Code.
+      properties:
+        code:
+          description: "Pre-generated code (Custom Carrier Code) that bundles carrier,\
+            \ carrier account, parcel type, service, and special services. When provided,\
+            \ it overrides the corresponding fields in the request payload, eliminating\
+            \ the need to pass them individually."
+          type: string
+      required:
+      - code
+      type: object
     carrierPayments:
       description: "Defines how carrier charges are billed to a third party. Use this\
         \ field to specify \naccount and charge type details for transportation and/or\
@@ -3358,15 +4330,6 @@ components:
         \ purchase order no., carrier note, cost account no., transportation no.,\
         \ or PO no., print custom message etc.<br /> Each of the reference field can\
         \ have only one indication/value. "
-      example:
-        reference3: "98437"
-        reference4: Overnight Shipping
-        reference1: custome message
-        reference2: SendTech
-        department: Name department
-        poNumber: R2W 2H2
-        additionalReference1: "612987641"
-        additionalReference2: "989"
       properties:
         reference1:
           description: "Reference 1 can have one of the above-indicated values/information,\
@@ -3450,6 +4413,199 @@ components:
       - shipmentId
       type: object
     shipmentDomesticByRateGroup:
+      example:
+        fromAddress:
+          name: Sender Name
+          addressLine1: 1600 Amphitheatre Parkway
+          addressLine2: near abc street
+          addressLine3: near xyz street
+          company: PB
+          email: testuser@gmail.com
+          phone: "6502530000"
+          cityTown: Mountain View
+          stateProvince: CA
+          postalCode: "94043"
+          inductionPostalCode: "06905"
+          countryCode: US
+          residential: true
+        toAddress:
+          name: Recipient Name
+          addressLine1: 350 Fifth Avenue
+          addressLine2: near abc street
+          addressLine3: near xyz street
+          cityTown: New York
+          stateProvince: NY
+          postalCode: "10118"
+          countryCode: US
+          company: PB
+          phone: "2127363100"
+          email: recipient@gmail.com
+          residential: true
+          isPOBox: true
+        altReturnAddress:
+          name: User Name
+          addressLine1: 1600 Amphitheatre Parkway
+          addressLine2: near abc street
+          addressLine3: near xyz street
+          company: PB
+          email: testuser@gmail.com
+          phone: "6502530000"
+          cityTown: Mountain View
+          stateProvince: CA
+          postalCode: "94043"
+          inductionPostalCode: "06905"
+          countryCode: US
+          residential: true
+        soldToAddress:
+          name: John Doe
+          addressLine1: 1600 Amphitheatre Parkway
+          addressLine2: Suite 101
+          addressLine3: Near central market
+          company: ABC Company
+          phone: 650-253-0000
+          email: billing@abccompany.com
+          residential: false
+          cityTown: Mountain View
+          stateProvince: CA
+          postalCode: "94043"
+          countryCode: US
+          taxId: string
+          taxIdType: EIN
+        additionalAddresses:
+        - address:
+            name: Warehouse Manager
+            residential: false
+            phone: 732-443-1007
+            countryCode: US
+            company: ABC Company
+            postalCode: 08810-1411
+            cityTown: DAYTON
+            stateProvince: NJ
+            addressLine1: 2270 US HIGHWAY 130
+          addressType: EXPORTER
+        parcel:
+          length: 2
+          width: 1
+          height: 1
+          dimUnit: IN
+          weightUnit: OZ
+          weight: 2
+          packageValue: 2
+        parcelType: PKG
+        rateShopBy: rateGroup
+        byRateGroup:
+          ruleType: Cheapest
+          rateGroupId: 5GW1NZ9Q7Av5n6B
+        shipmentOptions:
+          minimalAddressValidation: true
+          bypassAddressValidation: toAddress
+          bookingConfirmationNumber: XXXX56789812
+        references:
+          reference1: "123456"
+          reference2: SendTech
+          reference3: "98437"
+          reference4: FedEx Overnight Shipping
+          poNumber: R2W 2H2
+          department: Name department
+          additionalReference1: "612987641"
+          additionalReference2: "989"
+        carrierPayments:
+        - typeOfCharge: TRANSPORTATION_CHARGES
+          party: BILL_THIRD_PARTY
+          accountNumber: "602684342"
+          postalCode: "14609"
+          countryCode: US
+        docTab:
+          templateName: "1"
+          toAddressName:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          parcelTrackingNumber:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          carrier:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          serviceId:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          dateOfShipment:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          pieceNumber:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          packageTotalCarrierCharge:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          totalCarrierCharge:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          packageWeight:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          totalWeight:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          customField1:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          customField2:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          customField3:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+          customField4:
+            displayName: TO
+            value: Test1
+            row: 1
+            column: 1
+        metadata:
+        - name: costAccountName
+          value: costAccountName
+        deliveryConfirmation:
+          type: ADULT_SIGNATURE
+          value: amit
+        handling:
+          type: ADDITIONAL_HANDLING
+          value: HOLD
+        insurance:
+          type: INSURANCE
+          amount: 200.0
+        labelSize: DOC_4X6_75
+        labelType: SHIPPING_LABEL
+        labelFormat: ZPL2
+        dateOfShipment: "{{todayDate}}"
+        deliveryOption:
+          deliverBy: "{{tomorrowDate}}"
+          useBestNextDate: false
       properties:
         fromAddress:
           $ref: "#/components/schemas/fromAddressV2"
@@ -3478,23 +4634,27 @@ components:
           type: string
         rateShopBy:
           description: "RateShop, which is attached to an Enterprise or Location,\
-            \ is done through three approaches: by Carrier, by RateGroup, and by Ruleset.\
-            \ <br />  Through Carrier, customers can choose the carriers as per requirement,\
-            \ based on which services, parcel types, and special services can be selected,\
-            \ and RateShop is done. <br /> Through RateGroup, customers can select\
-            \ the RateGroup, which has been divided into two categories: Cheapest\
-            \ (w.r.t. price) and Fastest (w.r.t. delivery hours). <br /> Through Ruleset,\
-            \ customers can define the Condition/rule for selecting carriers and their\
-            \ services, so they do not need to worry for Rate Shopping every time\
-            \ they create Shipment. For example, For a particular location, they can\
-            \ set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly,\
-            \ for a particular amount like below $1000 Dollars, they can select a\
-            \ definite carrier service, based on RateGroup."
+            \ is done through four approaches: by Carrier, by RateGroup, by RuleSet\
+            \ and by CustomCarrierCode. <br />  Through Carrier, customers can choose\
+            \ the carriers as per requirement, based on which services, parcel types,\
+            \ and special services can be selected, and RateShop is done. <br /> Through\
+            \ RateGroup, customers can select the RateGroup, which has been divided\
+            \ into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery\
+            \ hours). <br /> Through RuleSet, customers can define the Condition/rule\
+            \ for selecting carriers and their services, so they do not need to worry\
+            \ for Rate Shopping every time they create Shipment. For example, For\
+            \ a particular location, they can set one definite carrier, or apply RateGroup\
+            \ - Cheapest/Fastest. Similarly, for a particular amount like below $1000\
+            \ Dollars, they can select a definite carrier service, based on RateGroup.\
+            \ <br/> Through customCarrierCode, customers can create a shipment using\
+            \ a single code (Custom Carrier Code) that represents a specific combination\
+            \ of carrier, carrier account, parcel type, service, and special services."
           enum:
           - carrier
           - rateGroup
-          - ruleset
-          example: rategroup
+          - ruleSet
+          - customCarrierCode
+          example: rateGroup
           type: string
         byRateGroup:
           $ref: "#/components/schemas/shipmentDomesticByRateGroup_byRateGroup"
@@ -3524,9 +4684,12 @@ components:
           $ref: "#/components/schemas/referenceV2"
         metadata:
           description: "Additional metadata that needs to be stored for this shipment\
-            \ can be added here.<br /> For now, 'Cost Account Name' is supported."
+            \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
+            \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
+            \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
           items:
-            $ref: "#/components/schemas/shipmentDomesticByRateGroup_metadata_inner"
+            $ref: "#/components/schemas/shipmentDomesticByCustomCarrierCode_metadata_inner"
           type: array
         labelSize:
           description: "Defines the label size of the Shipment, that is, the Shipping\
@@ -3615,23 +4778,27 @@ components:
           type: string
         rateShopBy:
           description: "RateShop, which is attached to an Enterprise or Location,\
-            \ is done through three approaches: by Carrier, by RateGroup, and by Ruleset.\
-            \ <br />  Through Carrier, customers can choose the carriers as per requirement,\
-            \ based on which services, parcel types, and special services can be selected,\
-            \ and RateShop is done. <br /> Through RateGroup, customers can select\
-            \ the RateGroup, which has been divided into two categories: Cheapest\
-            \ (w.r.t. price) and Fastest (w.r.t. delivery hours). <br /> Through Ruleset,\
-            \ customers can define the Condition/rule for selecting carriers and their\
-            \ services, so they do not need to worry for Rate Shopping every time\
-            \ they create Shipment. For example, For a particular location, they can\
-            \ set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly,\
-            \ for a particular amount like below $1000 Dollars, they can select a\
-            \ definite carrier service, based on RateGroup."
+            \ is done through four approaches: by Carrier, by RateGroup, by RuleSet\
+            \ and by CustomCarrierCode. <br />  Through Carrier, customers can choose\
+            \ the carriers as per requirement, based on which services, parcel types,\
+            \ and special services can be selected, and RateShop is done. <br /> Through\
+            \ RateGroup, customers can select the RateGroup, which has been divided\
+            \ into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery\
+            \ hours). <br /> Through RuleSet, customers can define the Condition/rule\
+            \ for selecting carriers and their services, so they do not need to worry\
+            \ for Rate Shopping every time they create Shipment. For example, For\
+            \ a particular location, they can set one definite carrier, or apply RateGroup\
+            \ - Cheapest/Fastest. Similarly, for a particular amount like below $1000\
+            \ Dollars, they can select a definite carrier service, based on RateGroup.\
+            \ <br/> Through customCarrierCode, customers can create a shipment using\
+            \ a single code (Custom Carrier Code) that represents a specific combination\
+            \ of carrier, carrier account, parcel type, service, and special services."
           enum:
           - carrier
           - rateGroup
-          - ruleset
-          example: ruleset
+          - ruleSet
+          - customCarrierCode
+          example: ruleSet
           type: string
         byRuleSet:
           $ref: "#/components/schemas/shipmentDomesticByRuleset_byRuleSet"
@@ -3661,9 +4828,12 @@ components:
           $ref: "#/components/schemas/referenceV2"
         metadata:
           description: "Additional metadata that needs to be stored for this shipment\
-            \ can be added here.<br /> For now, 'Cost Account Name' is supported."
+            \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
+            \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
+            \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
           items:
-            $ref: "#/components/schemas/shipmentDomesticByRuleset_metadata_inner"
+            $ref: "#/components/schemas/shipmentDomesticByCustomCarrierCode_metadata_inner"
           type: array
         labelSize:
           description: "Defines the label size of the Shipment, that is, the Shipping\
@@ -3752,7 +4922,7 @@ components:
           enum:
           - carrier
           - rateGroup
-          - ruleset
+          - ruleSet
           example: carrier
           type: string
         byCarrier:
@@ -3783,9 +4953,12 @@ components:
           $ref: "#/components/schemas/referenceV2"
         metadata:
           description: "Additional metadata that needs to be stored for this shipment\
-            \ can be added here.<br /> For now, 'Cost Account Name' is supported."
+            \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
+            \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
+            \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
           items:
-            $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_metadata_inner"
+            $ref: "#/components/schemas/shipmentDomesticByCustomCarrierCode_metadata_inner"
           type: array
         labelSize:
           description: "Defines the label size of the Shipment, that is, the Shipping\
@@ -4104,22 +5277,23 @@ components:
           type: string
         rateShopBy:
           description: "RateShop, which is attached to an Enterprise or Location,\
-            \ is done through three approaches: by Carrier, by RateGroup, and by Ruleset.\
-            \  <br />  Through Carrier, customers can choose the carriers as per requirement,\
-            \ based on which services, parcel types, and special services can be selected,\
-            \ and RateShop is done. <br /> Through RateGroup, customers can select\
-            \ the RateGroup, which has been divided into two categories: Cheapest\
-            \ (w.r.t. price) and Fastest (w.r.t. delivery hours).  <br /> Through\
-            \ Ruleset, customers can define the Condition/rule for selecting carriers\
-            \ and their services, so they do not need to worry for Rate Shopping every\
-            \ time they create Shipment. For example, For a particular location, they\
-            \ can set one definite carrier, or apply RateGroup - Cheapest/Fastest.\
-            \   Similarly, for a particular amount like below $1000 Dollars, they\
-            \ can select a definite carrier service, based on RateGroup."
+            \ is done through four approaches: by Carrier, by RateGroup, by RuleSet\
+            \ and by CustomCarrierCode.  <br />  Through Carrier, customers can choose\
+            \ the carriers as per requirement, based on which services, parcel types,\
+            \ and special services can be selected, and RateShop is done. <br /> Through\
+            \ RateGroup, customers can select the RateGroup, which has been divided\
+            \ into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery\
+            \ hours).  <br /> Through RuleSet, customers can define the Condition/rule\
+            \ for selecting carriers and their services, so they do not need to worry\
+            \ for Rate Shopping every time they create Shipment. For example, For\
+            \ a particular location, they can set one definite carrier, or apply RateGroup\
+            \ - Cheapest/Fastest.   Similarly, for a particular amount like below\
+            \ $1000 Dollars, they can select a definite carrier service, based on\
+            \ RateGroup."
           enum:
           - carrier
-          - rategroup
-          - ruleset
+          - rateGroup
+          - ruleSet
           example: carrier
           type: string
         byCarrier:
@@ -4133,6 +5307,63 @@ components:
       - labelType
       - parcel
       - parcelType
+      - rateShopBy
+      - toAddress
+      type: object
+    RateShopbyCustomCarrierCode:
+      properties:
+        fromAddress:
+          $ref: "#/components/schemas/fromAddressV2"
+        toAddress:
+          $ref: "#/components/schemas/toAddressV2"
+        parcel:
+          $ref: "#/components/schemas/RateShopbyCarrier_parcel"
+        parcelType:
+          description: "Parcel Type is required for creating a shipment while rating\
+            \ a parcel, which varies as per Carrier selection.<br /> ParcelType can\
+            \ have categories like Package, Envelopes, Paks, Boxes, Tube, etc. <br\
+            \ /> `Max length = 30` \n\n- For Rate Shop by Custom Carrier Code, the\
+            \ parcelType field in the request payload is optional:\n\n- If the parcel\
+            \ type is defined in the Custom Carrier Code metadata, it does not need\
+            \ to be provided in the request payload.\n\n- If the parcel type is not\
+            \ defined in the Custom Carrier Code, it must be provided in the request\
+            \ payload.\n\n- If parcel type is provided in both the request payload\
+            \ and Custom Carrier Code, then  request payload value will be overridden\
+            \ by the values defined in the Custom Carrier Code.\n"
+          example: PKG
+          type: string
+        rateShopBy:
+          description: "RateShop, which is attached to an Enterprise or Location,\
+            \ is done through four approaches: by Carrier, by RateGroup, by RuleSet\
+            \ and by CustomCarrierCode.  <br />  Through Carrier, customers can choose\
+            \ the carriers as per requirement, based on which services, parcel types,\
+            \ and special services can be selected, and RateShop is done. <br /> Through\
+            \ RateGroup, customers can select the RateGroup, which has been divided\
+            \ into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery\
+            \ hours).  <br /> Through RuleSet, customers can define the Condition/rule\
+            \ for selecting carriers and their services, so they do not need to worry\
+            \ for Rate Shopping every time they create Shipment. For example, For\
+            \ a particular location, they can set one definite carrier, or apply RateGroup\
+            \ - Cheapest/Fastest.   Similarly, for a particular amount like below\
+            \ $1000 Dollars, they can select a definite carrier service, based on\
+            \ RateGroup."
+          enum:
+          - carrier
+          - rateGroup
+          - ruleSet
+          - customCarrierCode
+          example: customCarrierCode
+          type: string
+        byCustomCarrierCode:
+          $ref: "#/components/schemas/RateShopbyCustomCarrierCode_byCustomCarrierCode"
+        deliveryOption:
+          $ref: "#/components/schemas/RateShopbyCarrier_deliveryOption"
+      required:
+      - fromAddress
+      - labelFormat
+      - labelSize
+      - labelType
+      - parcel
       - rateShopBy
       - toAddress
       type: object
@@ -4153,23 +5384,24 @@ components:
           type: string
         rateShopBy:
           description: "RateShop, which is attached to an Enterprise or Location,\
-            \ is done through three approaches: by Carrier, by RateGroup, and by Ruleset.\
-            \  <br />  Through Carrier, customers can choose the carriers as per requirement,\
-            \ based on which services, parcel types, and special services can be selected,\
-            \ and RateShop is done. <br /> Through RateGroup, customers can select\
-            \ the RateGroup, which has been divided into two categories: Cheapest\
-            \ (w.r.t. price) and Fastest (w.r.t. delivery hours).  <br /> Through\
-            \ Ruleset, customers can define the Condition/rule for selecting carriers\
-            \ and their services, so they do not need to worry for Rate Shopping every\
-            \ time they create Shipment. For example, For a particular location, they\
-            \ can set one definite carrier, or apply RateGroup - Cheapest/Fastest.\
-            \   Similarly, for a particular amount like below $1000 Dollars, they\
-            \ can select a definite carrier service, based on RateGroup."
+            \ is done through four approaches: by Carrier, by RateGroup, by RuleSet\
+            \ and by CustomCarrierCode.  <br />  Through Carrier, customers can choose\
+            \ the carriers as per requirement, based on which services, parcel types,\
+            \ and special services can be selected, and RateShop is done. <br /> Through\
+            \ RateGroup, customers can select the RateGroup, which has been divided\
+            \ into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery\
+            \ hours).  <br /> Through RuleSet, customers can define the Condition/rule\
+            \ for selecting carriers and their services, so they do not need to worry\
+            \ for Rate Shopping every time they create Shipment. For example, For\
+            \ a particular location, they can set one definite carrier, or apply RateGroup\
+            \ - Cheapest/Fastest.   Similarly, for a particular amount like below\
+            \ $1000 Dollars, they can select a definite carrier service, based on\
+            \ RateGroup."
           enum:
           - carrier
-          - rategroup
-          - ruleset
-          example: rategroup
+          - rateGroup
+          - ruleSet
+          example: rateGroup
           type: string
         byRateGroup:
           $ref: "#/components/schemas/shipmentDomesticByRateGroup_byRateGroup"
@@ -4203,23 +5435,24 @@ components:
           type: string
         rateShopBy:
           description: "RateShop, which is attached to an Enterprise or Location,\
-            \ is done through three approaches: by Carrier, by RateGroup, and by Ruleset.\
-            \  <br />  Through Carrier, customers can choose the carriers as per requirement,\
-            \ based on which services, parcel types, and special services can be selected,\
-            \ and RateShop is done. <br /> Through RateGroup, customers can select\
-            \ the RateGroup, which has been divided into two categories: Cheapest\
-            \ (w.r.t. price) and Fastest (w.r.t. delivery hours).  <br /> Through\
-            \ Ruleset, customers can define the Condition/rule for selecting carriers\
-            \ and their services, so they do not need to worry for Rate Shopping every\
-            \ time they create Shipment. For example, For a particular location, they\
-            \ can set one definite carrier, or apply RateGroup - Cheapest/Fastest.\
-            \   Similarly, for a particular amount like below $1000 Dollars, they\
-            \ can select a definite carrier service, based on RateGroup."
+            \ is done through four approaches: by Carrier, by RateGroup, by RuleSet\
+            \ and by CustomCarrierCode.  <br />  Through Carrier, customers can choose\
+            \ the carriers as per requirement, based on which services, parcel types,\
+            \ and special services can be selected, and RateShop is done. <br /> Through\
+            \ RateGroup, customers can select the RateGroup, which has been divided\
+            \ into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery\
+            \ hours).  <br /> Through RuleSet, customers can define the Condition/rule\
+            \ for selecting carriers and their services, so they do not need to worry\
+            \ for Rate Shopping every time they create Shipment. For example, For\
+            \ a particular location, they can set one definite carrier, or apply RateGroup\
+            \ - Cheapest/Fastest.   Similarly, for a particular amount like below\
+            \ $1000 Dollars, they can select a definite carrier service, based on\
+            \ RateGroup."
           enum:
           - carrier
-          - rategroup
-          - ruleset
-          example: ruleset
+          - rateGroup
+          - ruleSet
+          example: ruleSet
           type: string
         byRuleSet:
           $ref: "#/components/schemas/RateShopbyRuleset_byRuleSet"
@@ -4233,6 +5466,29 @@ components:
       - parcelType
       - rateShopBy
       - toAddress
+      type: object
+    SubscriptionCapabilitiesRequest:
+      additionalProperties: false
+      example:
+        capabilities:
+          parcelTypes:
+          - LP
+          services:
+          - NDA
+          specialServices:
+          - INS
+        originCountryCode: US
+      properties:
+        originCountryCode:
+          description: Two-letter ISO 3166-1 alpha-2 country code (shipment origin
+            country) to which the allowlist applies.
+          example: US
+          type: string
+        capabilities:
+          $ref: "#/components/schemas/SubscriptionCapabilitiesRequest_capabilities"
+      required:
+      - capabilities
+      - originCountryCode
       type: object
     returnLabel:
       properties:
@@ -5095,6 +6351,42 @@ components:
           type: array
       type: object
     schedulePickupDHLEXPRequest:
+      example:
+        packageLocation: Reception
+        carrierAccountId: wgjYXvYjD0V4
+        pickupAddress:
+          name: Test
+          addressLine1: 27 Waterview Dr
+          cityTown: Shelton
+          stateProvince: CT
+          postalCode: 06484-4301
+          countryCode: US
+          phone: "1234567890"
+          company: PB
+          email: ankita.chaurasia@pb.com
+        pickupSummary:
+        - serviceId: NDA
+          packageCount: 1
+          totalWeight: 15
+          weightUnit: OZ
+          packageDetails:
+          - width: 1
+            height: 15
+            length: 10
+            dimUnit: IN
+            weightUnit: OZ
+            weight: 15
+          currencyCode: USD
+          totalCustomsDeclaredValue: 5
+        shipmentIds:
+        - DHLEXP2201736600235437
+        - DHLEXP2201736600264906
+        pickupOptions:
+          pickupStartDateTime: 2025-09-29T09:05:05Z
+          pickupEndDateTime: 2025-09-29T18:30:00Z
+          carrierType: EXPRESS
+          overweight: 2
+        reference: reference
       properties:
         packageLocation:
           description: The location where the parcel will be available for pickup
@@ -5136,53 +6428,62 @@ components:
           description: An optional Reference related to the pickup.
           example: zscsdc
           type: string
+        shipmentIds:
+          description: List of shipment IDs for which pickup needs to be scheduled.
+          items:
+            description: Shipment identifier.
+            example: DHLEXP2201736600235437
+            type: string
+          type: array
         pickupOptions:
           $ref: "#/components/schemas/schedulePickupDHLEXPRequest_pickupOptions"
       required:
       - carrierAccountId
       - packageLocation
       - pickupAddress
-      - pickupSummary
+      - pickupOptions
       type: object
     schedulePickupDHLEXPResponse:
       example:
-        pickupTotalWeightUnit: OZ
-        pickupConfirmationNumber: CAME241011000909
-        packageLocation: None
-        pickupId: DHLEXP10111728640015873
-        carrierAccountId: j4pqLKjQ5dn
-        reference: zscsdc
-        pickupDateTime: 2024-10-10T17:05:05Z
+        carrierAccountId: wgjYXvYjD0V4
         carrier: dhlexp
         pickupAddress:
-          residential: false
-          phone: "1234567890"
-          countryCode: US
-          postalCode: 06484-4301
-          name: Test
-          cityTown: Shelton
           addressLine1: 27 Waterview Dr
-          stateProvince: CT
+          cityTown: Shelton
           company: PB
+          countryCode: US
           email: ankita.chaurasia@pb.com
+          name: Test
+          phone: "1234567890"
+          postalCode: 06484-4301
+          residential: false
+          stateProvince: CT
+        packageLocation: RECEPTION
+        shipmentIds:
+        - DHLEXP2201736600235437
+        - DHLEXP2201736600264906
         pickupSummary:
-        - totalWeight: 15
-          packageCount: 2
-          serviceId: NDA
-          currencyCode: USD
+        - serviceId: NDA
+          packageCount: 1
+          totalWeight: 15
           weightUnit: OZ
-        - totalWeight: 15
-          packageCount: 2
-          serviceId: NDA
+          totalCustomsDeclaredValue: 5
           currencyCode: USD
+        - serviceId: NDA
+          packageCount: 2
+          totalWeight: 20
           weightUnit: OZ
-        pickupTotalWeight: 16
-        additionalNotes: absdhda
+        reference: reference
+        pickupDateTime: 2025-09-29T09:05:00Z
+        pickupConfirmationNumber: AME250929000197
+        pickupId: DHLEXP09261758885311045
         pickupOptions:
-          pickupStartDateTime: 2024-10-10T17:03:05Z
-          carrierType: 0
-          pickupEndDateTime: 2024-10-10T17:05:05Z
+          pickupStartDateTime: 2025-09-29T09:05:05Z
+          pickupEndDateTime: 2025-09-29T18:30:00Z
           overweight: 2
+          carrierType: EXPRESS
+        pickupTotalWeight: 35
+        pickupTotalWeightUnit: OZ
       properties:
         packageLocation:
           description: The location where the parcel will be available for pickup
@@ -5246,6 +6547,28 @@ components:
           $ref: "#/components/schemas/schedulePickupDHLEXPResponse_pickupOptions"
       type: object
     schedulePickupUSPSRequest:
+      example:
+        additionalnotes: notes
+        carrierAccountId: En9jM8bB8eAZ
+        packageLocation: Back Door
+        pickupAddress:
+          addressLine1: 27 Waterview Dr
+          cityTown: Shelton
+          company: PB
+          countryCode: US
+          email: sender@email.com
+          name: Test
+          phone: "2124567890"
+          postalCode: 06484-4301
+          stateProvince: CT
+        pickupSummary:
+        - packageCount: 111
+          serviceId: EM
+          totalWeight: 45435
+          weightUnit: GM
+        reference: reference
+        shipmentIds:
+        - USPS2201674200253944
       properties:
         packageLocation:
           description: The location where the parcel will be available for pickup
@@ -5299,7 +6622,7 @@ components:
             type: string
           type: array
         pickupOptions:
-          $ref: "#/components/schemas/schedulePickupDHLEXPRequest_pickupOptions"
+          $ref: "#/components/schemas/schedulePickupUSPSRequest_pickupOptions"
       required:
       - carrierAccountId
       - packageLocation
@@ -5307,6 +6630,35 @@ components:
       - pickupSummary
       type: object
     schedulePickupUSPSResponse:
+      example:
+        carrierAccountId: En9jM8bB8eAZ
+        carrier: usps
+        pickupAddress:
+          addressLine1: 27 WATERVIEW DR
+          cityTown: SHELTON
+          company: PB
+          countryCode: US
+          email: sender@email.com
+          name: Test
+          phone: "2124567890"
+          postalCode: "06484"
+          residential: false
+          stateProvince: CT
+        packageLocation: Back Door
+        shipmentIds:
+        - USPS2201674200253944
+        pickupSummary:
+        - serviceId: EM
+          packageCount: 111
+          totalWeight: 45435
+          weightUnit: GM
+        additionalNotes: notes
+        reference: reference
+        pickupDateTime: 09/20/2025
+        pickupConfirmationNumber: WTC65273674
+        pickupId: USPSSKV539D3F8Z8
+        pickupTotalWeight: 45559.35
+        pickupTotalWeightUnit: GM
       properties:
         packageLocation:
           description: The location where the parcel will be available for pickup
@@ -5420,11 +6772,12 @@ components:
           example: zscsdc
           type: string
         pickupOptions:
-          $ref: "#/components/schemas/schedulePickupDHLEXPRequest_pickupOptions"
+          $ref: "#/components/schemas/schedulePickupUSPSRequest_pickupOptions"
       required:
       - carrierAccountId
       - packageLocation
       - pickupAddress
+      - pickupOptions
       - pickupStartTime
       - pickupSummary
       type: object
@@ -5483,7 +6836,7 @@ components:
           example: OZ
           type: string
         pickupOptions:
-          $ref: "#/components/schemas/schedulePickupDHLEXPRequest_pickupOptions"
+          $ref: "#/components/schemas/schedulePickupUSPSRequest_pickupOptions"
       type: object
     schedulePickupCancelRequest:
       example:
@@ -5494,6 +6847,8 @@ components:
           value: LMPod1
         - name: REASON_FOR_CANCEL
           value: Not required any more
+        - name: REMARKS
+          value: Customer requested cancellation
       properties:
         pickupIds:
           description: Unique identifiers for scheduled pickups.
@@ -5503,9 +6858,15 @@ components:
           type: array
         options:
           description: "An array of key-value pairs specifying additional parameters\
-            \ for the cancellation request. <br/>There are two required keys: `REQUESTOR_NAME`\
-            \ and `REASON_FOR_CANCEL`. The value for REQUESTOR_NAME is required, while\
-            \ the value for REASON_FOR_CANCEL is optional."
+            \ for the cancellation request. <br/>There are three required keys: `REQUESTOR_NAME`,\
+            \ `REASON_FOR_CANCEL` and `REMARKS`. Different carriers required different\
+            \ keys and values for \n| Carrier     | Is `options` required? | Required\
+            \ keys | Value |\n|-------------|------------------------|---------------|-------|\n\
+            | USPS   | No   |  | |\n| DHL Express | Yes  | `REQUESTOR_NAME`, `REASON_FOR_CANCEL`\
+            \ | `REQUESTOR_NAME` value required; `REASON_FOR_CANCEL` value optional.\
+            \ |\n| FedEx  | Yes | `REMARKS`  | `REMARKS` value required. |\n\n**Notes:**\n\
+            - Keys are case-sensitive.\n- Provide only the keys relevant to the selected\
+            \ carrier.\n"
           items:
             $ref: "#/components/schemas/schedulePickupCancelRequest_options_inner"
           type: array
@@ -5634,6 +6995,35 @@ components:
           $ref: "#/components/schemas/getAllPickups_data"
       type: object
     schedulePickupFedexRequest:
+      example:
+        carrierAccountId: OVJMdgGYNvrx
+        packageLocation: SIDE
+        pickupAddress:
+          name: Test
+          addressLine1: 27 Waterview Dr
+          cityTown: Shelton
+          stateProvince: CT
+          postalCode: 06484-4301
+          countryCode: US
+          phone: "1234567890"
+          company: PB
+          email: sender@email.com
+        pickupSummary:
+        - serviceId: 2DA
+          packageCount: 1
+          totalWeight: 15
+          weightUnit: OZ
+          totalCustomsDeclaredValue: 5
+        shipmentIds:
+        - FEDEX2201736700381083
+        - FEDEX2201736800144529
+        pickupOptions:
+          pickupStartDateTime: 2025-09-29T12:04:05Z
+          pickupEndDateTime: 2025-09-29T18:30:00Z
+          overweight: 1
+          carrierType: EXPRESS
+        additionalnotes: notes
+        reference: reference
       properties:
         packageLocation:
           description: The location where the parcel will be available for pickup
@@ -5673,14 +7063,7 @@ components:
           example: zscsdc
           type: string
         pickupOptions:
-          description: description
-          items:
-            $ref: "#/components/schemas/schedulePickupFedexRequest_pickupOptions_inner"
-          required:
-          - carrierType
-          - pickupEndDateTime
-          - pickupStartDateTime
-          type: array
+          $ref: "#/components/schemas/schedulePickupFedexRequest_pickupOptions"
       required:
       - carrierAccountId
       - packageLocation
@@ -5689,6 +7072,46 @@ components:
       - pickupSummary
       type: object
     schedulePickupFedexResponse:
+      example:
+        carrierAccountId: OVJMdgGYNvrx
+        carrier: fedex
+        pickupAddress:
+          addressLine1: 27 Waterview Dr
+          cityTown: Shelton
+          company: PB
+          countryCode: US
+          email: sender@email.com
+          name: Test
+          phone: "1234567890"
+          postalCode: 06484-4301
+          residential: false
+          stateProvince: CT
+        packageLocation: SIDE
+        shipmentIds:
+        - FEDEX2201736700381083
+        - FEDEX2201736800144529
+        pickupSummary:
+        - serviceId: 2DA
+          packageCount: 1
+          totalWeight: 15
+          weightUnit: OZ
+          totalCustomsDeclaredValue: 5
+        - serviceId: 3DA
+          packageCount: 2
+          totalWeight: 4
+          weightUnit: OZ
+        additionalNotes: notes
+        reference: reference
+        pickupDateTime: 2025-09-29T12:04:00Z
+        pickupConfirmationNumber: CPU0068152722
+        pickupId: FEDEX09261758885130715
+        pickupOptions:
+          pickupStartDateTime: 2025-09-29T12:04:05Z
+          pickupEndDateTime: 2025-09-29T18:30:00Z
+          overweight: 1
+          carrierType: EXPRESS
+        pickupTotalWeight: 19
+        pickupTotalWeightUnit: OZ
       properties:
         packageLocation:
           description: The location where the parcel will be available for pickup
@@ -5743,9 +7166,39 @@ components:
           example: OZ
           type: string
         pickupOptions:
-          $ref: "#/components/schemas/schedulePickupFedexRequest_pickupOptions_inner"
+          $ref: "#/components/schemas/schedulePickupFedexResponse_pickupOptions"
       type: object
     PickupAvailabilityRequest:
+      example:
+        carrierAccountId: 97wroboxVgbzK4N
+        pickupAddress:
+          name: Test
+          addressLine1: 27 Waterview Dr
+          cityTown: Shelton
+          stateProvince: CT
+          postalCode: 06484-4301
+          countryCode: US
+          phone: "1234567890"
+          company: PB
+          email: abc@test.com
+          residential: false
+        pickupSummary:
+        - toAddressCountryCode: CA
+          serviceId: ""
+          parcelType: PKG
+          packageDetails:
+          - height: 5
+            length: 6
+            width: 4
+            dimUnit: IN
+            weight: 34
+            weightUnit: OZ
+        pickupDateTime: 2025-09-15T13:00:00Z
+        pickupOptions:
+          pickupStartDateTime: 2025-09-15T12:45:00Z
+          pickupEndDateTime: 2025-09-15T13:15:00Z
+          carrierType: EXPRESS
+          scheduleDay: SAME_DAY
       properties:
         carrierAccountId:
           description: Unique identifier of the carrier account under which pickup
@@ -5770,9 +7223,42 @@ components:
       - carrierAccountId
       - pickupAddress
       - pickupDateTime
+      - pickupOptions
       - pickupSummary
       type: object
     PickupAvailabilityResponse:
+      example:
+        carrierAccountId: 97wroboxVgbzK4N
+        carrier: fedex
+        pickupAddress:
+          addressLine1: 27 Waterview Dr
+          cityTown: Shelton
+          company: PB
+          countryCode: US
+          email: abc@test.com
+          name: Test
+          phone: "1234567890"
+          postalCode: 06484-4301
+          residential: false
+          stateProvince: CT
+        pickupDateTime: 2025-09-15T13:00:00Z
+        pickupOptions:
+          pickupStartDateTime: 2025-09-15T12:45:00Z
+          pickupEndDateTime: 2025-09-15T13:15:00Z
+          carrierType: EXPRESS
+          scheduleDay: SAME_DAY
+        pickupAvailable: true
+        pickupInformation:
+          cutoffTime: 16:15:00
+          startCloseTimeOptions:
+            startTimeOptions:
+            - 12:30:00
+            - 13:00:00
+            closeTimeOptions:
+            - 12:30:00
+            - 13:00:00
+            - 13:30:00
+          timeRangeOptions: {}
       properties:
         carrierAccountId:
           description: Carrier account ID returned for the request.
@@ -5784,20 +7270,15 @@ components:
           type: string
         pickupAddress:
           $ref: "#/components/schemas/PickupAvailabilityResponse_pickupAddress"
-        pickupSummary:
-          items:
-            $ref: "#/components/schemas/PickupAvailabilityResponse_pickupSummary_inner"
-          type: array
         pickupDateTime:
           description: The pickup date/time
           example: 2025-08-26T10:00:00Z
           format: date-time
           type: string
         pickupOptions:
-          $ref: "#/components/schemas/PickupAvailabilityResponse_pickupOptions"
+          $ref: "#/components/schemas/PickupAvailabilityRequest_pickupOptions"
         pickupAvailable:
-          description: Indicates if pickup is available for the requested location
-            and shipment..
+          description: If pickup is available for the requested location and shipment..
           example: true
           type: boolean
         pickupInformation:
@@ -5816,19 +7297,6 @@ components:
         Billing address of the buyer responsible for the shipment payment. It can be domestic or international address. This is a required field for carrier UPS.
         - If the importer is the same as the final recipient, the `toAddress` and `soldToAddress` must match.
         - If the importer is different from the final recipient, enter the importer address in the `soldToAddress` and enter the final recipient's address in the `toAddress`.
-      example:
-        residential: false
-        phone: 905-555-1234
-        countryCode: CA
-        postalCode: L4L 3P6
-        name: John Doe
-        cityTown: Woodbridge
-        addressLine1: 70 Hanlan RD
-        stateProvince: "ON"
-        addressLine2: Suite 101
-        company: ABC Company
-        addressLine3: Near central market
-        email: billing@abccompany.com
       properties:
         addressLine1:
           description: Primary street address of the billing entity.
@@ -5900,7 +7368,7 @@ components:
             stateProvince: NJ
             addressLine1: 2270 US HIGHWAY 130
             company: ABC Company
-          addressType: BROKER
+          addressType: EXPORTER
         - address:
             residential: false
             phone: 732-443-1007
@@ -5911,7 +7379,7 @@ components:
             stateProvince: NJ
             addressLine1: 2270 US HIGHWAY 130
             company: ABC Company
-          addressType: BROKER
+          addressType: EXPORTER
         multiPieceParcels:
         - parcelType: PKG
           parcel:
@@ -6223,7 +7691,7 @@ components:
             stateProvince: NJ
             addressLine1: 2270 US HIGHWAY 130
             company: ABC Company
-          addressType: BROKER
+          addressType: EXPORTER
         - address:
             residential: false
             phone: 732-443-1007
@@ -6234,7 +7702,7 @@ components:
             stateProvince: NJ
             addressLine1: 2270 US HIGHWAY 130
             company: ABC Company
-          addressType: BROKER
+          addressType: EXPORTER
         multiPieceRates:
         - deliveryCommitment:
             estimatedDeliveryDateTime: 2024-12-17 13:30:00
@@ -7220,7 +8688,7 @@ components:
           - DDP
           - EXW
           - FCA
-          example: DDU
+          example: DDP
           type: string
       required:
       - currencyCode
@@ -7694,8 +9162,8 @@ components:
         parcel:
           $ref: "#/components/schemas/returnLabel_parcel"
         metadata:
-          description: "Additional metadata that needs to be stored for this shipment\
-            \ can be added here. For now, 'Cost Account Name' is supported."
+          description: 'Additional metadata that needs to be stored for this shipment
+            can be added here. '
           example:
           - name: costAccountName
             value: test
@@ -8264,155 +9732,72 @@ components:
       type: object
     domesticShipmentResponseV2:
       example:
+        correlationId: 6270e32715df4c4884a2008f943fe179
+        shipmentId: USPS2200613202723337
+        parcelTrackingNumber: "9470109109628000114503"
+        labelLayout:
+        - contentType: URL
+          contents: https://prv-labels-cls.gcs.pitneybowes.com/usps/910187923/outbound/label/5ecfa0ecc6454caeb90c55d35229de90.pdf
+          fileFormat: PDF
+          size: DOC_4X6
+          type: SHIPPING_LABEL
         parcel:
-          packageValue: 2
-          length: 2
-          width: 1
+          length: 10
+          height: 10
+          width: 10
           dimUnit: IN
-          weight: 2
-          height: 1
           weightUnit: OZ
-        additionalAddresses:
-        - address:
-            residential: false
-            phone: 732-443-1007
-            countryCode: US
-            postalCode: 08810-1411
-            cityTown: DAYTON
-            name: Warehouse Manager
-            stateProvince: NJ
-            addressLine1: 2270 US HIGHWAY 130
-            company: ABC Company
-          addressType: BROKER
-        - address:
-            residential: false
-            phone: 732-443-1007
-            countryCode: US
-            postalCode: 08810-1411
-            cityTown: DAYTON
-            name: Warehouse Manager
-            stateProvince: NJ
-            addressLine1: 2270 US HIGHWAY 130
-            company: ABC Company
-          addressType: BROKER
+          weight: 10
+          packageValue: 10
+        rate:
+          baseCharge: 27.6
+          carrier: USPS
+          currencyCode: USD
+          deliveryCommitment: {}
+          inductionPostalCode: "06905"
+          parcelType: PKG
+          rateTypeId: CONTRACT_RATES
+          serviceId: EM
+          specialServices: []
+          totalCarrierCharge: 27.6
+          destinationZone: "1"
+          isHazmat: false
         references:
-          reference3: "98437"
-          reference4: Overnight Shipping
           reference1: custome message
           reference2: SendTech
-          department: Name department
-          poNumber: R2W 2H2
-          additionalReference1: "612987641"
-          additionalReference2: "989"
-        printStatus: submitted
-        labelLayout:
-        - size: DOC_4X6
-          contents: XlhBCl5MSDE2LDEyCl5MTDEyMTIKXkZUIDU4MSwgNDAzIF5BVU4gIF5GRDAwMDNeRlMgXkZYIENvbmZpZ3VyYWJsZSBUZXh0IDEK...
-          type: SHIPPING_LABEL
-          contentType: BASE64
-          fileFormat: ZPL2
-        - size: DOC_4X6
-          contents: XlhBCl5MSDE2LDEyCl5MTDEyMTIKXkZUIDU4MSwgNDAzIF5BVU4gIF5GRDAwMDNeRlMgXkZYIENvbmZpZ3VyYWJsZSBUZXh0IDEK...
-          type: SHIPPING_LABEL
-          contentType: BASE64
-          fileFormat: ZPL2
-        printError:
-          code: validation_error
-          message: Api is not supported for your 1.10.15 version please install latest
-            dh version
-        toAddress:
-          postalCode: "10118"
-          stateProvince: NY
-          residential: true
-          phone: 332 555-1212
-          isPOBox: true
-          countryCode: US
-          name: Recipient Name
-          cityTown: New York
-          addressLine1: 350 Fifth Avenue
-          addressLine2: near abc street
-          company: PB
-          addressLine3: near xyz street
-          email: recipient@gmail.com
-        shipmentOptions:
-          printPONumber: ponumber
-          bookingConfirmationNumber: XXXX56789812
-          addToManifest: true
-          shipperId: "1234567890"
-          billingWeight: "128.0"
-          printCustomMessage: Print Message 1
-          printDepartment: department
-          printInvoiceNumber: invoicenumber
-          receiptOption: RECEIPT_WITH_INSTRUCTIONS
-          minimalAddressValidation: true
-        parcelTrackingNumber: "329039098457"
-        soldToAddress:
-          residential: false
-          phone: 905-555-1234
-          countryCode: CA
-          postalCode: L4L 3P6
-          name: John Doe
-          cityTown: Woodbridge
-          addressLine1: 70 Hanlan RD
-          stateProvince: "ON"
-          addressLine2: Suite 101
-          company: ABC Company
-          addressLine3: Near central market
-          email: billing@abccompany.com
-        rate:
-          baseCharge: 16.15
-          destinationZone: "1"
-          deliveryCommitment:
-            maxEstimatedNumberOfDays: "5"
-            estimatedDeliveryDateTime: 2024-03-25
-            guarantee: None
-          carrier: PUROLATOR
-          parcelType: PKG
-          inductionPostalCode: "06905"
-          baseChargeTaxes:
-          - displayName: Canada goods and services
-            name: GST
-            taxAmount: 2.69
-          - displayName: Canada goods and services
-            name: GST
-            taxAmount: 2.69
-          totalCarrierCharge: 22.46
-          surcharges:
-          - fee: 2.95
-            name: ResidentialDelivery
-          - fee: 2.95
-            name: ResidentialDelivery
-          serviceId: GRD
-          totalTaxAmount: 2.69
-          currencyCode: CAD
-          publishedTotalCarrierCharge: 73.12
-        shipmentId: FEDEX2200626443337314
-        carrierPayments:
-        - countryCode: US
-          postalCode: "30305"
-          typeOfCharge: ALL_CHARGES
-          accountNumber: "602684342"
-          party: BILL_RECEIVER
-        - countryCode: US
-          postalCode: "30305"
-          typeOfCharge: ALL_CHARGES
-          accountNumber: "602684342"
-          party: BILL_RECEIVER
-        correlationId: 3e2a71cc421e40b7970db9d540b1c7f2
         fromAddress:
-          postalCode: "94043"
+          addressLine1: 1600 Amphitheatre Pkwy
+          addressLine2: Near Abc Street Near Xyz Street
+          cityTown: Mountain View
+          company: PB
+          countryCode: US
+          email: testuser@gmail.com
+          name: Sender Name
+          phone: "6502530000"
+          postalCode: 94043-1351
+          residential: false
           stateProvince: CA
           inductionPostalCode: "06905"
-          residential: true
-          phone: "6502530000"
-          countryCode: US
-          name: Sender Name
-          cityTown: Mountain View
-          addressLine1: 1600 Amphitheatre Parkway
-          addressLine2: near abc street
+          status: VALIDATED_AND_NOT_CHANGED
+        toAddress:
+          addressLine1: 350 5th Ave
+          addressLine2: Near Abc Street Near Xyz Street
+          cityTown: New York
           company: PB
-          addressLine3: near xyz street
-          email: testuser@gmail.com
+          countryCode: US
+          email: recipient@gmail.com
+          name: Recipient Name
+          phone: "2127363100"
+          postalCode: 10118-0110
+          residential: false
+          stateProvince: NY
+          status: VALIDATED_AND_NOT_CHANGED
+          isPOBox: true
+        shipmentOptions:
+          addToManifest: true
+          receiptOption: noOptions
+          shipperId: "2000084646"
+          billingWeight: "16.00"
       properties:
         correlationId:
           description: Key assigned by the shipping system to the transaction.
@@ -8753,6 +10138,10 @@ components:
           description: "It provides options to print receipt with shipping label.\
             \ Only applicable for USPS, and it can have the indicated possible/ enum\
             \ values."
+          enum:
+          - RECEIPT_ONLY
+          - RECEIPT_WITH_INSTRUCTIONS
+          - or NO_OPTIONS
           example: RECEIPT_WITH_INSTRUCTIONS
           type: string
         printDepartment:
@@ -9596,6 +10985,7 @@ components:
       - $ref: "#/components/schemas/shipmentDomesticByCarrier"
       - $ref: "#/components/schemas/shipmentDomesticByRateGroup"
       - $ref: "#/components/schemas/shipmentDomesticByRuleset"
+      - $ref: "#/components/schemas/shipmentDomesticByCustomCarrierCode"
       - $ref: "#/components/schemas/shipmentInternationalByCarrier"
       - $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2"
     createShipmentV2_200_response:
@@ -9610,6 +11000,7 @@ components:
       - $ref: "#/components/schemas/RateShopbyCarrier"
       - $ref: "#/components/schemas/RateShopbyRategroup"
       - $ref: "#/components/schemas/RateShopbyRuleset"
+      - $ref: "#/components/schemas/RateShopbyCustomCarrierCode"
     rateShipment_200_response_parcel:
       description: Details of the parcel being rated.
       example:
@@ -9644,10 +11035,6 @@ components:
           type: number
       type: object
     rateShipment_200_response_rate_inner_baseChargeTaxes_inner:
-      example:
-        displayName: Canada goods and services
-        name: GST
-        taxAmount: 2.69
       properties:
         displayName:
           description: Name of the tax applied.
@@ -10551,7 +11938,7 @@ components:
           - DDP
           - EXW
           - FCA
-          example: DDU
+          example: DDP
           type: string
       required:
       - currencyCode
@@ -10901,7 +12288,7 @@ components:
           - DDP
           - EXW
           - FCA
-          example: DDU
+          example: DDP
           type: string
       required:
       - currencyCode
@@ -11043,9 +12430,8 @@ components:
           type: number
       type: object
     MilitaryMailShipmentsRequestV2_metadata_inner:
-      description: "The data that provides information about other inter-related/\
-        \ required data.<br /> Here, metadata details consists of CostAccount Name\
-        \ and Value."
+      description: The data that provides information about other inter-related/ required
+        data.
       properties:
         name:
           description: Name of the Cost Account which are linked to Shipment.
@@ -11556,7 +12942,7 @@ components:
           - DDP
           - EXW
           - FCA
-          example: DDU
+          example: DDP
           type: string
       required:
       - currencyCode
@@ -11737,6 +13123,13 @@ components:
             - Required as part of customs compliance under the Windsor Agreement
           example: true
           type: boolean
+        declarationId:
+          description: "Required for CPC shipments originating in Canada and destined\
+            \ for the US when X_ACCESS_KEY was not provided during CPC carrier onboarding;\
+            \ if X_ACCESS_KEY is configured, omit this field. Each declarationId is\
+            \ unique to a single shipment."
+          example: USA1006189
+          type: string
         shipperID:
           description: The unique identifier of the known shipper associated with
             this shipment.
@@ -12030,7 +13423,7 @@ components:
           - DDP
           - EXW
           - FCA
-          example: DDU
+          example: DDP
           type: string
       required:
       - currencyCode
@@ -12114,6 +13507,30 @@ components:
       required:
       - customsInfo
       - customsItems
+      type: object
+    shipmentDomesticByCustomCarrierCode_metadata_inner:
+      description: The data that provides information about other inter-related/ required
+        data.
+      example:
+      - name: costAccountName
+        value: costAccountName
+      - name: costAccountId
+        value: costAccountId
+      - name: costAccountCode
+        value: Code
+      - name: accountCode
+        value: code
+      - name: companyCode
+        value: code
+      properties:
+        name:
+          description: Name of the Cost Account which are linked to Shipment.
+          example: costAccountName
+          type: string
+        value:
+          description: Indicates the value for the CostAccount.
+          example: cost1
+          type: string
       type: object
     FedEx_Carrier_Payment:
       description: "**FedEx Billing Rules:**<br/>\n- If no bill-to party (who will\
@@ -12463,20 +13880,6 @@ components:
           example: "1234567890"
           type: string
       type: object
-    shipmentDomesticByRateGroup_metadata_inner:
-      description: "The data that provides information about other interrelated/ required\
-        \ sub-data.<br /> Here, metadata details consists of CostAccount Name and\
-        \ Value."
-      properties:
-        name:
-          description: Name of the Cost Account which are linked to Shipment.
-          example: costAccountName
-          type: string
-        value:
-          description: Indicates the value for the CostAccount.
-          example: cost1
-          type: string
-      type: object
     shipmentDomesticByRateGroup_deliveryOption:
       description: "There are two options of delivery: deliverBy and useBestNextDate,\
         \ where customer can schedule the delivery date in deliverBy.<br /> In case\
@@ -12614,19 +14017,6 @@ components:
           - toAddress
           - fromAndToAddress
           example: "1234567890"
-          type: string
-      type: object
-    shipmentDomesticByRuleset_metadata_inner:
-      description: "The data that provides information about other interrelated/ required\
-        \ data.<br /> Here, metadata details consists of CostAccount Name and Value."
-      properties:
-        name:
-          description: Name of the Cost Account which are linked to Shipment.
-          example: costAccountName
-          type: string
-        value:
-          description: Indicates the value for the CostAccount.
-          example: cost1
           type: string
       type: object
     shipmentDomesticByRuleset_deliveryOption:
@@ -13310,6 +14700,18 @@ components:
           example: false
           type: boolean
       type: object
+    RateShopbyCustomCarrierCode_byCustomCarrierCode:
+      description: The rates are fetched by using a predefined custom Carrier Code.
+      properties:
+        code:
+          description: "Pre-generated code (Custom Carrier Code) that bundles carrier,\
+            \ carrier account, parcel type, service, and special services. When provided,\
+            \ it overrides the corresponding fields in the request payload, eliminating\
+            \ the need to pass them individually."
+          type: string
+      required:
+      - code
+      type: object
     RateShopbyRuleset_byRuleSet:
       description: User can create the Shipment using Rule Set.<br /> By Rule Set
         means a rule that is defined as one or more conditions resulting in an action
@@ -13333,6 +14735,51 @@ components:
             - OVERNIGHT, etc.
           example: STANDARD
           type: string
+      type: object
+    SubscriptionCapabilitiesRequest_capabilities:
+      description: Carrier-specific capability codes to allow for the subscription
+        and origin country.
+      example:
+        parcelTypes:
+        - LP
+        services:
+        - NDA
+        specialServices:
+        - INS
+      properties:
+        parcelTypes:
+          description: "Package codes allowed in shipment calls for this subscription.\
+            \ Only these codes will be accepted by Rate Shipment and Create Shipment\
+            \ calls. Set only what you intend to use; others will be rejected. If\
+            \ omitted, the current allowlist (or carrier-supported defaults) remains\
+            \ in effect."
+          example:
+          - LP
+          items:
+            type: string
+          type: array
+        services:
+          description: "Service codes allowed in shipment calls for this subscription.\
+            \ Only these codes will be accepted in Rate Shipment and Create Shipment\
+            \ calls. Set only what you intend to use; others will be rejected. If\
+            \ omitted, the current allowlist (or carrier-supported defaults) remains\
+            \ in effect."
+          example:
+          - NDA
+          items:
+            type: string
+          type: array
+        specialServices:
+          description: "Special service codes allowed in shipment calls for this subscription.\
+            \ Only these codes will be accepted by Rate Shipment and Create Shipment\
+            \ calls. Set only what you intend to use; others will be rejected. If\
+            \ omitted, the current allowlist (or carrier-supported defaults) remains\
+            \ in effect."
+          example:
+          - INS
+          items:
+            type: string
+          type: array
       type: object
     returnLabel_fromAddress:
       properties:
@@ -15490,6 +16937,9 @@ components:
             \ service, if applicable."
           example: USD
           type: string
+        totalCustomsDeclaredValue:
+          description: Total customs declared value
+          type: number
         packageDetails:
           description: "Details of each package being picked up, including package\
             \ dimensions and weight."
@@ -15516,19 +16966,15 @@ components:
             the number of packages that exceed the carrier's weight limit.
           example: 2
           type: integer
+        carrierType:
+          description: The type of carrier used for the pickup.
+          enum:
+          - EXPRESS
+          - GROUND
+          example: EXPRESS
+          type: string
       type: object
     schedulePickupDHLEXPResponse_pickupAddress:
-      example:
-        residential: false
-        phone: "1234567890"
-        countryCode: US
-        postalCode: 06484-4301
-        name: Test
-        cityTown: Shelton
-        addressLine1: 27 Waterview Dr
-        stateProvince: CT
-        company: PB
-        email: ankita.chaurasia@pb.com
       properties:
         name:
           description: The name of the person or entity at the pickup address.
@@ -15578,12 +17024,6 @@ components:
           type: boolean
       type: object
     schedulePickupDHLEXPResponse_pickupSummary_inner:
-      example:
-        totalWeight: 15
-        packageCount: 2
-        serviceId: NDA
-        currencyCode: USD
-        weightUnit: OZ
       properties:
         serviceId:
           description: The abbreviated name of the carrier-specific service.
@@ -15610,11 +17050,6 @@ components:
           type: string
       type: object
     schedulePickupDHLEXPResponse_pickupOptions:
-      example:
-        pickupStartDateTime: 2024-10-10T17:03:05Z
-        carrierType: 0
-        pickupEndDateTime: 2024-10-10T17:05:05Z
-        overweight: 2
       properties:
         pickupStartDateTime:
           description: The start date and time for the pickup in ISO 8601 format.
@@ -15707,6 +17142,26 @@ components:
           description: The unit of measurement for the total package weight.
           example: OZ
           type: string
+      type: object
+    schedulePickupUSPSRequest_pickupOptions:
+      properties:
+        pickupStartDateTime:
+          description: The start date and time for the pickup in ISO 8601 format.
+            This indicates when the pickup window begins.
+          example: 2024-10-10T17:03:05Z
+          format: date-time
+          type: string
+        pickupEndDateTime:
+          description: The end date and time for the pickup in ISO 8601 format. This
+            indicates when the pickup window closes.
+          example: 2024-10-10T17:05:05Z
+          format: date-time
+          type: string
+        overweight:
+          description: The number of overweight packages in the pickup. This represents
+            the number of packages that exceed the carrier's weight limit.
+          example: 2
+          type: integer
       type: object
     schedulePickupUSPSResponse_pickupSummary_inner:
       properties:
@@ -16135,7 +17590,8 @@ components:
           example: PKG
           type: string
       type: object
-    schedulePickupFedexRequest_pickupOptions_inner:
+    schedulePickupFedexRequest_pickupOptions:
+      description: Pickup window options
       properties:
         pickupStartDateTime:
           description: The start date and time for the pickup in ISO 8601 format.
@@ -16158,6 +17614,10 @@ components:
           description: The type of carrier used for the pickup.
           example: EXPRESS
           type: string
+      required:
+      - carrierType
+      - pickupEndDateTime
+      - pickupStartDateTime
       type: object
     schedulePickupFedexResponse_pickupSummary_inner:
       properties:
@@ -16184,6 +17644,30 @@ components:
             \ carrier. Common values include 'PKG' for package, 'ENVELOPE', 'BOX',\
             \ etc."
           example: PKG
+          type: string
+      type: object
+    schedulePickupFedexResponse_pickupOptions:
+      properties:
+        pickupStartDateTime:
+          description: The start date and time for the pickup in ISO 8601 format.
+            This indicates when the pickup window begins.
+          example: 2024-10-10T17:03:05Z
+          format: date-time
+          type: string
+        pickupEndDateTime:
+          description: The end date and time for the pickup in ISO 8601 format. This
+            indicates when the pickup window closes.
+          example: 2024-10-10T17:05:05Z
+          format: date-time
+          type: string
+        overweight:
+          description: The number of overweight packages in the pickup. This represents
+            the number of packages that exceed the carrier's weight limit.
+          example: 2
+          type: integer
+        carrierType:
+          description: The type of carrier used for the pickup.
+          example: EXPRESS
           type: string
       type: object
     PickupAvailabilityRequest_pickupAddress:
@@ -16229,6 +17713,14 @@ components:
           description: Indicates if the address is residential.
           example: false
           type: boolean
+      required:
+      - addressLine1
+      - cityTown
+      - countryCode
+      - name
+      - phone
+      - postalCode
+      - stateProvince
       type: object
     PickupAvailabilityRequest_pickupSummary_inner_packageDetails_inner:
       description: Dimensions of packages to be picked up.
@@ -16242,14 +17734,16 @@ components:
         width:
           example: 4
           type: number
+        weight:
+          description: Weight of the package for pickup
+          example: 100
+          type: number
+        weightUnit:
+          description: Unit of measurement for weight
+          example: OZ
+          type: string
         dimUnit:
           example: IN
-          type: string
-      type: object
-    PickupAvailabilityRequest_pickupSummary_inner_specialServices_inner:
-      properties:
-        specialserviceId:
-          example: COM
           type: string
       type: object
     PickupAvailabilityRequest_pickupSummary_inner:
@@ -16260,38 +17754,37 @@ components:
           type: string
         serviceId:
           description: "Identifier of the shipping service requested (e.g., GND)."
-          example: GND
+          example: 2DA
           type: string
         parcelType:
           description: "Type of parcel (e.g., PKG, LTR)"
           example: PKG
           type: string
-        totalWeight:
-          description: Total weight of all packages for pickup
-          example: 100
-          type: number
-        weightUnit:
-          description: Unit of measurement for weight
-          example: OZ
-          type: string
         packageDetails:
           items:
             $ref: "#/components/schemas/PickupAvailabilityRequest_pickupSummary_inner_packageDetails_inner"
-          type: array
-        specialServices:
-          description: ' List of special services requested for the pickup.'
-          items:
-            $ref: "#/components/schemas/PickupAvailabilityRequest_pickupSummary_inner_specialServices_inner"
           type: array
       type: object
     PickupAvailabilityRequest_pickupOptions:
       description: Additional options for pickup eligibility.
       properties:
-        countryRelationship:
-          example: INTERNATIONAL
+        pickupStartDateTime:
+          description: Start time of the pickup window.
+          example: 2025-09-15T12:45:00Z
+          format: date-time
           type: string
-        carrier:
-          example: UPS
+        pickupEndDateTime:
+          description: End time of the pickup window.
+          example: 2025-09-15T13:15:00Z
+          format: date-time
+          type: string
+        carrierType:
+          description: Type of carrier service requested for the pickup.
+          example: EXPRESS
+          type: string
+        scheduleDay:
+          description: "Indicates when the pickup is scheduled (e.g., SAME_DAY, NEXT_DAY)."
+          example: SAME_DAY
           type: string
       type: object
     PickupAvailabilityResponse_pickupAddress:
@@ -16338,129 +17831,39 @@ components:
           example: false
           type: boolean
       type: object
-    PickupAvailabilityResponse_pickupSummary_inner:
-      properties:
-        serviceId:
-          description: "Identifier of the shipping service requested (e.g., GND)."
-          example: GND
-          type: string
-        parcelType:
-          description: "Type of parcel (e.g., PKG, LTR)"
-          example: PKG
-          type: string
-        totalWeight:
-          description: Total weight of all packages for pickup
-          example: 100
-          type: number
-        weightUnit:
-          description: Unit of measurement for weight
-          example: OZ
-          type: string
-        packageDetails:
-          items:
-            $ref: "#/components/schemas/PickupAvailabilityRequest_pickupSummary_inner_packageDetails_inner"
-          type: array
-      type: object
-    PickupAvailabilityResponse_pickupOptions:
-      description: Pickup options
-      properties:
-        countryRelationship:
-          example: DOMESTIC
-          type: string
-        carrier:
-          example: UPS
-          type: string
-      type: object
     PickupAvailabilityResponse_pickupInformation_startCloseTimeOptions:
-      description: Options for pickup start/close time windows.
+      description: Available start and close time options for scheduling pickups.
       properties:
-        minTimeWindow:
-          description: Minimum time window between pickup start and end
-          example: "210"
-          type: string
-        defaultStartTime:
-          description: Default pickup start time
-          example: 08:00:00
-          type: string
-        defaultCloseTime:
-          description: Default pickup close time
-          example: 18:00:00
-          type: string
         startTimeOptions:
-          description: List of available pickup start times.
+          description: List of selectable pickup start times (HH:MM:SS).
           example:
-          - 07:00:00
-          - 07:30:00
           - 08:00:00
           items:
             type: string
           type: array
         closeTimeOptions:
-          description: List of available pickup close times.
+          description: List of selectable pickup close times (HH:MM:SS).
           example:
-          - 18:30:00
-          - 19:00:00
-          - 19:30:00
+          - 14:00:00
           items:
             type: string
           type: array
       type: object
-    PickupAvailabilityResponse_pickupInformation_timeRangeOptions_defaultRange:
-      properties:
-        startTime:
-          description: Default pickup start time
-          example: 10:00:00
-          type: string
-        closeTime:
-          description: Default pickup close time
-          example: 18:00:00
-          type: string
-      type: object
-    PickupAvailabilityResponse_pickupInformation_timeRangeOptions_timeRanges_inner:
-      properties:
-        startTime:
-          description: Pickup start time
-          example: 10:00:00
-          type: string
-        closeTime:
-          description: Pickup close time
-          example: 18:00:00
-          type: string
-      type: object
-    PickupAvailabilityResponse_pickupInformation_timeRangeOptions:
-      description: Default and available pickup time ranges.
-      properties:
-        defaultRange:
-          $ref: "#/components/schemas/PickupAvailabilityResponse_pickupInformation_timeRangeOptions_defaultRange"
-        timeRanges:
-          description: Available pickup time ranges.
-          items:
-            $ref: "#/components/schemas/PickupAvailabilityResponse_pickupInformation_timeRangeOptions_timeRanges_inner"
-          type: array
-      type: object
     PickupAvailabilityResponse_pickupInformation:
-      description: Detailed pickup availability information.
+      description: Detailed pickup availability options as returned by the requested
+        carrier.
       properties:
-        residentialAvailable:
-          description: Is residential pickup supported
-          example: true
-          type: boolean
-        onDemandAvailable:
-          description: Is on-demand pickup supported
-          example: true
-          type: boolean
-        scheduledAvailable:
-          description: Is scheduled pickup supported
-          example: true
-          type: boolean
         cutoffTime:
-          description: Latest cutoff time for pickup requests
-          example: 06:00:00
+          description: Latest cutoff time for submitting pickup requests (HH:MM:SS).
+          example: 13:00:00
           type: string
         startCloseTimeOptions:
           $ref: "#/components/schemas/PickupAvailabilityResponse_pickupInformation_startCloseTimeOptions"
         timeRangeOptions:
-          $ref: "#/components/schemas/PickupAvailabilityResponse_pickupInformation_timeRangeOptions"
+          description: Container for default/available time ranges; may be empty depending
+            on carrier.
+          example: {}
+          type: object
       type: object
     additionalAddresses_inner_address:
       description: The additional address details.
@@ -16524,7 +17927,7 @@ components:
           stateProvince: NJ
           addressLine1: 2270 US HIGHWAY 130
           company: ABC Company
-        addressType: BROKER
+        addressType: EXPORTER
       properties:
         address:
           $ref: "#/components/schemas/additionalAddresses_inner_address"
@@ -16540,7 +17943,7 @@ components:
           - EXPORTER
           - ALT_DELIVERY
           - SHIPPER
-          example: BROKER
+          example: EXPORTER
           type: string
       type: object
     MultipieceShipmentRequest_fromAddress:
@@ -17218,7 +18621,7 @@ components:
           - DDP
           - EXW
           - FCA
-          example: DDU
+          example: DDP
           type: string
       required:
       - currencyCode
@@ -18363,7 +19766,7 @@ components:
           - DDP
           - EXW
           - FCA
-          example: DDU
+          example: DDP
           type: string
       type: object
     MultipieceShipmentInternationalResponse_customs_customsItems_inner:
@@ -20425,8 +21828,8 @@ components:
         parcel:
           $ref: "#/components/schemas/getAllShipments_data_inner_parcel"
         metadata:
-          description: "Additional metadata that needs to be stored for this shipment\
-            \ can be added here. For now, 'Cost Account Name' is supported."
+          description: 'Additional metadata that needs to be stored for this shipment
+            can be added here. '
           example:
           - name: costAccountName
             value: test
@@ -21031,17 +22434,6 @@ components:
             minLength: 5
             type: string
         type: object
-      example:
-        printPONumber: ponumber
-        bookingConfirmationNumber: XXXX56789812
-        addToManifest: true
-        shipperId: "1234567890"
-        billingWeight: "128.0"
-        printCustomMessage: Print Message 1
-        printDepartment: department
-        printInvoiceNumber: invoicenumber
-        receiptOption: RECEIPT_WITH_INSTRUCTIONS
-        minimalAddressValidation: true
     reprintShipment_toAddress:
       properties:
         addressLine1:
@@ -21648,12 +23040,6 @@ components:
           type: string
       type: object
     MilitaryMailShipmentResponseV2_labelLayout_inner:
-      example:
-        size: DOC_4X6
-        contents: XlhBCl5MSDE2LDEyCl5MTDEyMTIKXkZUIDU4MSwgNDAzIF5BVU4gIF5GRDAwMDNeRlMgXkZYIENvbmZpZ3VyYWJsZSBUZXh0IDEK...
-        type: SHIPPING_LABEL
-        contentType: BASE64
-        fileFormat: ZPL2
       properties:
         contentType:
           description: Specifies how the label content is encoded.
@@ -21685,10 +23071,6 @@ components:
           type: string
       type: object
     MilitaryMailShipmentResponseV2_printError:
-      example:
-        code: validation_error
-        message: Api is not supported for your 1.10.15 version please install latest
-          dh version
       properties:
         code:
           description: indicates error code of print
@@ -22198,7 +23580,7 @@ components:
           - DDP
           - EXW
           - FCA
-          example: DDU
+          example: DDP
           type: string
       type: object
     internationalShipmentResponse_customs_customsItems_inner:
@@ -22388,33 +23770,6 @@ components:
             example: 73.12
             type: number
         type: object
-      example:
-        baseCharge: 16.15
-        destinationZone: "1"
-        deliveryCommitment:
-          maxEstimatedNumberOfDays: "5"
-          estimatedDeliveryDateTime: 2024-03-25
-          guarantee: None
-        carrier: PUROLATOR
-        parcelType: PKG
-        inductionPostalCode: "06905"
-        baseChargeTaxes:
-        - displayName: Canada goods and services
-          name: GST
-          taxAmount: 2.69
-        - displayName: Canada goods and services
-          name: GST
-          taxAmount: 2.69
-        totalCarrierCharge: 22.46
-        surcharges:
-        - fee: 2.95
-          name: ResidentialDelivery
-        - fee: 2.95
-          name: ResidentialDelivery
-        serviceId: GRD
-        totalTaxAmount: 2.69
-        currencyCode: CAD
-        publishedTotalCarrierCharge: 73.12
     PrintDocumentRequest_reference:
       description: "- Contains key value map for passing references. Max references\
         \ allowed is 6. <br /> - References are tags or information that is printed\

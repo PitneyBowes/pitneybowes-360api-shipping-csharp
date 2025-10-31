@@ -43,7 +43,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="minimalAddressValidation">Allows performing minimal address validation during shipment creation. the addressLine1 field is not validated if set to true. Minimal address validation is supported only for these APIs:    - Create Shipment    - Create Bulk Shipments    - Create Multipiece Shipment </param>
         /// <param name="billingWeight">The weight used by the carrier to calculate the shipping cost. This value is determined as the greater of the actual weight and the dimensional weight. </param>
         [JsonConstructor]
-        public MilitaryMailShipmentResponseV2ShipmentOptions(Option<bool?> addToManifest = default, Option<string?> printCustomMessage = default, Option<string?> receiptOption = default, Option<string?> printDepartment = default, Option<string?> printInvoiceNumber = default, Option<string?> printPONumber = default, Option<string?> shipperId = default, Option<bool?> minimalAddressValidation = default, Option<string?> billingWeight = default)
+        public MilitaryMailShipmentResponseV2ShipmentOptions(Option<bool?> addToManifest = default, Option<string?> printCustomMessage = default, Option<ReceiptOptionEnum?> receiptOption = default, Option<string?> printDepartment = default, Option<string?> printInvoiceNumber = default, Option<string?> printPONumber = default, Option<string?> shipperId = default, Option<bool?> minimalAddressValidation = default, Option<string?> billingWeight = default)
         {
             AddToManifestOption = addToManifest;
             PrintCustomMessageOption = printCustomMessage;
@@ -58,6 +58,102 @@ namespace com.pitneybowes.api360.Model
         }
 
         partial void OnCreated();
+
+        /// <summary>
+        /// It provides options to print receipt with shipping label. Only applicable for USPS, and it can have the indicated possible/ enum values.
+        /// </summary>
+        /// <value>It provides options to print receipt with shipping label. Only applicable for USPS, and it can have the indicated possible/ enum values.</value>
+        public enum ReceiptOptionEnum
+        {
+            /// <summary>
+            /// Enum RECEIPTONLY for value: RECEIPT_ONLY
+            /// </summary>
+            RECEIPTONLY = 1,
+
+            /// <summary>
+            /// Enum RECEIPTWITHINSTRUCTIONS for value: RECEIPT_WITH_INSTRUCTIONS
+            /// </summary>
+            RECEIPTWITHINSTRUCTIONS = 2,
+
+            /// <summary>
+            /// Enum OrNOOPTIONS for value: or NO_OPTIONS
+            /// </summary>
+            OrNOOPTIONS = 3
+        }
+
+        /// <summary>
+        /// Returns a <see cref="ReceiptOptionEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static ReceiptOptionEnum ReceiptOptionEnumFromString(string value)
+        {
+            if (value.Equals("RECEIPT_ONLY"))
+                return ReceiptOptionEnum.RECEIPTONLY;
+
+            if (value.Equals("RECEIPT_WITH_INSTRUCTIONS"))
+                return ReceiptOptionEnum.RECEIPTWITHINSTRUCTIONS;
+
+            if (value.Equals("or NO_OPTIONS"))
+                return ReceiptOptionEnum.OrNOOPTIONS;
+
+            throw new NotImplementedException($"Could not convert value to type ReceiptOptionEnum: '{value}'");
+        }
+
+        /// <summary>
+        /// Returns a <see cref="ReceiptOptionEnum"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ReceiptOptionEnum? ReceiptOptionEnumFromStringOrDefault(string value)
+        {
+            if (value.Equals("RECEIPT_ONLY"))
+                return ReceiptOptionEnum.RECEIPTONLY;
+
+            if (value.Equals("RECEIPT_WITH_INSTRUCTIONS"))
+                return ReceiptOptionEnum.RECEIPTWITHINSTRUCTIONS;
+
+            if (value.Equals("or NO_OPTIONS"))
+                return ReceiptOptionEnum.OrNOOPTIONS;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts the <see cref="ReceiptOptionEnum"/> to the json value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static string ReceiptOptionEnumToJsonValue(ReceiptOptionEnum? value)
+        {
+            if (value == ReceiptOptionEnum.RECEIPTONLY)
+                return "RECEIPT_ONLY";
+
+            if (value == ReceiptOptionEnum.RECEIPTWITHINSTRUCTIONS)
+                return "RECEIPT_WITH_INSTRUCTIONS";
+
+            if (value == ReceiptOptionEnum.OrNOOPTIONS)
+                return "or NO_OPTIONS";
+
+            throw new NotImplementedException($"Value could not be handled: '{value}'");
+        }
+
+        /// <summary>
+        /// Used to track the state of ReceiptOption
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<ReceiptOptionEnum?> ReceiptOptionOption { get; private set; }
+
+        /// <summary>
+        /// It provides options to print receipt with shipping label. Only applicable for USPS, and it can have the indicated possible/ enum values.
+        /// </summary>
+        /// <value>It provides options to print receipt with shipping label. Only applicable for USPS, and it can have the indicated possible/ enum values.</value>
+        /* <example>RECEIPT_WITH_INSTRUCTIONS</example> */
+        [JsonPropertyName("receiptOption")]
+        public ReceiptOptionEnum? ReceiptOption { get { return this.ReceiptOptionOption; } set { this.ReceiptOptionOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of AddToManifest
@@ -88,21 +184,6 @@ namespace com.pitneybowes.api360.Model
         /* <example>Print Message 1</example> */
         [JsonPropertyName("printCustomMessage")]
         public string? PrintCustomMessage { get { return this.PrintCustomMessageOption; } set { this.PrintCustomMessageOption = new(value); } }
-
-        /// <summary>
-        /// Used to track the state of ReceiptOption
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string?> ReceiptOptionOption { get; private set; }
-
-        /// <summary>
-        /// It provides options to print receipt with shipping label. Only applicable for USPS, and it can have the indicated possible/ enum values.
-        /// </summary>
-        /// <value>It provides options to print receipt with shipping label. Only applicable for USPS, and it can have the indicated possible/ enum values.</value>
-        /* <example>RECEIPT_WITH_INSTRUCTIONS</example> */
-        [JsonPropertyName("receiptOption")]
-        public string? ReceiptOption { get { return this.ReceiptOptionOption; } set { this.ReceiptOptionOption = new(value); } }
 
         /// <summary>
         /// Used to track the state of PrintDepartment
@@ -250,7 +331,7 @@ namespace com.pitneybowes.api360.Model
 
             Option<bool?> addToManifest = default;
             Option<string?> printCustomMessage = default;
-            Option<string?> receiptOption = default;
+            Option<MilitaryMailShipmentResponseV2ShipmentOptions.ReceiptOptionEnum?> receiptOption = default;
             Option<string?> printDepartment = default;
             Option<string?> printInvoiceNumber = default;
             Option<string?> printPONumber = default;
@@ -280,7 +361,9 @@ namespace com.pitneybowes.api360.Model
                             printCustomMessage = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "receiptOption":
-                            receiptOption = new Option<string?>(utf8JsonReader.GetString()!);
+                            string? receiptOptionRawValue = utf8JsonReader.GetString();
+                            if (receiptOptionRawValue != null)
+                                receiptOption = new Option<MilitaryMailShipmentResponseV2ShipmentOptions.ReceiptOptionEnum?>(MilitaryMailShipmentResponseV2ShipmentOptions.ReceiptOptionEnumFromStringOrDefault(receiptOptionRawValue));
                             break;
                         case "printDepartment":
                             printDepartment = new Option<string?>(utf8JsonReader.GetString()!);
@@ -363,9 +446,6 @@ namespace com.pitneybowes.api360.Model
             if (militaryMailShipmentResponseV2ShipmentOptions.PrintCustomMessageOption.IsSet && militaryMailShipmentResponseV2ShipmentOptions.PrintCustomMessage == null)
                 throw new ArgumentNullException(nameof(militaryMailShipmentResponseV2ShipmentOptions.PrintCustomMessage), "Property is required for class MilitaryMailShipmentResponseV2ShipmentOptions.");
 
-            if (militaryMailShipmentResponseV2ShipmentOptions.ReceiptOptionOption.IsSet && militaryMailShipmentResponseV2ShipmentOptions.ReceiptOption == null)
-                throw new ArgumentNullException(nameof(militaryMailShipmentResponseV2ShipmentOptions.ReceiptOption), "Property is required for class MilitaryMailShipmentResponseV2ShipmentOptions.");
-
             if (militaryMailShipmentResponseV2ShipmentOptions.PrintDepartmentOption.IsSet && militaryMailShipmentResponseV2ShipmentOptions.PrintDepartment == null)
                 throw new ArgumentNullException(nameof(militaryMailShipmentResponseV2ShipmentOptions.PrintDepartment), "Property is required for class MilitaryMailShipmentResponseV2ShipmentOptions.");
 
@@ -387,9 +467,8 @@ namespace com.pitneybowes.api360.Model
             if (militaryMailShipmentResponseV2ShipmentOptions.PrintCustomMessageOption.IsSet)
                 writer.WriteString("printCustomMessage", militaryMailShipmentResponseV2ShipmentOptions.PrintCustomMessage);
 
-            if (militaryMailShipmentResponseV2ShipmentOptions.ReceiptOptionOption.IsSet)
-                writer.WriteString("receiptOption", militaryMailShipmentResponseV2ShipmentOptions.ReceiptOption);
-
+            var receiptOptionRawValue = MilitaryMailShipmentResponseV2ShipmentOptions.ReceiptOptionEnumToJsonValue(militaryMailShipmentResponseV2ShipmentOptions.ReceiptOptionOption.Value!.Value);
+            writer.WriteString("receiptOption", receiptOptionRawValue);
             if (militaryMailShipmentResponseV2ShipmentOptions.PrintDepartmentOption.IsSet)
                 writer.WriteString("printDepartment", militaryMailShipmentResponseV2ShipmentOptions.PrintDepartment);
 

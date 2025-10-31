@@ -37,19 +37,19 @@ namespace com.pitneybowes.api360.Model
         /// <param name="carrierAccountId">The unique identifier of the carrier account being used to process the pickup.</param>
         /// <param name="pickupAddress">pickupAddress</param>
         /// <param name="pickupSummary">An array of the pickup details, including the number of packages, total weight, and carrier service information.</param>
+        /// <param name="pickupOptions">pickupOptions</param>
         /// <param name="additionalnotes">Additional instructions or notes for the carrier regarding the pickup. &lt;br /&gt; Value is required when packageLocation is set to other.</param>
         /// <param name="reference">An optional Reference related to the pickup.</param>
-        /// <param name="pickupOptions">pickupOptions</param>
         [JsonConstructor]
-        public SchedulePickupUPSRequest(PackageLocationEnum packageLocation, string carrierAccountId, SchedulePickupUSPSRequestPickupAddress pickupAddress, List<SchedulePickupUPSRequestPickupSummaryInner> pickupSummary, Option<string?> additionalnotes = default, Option<string?> reference = default, Option<SchedulePickupDHLEXPRequestPickupOptions?> pickupOptions = default)
+        public SchedulePickupUPSRequest(PackageLocationEnum packageLocation, string carrierAccountId, SchedulePickupUSPSRequestPickupAddress pickupAddress, List<SchedulePickupUPSRequestPickupSummaryInner> pickupSummary, SchedulePickupUSPSRequestPickupOptions pickupOptions, Option<string?> additionalnotes = default, Option<string?> reference = default)
         {
             PackageLocation = packageLocation;
             CarrierAccountId = carrierAccountId;
             PickupAddress = pickupAddress;
             PickupSummary = pickupSummary;
+            PickupOptions = pickupOptions;
             AdditionalnotesOption = additionalnotes;
             ReferenceOption = reference;
-            PickupOptionsOption = pickupOptions;
             OnCreated();
         }
 
@@ -306,6 +306,12 @@ namespace com.pitneybowes.api360.Model
         public List<SchedulePickupUPSRequestPickupSummaryInner> PickupSummary { get; set; }
 
         /// <summary>
+        /// Gets or Sets PickupOptions
+        /// </summary>
+        [JsonPropertyName("pickupOptions")]
+        public SchedulePickupUSPSRequestPickupOptions PickupOptions { get; set; }
+
+        /// <summary>
         /// Used to track the state of Additionalnotes
         /// </summary>
         [JsonIgnore]
@@ -336,19 +342,6 @@ namespace com.pitneybowes.api360.Model
         public string? Reference { get { return this.ReferenceOption; } set { this.ReferenceOption = new(value); } }
 
         /// <summary>
-        /// Used to track the state of PickupOptions
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<SchedulePickupDHLEXPRequestPickupOptions?> PickupOptionsOption { get; private set; }
-
-        /// <summary>
-        /// Gets or Sets PickupOptions
-        /// </summary>
-        [JsonPropertyName("pickupOptions")]
-        public SchedulePickupDHLEXPRequestPickupOptions? PickupOptions { get { return this.PickupOptionsOption; } set { this.PickupOptionsOption = new(value); } }
-
-        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -360,9 +353,9 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  CarrierAccountId: ").Append(CarrierAccountId).Append("\n");
             sb.Append("  PickupAddress: ").Append(PickupAddress).Append("\n");
             sb.Append("  PickupSummary: ").Append(PickupSummary).Append("\n");
+            sb.Append("  PickupOptions: ").Append(PickupOptions).Append("\n");
             sb.Append("  Additionalnotes: ").Append(Additionalnotes).Append("\n");
             sb.Append("  Reference: ").Append(Reference).Append("\n");
-            sb.Append("  PickupOptions: ").Append(PickupOptions).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -404,9 +397,9 @@ namespace com.pitneybowes.api360.Model
             Option<string?> carrierAccountId = default;
             Option<SchedulePickupUSPSRequestPickupAddress?> pickupAddress = default;
             Option<List<SchedulePickupUPSRequestPickupSummaryInner>?> pickupSummary = default;
+            Option<SchedulePickupUSPSRequestPickupOptions?> pickupOptions = default;
             Option<string?> additionalnotes = default;
             Option<string?> reference = default;
-            Option<SchedulePickupDHLEXPRequestPickupOptions?> pickupOptions = default;
 
             while (utf8JsonReader.Read())
             {
@@ -437,14 +430,14 @@ namespace com.pitneybowes.api360.Model
                         case "pickupSummary":
                             pickupSummary = new Option<List<SchedulePickupUPSRequestPickupSummaryInner>?>(JsonSerializer.Deserialize<List<SchedulePickupUPSRequestPickupSummaryInner>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
+                        case "pickupOptions":
+                            pickupOptions = new Option<SchedulePickupUSPSRequestPickupOptions?>(JsonSerializer.Deserialize<SchedulePickupUSPSRequestPickupOptions>(ref utf8JsonReader, jsonSerializerOptions)!);
+                            break;
                         case "additionalnotes":
                             additionalnotes = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "reference":
                             reference = new Option<string?>(utf8JsonReader.GetString()!);
-                            break;
-                        case "pickupOptions":
-                            pickupOptions = new Option<SchedulePickupDHLEXPRequestPickupOptions?>(JsonSerializer.Deserialize<SchedulePickupDHLEXPRequestPickupOptions>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         default:
                             break;
@@ -464,6 +457,9 @@ namespace com.pitneybowes.api360.Model
             if (!pickupSummary.IsSet)
                 throw new ArgumentException("Property is required for class SchedulePickupUPSRequest.", nameof(pickupSummary));
 
+            if (!pickupOptions.IsSet)
+                throw new ArgumentException("Property is required for class SchedulePickupUPSRequest.", nameof(pickupOptions));
+
             if (packageLocation.IsSet && packageLocation.Value == null)
                 throw new ArgumentNullException(nameof(packageLocation), "Property is not nullable for class SchedulePickupUPSRequest.");
 
@@ -476,16 +472,16 @@ namespace com.pitneybowes.api360.Model
             if (pickupSummary.IsSet && pickupSummary.Value == null)
                 throw new ArgumentNullException(nameof(pickupSummary), "Property is not nullable for class SchedulePickupUPSRequest.");
 
+            if (pickupOptions.IsSet && pickupOptions.Value == null)
+                throw new ArgumentNullException(nameof(pickupOptions), "Property is not nullable for class SchedulePickupUPSRequest.");
+
             if (additionalnotes.IsSet && additionalnotes.Value == null)
                 throw new ArgumentNullException(nameof(additionalnotes), "Property is not nullable for class SchedulePickupUPSRequest.");
 
             if (reference.IsSet && reference.Value == null)
                 throw new ArgumentNullException(nameof(reference), "Property is not nullable for class SchedulePickupUPSRequest.");
 
-            if (pickupOptions.IsSet && pickupOptions.Value == null)
-                throw new ArgumentNullException(nameof(pickupOptions), "Property is not nullable for class SchedulePickupUPSRequest.");
-
-            return new SchedulePickupUPSRequest(packageLocation.Value!.Value!, carrierAccountId.Value!, pickupAddress.Value!, pickupSummary.Value!, additionalnotes, reference, pickupOptions);
+            return new SchedulePickupUPSRequest(packageLocation.Value!.Value!, carrierAccountId.Value!, pickupAddress.Value!, pickupSummary.Value!, pickupOptions.Value!, additionalnotes, reference);
         }
 
         /// <summary>
@@ -521,14 +517,14 @@ namespace com.pitneybowes.api360.Model
             if (schedulePickupUPSRequest.PickupSummary == null)
                 throw new ArgumentNullException(nameof(schedulePickupUPSRequest.PickupSummary), "Property is required for class SchedulePickupUPSRequest.");
 
+            if (schedulePickupUPSRequest.PickupOptions == null)
+                throw new ArgumentNullException(nameof(schedulePickupUPSRequest.PickupOptions), "Property is required for class SchedulePickupUPSRequest.");
+
             if (schedulePickupUPSRequest.AdditionalnotesOption.IsSet && schedulePickupUPSRequest.Additionalnotes == null)
                 throw new ArgumentNullException(nameof(schedulePickupUPSRequest.Additionalnotes), "Property is required for class SchedulePickupUPSRequest.");
 
             if (schedulePickupUPSRequest.ReferenceOption.IsSet && schedulePickupUPSRequest.Reference == null)
                 throw new ArgumentNullException(nameof(schedulePickupUPSRequest.Reference), "Property is required for class SchedulePickupUPSRequest.");
-
-            if (schedulePickupUPSRequest.PickupOptionsOption.IsSet && schedulePickupUPSRequest.PickupOptions == null)
-                throw new ArgumentNullException(nameof(schedulePickupUPSRequest.PickupOptions), "Property is required for class SchedulePickupUPSRequest.");
 
             var packageLocationRawValue = SchedulePickupUPSRequest.PackageLocationEnumToJsonValue(schedulePickupUPSRequest.PackageLocation);
             writer.WriteString("packageLocation", packageLocationRawValue);
@@ -538,17 +534,13 @@ namespace com.pitneybowes.api360.Model
             JsonSerializer.Serialize(writer, schedulePickupUPSRequest.PickupAddress, jsonSerializerOptions);
             writer.WritePropertyName("pickupSummary");
             JsonSerializer.Serialize(writer, schedulePickupUPSRequest.PickupSummary, jsonSerializerOptions);
+            writer.WritePropertyName("pickupOptions");
+            JsonSerializer.Serialize(writer, schedulePickupUPSRequest.PickupOptions, jsonSerializerOptions);
             if (schedulePickupUPSRequest.AdditionalnotesOption.IsSet)
                 writer.WriteString("additionalnotes", schedulePickupUPSRequest.Additionalnotes);
 
             if (schedulePickupUPSRequest.ReferenceOption.IsSet)
                 writer.WriteString("reference", schedulePickupUPSRequest.Reference);
-
-            if (schedulePickupUPSRequest.PickupOptionsOption.IsSet)
-            {
-                writer.WritePropertyName("pickupOptions");
-                JsonSerializer.Serialize(writer, schedulePickupUPSRequest.PickupOptions, jsonSerializerOptions);
-            }
         }
     }
 }
