@@ -1,5 +1,4 @@
 # com.pitneybowes.api360.Model.DocTabItem
-This field will either be part of the request or response payload or will be marked as a custom field. We need to pass this field only if we need to print it on the label.
 
 ## Properties
 

@@ -42,15 +42,15 @@ namespace com.pitneybowes.api360.Model
         /// <param name="email">Contact email at the pickup location</param>
         /// <param name="residential">Indicates if the address is residential.</param>
         [JsonConstructor]
-        public PickupAvailabilityRequestPickupAddress(Option<string> name = default, Option<string> addressLine1 = default, Option<string> cityTown = default, Option<string> stateProvince = default, Option<string> postalCode = default, Option<string> countryCode = default, Option<string> phone = default, Option<string> company = default, Option<string> email = default, Option<bool?> residential = default)
+        public PickupAvailabilityRequestPickupAddress(string name, string addressLine1, string cityTown, string stateProvince, string postalCode, string countryCode, string phone, Option<string> company = default, Option<string> email = default, Option<bool?> residential = default)
         {
-            NameOption = name;
-            AddressLine1Option = addressLine1;
-            CityTownOption = cityTown;
-            StateProvinceOption = stateProvince;
-            PostalCodeOption = postalCode;
-            CountryCodeOption = countryCode;
-            PhoneOption = phone;
+            Name = name;
+            AddressLine1 = addressLine1;
+            CityTown = cityTown;
+            StateProvince = stateProvince;
+            PostalCode = postalCode;
+            CountryCode = countryCode;
+            Phone = phone;
             CompanyOption = company;
             EmailOption = email;
             ResidentialOption = residential;
@@ -60,26 +60,12 @@ namespace com.pitneybowes.api360.Model
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of Name
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> NameOption { get; private set; }
-
-        /// <summary>
         /// Contact person name at the pickup location
         /// </summary>
         /// <value>Contact person name at the pickup location</value>
         /* <example>John Doe</example> */
         [JsonPropertyName("name")]
-        public string Name { get { return this.NameOption; } set { this.NameOption = new Option<string>(value); } }
-
-        /// <summary>
-        /// Used to track the state of AddressLine1
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> AddressLine1Option { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Primary street address line
@@ -87,14 +73,7 @@ namespace com.pitneybowes.api360.Model
         /// <value>Primary street address line</value>
         /* <example>27 Waterview Dr</example> */
         [JsonPropertyName("addressLine1")]
-        public string AddressLine1 { get { return this.AddressLine1Option; } set { this.AddressLine1Option = new Option<string>(value); } }
-
-        /// <summary>
-        /// Used to track the state of CityTown
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> CityTownOption { get; private set; }
+        public string AddressLine1 { get; set; }
 
         /// <summary>
         /// City or town of the pickup location
@@ -102,14 +81,7 @@ namespace com.pitneybowes.api360.Model
         /// <value>City or town of the pickup location</value>
         /* <example>Shelton</example> */
         [JsonPropertyName("cityTown")]
-        public string CityTown { get { return this.CityTownOption; } set { this.CityTownOption = new Option<string>(value); } }
-
-        /// <summary>
-        /// Used to track the state of StateProvince
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> StateProvinceOption { get; private set; }
+        public string CityTown { get; set; }
 
         /// <summary>
         /// State or province of the pickup location
@@ -117,14 +89,7 @@ namespace com.pitneybowes.api360.Model
         /// <value>State or province of the pickup location</value>
         /* <example>CT</example> */
         [JsonPropertyName("stateProvince")]
-        public string StateProvince { get { return this.StateProvinceOption; } set { this.StateProvinceOption = new Option<string>(value); } }
-
-        /// <summary>
-        /// Used to track the state of PostalCode
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> PostalCodeOption { get; private set; }
+        public string StateProvince { get; set; }
 
         /// <summary>
         /// Postal or ZIP code of the pickup location
@@ -132,14 +97,7 @@ namespace com.pitneybowes.api360.Model
         /// <value>Postal or ZIP code of the pickup location</value>
         /* <example>06484-4301</example> */
         [JsonPropertyName("postalCode")]
-        public string PostalCode { get { return this.PostalCodeOption; } set { this.PostalCodeOption = new Option<string>(value); } }
-
-        /// <summary>
-        /// Used to track the state of CountryCode
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> CountryCodeOption { get; private set; }
+        public string PostalCode { get; set; }
 
         /// <summary>
         /// Two-letter ISO country code
@@ -147,14 +105,7 @@ namespace com.pitneybowes.api360.Model
         /// <value>Two-letter ISO country code</value>
         /* <example>US</example> */
         [JsonPropertyName("countryCode")]
-        public string CountryCode { get { return this.CountryCodeOption; } set { this.CountryCodeOption = new Option<string>(value); } }
-
-        /// <summary>
-        /// Used to track the state of Phone
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> PhoneOption { get; private set; }
+        public string CountryCode { get; set; }
 
         /// <summary>
         /// Contact phone number at the pickup location
@@ -162,7 +113,7 @@ namespace com.pitneybowes.api360.Model
         /// <value>Contact phone number at the pickup location</value>
         /* <example>1234567890</example> */
         [JsonPropertyName("phone")]
-        public string Phone { get { return this.PhoneOption; } set { this.PhoneOption = new Option<string>(value); } }
+        public string Phone { get; set; }
 
         /// <summary>
         /// Used to track the state of Company
@@ -326,6 +277,27 @@ namespace com.pitneybowes.api360.Model
                 }
             }
 
+            if (!name.IsSet)
+                throw new ArgumentException("Property is required for class PickupAvailabilityRequestPickupAddress.", nameof(name));
+
+            if (!addressLine1.IsSet)
+                throw new ArgumentException("Property is required for class PickupAvailabilityRequestPickupAddress.", nameof(addressLine1));
+
+            if (!cityTown.IsSet)
+                throw new ArgumentException("Property is required for class PickupAvailabilityRequestPickupAddress.", nameof(cityTown));
+
+            if (!stateProvince.IsSet)
+                throw new ArgumentException("Property is required for class PickupAvailabilityRequestPickupAddress.", nameof(stateProvince));
+
+            if (!postalCode.IsSet)
+                throw new ArgumentException("Property is required for class PickupAvailabilityRequestPickupAddress.", nameof(postalCode));
+
+            if (!countryCode.IsSet)
+                throw new ArgumentException("Property is required for class PickupAvailabilityRequestPickupAddress.", nameof(countryCode));
+
+            if (!phone.IsSet)
+                throw new ArgumentException("Property is required for class PickupAvailabilityRequestPickupAddress.", nameof(phone));
+
             if (name.IsSet && name.Value == null)
                 throw new ArgumentNullException(nameof(name), "Property is not nullable for class PickupAvailabilityRequestPickupAddress.");
 
@@ -356,7 +328,7 @@ namespace com.pitneybowes.api360.Model
             if (residential.IsSet && residential.Value == null)
                 throw new ArgumentNullException(nameof(residential), "Property is not nullable for class PickupAvailabilityRequestPickupAddress.");
 
-            return new PickupAvailabilityRequestPickupAddress(name, addressLine1, cityTown, stateProvince, postalCode, countryCode, phone, company, email, residential);
+            return new PickupAvailabilityRequestPickupAddress(name.Value, addressLine1.Value, cityTown.Value, stateProvince.Value, postalCode.Value, countryCode.Value, phone.Value, company, email, residential);
         }
 
         /// <summary>
@@ -383,25 +355,25 @@ namespace com.pitneybowes.api360.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, PickupAvailabilityRequestPickupAddress pickupAvailabilityRequestPickupAddress, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (pickupAvailabilityRequestPickupAddress.NameOption.IsSet && pickupAvailabilityRequestPickupAddress.Name == null)
+            if (pickupAvailabilityRequestPickupAddress.Name == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupAddress.Name), "Property is required for class PickupAvailabilityRequestPickupAddress.");
 
-            if (pickupAvailabilityRequestPickupAddress.AddressLine1Option.IsSet && pickupAvailabilityRequestPickupAddress.AddressLine1 == null)
+            if (pickupAvailabilityRequestPickupAddress.AddressLine1 == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupAddress.AddressLine1), "Property is required for class PickupAvailabilityRequestPickupAddress.");
 
-            if (pickupAvailabilityRequestPickupAddress.CityTownOption.IsSet && pickupAvailabilityRequestPickupAddress.CityTown == null)
+            if (pickupAvailabilityRequestPickupAddress.CityTown == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupAddress.CityTown), "Property is required for class PickupAvailabilityRequestPickupAddress.");
 
-            if (pickupAvailabilityRequestPickupAddress.StateProvinceOption.IsSet && pickupAvailabilityRequestPickupAddress.StateProvince == null)
+            if (pickupAvailabilityRequestPickupAddress.StateProvince == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupAddress.StateProvince), "Property is required for class PickupAvailabilityRequestPickupAddress.");
 
-            if (pickupAvailabilityRequestPickupAddress.PostalCodeOption.IsSet && pickupAvailabilityRequestPickupAddress.PostalCode == null)
+            if (pickupAvailabilityRequestPickupAddress.PostalCode == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupAddress.PostalCode), "Property is required for class PickupAvailabilityRequestPickupAddress.");
 
-            if (pickupAvailabilityRequestPickupAddress.CountryCodeOption.IsSet && pickupAvailabilityRequestPickupAddress.CountryCode == null)
+            if (pickupAvailabilityRequestPickupAddress.CountryCode == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupAddress.CountryCode), "Property is required for class PickupAvailabilityRequestPickupAddress.");
 
-            if (pickupAvailabilityRequestPickupAddress.PhoneOption.IsSet && pickupAvailabilityRequestPickupAddress.Phone == null)
+            if (pickupAvailabilityRequestPickupAddress.Phone == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupAddress.Phone), "Property is required for class PickupAvailabilityRequestPickupAddress.");
 
             if (pickupAvailabilityRequestPickupAddress.CompanyOption.IsSet && pickupAvailabilityRequestPickupAddress.Company == null)
@@ -410,26 +382,19 @@ namespace com.pitneybowes.api360.Model
             if (pickupAvailabilityRequestPickupAddress.EmailOption.IsSet && pickupAvailabilityRequestPickupAddress.Email == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupAddress.Email), "Property is required for class PickupAvailabilityRequestPickupAddress.");
 
-            if (pickupAvailabilityRequestPickupAddress.NameOption.IsSet)
-                writer.WriteString("name", pickupAvailabilityRequestPickupAddress.Name);
+            writer.WriteString("name", pickupAvailabilityRequestPickupAddress.Name);
 
-            if (pickupAvailabilityRequestPickupAddress.AddressLine1Option.IsSet)
-                writer.WriteString("addressLine1", pickupAvailabilityRequestPickupAddress.AddressLine1);
+            writer.WriteString("addressLine1", pickupAvailabilityRequestPickupAddress.AddressLine1);
 
-            if (pickupAvailabilityRequestPickupAddress.CityTownOption.IsSet)
-                writer.WriteString("cityTown", pickupAvailabilityRequestPickupAddress.CityTown);
+            writer.WriteString("cityTown", pickupAvailabilityRequestPickupAddress.CityTown);
 
-            if (pickupAvailabilityRequestPickupAddress.StateProvinceOption.IsSet)
-                writer.WriteString("stateProvince", pickupAvailabilityRequestPickupAddress.StateProvince);
+            writer.WriteString("stateProvince", pickupAvailabilityRequestPickupAddress.StateProvince);
 
-            if (pickupAvailabilityRequestPickupAddress.PostalCodeOption.IsSet)
-                writer.WriteString("postalCode", pickupAvailabilityRequestPickupAddress.PostalCode);
+            writer.WriteString("postalCode", pickupAvailabilityRequestPickupAddress.PostalCode);
 
-            if (pickupAvailabilityRequestPickupAddress.CountryCodeOption.IsSet)
-                writer.WriteString("countryCode", pickupAvailabilityRequestPickupAddress.CountryCode);
+            writer.WriteString("countryCode", pickupAvailabilityRequestPickupAddress.CountryCode);
 
-            if (pickupAvailabilityRequestPickupAddress.PhoneOption.IsSet)
-                writer.WriteString("phone", pickupAvailabilityRequestPickupAddress.Phone);
+            writer.WriteString("phone", pickupAvailabilityRequestPickupAddress.Phone);
 
             if (pickupAvailabilityRequestPickupAddress.CompanyOption.IsSet)
                 writer.WriteString("company", pickupAvailabilityRequestPickupAddress.Company);

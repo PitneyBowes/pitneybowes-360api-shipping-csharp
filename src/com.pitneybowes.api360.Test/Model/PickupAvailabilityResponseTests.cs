@@ -81,15 +81,6 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'PickupSummary'
-        /// </summary>
-        [Fact]
-        public void PickupSummaryTest()
-        {
-            // TODO unit test for the property 'PickupSummary'
-        }
-
-        /// <summary>
         /// Test the property 'PickupDateTime'
         /// </summary>
         [Fact]

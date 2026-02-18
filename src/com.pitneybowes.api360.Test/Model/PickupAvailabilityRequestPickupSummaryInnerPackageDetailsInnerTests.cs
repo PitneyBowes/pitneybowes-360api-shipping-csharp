@@ -81,6 +81,24 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'Weight'
+        /// </summary>
+        [Fact]
+        public void WeightTest()
+        {
+            // TODO unit test for the property 'Weight'
+        }
+
+        /// <summary>
+        /// Test the property 'WeightUnit'
+        /// </summary>
+        [Fact]
+        public void WeightUnitTest()
+        {
+            // TODO unit test for the property 'WeightUnit'
+        }
+
+        /// <summary>
         /// Test the property 'DimUnit'
         /// </summary>
         [Fact]

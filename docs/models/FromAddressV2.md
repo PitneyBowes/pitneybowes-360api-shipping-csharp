@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **AddressLine2** | **string** | The addressLine2 contains Street address or Landmark (if any). | [optional] 
 **AddressLine3** | **string** | The addressLine3 contains P.O. Box (if any) near the address. | [optional] 
 **Company** | **string** | The name of the company, in case if the senders address is not residential. | [optional] 
-**Email** | **string** | This must be senders&#39;s valid email. Email is required if the customer is using GoFor Carrier. Sender email is required for RMG b2b shipment. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60;  | [optional] 
+**Email** | **string** | This must be senders&#39;s valid email. Email is required if the customer is using GoFor Carrier. Sender email is required for RMG b2b shipment. &lt;br /&gt; &#x60;Max length &#x3D; 50&#x60;  | [optional] 
 **InductionPostalCode** | **string** | The postal code where the shipment is tendered to the carrier. If an induction postal code is specified in the \&quot;fromAddress\&quot;, it will be used for rate calculations and determining manifest eligibility instead of the standard postal code. If not specified, the postal code from the \&quot;fromAddress\&quot; will be used.  | [optional] 
 **Residential** | **bool** | The specified address can be Residential or Official. In case if the address is Residential, the boolean value will be &#39;true&#39;, else it will take &#39;false&#39;. | [optional] 
 

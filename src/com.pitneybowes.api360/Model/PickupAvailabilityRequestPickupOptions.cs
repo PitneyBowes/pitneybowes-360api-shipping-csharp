@@ -31,45 +31,81 @@ namespace com.pitneybowes.api360.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="PickupAvailabilityRequestPickupOptions" /> class.
         /// </summary>
-        /// <param name="countryRelationship">countryRelationship</param>
-        /// <param name="carrier">carrier</param>
+        /// <param name="pickupStartDateTime">Start time of the pickup window.</param>
+        /// <param name="pickupEndDateTime">End time of the pickup window.</param>
+        /// <param name="carrierType">Type of carrier service requested for the pickup.</param>
+        /// <param name="scheduleDay">Indicates when the pickup is scheduled (e.g., SAME_DAY, FUTURE_DAY).</param>
         [JsonConstructor]
-        public PickupAvailabilityRequestPickupOptions(Option<string> countryRelationship = default, Option<string> carrier = default)
+        public PickupAvailabilityRequestPickupOptions(Option<DateTime?> pickupStartDateTime = default, Option<DateTime?> pickupEndDateTime = default, Option<string> carrierType = default, Option<string> scheduleDay = default)
         {
-            CountryRelationshipOption = countryRelationship;
-            CarrierOption = carrier;
+            PickupStartDateTimeOption = pickupStartDateTime;
+            PickupEndDateTimeOption = pickupEndDateTime;
+            CarrierTypeOption = carrierType;
+            ScheduleDayOption = scheduleDay;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// Used to track the state of CountryRelationship
+        /// Used to track the state of PickupStartDateTime
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> CountryRelationshipOption { get; private set; }
+        public Option<DateTime?> PickupStartDateTimeOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets CountryRelationship
+        /// Start time of the pickup window.
         /// </summary>
-        /* <example>INTERNATIONAL</example> */
-        [JsonPropertyName("countryRelationship")]
-        public string CountryRelationship { get { return this.CountryRelationshipOption; } set { this.CountryRelationshipOption = new Option<string>(value); } }
+        /// <value>Start time of the pickup window.</value>
+        /* <example>2025-09-15T12:45Z</example> */
+        [JsonPropertyName("pickupStartDateTime")]
+        public DateTime? PickupStartDateTime { get { return this.PickupStartDateTimeOption; } set { this.PickupStartDateTimeOption = new Option<DateTime?>(value); } }
 
         /// <summary>
-        /// Used to track the state of Carrier
+        /// Used to track the state of PickupEndDateTime
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> CarrierOption { get; private set; }
+        public Option<DateTime?> PickupEndDateTimeOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets Carrier
+        /// End time of the pickup window.
         /// </summary>
-        /* <example>UPS</example> */
-        [JsonPropertyName("carrier")]
-        public string Carrier { get { return this.CarrierOption; } set { this.CarrierOption = new Option<string>(value); } }
+        /// <value>End time of the pickup window.</value>
+        /* <example>2025-09-15T13:15Z</example> */
+        [JsonPropertyName("pickupEndDateTime")]
+        public DateTime? PickupEndDateTime { get { return this.PickupEndDateTimeOption; } set { this.PickupEndDateTimeOption = new Option<DateTime?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of CarrierType
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> CarrierTypeOption { get; private set; }
+
+        /// <summary>
+        /// Type of carrier service requested for the pickup.
+        /// </summary>
+        /// <value>Type of carrier service requested for the pickup.</value>
+        /* <example>EXPRESS</example> */
+        [JsonPropertyName("carrierType")]
+        public string CarrierType { get { return this.CarrierTypeOption; } set { this.CarrierTypeOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of ScheduleDay
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> ScheduleDayOption { get; private set; }
+
+        /// <summary>
+        /// Indicates when the pickup is scheduled (e.g., SAME_DAY, FUTURE_DAY).
+        /// </summary>
+        /// <value>Indicates when the pickup is scheduled (e.g., SAME_DAY, FUTURE_DAY).</value>
+        /* <example>SAME_DAY</example> */
+        [JsonPropertyName("scheduleDay")]
+        public string ScheduleDay { get { return this.ScheduleDayOption; } set { this.ScheduleDayOption = new Option<string>(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -79,8 +115,10 @@ namespace com.pitneybowes.api360.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class PickupAvailabilityRequestPickupOptions {\n");
-            sb.Append("  CountryRelationship: ").Append(CountryRelationship).Append("\n");
-            sb.Append("  Carrier: ").Append(Carrier).Append("\n");
+            sb.Append("  PickupStartDateTime: ").Append(PickupStartDateTime).Append("\n");
+            sb.Append("  PickupEndDateTime: ").Append(PickupEndDateTime).Append("\n");
+            sb.Append("  CarrierType: ").Append(CarrierType).Append("\n");
+            sb.Append("  ScheduleDay: ").Append(ScheduleDay).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -102,6 +140,16 @@ namespace com.pitneybowes.api360.Model
     public class PickupAvailabilityRequestPickupOptionsJsonConverter : JsonConverter<PickupAvailabilityRequestPickupOptions>
     {
         /// <summary>
+        /// The format to use to serialize PickupStartDateTime
+        /// </summary>
+        public static string PickupStartDateTimeFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+
+        /// <summary>
+        /// The format to use to serialize PickupEndDateTime
+        /// </summary>
+        public static string PickupEndDateTimeFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+
+        /// <summary>
         /// Deserializes json to <see cref="PickupAvailabilityRequestPickupOptions" />
         /// </summary>
         /// <param name="utf8JsonReader"></param>
@@ -118,8 +166,10 @@ namespace com.pitneybowes.api360.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<string> countryRelationship = default;
-            Option<string> carrier = default;
+            Option<DateTime?> pickupStartDateTime = default;
+            Option<DateTime?> pickupEndDateTime = default;
+            Option<string> carrierType = default;
+            Option<string> scheduleDay = default;
 
             while (utf8JsonReader.Read())
             {
@@ -136,11 +186,17 @@ namespace com.pitneybowes.api360.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "countryRelationship":
-                            countryRelationship = new Option<string>(utf8JsonReader.GetString());
+                        case "pickupStartDateTime":
+                            pickupStartDateTime = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
-                        case "carrier":
-                            carrier = new Option<string>(utf8JsonReader.GetString());
+                        case "pickupEndDateTime":
+                            pickupEndDateTime = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "carrierType":
+                            carrierType = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "scheduleDay":
+                            scheduleDay = new Option<string>(utf8JsonReader.GetString());
                             break;
                         default:
                             break;
@@ -148,13 +204,19 @@ namespace com.pitneybowes.api360.Model
                 }
             }
 
-            if (countryRelationship.IsSet && countryRelationship.Value == null)
-                throw new ArgumentNullException(nameof(countryRelationship), "Property is not nullable for class PickupAvailabilityRequestPickupOptions.");
+            if (pickupStartDateTime.IsSet && pickupStartDateTime.Value == null)
+                throw new ArgumentNullException(nameof(pickupStartDateTime), "Property is not nullable for class PickupAvailabilityRequestPickupOptions.");
 
-            if (carrier.IsSet && carrier.Value == null)
-                throw new ArgumentNullException(nameof(carrier), "Property is not nullable for class PickupAvailabilityRequestPickupOptions.");
+            if (pickupEndDateTime.IsSet && pickupEndDateTime.Value == null)
+                throw new ArgumentNullException(nameof(pickupEndDateTime), "Property is not nullable for class PickupAvailabilityRequestPickupOptions.");
 
-            return new PickupAvailabilityRequestPickupOptions(countryRelationship, carrier);
+            if (carrierType.IsSet && carrierType.Value == null)
+                throw new ArgumentNullException(nameof(carrierType), "Property is not nullable for class PickupAvailabilityRequestPickupOptions.");
+
+            if (scheduleDay.IsSet && scheduleDay.Value == null)
+                throw new ArgumentNullException(nameof(scheduleDay), "Property is not nullable for class PickupAvailabilityRequestPickupOptions.");
+
+            return new PickupAvailabilityRequestPickupOptions(pickupStartDateTime, pickupEndDateTime, carrierType, scheduleDay);
         }
 
         /// <summary>
@@ -181,17 +243,23 @@ namespace com.pitneybowes.api360.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, PickupAvailabilityRequestPickupOptions pickupAvailabilityRequestPickupOptions, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (pickupAvailabilityRequestPickupOptions.CountryRelationshipOption.IsSet && pickupAvailabilityRequestPickupOptions.CountryRelationship == null)
-                throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupOptions.CountryRelationship), "Property is required for class PickupAvailabilityRequestPickupOptions.");
+            if (pickupAvailabilityRequestPickupOptions.CarrierTypeOption.IsSet && pickupAvailabilityRequestPickupOptions.CarrierType == null)
+                throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupOptions.CarrierType), "Property is required for class PickupAvailabilityRequestPickupOptions.");
 
-            if (pickupAvailabilityRequestPickupOptions.CarrierOption.IsSet && pickupAvailabilityRequestPickupOptions.Carrier == null)
-                throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupOptions.Carrier), "Property is required for class PickupAvailabilityRequestPickupOptions.");
+            if (pickupAvailabilityRequestPickupOptions.ScheduleDayOption.IsSet && pickupAvailabilityRequestPickupOptions.ScheduleDay == null)
+                throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupOptions.ScheduleDay), "Property is required for class PickupAvailabilityRequestPickupOptions.");
 
-            if (pickupAvailabilityRequestPickupOptions.CountryRelationshipOption.IsSet)
-                writer.WriteString("countryRelationship", pickupAvailabilityRequestPickupOptions.CountryRelationship);
+            if (pickupAvailabilityRequestPickupOptions.PickupStartDateTimeOption.IsSet)
+                writer.WriteString("pickupStartDateTime", pickupAvailabilityRequestPickupOptions.PickupStartDateTimeOption.Value.Value.ToString(PickupStartDateTimeFormat));
 
-            if (pickupAvailabilityRequestPickupOptions.CarrierOption.IsSet)
-                writer.WriteString("carrier", pickupAvailabilityRequestPickupOptions.Carrier);
+            if (pickupAvailabilityRequestPickupOptions.PickupEndDateTimeOption.IsSet)
+                writer.WriteString("pickupEndDateTime", pickupAvailabilityRequestPickupOptions.PickupEndDateTimeOption.Value.Value.ToString(PickupEndDateTimeFormat));
+
+            if (pickupAvailabilityRequestPickupOptions.CarrierTypeOption.IsSet)
+                writer.WriteString("carrierType", pickupAvailabilityRequestPickupOptions.CarrierType);
+
+            if (pickupAvailabilityRequestPickupOptions.ScheduleDayOption.IsSet)
+                writer.WriteString("scheduleDay", pickupAvailabilityRequestPickupOptions.ScheduleDay);
         }
     }
 }

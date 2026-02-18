@@ -40,7 +40,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="shipmentIds">A comma-separated list of shipment IDs associated with the pickup request. </param>
         /// <param name="pickupOptions">pickupOptions</param>
         [JsonConstructor]
-        public SchedulePickupUSPSRequest(PackageLocationEnum packageLocation, string carrierAccountId, SchedulePickupUSPSRequestPickupAddress pickupAddress, List<SchedulePickupUSPSRequestPickupSummaryInner> pickupSummary, Option<string> additionalnotes = default, Option<string> reference = default, Option<List<string>> shipmentIds = default, Option<SchedulePickupDHLEXPRequestPickupOptions> pickupOptions = default)
+        public SchedulePickupUSPSRequest(PackageLocationEnum packageLocation, string carrierAccountId, SchedulePickupUSPSRequestPickupAddress pickupAddress, List<SchedulePickupUSPSRequestPickupSummaryInner> pickupSummary, Option<string> additionalnotes = default, Option<string> reference = default, Option<List<string>> shipmentIds = default, Option<SchedulePickupUSPSRequestPickupOptions> pickupOptions = default)
         {
             PackageLocation = packageLocation;
             CarrierAccountId = carrierAccountId;
@@ -299,13 +299,13 @@ namespace com.pitneybowes.api360.Model
         /// </summary>
         [JsonIgnore]
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<SchedulePickupDHLEXPRequestPickupOptions> PickupOptionsOption { get; private set; }
+        public Option<SchedulePickupUSPSRequestPickupOptions> PickupOptionsOption { get; private set; }
 
         /// <summary>
         /// Gets or Sets PickupOptions
         /// </summary>
         [JsonPropertyName("pickupOptions")]
-        public SchedulePickupDHLEXPRequestPickupOptions PickupOptions { get { return this.PickupOptionsOption; } set { this.PickupOptionsOption = new Option<SchedulePickupDHLEXPRequestPickupOptions>(value); } }
+        public SchedulePickupUSPSRequestPickupOptions PickupOptions { get { return this.PickupOptionsOption; } set { this.PickupOptionsOption = new Option<SchedulePickupUSPSRequestPickupOptions>(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -367,7 +367,7 @@ namespace com.pitneybowes.api360.Model
             Option<string> additionalnotes = default;
             Option<string> reference = default;
             Option<List<string>> shipmentIds = default;
-            Option<SchedulePickupDHLEXPRequestPickupOptions> pickupOptions = default;
+            Option<SchedulePickupUSPSRequestPickupOptions> pickupOptions = default;
 
             while (utf8JsonReader.Read())
             {
@@ -408,7 +408,7 @@ namespace com.pitneybowes.api360.Model
                             shipmentIds = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "pickupOptions":
-                            pickupOptions = new Option<SchedulePickupDHLEXPRequestPickupOptions>(JsonSerializer.Deserialize<SchedulePickupDHLEXPRequestPickupOptions>(ref utf8JsonReader, jsonSerializerOptions));
+                            pickupOptions = new Option<SchedulePickupUSPSRequestPickupOptions>(JsonSerializer.Deserialize<SchedulePickupUSPSRequestPickupOptions>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         default:
                             break;

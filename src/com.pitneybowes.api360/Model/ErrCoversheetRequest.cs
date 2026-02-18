@@ -42,7 +42,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="format">The file format of the coversheet. Default format is &#x60;PDF&#x60;.</param>
         /// <param name="size">The size of the coversheet. Default size is &#x60;10&#x60;.</param>
         /// <param name="shipmentOptions">shipmentOptions</param>
-        /// <param name="metadata">Optional metadata for the shipment.</param>
+        /// <param name="metadata">Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id and Cost Account Code](/openapi/costaccount/operation/addCostAccount/).&lt;br/&gt;If Cost Account metadata is provided, all three Cost Account fields are required.</param>
         /// <param name="shippingReferences">shippingReferences</param>
         [JsonConstructor]
         public ErrCoversheetRequest(TypeEnum type, string carrierAccountId, ParcelTypeEnum parcelType, string serviceId, List<ErrCoversheetRequestSpecialServicesInner> specialServices, ErrCoversheetRequestFromAddress fromAddress, ErrCoversheetRequestParcel parcel, ErrCoversheetRequestToAddress toAddress, Option<FormatEnum?> format = default, Option<SizeEnum?> size = default, Option<ErrCoversheetRequestShipmentOptions> shipmentOptions = default, Option<List<MultipieceShipmentRequestMetadataInner>> metadata = default, Option<ErrCoversheetRequestShippingReferences> shippingReferences = default)
@@ -140,7 +140,12 @@ namespace com.pitneybowes.api360.Model
             /// <summary>
             /// Enum PKG for value: PKG
             /// </summary>
-            PKG = 2
+            PKG = 2,
+
+            /// <summary>
+            /// Enum LTR for value: LTR
+            /// </summary>
+            LTR = 3
         }
 
         /// <summary>
@@ -156,6 +161,9 @@ namespace com.pitneybowes.api360.Model
 
             if (value.Equals("PKG"))
                 return ParcelTypeEnum.PKG;
+
+            if (value.Equals("LTR"))
+                return ParcelTypeEnum.LTR;
 
             throw new NotImplementedException($"Could not convert value to type ParcelTypeEnum: '{value}'");
         }
@@ -173,6 +181,9 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("PKG"))
                 return ParcelTypeEnum.PKG;
 
+            if (value.Equals("LTR"))
+                return ParcelTypeEnum.LTR;
+
             return null;
         }
 
@@ -189,6 +200,9 @@ namespace com.pitneybowes.api360.Model
 
             if (value == ParcelTypeEnum.PKG)
                 return "PKG";
+
+            if (value == ParcelTypeEnum.LTR)
+                return "LTR";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -442,9 +456,10 @@ namespace com.pitneybowes.api360.Model
         public Option<List<MultipieceShipmentRequestMetadataInner>> MetadataOption { get; private set; }
 
         /// <summary>
-        /// Optional metadata for the shipment.
+        /// Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id and Cost Account Code](/openapi/costaccount/operation/addCostAccount/).&lt;br/&gt;If Cost Account metadata is provided, all three Cost Account fields are required.
         /// </summary>
-        /// <value>Optional metadata for the shipment.</value>
+        /// <value>Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id and Cost Account Code](/openapi/costaccount/operation/addCostAccount/).&lt;br/&gt;If Cost Account metadata is provided, all three Cost Account fields are required.</value>
+        /* <example>[{&quot;name&quot;:&quot;costAccountName&quot;,&quot;value&quot;:&quot;costAccountName&quot;},{&quot;name&quot;:&quot;costAccountId&quot;,&quot;value&quot;:&quot;costAccountId&quot;},{&quot;name&quot;:&quot;costAccountCode&quot;,&quot;value&quot;:&quot;Code&quot;}]</example> */
         [JsonPropertyName("metadata")]
         public List<MultipieceShipmentRequestMetadataInner> Metadata { get { return this.MetadataOption; } set { this.MetadataOption = new Option<List<MultipieceShipmentRequestMetadataInner>>(value); } }
 

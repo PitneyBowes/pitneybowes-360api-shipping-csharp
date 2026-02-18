@@ -58,88 +58,27 @@ namespace com.pitneybowes.api360.Model
             OnCreated();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RateShipmentRequest" /> class.
+        /// </summary>
+        /// <param name="rateShopbyCustomCarrierCode"></param>
+        public RateShipmentRequest(RateShopbyCustomCarrierCode rateShopbyCustomCarrierCode)
+        {
+            RateShopbyCustomCarrierCode = rateShopbyCustomCarrierCode;
+            OnCreated();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RateShipmentRequest" /> class.
+        /// </summary>
+        /// <param name="rateShopbyExternalSystemCode"></param>
+        public RateShipmentRequest(RateShopbyExternalSystemCode rateShopbyExternalSystemCode)
+        {
+            RateShopbyExternalSystemCode = rateShopbyExternalSystemCode;
+            OnCreated();
+        }
+
         partial void OnCreated();
-
-        /// <summary>
-        /// RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.
-        /// </summary>
-        /// <value>RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset.  &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours).  &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest.   Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</value>
-        public enum RateShopByEnum
-        {
-            /// <summary>
-            /// Enum Carrier for value: carrier
-            /// </summary>
-            Carrier = 1,
-
-            /// <summary>
-            /// Enum Rategroup for value: rategroup
-            /// </summary>
-            Rategroup = 2,
-
-            /// <summary>
-            /// Enum Ruleset for value: ruleset
-            /// </summary>
-            Ruleset = 3
-        }
-
-        /// <summary>
-        /// Returns a <see cref="RateShopByEnum"/>
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static RateShopByEnum RateShopByEnumFromString(string value)
-        {
-            if (value.Equals("carrier"))
-                return RateShopByEnum.Carrier;
-
-            if (value.Equals("rategroup"))
-                return RateShopByEnum.Rategroup;
-
-            if (value.Equals("ruleset"))
-                return RateShopByEnum.Ruleset;
-
-            throw new NotImplementedException($"Could not convert value to type RateShopByEnum: '{value}'");
-        }
-
-        /// <summary>
-        /// Returns a <see cref="RateShopByEnum"/>
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static RateShopByEnum? RateShopByEnumFromStringOrDefault(string value)
-        {
-            if (value.Equals("carrier"))
-                return RateShopByEnum.Carrier;
-
-            if (value.Equals("rategroup"))
-                return RateShopByEnum.Rategroup;
-
-            if (value.Equals("ruleset"))
-                return RateShopByEnum.Ruleset;
-
-            return null;
-        }
-
-        /// <summary>
-        /// Converts the <see cref="RateShopByEnum"/> to the json value
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static string RateShopByEnumToJsonValue(RateShopByEnum value)
-        {
-            if (value == RateShopByEnum.Carrier)
-                return "carrier";
-
-            if (value == RateShopByEnum.Rategroup)
-                return "rategroup";
-
-            if (value == RateShopByEnum.Ruleset)
-                return "ruleset";
-
-            throw new NotImplementedException($"Value could not be handled: '{value}'");
-        }
 
         /// <summary>
         /// Gets or Sets RateShopbyCarrier
@@ -155,6 +94,16 @@ namespace com.pitneybowes.api360.Model
         /// Gets or Sets RateShopbyRuleset
         /// </summary>
         public RateShopbyRuleset RateShopbyRuleset { get; set; }
+
+        /// <summary>
+        /// Gets or Sets RateShopbyCustomCarrierCode
+        /// </summary>
+        public RateShopbyCustomCarrierCode RateShopbyCustomCarrierCode { get; set; }
+
+        /// <summary>
+        /// Gets or Sets RateShopbyExternalSystemCode
+        /// </summary>
+        public RateShopbyExternalSystemCode RateShopbyExternalSystemCode { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -174,16 +123,6 @@ namespace com.pitneybowes.api360.Model
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            return this.BaseValidate(validationContext);
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        protected IEnumerable<ValidationResult> BaseValidate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -211,44 +150,37 @@ namespace com.pitneybowes.api360.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<RateShipmentRequest.RateShopByEnum?> rateShopBy = default;
+            RateShopbyCarrier rateShopbyCarrier = default;
+            RateShopbyRategroup rateShopbyRategroup = default;
+            RateShopbyRuleset rateShopbyRuleset = default;
+            RateShopbyCustomCarrierCode rateShopbyCustomCarrierCode = default;
+            RateShopbyExternalSystemCode rateShopbyExternalSystemCode = default;
 
-            RateShopbyCarrier rateShopbyCarrier = null;
-            RateShopbyRategroup rateShopbyRategroup = null;
-            RateShopbyRuleset rateShopbyRuleset = null;
-
-            Utf8JsonReader utf8JsonReaderDiscriminator = utf8JsonReader;
-            while (utf8JsonReaderDiscriminator.Read())
+            Utf8JsonReader utf8JsonReaderOneOf = utf8JsonReader;
+            while (utf8JsonReaderOneOf.Read())
             {
-                if (startingTokenType == JsonTokenType.StartObject && utf8JsonReaderDiscriminator.TokenType == JsonTokenType.EndObject && currentDepth == utf8JsonReaderDiscriminator.CurrentDepth)
+                if (startingTokenType == JsonTokenType.StartObject && utf8JsonReaderOneOf.TokenType == JsonTokenType.EndObject && currentDepth == utf8JsonReaderOneOf.CurrentDepth)
                     break;
 
-                if (startingTokenType == JsonTokenType.StartArray && utf8JsonReaderDiscriminator.TokenType == JsonTokenType.EndArray && currentDepth == utf8JsonReaderDiscriminator.CurrentDepth)
+                if (startingTokenType == JsonTokenType.StartArray && utf8JsonReaderOneOf.TokenType == JsonTokenType.EndArray && currentDepth == utf8JsonReaderOneOf.CurrentDepth)
                     break;
 
-                if (utf8JsonReaderDiscriminator.TokenType == JsonTokenType.PropertyName && currentDepth == utf8JsonReaderDiscriminator.CurrentDepth - 1)
+                if (utf8JsonReaderOneOf.TokenType == JsonTokenType.PropertyName && currentDepth == utf8JsonReaderOneOf.CurrentDepth - 1)
                 {
-                    string localVarJsonPropertyName = utf8JsonReaderDiscriminator.GetString();
-                    utf8JsonReaderDiscriminator.Read();
-                    if (localVarJsonPropertyName.Equals("rateShopBy"))
-                    {
-                        string discriminator = utf8JsonReaderDiscriminator.GetString();
-                        if (discriminator.Equals("RateShopbyCarrier"))
-                        {
-                            Utf8JsonReader utf8JsonReaderRateShopbyCarrier = utf8JsonReader;
-                            rateShopbyCarrier = JsonSerializer.Deserialize<RateShopbyCarrier>(ref utf8JsonReaderRateShopbyCarrier, jsonSerializerOptions);
-                        }
-                        if (discriminator.Equals("RateShopbyRategroup"))
-                        {
-                            Utf8JsonReader utf8JsonReaderRateShopbyRategroup = utf8JsonReader;
-                            rateShopbyRategroup = JsonSerializer.Deserialize<RateShopbyRategroup>(ref utf8JsonReaderRateShopbyRategroup, jsonSerializerOptions);
-                        }
-                        if (discriminator.Equals("RateShopbyRuleset"))
-                        {
-                            Utf8JsonReader utf8JsonReaderRateShopbyRuleset = utf8JsonReader;
-                            rateShopbyRuleset = JsonSerializer.Deserialize<RateShopbyRuleset>(ref utf8JsonReaderRateShopbyRuleset, jsonSerializerOptions);
-                        }
-                    }
+                    Utf8JsonReader utf8JsonReaderRateShopbyCarrier = utf8JsonReader;
+                    ClientUtils.TryDeserialize<RateShopbyCarrier>(ref utf8JsonReaderRateShopbyCarrier, jsonSerializerOptions, out rateShopbyCarrier);
+
+                    Utf8JsonReader utf8JsonReaderRateShopbyRategroup = utf8JsonReader;
+                    ClientUtils.TryDeserialize<RateShopbyRategroup>(ref utf8JsonReaderRateShopbyRategroup, jsonSerializerOptions, out rateShopbyRategroup);
+
+                    Utf8JsonReader utf8JsonReaderRateShopbyRuleset = utf8JsonReader;
+                    ClientUtils.TryDeserialize<RateShopbyRuleset>(ref utf8JsonReaderRateShopbyRuleset, jsonSerializerOptions, out rateShopbyRuleset);
+
+                    Utf8JsonReader utf8JsonReaderRateShopbyCustomCarrierCode = utf8JsonReader;
+                    ClientUtils.TryDeserialize<RateShopbyCustomCarrierCode>(ref utf8JsonReaderRateShopbyCustomCarrierCode, jsonSerializerOptions, out rateShopbyCustomCarrierCode);
+
+                    Utf8JsonReader utf8JsonReaderRateShopbyExternalSystemCode = utf8JsonReader;
+                    ClientUtils.TryDeserialize<RateShopbyExternalSystemCode>(ref utf8JsonReaderRateShopbyExternalSystemCode, jsonSerializerOptions, out rateShopbyExternalSystemCode);
                 }
             }
 
@@ -267,22 +199,11 @@ namespace com.pitneybowes.api360.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "rateShopBy":
-                            string rateShopByRawValue = utf8JsonReader.GetString();
-                            if (rateShopByRawValue != null)
-                                rateShopBy = new Option<RateShipmentRequest.RateShopByEnum?>(RateShipmentRequest.RateShopByEnumFromStringOrDefault(rateShopByRawValue));
-                            break;
                         default:
                             break;
                     }
                 }
             }
-
-            if (!rateShopBy.IsSet)
-                throw new ArgumentException("Property is required for class RateShipmentRequest.", nameof(rateShopBy));
-
-            if (rateShopBy.IsSet && rateShopBy.Value == null)
-                throw new ArgumentNullException(nameof(rateShopBy), "Property is not nullable for class RateShipmentRequest.");
 
             if (rateShopbyCarrier != null)
                 return new RateShipmentRequest(rateShopbyCarrier);
@@ -292,6 +213,12 @@ namespace com.pitneybowes.api360.Model
 
             if (rateShopbyRuleset != null)
                 return new RateShipmentRequest(rateShopbyRuleset);
+
+            if (rateShopbyCustomCarrierCode != null)
+                return new RateShipmentRequest(rateShopbyCustomCarrierCode);
+
+            if (rateShopbyExternalSystemCode != null)
+                return new RateShipmentRequest(rateShopbyExternalSystemCode);
 
             throw new JsonException();
         }
@@ -306,24 +233,6 @@ namespace com.pitneybowes.api360.Model
         public override void Write(Utf8JsonWriter writer, RateShipmentRequest rateShipmentRequest, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
-
-            if (rateShipmentRequest.RateShopbyCarrier != null)
-            {
-                RateShopbyCarrierJsonConverter rateShopbyCarrierJsonConverter = (RateShopbyCarrierJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(rateShipmentRequest.RateShopbyCarrier.GetType()));
-                rateShopbyCarrierJsonConverter.WriteProperties(writer, rateShipmentRequest.RateShopbyCarrier, jsonSerializerOptions);
-            }
-
-            if (rateShipmentRequest.RateShopbyRategroup != null)
-            {
-                RateShopbyRategroupJsonConverter rateShopbyRategroupJsonConverter = (RateShopbyRategroupJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(rateShipmentRequest.RateShopbyRategroup.GetType()));
-                rateShopbyRategroupJsonConverter.WriteProperties(writer, rateShipmentRequest.RateShopbyRategroup, jsonSerializerOptions);
-            }
-
-            if (rateShipmentRequest.RateShopbyRuleset != null)
-            {
-                RateShopbyRulesetJsonConverter rateShopbyRulesetJsonConverter = (RateShopbyRulesetJsonConverter) jsonSerializerOptions.Converters.First(c => c.CanConvert(rateShipmentRequest.RateShopbyRuleset.GetType()));
-                rateShopbyRulesetJsonConverter.WriteProperties(writer, rateShipmentRequest.RateShopbyRuleset, jsonSerializerOptions);
-            }
 
             WriteProperties(writer, rateShipmentRequest, jsonSerializerOptions);
             writer.WriteEndObject();

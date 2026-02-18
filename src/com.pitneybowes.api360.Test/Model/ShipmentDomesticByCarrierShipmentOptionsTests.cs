@@ -126,6 +126,15 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'DeclarationId'
+        /// </summary>
+        [Fact]
+        public void DeclarationIdTest()
+        {
+            // TODO unit test for the property 'DeclarationId'
+        }
+
+        /// <summary>
         /// Test the property 'ShipperID'
         /// </summary>
         [Fact]

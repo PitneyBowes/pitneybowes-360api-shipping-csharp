@@ -54,21 +54,39 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'CountryRelationship'
+        /// Test the property 'PickupStartDateTime'
         /// </summary>
         [Fact]
-        public void CountryRelationshipTest()
+        public void PickupStartDateTimeTest()
         {
-            // TODO unit test for the property 'CountryRelationship'
+            // TODO unit test for the property 'PickupStartDateTime'
         }
 
         /// <summary>
-        /// Test the property 'Carrier'
+        /// Test the property 'PickupEndDateTime'
         /// </summary>
         [Fact]
-        public void CarrierTest()
+        public void PickupEndDateTimeTest()
         {
-            // TODO unit test for the property 'Carrier'
+            // TODO unit test for the property 'PickupEndDateTime'
+        }
+
+        /// <summary>
+        /// Test the property 'CarrierType'
+        /// </summary>
+        [Fact]
+        public void CarrierTypeTest()
+        {
+            // TODO unit test for the property 'CarrierType'
+        }
+
+        /// <summary>
+        /// Test the property 'ScheduleDay'
+        /// </summary>
+        [Fact]
+        public void ScheduleDayTest()
+        {
+            // TODO unit test for the property 'ScheduleDay'
         }
     }
 }

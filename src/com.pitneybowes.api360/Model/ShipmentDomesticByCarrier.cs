@@ -34,7 +34,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="fromAddress">fromAddress</param>
         /// <param name="toAddress">toAddress</param>
         /// <param name="parcelType">Parcel Type is required for creating a shipment while rating a parcel, which varies as per Carrier selection.&lt;br /&gt; ParcelType can have categories like Package, Envelopes, Paks, Boxes, Tube, etc. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; </param>
-        /// <param name="rateShopBy">RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</param>
+        /// <param name="rateShopBy">RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode**. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup. &lt;br/&gt; Through customCarrierCode, customers can create a shipment using a single code (Custom Carrier Code) that represents a specific combination of carrier, carrier account, parcel type, service, and special services.</param>
         /// <param name="labelSize">Defines the label size of the Shipment, that is, the Shipping Label is available in different Doc Size. &lt;br /&gt; &#x60;Max length &#x3D; 10&#x60;</param>
         /// <param name="labelType">Defines the type of the Shipment. QR_CODE supported for carrier USPS only as of now. &lt;br /&gt; &#x60;Max length &#x3D; 14&#x60;</param>
         /// <param name="labelFormat">\&quot;Defines the file/format in which the label is printed.&lt;br /&gt; For ZPL2, DOC_4X6 will be supported, while for PDF, both the sizes are supported. QR_CODE can be generated only in GIF format. &#x60;Max length &#x3D; 14&#x60;\&quot; </param>
@@ -42,6 +42,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="additionalAddresses">A list of additional addresses associated with the shipment.  - Each object includes an address and its designated type, such as BROKER or other parties involved in customs or shipping processes.  - Additional address could be domestic or International both.  </param>
         /// <param name="altReturnAddress">altReturnAddress</param>
         /// <param name="parcel">parcel</param>
+        /// <param name="rateTypeId">Type of rate requested like COMMERCIAL, ONE_RATE, RETAIL,</param>
         /// <param name="byCarrier">byCarrier</param>
         /// <param name="shipmentOptions">shipmentOptions</param>
         /// <param name="carrierPayments">Defines how carrier charges are billed to a third party. Use this field to specify  account and charge type details for transportation and/or duties and taxes. This  field is optional and currently supported for FedEx, UPS, and DHL Express.  - If no &#x60;party&#x60; (who will pay for TRANSPORTATION_CHARGES or duties and taxes) is explicitly specified during shipment creation, the charges will automatically default to the sender (shipper). To direct charges to a different party, the appropriate bill-to details must be provided in the request. </param>
@@ -51,7 +52,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="handling">handling</param>
         /// <param name="insurance">insurance</param>
         /// <param name="references">references</param>
-        /// <param name="metadata">Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; For now, &#39;Cost Account Name&#39; is supported.</param>
+        /// <param name="metadata">Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/), [Account Code](/openapi/billingcodes/operation/createAccountCode/) and [Company Code](/openapi/billingcodes/operation/createCompanyCode/).&lt;br/&gt;If Cost Account metadata is provided, all three Cost Account fields are required.</param>
         /// <param name="contentType">Specifies how the label content is encoded.&lt;br/&gt; URL is supported for &#x60;PDF&#x60; and &#x60;GIF&#x60;. &lt;br/&gt; BASE64 is supported for &#x60;ZPL2&#x60;, &#x60;PNG&#x60;, and &#x60;GIF&#x60;. </param>
         /// <param name="printerAliasName">Refers to a printer connected (directly or via network) to a computer. &#x60;Max length &#x3D; 60&#x60;</param>
         /// <param name="dateOfShipment">The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD.</param>
@@ -59,7 +60,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="returnOptions">returnOptions</param>
         /// <param name="customs">customs</param>
         [JsonConstructor]
-        public ShipmentDomesticByCarrier(FromAddressV2 fromAddress, ToAddressV2 toAddress, string parcelType, RateShopByEnum rateShopBy, LabelSizeEnum labelSize, LabelTypeEnum labelType, LabelFormatEnum labelFormat, Option<SoldToAddressV2> soldToAddress = default, Option<List<AdditionalAddressesInner>> additionalAddresses = default, Option<ShipmentDomesticByCarrierAltReturnAddress> altReturnAddress = default, Option<ParcelV2> parcel = default, Option<ByCarrierV2> byCarrier = default, Option<ShipmentDomesticByCarrierShipmentOptions> shipmentOptions = default, Option<List<CarrierPaymentsInner>> carrierPayments = default, Option<ShipmentDomesticByCarrierDocTab> docTab = default, Option<List<SpecialService>> specialServices = default, Option<ShipmentDomesticByCarrierDeliveryConfirmation> deliveryConfirmation = default, Option<ShipmentDomesticByCarrierHandling> handling = default, Option<ShipmentDomesticByCarrierInsurance> insurance = default, Option<ReferenceV2> references = default, Option<List<MilitaryMailShipmentsRequestV2MetadataInner>> metadata = default, Option<ContentTypeEnum?> contentType = default, Option<string> printerAliasName = default, Option<DateTime?> dateOfShipment = default, Option<MilitaryMailShipmentsRequestV2DeliveryOption> deliveryOption = default, Option<ShipmentDomesticByCarrierReturnOptions> returnOptions = default, Option<ShipmentDomesticByCarrierCustoms> customs = default)
+        public ShipmentDomesticByCarrier(FromAddressV2 fromAddress, ToAddressV2 toAddress, string parcelType, RateShopByEnum rateShopBy, LabelSizeEnum labelSize, LabelTypeEnum labelType, LabelFormatEnum labelFormat, Option<SoldToAddressV2> soldToAddress = default, Option<List<AdditionalAddressesInner>> additionalAddresses = default, Option<ShipmentDomesticByCarrierAltReturnAddress> altReturnAddress = default, Option<ParcelV2> parcel = default, Option<string> rateTypeId = default, Option<ByCarrierV2> byCarrier = default, Option<ShipmentDomesticByCarrierShipmentOptions> shipmentOptions = default, Option<List<CarrierPaymentsInner>> carrierPayments = default, Option<ShipmentDomesticByCarrierDocTab> docTab = default, Option<List<SpecialService>> specialServices = default, Option<ShipmentDomesticByCarrierDeliveryConfirmation> deliveryConfirmation = default, Option<ShipmentDomesticByCarrierHandling> handling = default, Option<ShipmentDomesticByCarrierInsurance> insurance = default, Option<ReferenceV2> references = default, Option<List<MilitaryMailShipmentsRequestV2MetadataInner>> metadata = default, Option<ContentTypeEnum?> contentType = default, Option<string> printerAliasName = default, Option<DateTime?> dateOfShipment = default, Option<MilitaryMailShipmentsRequestV2DeliveryOption> deliveryOption = default, Option<ShipmentDomesticByCarrierReturnOptions> returnOptions = default, Option<ShipmentDomesticByCarrierCustoms> customs = default)
         {
             FromAddress = fromAddress;
             ToAddress = toAddress;
@@ -72,6 +73,7 @@ namespace com.pitneybowes.api360.Model
             AdditionalAddressesOption = additionalAddresses;
             AltReturnAddressOption = altReturnAddress;
             ParcelOption = parcel;
+            RateTypeIdOption = rateTypeId;
             ByCarrierOption = byCarrier;
             ShipmentOptionsOption = shipmentOptions;
             CarrierPaymentsOption = carrierPayments;
@@ -94,9 +96,9 @@ namespace com.pitneybowes.api360.Model
         partial void OnCreated();
 
         /// <summary>
-        /// RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.
+        /// RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode**. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup. &lt;br/&gt; Through customCarrierCode, customers can create a shipment using a single code (Custom Carrier Code) that represents a specific combination of carrier, carrier account, parcel type, service, and special services.
         /// </summary>
-        /// <value>RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</value>
+        /// <value>RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode**. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup. &lt;br/&gt; Through customCarrierCode, customers can create a shipment using a single code (Custom Carrier Code) that represents a specific combination of carrier, carrier account, parcel type, service, and special services.</value>
         public enum RateShopByEnum
         {
             /// <summary>
@@ -110,9 +112,14 @@ namespace com.pitneybowes.api360.Model
             RateGroup = 2,
 
             /// <summary>
-            /// Enum Ruleset for value: ruleset
+            /// Enum RuleSet for value: ruleSet
             /// </summary>
-            Ruleset = 3
+            RuleSet = 3,
+
+            /// <summary>
+            /// Enum CustomCarrierCode for value: customCarrierCode
+            /// </summary>
+            CustomCarrierCode = 4
         }
 
         /// <summary>
@@ -129,8 +136,11 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("rateGroup"))
                 return RateShopByEnum.RateGroup;
 
-            if (value.Equals("ruleset"))
-                return RateShopByEnum.Ruleset;
+            if (value.Equals("ruleSet"))
+                return RateShopByEnum.RuleSet;
+
+            if (value.Equals("customCarrierCode"))
+                return RateShopByEnum.CustomCarrierCode;
 
             throw new NotImplementedException($"Could not convert value to type RateShopByEnum: '{value}'");
         }
@@ -148,8 +158,11 @@ namespace com.pitneybowes.api360.Model
             if (value.Equals("rateGroup"))
                 return RateShopByEnum.RateGroup;
 
-            if (value.Equals("ruleset"))
-                return RateShopByEnum.Ruleset;
+            if (value.Equals("ruleSet"))
+                return RateShopByEnum.RuleSet;
+
+            if (value.Equals("customCarrierCode"))
+                return RateShopByEnum.CustomCarrierCode;
 
             return null;
         }
@@ -168,16 +181,19 @@ namespace com.pitneybowes.api360.Model
             if (value == RateShopByEnum.RateGroup)
                 return "rateGroup";
 
-            if (value == RateShopByEnum.Ruleset)
-                return "ruleset";
+            if (value == RateShopByEnum.RuleSet)
+                return "ruleSet";
+
+            if (value == RateShopByEnum.CustomCarrierCode)
+                return "customCarrierCode";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
 
         /// <summary>
-        /// RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.
+        /// RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode**. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup. &lt;br/&gt; Through customCarrierCode, customers can create a shipment using a single code (Custom Carrier Code) that represents a specific combination of carrier, carrier account, parcel type, service, and special services.
         /// </summary>
-        /// <value>RateShop, which is attached to an Enterprise or Location, is done through three approaches: by Carrier, by RateGroup, and by Ruleset. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through Ruleset, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup.</value>
+        /// <value>RateShop, which is attached to an Enterprise or Location, is done through four approaches: by Carrier, by RateGroup, by RuleSet and by CustomCarrierCode**. &lt;br /&gt;  Through Carrier, customers can choose the carriers as per requirement, based on which services, parcel types, and special services can be selected, and RateShop is done. &lt;br /&gt; Through RateGroup, customers can select the RateGroup, which has been divided into two categories: Cheapest (w.r.t. price) and Fastest (w.r.t. delivery hours). &lt;br /&gt; Through RuleSet, customers can define the Condition/rule for selecting carriers and their services, so they do not need to worry for Rate Shopping every time they create Shipment. For example, For a particular location, they can set one definite carrier, or apply RateGroup - Cheapest/Fastest. Similarly, for a particular amount like below $1000 Dollars, they can select a definite carrier service, based on RateGroup. &lt;br/&gt; Through customCarrierCode, customers can create a shipment using a single code (Custom Carrier Code) that represents a specific combination of carrier, carrier account, parcel type, service, and special services.</value>
         /* <example>carrier</example> */
         [JsonPropertyName("rateShopBy")]
         public RateShopByEnum RateShopBy { get; set; }
@@ -605,6 +621,20 @@ namespace com.pitneybowes.api360.Model
         public ParcelV2 Parcel { get { return this.ParcelOption; } set { this.ParcelOption = new Option<ParcelV2>(value); } }
 
         /// <summary>
+        /// Used to track the state of RateTypeId
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> RateTypeIdOption { get; private set; }
+
+        /// <summary>
+        /// Type of rate requested like COMMERCIAL, ONE_RATE, RETAIL,
+        /// </summary>
+        /// <value>Type of rate requested like COMMERCIAL, ONE_RATE, RETAIL,</value>
+        [JsonPropertyName("rateTypeId")]
+        public string RateTypeId { get { return this.RateTypeIdOption; } set { this.RateTypeIdOption = new Option<string>(value); } }
+
+        /// <summary>
         /// Used to track the state of ByCarrier
         /// </summary>
         [JsonIgnore]
@@ -731,9 +761,10 @@ namespace com.pitneybowes.api360.Model
         public Option<List<MilitaryMailShipmentsRequestV2MetadataInner>> MetadataOption { get; private set; }
 
         /// <summary>
-        /// Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; For now, &#39;Cost Account Name&#39; is supported.
+        /// Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/), [Account Code](/openapi/billingcodes/operation/createAccountCode/) and [Company Code](/openapi/billingcodes/operation/createCompanyCode/).&lt;br/&gt;If Cost Account metadata is provided, all three Cost Account fields are required.
         /// </summary>
-        /// <value>Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; For now, &#39;Cost Account Name&#39; is supported.</value>
+        /// <value>Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/), [Account Code](/openapi/billingcodes/operation/createAccountCode/) and [Company Code](/openapi/billingcodes/operation/createCompanyCode/).&lt;br/&gt;If Cost Account metadata is provided, all three Cost Account fields are required.</value>
+        /* <example>[{&quot;name&quot;:&quot;costAccountName&quot;,&quot;value&quot;:&quot;costAccountName&quot;},{&quot;name&quot;:&quot;costAccountId&quot;,&quot;value&quot;:&quot;costAccountId&quot;},{&quot;name&quot;:&quot;costAccountCode&quot;,&quot;value&quot;:&quot;Code&quot;},{&quot;name&quot;:&quot;accountCode&quot;,&quot;value&quot;:&quot;code&quot;},{&quot;name&quot;:&quot;companyCode&quot;,&quot;value&quot;:&quot;code&quot;}]</example> */
         [JsonPropertyName("metadata")]
         public List<MilitaryMailShipmentsRequestV2MetadataInner> Metadata { get { return this.MetadataOption; } set { this.MetadataOption = new Option<List<MilitaryMailShipmentsRequestV2MetadataInner>>(value); } }
 
@@ -825,6 +856,7 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  AdditionalAddresses: ").Append(AdditionalAddresses).Append("\n");
             sb.Append("  AltReturnAddress: ").Append(AltReturnAddress).Append("\n");
             sb.Append("  Parcel: ").Append(Parcel).Append("\n");
+            sb.Append("  RateTypeId: ").Append(RateTypeId).Append("\n");
             sb.Append("  ByCarrier: ").Append(ByCarrier).Append("\n");
             sb.Append("  ShipmentOptions: ").Append(ShipmentOptions).Append("\n");
             sb.Append("  CarrierPayments: ").Append(CarrierPayments).Append("\n");
@@ -894,6 +926,7 @@ namespace com.pitneybowes.api360.Model
             Option<List<AdditionalAddressesInner>> additionalAddresses = default;
             Option<ShipmentDomesticByCarrierAltReturnAddress> altReturnAddress = default;
             Option<ParcelV2> parcel = default;
+            Option<string> rateTypeId = default;
             Option<ByCarrierV2> byCarrier = default;
             Option<ShipmentDomesticByCarrierShipmentOptions> shipmentOptions = default;
             Option<List<CarrierPaymentsInner>> carrierPayments = default;
@@ -966,6 +999,9 @@ namespace com.pitneybowes.api360.Model
                             break;
                         case "parcel":
                             parcel = new Option<ParcelV2>(JsonSerializer.Deserialize<ParcelV2>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "rateTypeId":
+                            rateTypeId = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "byCarrier":
                             byCarrier = new Option<ByCarrierV2>(JsonSerializer.Deserialize<ByCarrierV2>(ref utf8JsonReader, jsonSerializerOptions));
@@ -1077,6 +1113,9 @@ namespace com.pitneybowes.api360.Model
             if (parcel.IsSet && parcel.Value == null)
                 throw new ArgumentNullException(nameof(parcel), "Property is not nullable for class ShipmentDomesticByCarrier.");
 
+            if (rateTypeId.IsSet && rateTypeId.Value == null)
+                throw new ArgumentNullException(nameof(rateTypeId), "Property is not nullable for class ShipmentDomesticByCarrier.");
+
             if (byCarrier.IsSet && byCarrier.Value == null)
                 throw new ArgumentNullException(nameof(byCarrier), "Property is not nullable for class ShipmentDomesticByCarrier.");
 
@@ -1125,7 +1164,7 @@ namespace com.pitneybowes.api360.Model
             if (customs.IsSet && customs.Value == null)
                 throw new ArgumentNullException(nameof(customs), "Property is not nullable for class ShipmentDomesticByCarrier.");
 
-            return new ShipmentDomesticByCarrier(fromAddress.Value, toAddress.Value, parcelType.Value, rateShopBy.Value.Value, labelSize.Value.Value, labelType.Value.Value, labelFormat.Value.Value, soldToAddress, additionalAddresses, altReturnAddress, parcel, byCarrier, shipmentOptions, carrierPayments, docTab, specialServices, deliveryConfirmation, handling, insurance, references, metadata, contentType, printerAliasName, dateOfShipment, deliveryOption, returnOptions, customs);
+            return new ShipmentDomesticByCarrier(fromAddress.Value, toAddress.Value, parcelType.Value, rateShopBy.Value.Value, labelSize.Value.Value, labelType.Value.Value, labelFormat.Value.Value, soldToAddress, additionalAddresses, altReturnAddress, parcel, rateTypeId, byCarrier, shipmentOptions, carrierPayments, docTab, specialServices, deliveryConfirmation, handling, insurance, references, metadata, contentType, printerAliasName, dateOfShipment, deliveryOption, returnOptions, customs);
         }
 
         /// <summary>
@@ -1172,6 +1211,9 @@ namespace com.pitneybowes.api360.Model
 
             if (shipmentDomesticByCarrier.ParcelOption.IsSet && shipmentDomesticByCarrier.Parcel == null)
                 throw new ArgumentNullException(nameof(shipmentDomesticByCarrier.Parcel), "Property is required for class ShipmentDomesticByCarrier.");
+
+            if (shipmentDomesticByCarrier.RateTypeIdOption.IsSet && shipmentDomesticByCarrier.RateTypeId == null)
+                throw new ArgumentNullException(nameof(shipmentDomesticByCarrier.RateTypeId), "Property is required for class ShipmentDomesticByCarrier.");
 
             if (shipmentDomesticByCarrier.ByCarrierOption.IsSet && shipmentDomesticByCarrier.ByCarrier == null)
                 throw new ArgumentNullException(nameof(shipmentDomesticByCarrier.ByCarrier), "Property is required for class ShipmentDomesticByCarrier.");
@@ -1249,6 +1291,9 @@ namespace com.pitneybowes.api360.Model
                 writer.WritePropertyName("parcel");
                 JsonSerializer.Serialize(writer, shipmentDomesticByCarrier.Parcel, jsonSerializerOptions);
             }
+            if (shipmentDomesticByCarrier.RateTypeIdOption.IsSet)
+                writer.WriteString("rateTypeId", shipmentDomesticByCarrier.RateTypeId);
+
             if (shipmentDomesticByCarrier.ByCarrierOption.IsSet)
             {
                 writer.WritePropertyName("byCarrier");

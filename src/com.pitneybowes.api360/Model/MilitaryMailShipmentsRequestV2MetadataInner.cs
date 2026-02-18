@@ -24,7 +24,7 @@ using com.pitneybowes.api360.Client;
 namespace com.pitneybowes.api360.Model
 {
     /// <summary>
-    /// The data that provides information about other inter-related/ required data.&lt;br /&gt; Here, metadata details consists of CostAccount Name and Value.
+    /// The data that provides information about other inter-related/ required data.
     /// </summary>
     public partial class MilitaryMailShipmentsRequestV2MetadataInner : IValidatableObject
     {

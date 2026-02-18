@@ -99,6 +99,15 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'TotalCustomsDeclaredValue'
+        /// </summary>
+        [Fact]
+        public void TotalCustomsDeclaredValueTest()
+        {
+            // TODO unit test for the property 'TotalCustomsDeclaredValue'
+        }
+
+        /// <summary>
         /// Test the property 'PackageDetails'
         /// </summary>
         [Fact]

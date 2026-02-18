@@ -54,33 +54,6 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'ResidentialAvailable'
-        /// </summary>
-        [Fact]
-        public void ResidentialAvailableTest()
-        {
-            // TODO unit test for the property 'ResidentialAvailable'
-        }
-
-        /// <summary>
-        /// Test the property 'OnDemandAvailable'
-        /// </summary>
-        [Fact]
-        public void OnDemandAvailableTest()
-        {
-            // TODO unit test for the property 'OnDemandAvailable'
-        }
-
-        /// <summary>
-        /// Test the property 'ScheduledAvailable'
-        /// </summary>
-        [Fact]
-        public void ScheduledAvailableTest()
-        {
-            // TODO unit test for the property 'ScheduledAvailable'
-        }
-
-        /// <summary>
         /// Test the property 'CutoffTime'
         /// </summary>
         [Fact]

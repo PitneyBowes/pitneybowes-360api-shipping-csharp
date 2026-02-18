@@ -34,13 +34,17 @@ namespace com.pitneybowes.api360.Model
         /// <param name="height">height</param>
         /// <param name="length">length</param>
         /// <param name="width">width</param>
+        /// <param name="weight">Weight of the package for pickup</param>
+        /// <param name="weightUnit">Unit of measurement for weight</param>
         /// <param name="dimUnit">dimUnit</param>
         [JsonConstructor]
-        public PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner(Option<decimal?> height = default, Option<decimal?> length = default, Option<decimal?> width = default, Option<string> dimUnit = default)
+        public PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner(Option<decimal?> height = default, Option<decimal?> length = default, Option<decimal?> width = default, Option<decimal?> weight = default, Option<string> weightUnit = default, Option<string> dimUnit = default)
         {
             HeightOption = height;
             LengthOption = length;
             WidthOption = width;
+            WeightOption = weight;
+            WeightUnitOption = weightUnit;
             DimUnitOption = dimUnit;
             OnCreated();
         }
@@ -90,6 +94,36 @@ namespace com.pitneybowes.api360.Model
         public decimal? Width { get { return this.WidthOption; } set { this.WidthOption = new Option<decimal?>(value); } }
 
         /// <summary>
+        /// Used to track the state of Weight
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<decimal?> WeightOption { get; private set; }
+
+        /// <summary>
+        /// Weight of the package for pickup
+        /// </summary>
+        /// <value>Weight of the package for pickup</value>
+        /* <example>100</example> */
+        [JsonPropertyName("weight")]
+        public decimal? Weight { get { return this.WeightOption; } set { this.WeightOption = new Option<decimal?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of WeightUnit
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> WeightUnitOption { get; private set; }
+
+        /// <summary>
+        /// Unit of measurement for weight
+        /// </summary>
+        /// <value>Unit of measurement for weight</value>
+        /* <example>OZ</example> */
+        [JsonPropertyName("weightUnit")]
+        public string WeightUnit { get { return this.WeightUnitOption; } set { this.WeightUnitOption = new Option<string>(value); } }
+
+        /// <summary>
         /// Used to track the state of DimUnit
         /// </summary>
         [JsonIgnore]
@@ -114,6 +148,8 @@ namespace com.pitneybowes.api360.Model
             sb.Append("  Height: ").Append(Height).Append("\n");
             sb.Append("  Length: ").Append(Length).Append("\n");
             sb.Append("  Width: ").Append(Width).Append("\n");
+            sb.Append("  Weight: ").Append(Weight).Append("\n");
+            sb.Append("  WeightUnit: ").Append(WeightUnit).Append("\n");
             sb.Append("  DimUnit: ").Append(DimUnit).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -155,6 +191,8 @@ namespace com.pitneybowes.api360.Model
             Option<decimal?> height = default;
             Option<decimal?> length = default;
             Option<decimal?> width = default;
+            Option<decimal?> weight = default;
+            Option<string> weightUnit = default;
             Option<string> dimUnit = default;
 
             while (utf8JsonReader.Read())
@@ -181,6 +219,12 @@ namespace com.pitneybowes.api360.Model
                         case "width":
                             width = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
                             break;
+                        case "weight":
+                            weight = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
+                            break;
+                        case "weightUnit":
+                            weightUnit = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         case "dimUnit":
                             dimUnit = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -199,10 +243,16 @@ namespace com.pitneybowes.api360.Model
             if (width.IsSet && width.Value == null)
                 throw new ArgumentNullException(nameof(width), "Property is not nullable for class PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.");
 
+            if (weight.IsSet && weight.Value == null)
+                throw new ArgumentNullException(nameof(weight), "Property is not nullable for class PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.");
+
+            if (weightUnit.IsSet && weightUnit.Value == null)
+                throw new ArgumentNullException(nameof(weightUnit), "Property is not nullable for class PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.");
+
             if (dimUnit.IsSet && dimUnit.Value == null)
                 throw new ArgumentNullException(nameof(dimUnit), "Property is not nullable for class PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.");
 
-            return new PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner(height, length, width, dimUnit);
+            return new PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner(height, length, width, weight, weightUnit, dimUnit);
         }
 
         /// <summary>
@@ -229,6 +279,9 @@ namespace com.pitneybowes.api360.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.WeightUnitOption.IsSet && pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.WeightUnit == null)
+                throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.WeightUnit), "Property is required for class PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.");
+
             if (pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.DimUnitOption.IsSet && pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.DimUnit == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.DimUnit), "Property is required for class PickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.");
 
@@ -240,6 +293,12 @@ namespace com.pitneybowes.api360.Model
 
             if (pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.WidthOption.IsSet)
                 writer.WriteNumber("width", pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.WidthOption.Value.Value);
+
+            if (pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.WeightOption.IsSet)
+                writer.WriteNumber("weight", pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.WeightOption.Value.Value);
+
+            if (pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.WeightUnitOption.IsSet)
+                writer.WriteString("weightUnit", pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.WeightUnit);
 
             if (pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.DimUnitOption.IsSet)
                 writer.WriteString("dimUnit", pickupAvailabilityRequestPickupSummaryInnerPackageDetailsInner.DimUnit);

@@ -34,7 +34,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="correlationId">Key assigned by the shipping system to the transaction.</param>
         /// <param name="fromAddress">fromAddress</param>
         /// <param name="parcel">parcel</param>
-        /// <param name="metadata">Additional metadata that needs to be stored for this shipment can be added here. For now, &#39;Cost Account Name&#39; is supported.</param>
+        /// <param name="metadata">Additional metadata that needs to be stored for this shipment can be added here. </param>
         /// <param name="parcelId">A unique identifier associated with the Parcel.</param>
         /// <param name="parcelTrackingNumber">The Tracking number given to the Parcel for tracking purpose.</param>
         /// <param name="rate">rate</param>
@@ -114,9 +114,9 @@ namespace com.pitneybowes.api360.Model
         public Option<List<GetAllShipmentsDataInnerMetadataInner>> MetadataOption { get; private set; }
 
         /// <summary>
-        /// Additional metadata that needs to be stored for this shipment can be added here. For now, &#39;Cost Account Name&#39; is supported.
+        /// Additional metadata that needs to be stored for this shipment can be added here. 
         /// </summary>
-        /// <value>Additional metadata that needs to be stored for this shipment can be added here. For now, &#39;Cost Account Name&#39; is supported.</value>
+        /// <value>Additional metadata that needs to be stored for this shipment can be added here. </value>
         /* <example>[{&quot;name&quot;:&quot;costAccountName&quot;,&quot;value&quot;:&quot;test&quot;}]</example> */
         [JsonPropertyName("metadata")]
         public List<GetAllShipmentsDataInnerMetadataInner> Metadata { get { return this.MetadataOption; } set { this.MetadataOption = new Option<List<GetAllShipmentsDataInnerMetadataInner>>(value); } }

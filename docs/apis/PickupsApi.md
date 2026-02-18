@@ -1,11 +1,12 @@
 # com.pitneybowes.api360.Api.PickupsApi
 
-All URIs are relative to *https://api-dev.sendpro360.pitneycloud.com/shipping*
+All URIs are relative to *https://api-sandbox.sendpro360.pitneybowes.com/shipping*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**CancelPickups**](PickupsApi.md#cancelpickups) | **PUT** /api/v1/pickups/cancel | Cancel Pickups |
-| [**CancelledPickupDocument**](PickupsApi.md#cancelledpickupdocument) | **POST** /api/v1/pickups/document/cancelled | Cancelled Pickup Document |
+| [**CancelledPickupDocument**](PickupsApi.md#cancelledpickupdocument) | **POST** /api/v1/pickups/document | Cancelled Pickup Document |
+| [**CheckPickupAvailability**](PickupsApi.md#checkpickupavailability) | **POST** /api/v1/pickups/availability | Check Pickup Availability |
 | [**GetPickupDocument**](PickupsApi.md#getpickupdocument) | **GET** /api/v1/pickups/{pickupId}/document | Get Pickup Document |
 | [**GetPickups**](PickupsApi.md#getpickups) | **GET** /api/v1/pickups | Get Pickups |
 | [**SchedulePickup**](PickupsApi.md#schedulepickup) | **POST** /api/v1/pickups | Schedule Pickup |
@@ -91,6 +92,46 @@ This operation generates a PDF receipt for pickup cancellations. It supports cre
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+<a id="checkpickupavailability"></a>
+# **CheckPickupAvailability**
+> PickupAvailabilityResponse CheckPickupAvailability (string acceptLanguage, PickupAvailabilityRequest pickupAvailabilityRequest)
+
+Check Pickup Availability
+
+Validates if the requested carrier can perform a pickup at the provided address, given the shipment details and requested pickup date/time.  The response also indicates: - If pickup is available at the location. - What types of pickup (residential, on-demand, scheduled) are supported. - Cutoff times and valid pickup time windows. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **acceptLanguage** | **string** | Locale for response messages, BCP-47 format (language-region), e.g., en-US.  |  |
+| **pickupAvailabilityRequest** | [**PickupAvailabilityRequest**](PickupAvailabilityRequest.md) |  |  |
+
+### Return type
+
+[**PickupAvailabilityResponse**](PickupAvailabilityResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Pickup availability details returned successfully. |  -  |
+| **400** | Invalid request. |  -  |
+| **401** | The request could not be authorized. |  -  |
+| **500** | The request could not be completed due to an internal error. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 <a id="getpickupdocument"></a>
 # **GetPickupDocument**
 > GetPickupDocument GetPickupDocument (string pickupId, string xPBDeveloperPartnerId = null)
@@ -133,7 +174,7 @@ The API retrieves the document for a scheduled pickup receipt using the pickupId
 
 <a id="getpickups"></a>
 # **GetPickups**
-> GetAllPickups GetPickups (string carrier, string startDate, string endDate, string status, string xPBDeveloperPartnerId = null)
+> GetAllPickups GetPickups (string xPBDeveloperPartnerId = null, string carrier = null, string startDate = null, string endDate = null, string status = null)
 
 Get Pickups
 
@@ -144,11 +185,11 @@ Get Pickups
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **carrier** | **string** | Name of the carrier to retrieve pickups for. |  |
-| **startDate** | **string** | The start date for filtering pickups. Format: YYYY-MM-DD. |  |
-| **endDate** | **string** | The end date for filtering pickups. Format: YYYY-MM-DD. |  |
-| **status** | **string** | The status of the pickups to retrieve (scheduled or cancelled). |  |
 | **xPBDeveloperPartnerId** | **string** | This is the Developer Partner ID. When the developer is the only partner, this field is not required. | [optional]  |
+| **carrier** | **string** | Name of the carrier to retrieve pickups for. | [optional]  |
+| **startDate** | **string** | The start date for filtering pickups. Format: YYYY-MM-DD. | [optional]  |
+| **endDate** | **string** | The end date for filtering pickups. Format: YYYY-MM-DD. | [optional]  |
+| **status** | **string** | The status of the pickups to retrieve (scheduled or cancelled). | [optional]  |
 
 ### Return type
 
@@ -180,7 +221,7 @@ Get Pickups
 
 Schedule Pickup
 
-Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments that you have already created.
+Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments.  The pickup schedule scope is determined by what you provide in the request:   - **If pickupSummary is provided:** a pickup is scheduled for the packages described in the summary.   - **If ShipmentIds is provided:** a pickup is scheduled for the specified shipments.   - **If both pickupSummary and ShipmentIds are provided:** a pickup is scheduled for all shipments including by both inputs.   - **If neither is provided:** a pickup is scheduled for all shipments created on the given carrier account by that time of the day. > Note: The sender's first name and last name are required for USPS. For example: `\"name\": \"John Doe\"` 
 
 
 ### Parameters

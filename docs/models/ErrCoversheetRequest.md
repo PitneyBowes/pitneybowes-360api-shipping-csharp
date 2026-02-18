@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **Format** | **string** | The file format of the coversheet. Default format is &#x60;PDF&#x60;. | [optional] 
 **Size** | **string** | The size of the coversheet. Default size is &#x60;10&#x60;. | [optional] 
 **ShipmentOptions** | [**ErrCoversheetRequestShipmentOptions**](ErrCoversheetRequestShipmentOptions.md) |  | [optional] 
-**Metadata** | [**List&lt;MultipieceShipmentRequestMetadataInner&gt;**](MultipieceShipmentRequestMetadataInner.md) | Optional metadata for the shipment. | [optional] 
+**Metadata** | [**List&lt;MultipieceShipmentRequestMetadataInner&gt;**](MultipieceShipmentRequestMetadataInner.md) | Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id and Cost Account Code](/openapi/costaccount/operation/addCostAccount/).&lt;br/&gt;If Cost Account metadata is provided, all three Cost Account fields are required. | [optional] 
 **ShippingReferences** | [**ErrCoversheetRequestShippingReferences**](ErrCoversheetRequestShippingReferences.md) |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)

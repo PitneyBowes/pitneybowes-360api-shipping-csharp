@@ -1,11 +1,12 @@
 # com.pitneybowes.api360.Api.ShipmentApi
 
-All URIs are relative to *https://api-dev.sendpro360.pitneycloud.com/shipping*
+All URIs are relative to *https://api-sandbox.sendpro360.pitneybowes.com/shipping*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**CancelShipmentByIdV2**](ShipmentApi.md#cancelshipmentbyidv2) | **POST** /api/v2/shipments/cancel | Cancel Shipment |
 | [**CancelStampsERR**](ShipmentApi.md#cancelstampserr) | **POST** /api/v1/err/stamps/void | Cancel Stamps ERR |
+| [**CarrierFacility**](ShipmentApi.md#carrierfacility) | **POST** /api/v1/carrier-facility | Carrier facilities |
 | [**CreateErrCoversheet**](ShipmentApi.md#createerrcoversheet) | **POST** /api/v1/err/coverSheet | Create ERR Single Coversheet |
 | [**CreateShipmentV2**](ShipmentApi.md#createshipmentv2) | **POST** /api/v2/shipments | Create Shipment |
 | [**DownloadBpodFiles**](ShipmentApi.md#downloadbpodfiles) | **POST** /api/v1/err/shipments/bpod | Download BPOD Files |
@@ -19,6 +20,7 @@ All URIs are relative to *https://api-dev.sendpro360.pitneycloud.com/shipping*
 | [**GetSpecialServices**](ShipmentApi.md#getspecialservices) | **GET** /api/v1/specialServices | Get Special Services |
 | [**RateShipment**](ShipmentApi.md#rateshipment) | **POST** /api/v2/rates | Rate Shipment |
 | [**ReprintShipmentByIdV2**](ShipmentApi.md#reprintshipmentbyidv2) | **POST** /api/v2/shipments/reprint | Reprint Shipment |
+| [**SetSubscriptionCapabilities**](ShipmentApi.md#setsubscriptioncapabilities) | **PUT** /api/v1/carriers/{carrier} | Update Carriers |
 | [**ShipmentById**](ShipmentApi.md#shipmentbyid) | **GET** /api/v1/shipments/{shipmentId} | Get Shipment by Id |
 
 <a id="cancelshipmentbyidv2"></a>
@@ -104,6 +106,45 @@ This operation cancels (voids) stamps generated for ERR (Electronic Return Recei
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+<a id="carrierfacility"></a>
+# **CarrierFacility**
+> CarrierFacilityResponse CarrierFacility (CarrierFacilityRequest carrierFacilityRequest)
+
+Carrier facilities
+
+This operation locates Post Offices and other facilities for a given carrier. You can use this operation, for example, to locate all USPS Post Offices near a given postal code.       
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **carrierFacilityRequest** | [**CarrierFacilityRequest**](CarrierFacilityRequest.md) |  |  |
+
+### Return type
+
+[**CarrierFacilityResponse**](CarrierFacilityResponse.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Facilities available at the specified location have been fetched successfully. |  -  |
+| **400** | Invalid request. |  -  |
+| **401** | The request could not be authorized. |  -  |
+| **500** | The request could not be completed due to an internal error. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 <a id="createerrcoversheet"></a>
 # **CreateErrCoversheet**
 > ErrCoversheetResponse CreateErrCoversheet (ErrCoversheetRequest errCoversheetRequest)
@@ -145,23 +186,23 @@ This API generates a single coversheet for a parcel, with support for Electronic
 
 <a id="createshipmentv2"></a>
 # **CreateShipmentV2**
-> CreateShipmentV2200Response CreateShipmentV2 (bool isReturn, CreateShipmentV2Request createShipmentV2Request, string xPBDeveloperPartnerId = null, string xPBLocationId = null, string xPBTransactionId = null, string xPBDefaultID = null, string includeDeliveryCommitment = null)
+> CreateShipmentV2200Response CreateShipmentV2 (CreateShipmentV2Request createShipmentV2Request, string xPBDeveloperPartnerId = null, string xPBLocationId = null, string xPBTransactionId = null, string xPBDefaultID = null, bool isReturn = null, string includeDeliveryCommitment = null)
 
 Create Shipment
 
-> **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. <br/> To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). <br/> To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.<br>  **Domestic Shipments** <br>    - Both the `toAddress` and `fromAddress` addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The `toAddress` must be in a different country than the `fromAddress`.   - Requires international carrier services, special services, and customs information.<br>  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports three RateShop types: <br>  **1. By Carrier:**<br>    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**<br>    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: <br>   - Shipments weighing up to 3kg use a \"Standard\" service type with carrier A.   - Shipments exceeding 3kg use an \"Over-weight\" service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**<br>    - Use predefined rate groups to select a carrier and service dynamically.For example:<br>   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.    **Notes**<br>    - The `rateShopBy` field determines the variant to use (`carrier`, `ruleset`, or `rategroup`).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** `carrierAccountId`, `carrier`, and `service`     - **byRuleSet:** `ruleType` and `shipOption`     - **byRateGroup:** `ruleType` and `rateGroupId`    - Define special services in one of two ways - by using a `specialServiceId` or by specifying  special service objects such as `deliveryConfirmation`, `handling`, `insurance`, or `returnOptions`. These two cannot be used together in the same request. 
+> **Note:** This Request sample includes the full set of supported fields across all carriers. However, not all fields are applicable to every carrier. When making API calls from the doc portal, ensure you include only the parameters supported by the specific carrier you are integrating with. If unsupported fields are included, the request may fail. <br/> To simplify integration and avoid errors, refer to the [Postman Collection](/docs/resources/postman/). <br/> To explore which label types, label formats, label sizes, parcel types, services, and special services are supported by each carrier, see the [Carrier Catalog](/docs/shipping/carriers/carrier-catalog/). Detailed field descriptions are also provided below.  The Create Shipment API is used to create shipments and generate shipment labels. A shipment refers to the process of packing and transporting an item from a source location to a destination location using a carrier service. The API supports both domestic and international shipments.<br>  **Domestic Shipments** <br>    - Both the `toAddress` and `fromAddress` addresses must be within the same country.   - Requires carrier services and associated special services.  **International Shipments**   - The `toAddress` must be in a different country than the `fromAddress`.   - Requires international carrier services, special services, and customs information.<br>  The V2 Create Shipment API compares shipping rates, services, and options across multiple carriers. It selects the best shipping solution based on criteria such as cost, delivery speed, or other business rules. This automates decision-making and eliminates the need for manual analysis of carrier data. It supports following RateShop types: <br>  **1. By Carrier:**<br>    - Manually specify the carrier and service for shipment creation.   - Provides more customization than V1 Create Shipment.  **2. By RuleSet**<br>    - Automatically select the best carrier and service based on predefined rules (e.g., cheapest, fastest). For example: <br>   - Shipments weighing up to 3kg use a \"Standard\" service type with carrier A.   - Shipments exceeding 3kg use an \"Over-weight\" service type with carrier B.   - Rules are fully client-defined, allowing for dynamic decision-making based on shipment parameters like weight, dimensions, and destination.  **3. By RateGroup**<br>    - Use predefined rate groups to select a carrier and service dynamically.For example:<br>   - Clients can choose between the fastest delivery or the cheapest service rate among a predefined group of carriers.   - The system automatically determines and selects the best carrier and service, without the need for manual comparisons.  **4. By CustomCarrierCode**<br>    - Instead of passing multiple fields (carrier, carrier account, parcel type, service, and special services) every time in your request payload, you can:      - Generate a [Custom Carrier Code](/openapi/customcode/operation/createCustomCode/) once, with all those values defined.      - Use that single code in your create shipment requests.      - The carrier, account, service, parcel type, and special service values from that code will then automatically apply.    - If parcel type, service, or special services are also passed in the request payload, they will be overridden by the values defined in the Custom Carrier Code.  **5. By byExternalSystemCode**<br>    - This enables shipment creation using an external System Code (For SPE users).    - When an `ExternalSystemCode` is passed in the request, the system retrieves all shipment configuration details (carrier, account, parcel type, service, and special services) linked to that code in the legacy system.     **Notes**<br>    - The `rateShopBy` field determines the variant to use (`carrier`, `ruleSet`, or `rateGroup`).   - Ensure that variant-specific fields are correctly populated:     - **byCarrier:** `carrierAccountId`, `carrier`, and `service`     - **byRuleSet:** `ruleType` and `shipOption`     - **byRateGroup:** `ruleType` and `rateGroupId`     - **byCustomCarrierCode:** `code`      - **byExternalSystemCode**: `externalSystemCode`, `carrierCode`, `serviceCode` and `parcelTypeCode`    - Define special services in one of two ways - by using a `specialServiceId` or by specifying  special service objects such as `deliveryConfirmation`, `handling`, `insurance`, or `returnOptions`. These two cannot be used together in the same request. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **isReturn** | **bool** | Applies only to carriers UPS and FedEx; For UPS, if &#x60;isReturn&#x60; is passed, you must either include the &#x60;returnOptions&#x60; object (when using individual service objects) or specify the &#x60;serviceId:PRL&#x60; (when using specialService), or an error will occur. For FedEx, If &#x60;isReturn&#x60; is set to &#x60;true&#x60;, the &#x60;returnOptions&#x60; object is optional. |  |
 | **createShipmentV2Request** | [**CreateShipmentV2Request**](CreateShipmentV2Request.md) |  |  |
 | **xPBDeveloperPartnerId** | **string** | The Developer Partner ID is assigned by PB to uniquely identify a Developer&#39;s strategic business partners. If the developer is the sole business partner, this field isn&#39;t required. | [optional]  |
 | **xPBLocationId** | **string** | This is the Location ID assigned as per the Developer&#39;s and Partner&#39;s parsed locations, to which all transactions will be billed. &lt;br /&gt; Partner&#39;s location will be used for billing if it is configured, however, in case Partner&#39;s location is not given, then the Developer&#39;s location will be taken. Developer&#39;s location will be the default value. &lt;br /&gt; Additionally, Developers and Partners can use carriers belong to this location only. | [optional]  |
 | **xPBTransactionId** | **string** | A unique Transaction ID provided by the partner, which is used to enable debugging and linking between the client&#39;s transaction and the system. | [optional]  |
 | **xPBDefaultID** | **string** | A unique identifier assigned to the Default while its creation using CreateDefaults API. | [optional]  |
+| **isReturn** | **bool** | Applies only to carriers UPS and FedEx; For UPS, if &#x60;isReturn&#x60; is passed, you must either include the &#x60;returnOptions&#x60; object (when using individual service objects) or specify the &#x60;serviceId:PRL&#x60; (when using specialService), or an error will occur. For FedEx, If &#x60;isReturn&#x60; is set to &#x60;true&#x60;, the &#x60;returnOptions&#x60; object is optional. | [optional]  |
 | **includeDeliveryCommitment** | **string** | When set to true (default), the response includes delivery commitment information. Set to false to exclude delivery commitment details from the response. | [optional] [default to &quot;true&quot;] |
 
 ### Return type
@@ -232,7 +273,7 @@ This API operation is used to download bulk of ERR (*Electronic Return Receipt*)
 
 <a id="getallshipments"></a>
 # **GetAllShipments**
-> GetAllShipments GetAllShipments (string xPBDeveloperPartnerId = null, string startDate = null, string endDate = null, string page = null, string size = null)
+> GetAllShipments GetAllShipments (string xPBDeveloperPartnerId = null, string startDate = null, string endDate = null, string page = null, string size = null, string carrier = null, bool insured = null, bool returnLabel = null, bool isInternational = null, bool refundEligible = null, bool merchant = null, string shipmentType = null, string xPBDeveloperPartnerID = null)
 
 Get All Shipments
 
@@ -248,6 +289,14 @@ The operation fetches all created Shipments. If query parameters are not provide
 | **endDate** | **string** | While searching shipments, user set a date range to get all created shipments. This indicatesthe end date of the set date range under shipment search criteria. The date format must be: YYYY-MM-DD. | [optional]  |
 | **page** | **string** | The page of the Shipments search result list. | [optional]  |
 | **size** | **string** | The size/count of the searched result list. | [optional]  |
+| **carrier** | **string** | Filter shipments transaction report by carrier code (e.g., &#x60;UPS&#x60;, &#x60;FEDEX&#x60;, &#x60;USPS&#x60;). | [optional]  |
+| **insured** | **bool** | Filter shipments by insurance status. Set to &#x60;true&#x60; for insured shipments, &#x60;false&#x60; otherwise. | [optional]  |
+| **returnLabel** | **bool** | Filter shipments that include return labels. Set to &#x60;true&#x60; to return only shipments with return labels, &#x60;false&#x60; otherwise. | [optional]  |
+| **isInternational** | **bool** | Filter shipments by type. Set &#x60;true&#x60; for international shipments, &#x60;false&#x60; for domestic shipments. | [optional]  |
+| **refundEligible** | **bool** | Filter shipments eligible for refund. | [optional]  |
+| **merchant** | **bool** | Filter merchant shipments transaction report. - **true** → Returns shipment transaction reports for all merchants associated with the developer.    - To view the transaction report for a **specific merchant**, include the header &#x60;X-PB-Developer-Partner-ID&#x60; with the value set to that merchant&#39;s &#x60;subscriptionId&#x60;.  | [optional]  |
+| **shipmentType** | **string** | Filter by shipment type. Accepted values: - &#x60;multipiece&#x60;: multi-piece shipments - &#x60;apv&#x60;: Adjusted Posted Value (APV) shipments If omitted, all shipment types are returned.  | [optional]  |
+| **xPBDeveloperPartnerID** | **string** | This is the Developer Partner ID. | [optional]  |
 
 ### Return type
 
@@ -562,7 +611,7 @@ The operation fetches Special Services for a given carrier, service, origin coun
 
 <a id="rateshipment"></a>
 # **RateShipment**
-> RateShipment200Response RateShipment (RateShipmentRequest rateShipmentRequest)
+> RateShipment200Response RateShipment (RateShipmentRequest rateShipmentRequest, string xPBLocationId = null)
 
 Rate Shipment
 
@@ -574,6 +623,7 @@ This operation generates rate Shop for a specified shipment without generating t
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **rateShipmentRequest** | [**RateShipmentRequest**](RateShipmentRequest.md) |  |  |
+| **xPBLocationId** | **string** | This is the Location ID assigned as per the Developer&#39;s and Partner&#39;s parsed locations, to which all transactions will be billed. &lt;br /&gt; Partner&#39;s location will be used for billing if it is configured, however, in case Partner&#39;s location is not given, then the Developer&#39;s location will be taken. Developer&#39;s location will be the default value. &lt;br /&gt; Additionally, Developers and Partners can use carriers belong to this location only. | [optional]  |
 
 ### Return type
 
@@ -638,6 +688,46 @@ This operation retrieves an existing shipping label associated with a shipment. 
 | **400** | Invalid request. |  -  |
 | **401** | The request could not be authorized. |  -  |
 | **404** | The requested resource was not found. |  -  |
+| **500** | The request could not be completed due to an internal error. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="setsubscriptioncapabilities"></a>
+# **SetSubscriptionCapabilities**
+> void SetSubscriptionCapabilities (string carrier, SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest)
+
+Update Carriers
+
+This API operation sets the allowed capabilities—services, packages, and special services - for a subscription and carrier. By default, all carrier-provided capabilities are available. After this call, only the specified capabilities are permitted for Rate Shop and Create Shipment operations. Requests that use capabilities not in this allowlist are rejected with an error.<br/> The Get Services, Get Parcel Types , and Get Special Services APIs will also return only the capabilities defined in this allowlist.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **carrier** | **string** | Carrier name whose capabilities are to be allowlisted for this subscription. |  |
+| **subscriptionCapabilitiesRequest** | [**SubscriptionCapabilitiesRequest**](SubscriptionCapabilitiesRequest.md) |  |  |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Subscription capabilities have been updated successfully. |  -  |
+| **400** | Invalid request. |  -  |
+| **401** | The request could not be authorized. |  -  |
 | **500** | The request could not be completed due to an internal error. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)

@@ -153,6 +153,15 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'RateTypeId'
+        /// </summary>
+        [Fact]
+        public void RateTypeIdTest()
+        {
+            // TODO unit test for the property 'RateTypeId'
+        }
+
+        /// <summary>
         /// Test the property 'ByCarrier'
         /// </summary>
         [Fact]

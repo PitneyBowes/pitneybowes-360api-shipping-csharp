@@ -54,33 +54,6 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'MinTimeWindow'
-        /// </summary>
-        [Fact]
-        public void MinTimeWindowTest()
-        {
-            // TODO unit test for the property 'MinTimeWindow'
-        }
-
-        /// <summary>
-        /// Test the property 'DefaultStartTime'
-        /// </summary>
-        [Fact]
-        public void DefaultStartTimeTest()
-        {
-            // TODO unit test for the property 'DefaultStartTime'
-        }
-
-        /// <summary>
-        /// Test the property 'DefaultCloseTime'
-        /// </summary>
-        [Fact]
-        public void DefaultCloseTimeTest()
-        {
-            // TODO unit test for the property 'DefaultCloseTime'
-        }
-
-        /// <summary>
         /// Test the property 'StartTimeOptions'
         /// </summary>
         [Fact]

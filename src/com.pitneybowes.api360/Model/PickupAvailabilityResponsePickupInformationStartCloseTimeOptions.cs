@@ -24,75 +24,24 @@ using com.pitneybowes.api360.Client;
 namespace com.pitneybowes.api360.Model
 {
     /// <summary>
-    /// Options for pickup start/close time windows.
+    /// Available start and close time options for scheduling pickups.
     /// </summary>
     public partial class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions : IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PickupAvailabilityResponsePickupInformationStartCloseTimeOptions" /> class.
         /// </summary>
-        /// <param name="minTimeWindow">Minimum time window between pickup start and end</param>
-        /// <param name="defaultStartTime">Default pickup start time</param>
-        /// <param name="defaultCloseTime">Default pickup close time</param>
-        /// <param name="startTimeOptions">List of available pickup start times.</param>
-        /// <param name="closeTimeOptions">List of available pickup close times.</param>
+        /// <param name="startTimeOptions">List of selectable pickup start times (HH:MM:SS).</param>
+        /// <param name="closeTimeOptions">List of selectable pickup close times (HH:MM:SS).</param>
         [JsonConstructor]
-        public PickupAvailabilityResponsePickupInformationStartCloseTimeOptions(Option<string> minTimeWindow = default, Option<string> defaultStartTime = default, Option<string> defaultCloseTime = default, Option<List<string>> startTimeOptions = default, Option<List<string>> closeTimeOptions = default)
+        public PickupAvailabilityResponsePickupInformationStartCloseTimeOptions(Option<List<string>> startTimeOptions = default, Option<List<string>> closeTimeOptions = default)
         {
-            MinTimeWindowOption = minTimeWindow;
-            DefaultStartTimeOption = defaultStartTime;
-            DefaultCloseTimeOption = defaultCloseTime;
             StartTimeOptionsOption = startTimeOptions;
             CloseTimeOptionsOption = closeTimeOptions;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Used to track the state of MinTimeWindow
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> MinTimeWindowOption { get; private set; }
-
-        /// <summary>
-        /// Minimum time window between pickup start and end
-        /// </summary>
-        /// <value>Minimum time window between pickup start and end</value>
-        /* <example>210</example> */
-        [JsonPropertyName("minTimeWindow")]
-        public string MinTimeWindow { get { return this.MinTimeWindowOption; } set { this.MinTimeWindowOption = new Option<string>(value); } }
-
-        /// <summary>
-        /// Used to track the state of DefaultStartTime
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> DefaultStartTimeOption { get; private set; }
-
-        /// <summary>
-        /// Default pickup start time
-        /// </summary>
-        /// <value>Default pickup start time</value>
-        /* <example>08:00:00</example> */
-        [JsonPropertyName("defaultStartTime")]
-        public string DefaultStartTime { get { return this.DefaultStartTimeOption; } set { this.DefaultStartTimeOption = new Option<string>(value); } }
-
-        /// <summary>
-        /// Used to track the state of DefaultCloseTime
-        /// </summary>
-        [JsonIgnore]
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        public Option<string> DefaultCloseTimeOption { get; private set; }
-
-        /// <summary>
-        /// Default pickup close time
-        /// </summary>
-        /// <value>Default pickup close time</value>
-        /* <example>18:00:00</example> */
-        [JsonPropertyName("defaultCloseTime")]
-        public string DefaultCloseTime { get { return this.DefaultCloseTimeOption; } set { this.DefaultCloseTimeOption = new Option<string>(value); } }
 
         /// <summary>
         /// Used to track the state of StartTimeOptions
@@ -102,10 +51,10 @@ namespace com.pitneybowes.api360.Model
         public Option<List<string>> StartTimeOptionsOption { get; private set; }
 
         /// <summary>
-        /// List of available pickup start times.
+        /// List of selectable pickup start times (HH:MM:SS).
         /// </summary>
-        /// <value>List of available pickup start times.</value>
-        /* <example>[&quot;07:00:00&quot;,&quot;07:30:00&quot;,&quot;08:00:00&quot;]</example> */
+        /// <value>List of selectable pickup start times (HH:MM:SS).</value>
+        /* <example>[&quot;08:00:00&quot;]</example> */
         [JsonPropertyName("startTimeOptions")]
         public List<string> StartTimeOptions { get { return this.StartTimeOptionsOption; } set { this.StartTimeOptionsOption = new Option<List<string>>(value); } }
 
@@ -117,10 +66,10 @@ namespace com.pitneybowes.api360.Model
         public Option<List<string>> CloseTimeOptionsOption { get; private set; }
 
         /// <summary>
-        /// List of available pickup close times.
+        /// List of selectable pickup close times (HH:MM:SS).
         /// </summary>
-        /// <value>List of available pickup close times.</value>
-        /* <example>[&quot;18:30:00&quot;,&quot;19:00:00&quot;,&quot;19:30:00&quot;]</example> */
+        /// <value>List of selectable pickup close times (HH:MM:SS).</value>
+        /* <example>[&quot;14:00:00&quot;]</example> */
         [JsonPropertyName("closeTimeOptions")]
         public List<string> CloseTimeOptions { get { return this.CloseTimeOptionsOption; } set { this.CloseTimeOptionsOption = new Option<List<string>>(value); } }
 
@@ -132,9 +81,6 @@ namespace com.pitneybowes.api360.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions {\n");
-            sb.Append("  MinTimeWindow: ").Append(MinTimeWindow).Append("\n");
-            sb.Append("  DefaultStartTime: ").Append(DefaultStartTime).Append("\n");
-            sb.Append("  DefaultCloseTime: ").Append(DefaultCloseTime).Append("\n");
             sb.Append("  StartTimeOptions: ").Append(StartTimeOptions).Append("\n");
             sb.Append("  CloseTimeOptions: ").Append(CloseTimeOptions).Append("\n");
             sb.Append("}\n");
@@ -174,9 +120,6 @@ namespace com.pitneybowes.api360.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<string> minTimeWindow = default;
-            Option<string> defaultStartTime = default;
-            Option<string> defaultCloseTime = default;
             Option<List<string>> startTimeOptions = default;
             Option<List<string>> closeTimeOptions = default;
 
@@ -195,15 +138,6 @@ namespace com.pitneybowes.api360.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "minTimeWindow":
-                            minTimeWindow = new Option<string>(utf8JsonReader.GetString());
-                            break;
-                        case "defaultStartTime":
-                            defaultStartTime = new Option<string>(utf8JsonReader.GetString());
-                            break;
-                        case "defaultCloseTime":
-                            defaultCloseTime = new Option<string>(utf8JsonReader.GetString());
-                            break;
                         case "startTimeOptions":
                             startTimeOptions = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -216,22 +150,13 @@ namespace com.pitneybowes.api360.Model
                 }
             }
 
-            if (minTimeWindow.IsSet && minTimeWindow.Value == null)
-                throw new ArgumentNullException(nameof(minTimeWindow), "Property is not nullable for class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions.");
-
-            if (defaultStartTime.IsSet && defaultStartTime.Value == null)
-                throw new ArgumentNullException(nameof(defaultStartTime), "Property is not nullable for class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions.");
-
-            if (defaultCloseTime.IsSet && defaultCloseTime.Value == null)
-                throw new ArgumentNullException(nameof(defaultCloseTime), "Property is not nullable for class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions.");
-
             if (startTimeOptions.IsSet && startTimeOptions.Value == null)
                 throw new ArgumentNullException(nameof(startTimeOptions), "Property is not nullable for class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions.");
 
             if (closeTimeOptions.IsSet && closeTimeOptions.Value == null)
                 throw new ArgumentNullException(nameof(closeTimeOptions), "Property is not nullable for class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions.");
 
-            return new PickupAvailabilityResponsePickupInformationStartCloseTimeOptions(minTimeWindow, defaultStartTime, defaultCloseTime, startTimeOptions, closeTimeOptions);
+            return new PickupAvailabilityResponsePickupInformationStartCloseTimeOptions(startTimeOptions, closeTimeOptions);
         }
 
         /// <summary>
@@ -258,29 +183,11 @@ namespace com.pitneybowes.api360.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, PickupAvailabilityResponsePickupInformationStartCloseTimeOptions pickupAvailabilityResponsePickupInformationStartCloseTimeOptions, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.MinTimeWindowOption.IsSet && pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.MinTimeWindow == null)
-                throw new ArgumentNullException(nameof(pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.MinTimeWindow), "Property is required for class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions.");
-
-            if (pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.DefaultStartTimeOption.IsSet && pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.DefaultStartTime == null)
-                throw new ArgumentNullException(nameof(pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.DefaultStartTime), "Property is required for class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions.");
-
-            if (pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.DefaultCloseTimeOption.IsSet && pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.DefaultCloseTime == null)
-                throw new ArgumentNullException(nameof(pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.DefaultCloseTime), "Property is required for class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions.");
-
             if (pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.StartTimeOptionsOption.IsSet && pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.StartTimeOptions == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.StartTimeOptions), "Property is required for class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions.");
 
             if (pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.CloseTimeOptionsOption.IsSet && pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.CloseTimeOptions == null)
                 throw new ArgumentNullException(nameof(pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.CloseTimeOptions), "Property is required for class PickupAvailabilityResponsePickupInformationStartCloseTimeOptions.");
-
-            if (pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.MinTimeWindowOption.IsSet)
-                writer.WriteString("minTimeWindow", pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.MinTimeWindow);
-
-            if (pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.DefaultStartTimeOption.IsSet)
-                writer.WriteString("defaultStartTime", pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.DefaultStartTime);
-
-            if (pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.DefaultCloseTimeOption.IsSet)
-                writer.WriteString("defaultCloseTime", pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.DefaultCloseTime);
 
             if (pickupAvailabilityResponsePickupInformationStartCloseTimeOptions.StartTimeOptionsOption.IsSet)
             {

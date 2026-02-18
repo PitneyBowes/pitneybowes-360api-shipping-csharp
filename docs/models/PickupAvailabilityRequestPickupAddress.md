@@ -5,13 +5,13 @@ Address where pickup is requested.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | Contact person name at the pickup location | [optional] 
-**AddressLine1** | **string** | Primary street address line | [optional] 
-**CityTown** | **string** | City or town of the pickup location | [optional] 
-**StateProvince** | **string** | State or province of the pickup location | [optional] 
-**PostalCode** | **string** | Postal or ZIP code of the pickup location | [optional] 
-**CountryCode** | **string** | Two-letter ISO country code | [optional] 
-**Phone** | **string** | Contact phone number at the pickup location | [optional] 
+**Name** | **string** | Contact person name at the pickup location | 
+**AddressLine1** | **string** | Primary street address line | 
+**CityTown** | **string** | City or town of the pickup location | 
+**StateProvince** | **string** | State or province of the pickup location | 
+**PostalCode** | **string** | Postal or ZIP code of the pickup location | 
+**CountryCode** | **string** | Two-letter ISO country code | 
+**Phone** | **string** | Contact phone number at the pickup location | 
 **Company** | **string** | Company name associated with the pickup locatio | [optional] 
 **Email** | **string** | Contact email at the pickup location | [optional] 
 **Residential** | **bool** | Indicates if the address is residential. | [optional] 

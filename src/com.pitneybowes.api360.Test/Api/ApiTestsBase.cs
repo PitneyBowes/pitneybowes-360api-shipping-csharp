@@ -52,14 +52,14 @@ namespace com.pitneybowes.api360.Test.Api
         public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
             .ConfigureApi((context, services, options) =>
             {
-                string bearerTokenValue1 = "eyJraWQiOiItUmg0djI4NEdnVVpnSTFZSWpoRW9Fdl9VWHNxemNUTU14VV9xeWdPYTZzIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULi1YWTlzZ1RpcHpVc3lCekRjeGVPWUZzU2dfaEhnd2JrQUFzUy16VUR5SlUiLCJpc3MiOiJodHRwczovL3BpdG5leWJvd2VzLm9rdGFwcmV2aWV3LmNvbS9vYXV0aDIvYXVzMWtyYXRtcmNzSll5NWowaDgiLCJhdWQiOiJodHRwczovL2FwaS5waXRuZXlib3dlcy5jb20iLCJzdWIiOiJBUEktU1AzNjAtbVFlVkVLd1kyOHB3LVFBIiwiaWF0IjoxNzU3NjA5OTE1LCJleHAiOjE3NTc2MjQzMTUsImNpZCI6IjBvYTJnNm91ZmEzaHdPZFlGMGg4Iiwic2NwIjpbInBzYXBpIl0sInN2Y1ZlciI6IjMuMCIsImNsYWltX3BzYXBpIjp7ImVudElEIjoiZW50X2F1dG9fc2E1YzRlMiIsInVpZCI6IjBvYTJnNm91ZmEzaHdPZFlGMGg4Iiwic3ViSUQiOiJzYTVjNGUyIiwicGFyZW50UGxhbiI6IlBJVE5FWVNISVAiLCJjdHlwIjoiY29tbWVyY2lhbCIsImNudHJ5IjoiVVMiLCJwbGFucyI6WyJBUElfU0VORElOR19CQVNJQ19NQU5BR0UiLCJBUElfU0VORElOR19CQVNJQyIsIkFQSV9UUklBTF9QTEFOIiwiQVBJX1NFTkRJTkdfTEJMX1VJX1BMQU4iLCJBUElfTUFOQUdFIl0sImRldklEIjoic2E1YzRlMiIsInByZElkIjoicGl0bmV5c2hpcF9wcm8ifX0.HRXQeTCjR0i3vLpI9zwpMpCH9ubdL7j7uk7pkAyv2w_6TEL57wvQ5xGEQ3EmJTF_js7LoSxqhtuk59fcPqL2zqzHYCXYyu2uVUsqwuJkSV0wRcxLk_Mx3HXcoHNLfM9UvNLRsAbI4033LElJG8PEVl_maWUEbWkF80MkC8jpxUzUyHmwfkxmKJvUduQn3j17K8cide86LyHElG8cSeLCyV9-aEy6lb3LllWto3uIUWGRlxmYUsbYfPhObmkSwG6jF6I6P3155zagS-zXxn8cQDO7c03sPGSZtuqWcAbzDCiEQJFeomoEFFK5_7RLsOMgOWQcSRaXg3SziKuNSbJWEw";
+                string bearerTokenValue1 = context.Configuration["<token>"] ?? throw new Exception("Token not found.");
                 BearerToken bearerToken1 = new BearerToken(bearerTokenValue1, timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(bearerToken1);
 
-                string basicTokenUsername1 = "Test";
-                string basicTokenPassword1 = "Test";
+                string basicTokenUsername1 = context.Configuration["<username>"] ?? throw new Exception("Username not found.");
+                string basicTokenPassword1 = context.Configuration["<password>"] ?? throw new Exception("Password not found.");
                 BasicToken basicToken1 = new BasicToken(basicTokenUsername1, basicTokenPassword1, timeout: TimeSpan.FromSeconds(1));
-                options.AddTokens(basicToken1); 
+                options.AddTokens(basicToken1);
             });
     }
 }

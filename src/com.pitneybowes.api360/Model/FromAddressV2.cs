@@ -41,7 +41,7 @@ namespace com.pitneybowes.api360.Model
         /// <param name="addressLine2">The addressLine2 contains Street address or Landmark (if any).</param>
         /// <param name="addressLine3">The addressLine3 contains P.O. Box (if any) near the address.</param>
         /// <param name="company">The name of the company, in case if the senders address is not residential.</param>
-        /// <param name="email">This must be senders&#39;s valid email. Email is required if the customer is using GoFor Carrier. Sender email is required for RMG b2b shipment. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; </param>
+        /// <param name="email">This must be senders&#39;s valid email. Email is required if the customer is using GoFor Carrier. Sender email is required for RMG b2b shipment. &lt;br /&gt; &#x60;Max length &#x3D; 50&#x60; </param>
         /// <param name="inductionPostalCode">The postal code where the shipment is tendered to the carrier. If an induction postal code is specified in the \&quot;fromAddress\&quot;, it will be used for rate calculations and determining manifest eligibility instead of the standard postal code. If not specified, the postal code from the \&quot;fromAddress\&quot; will be used. </param>
         /// <param name="residential">The specified address can be Residential or Official. In case if the address is Residential, the boolean value will be &#39;true&#39;, else it will take &#39;false&#39;.</param>
         [JsonConstructor]
@@ -174,9 +174,9 @@ namespace com.pitneybowes.api360.Model
         public Option<string> EmailOption { get; private set; }
 
         /// <summary>
-        /// This must be senders&#39;s valid email. Email is required if the customer is using GoFor Carrier. Sender email is required for RMG b2b shipment. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; 
+        /// This must be senders&#39;s valid email. Email is required if the customer is using GoFor Carrier. Sender email is required for RMG b2b shipment. &lt;br /&gt; &#x60;Max length &#x3D; 50&#x60; 
         /// </summary>
-        /// <value>This must be senders&#39;s valid email. Email is required if the customer is using GoFor Carrier. Sender email is required for RMG b2b shipment. &lt;br /&gt; &#x60;Max length &#x3D; 30&#x60; </value>
+        /// <value>This must be senders&#39;s valid email. Email is required if the customer is using GoFor Carrier. Sender email is required for RMG b2b shipment. &lt;br /&gt; &#x60;Max length &#x3D; 50&#x60; </value>
         /* <example>testuser@gmail.com</example> */
         [JsonPropertyName("email")]
         public string Email { get { return this.EmailOption; } set { this.EmailOption = new Option<string>(value); } }
