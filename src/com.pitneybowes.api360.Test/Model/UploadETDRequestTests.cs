@@ -63,12 +63,12 @@ namespace com.pitneybowes.api360.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'Name'
+        /// Test the property 'FileName'
         /// </summary>
         [Fact]
-        public void NameTest()
+        public void FileNameTest()
         {
-            // TODO unit test for the property 'Name'
+            // TODO unit test for the property 'FileName'
         }
 
         /// <summary>

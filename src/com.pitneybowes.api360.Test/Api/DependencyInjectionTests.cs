@@ -25,51 +25,51 @@ namespace com.pitneybowes.api360.Test.Api
     public class DependencyInjectionTest
     {
         private readonly IHost _hostUsingConfigureWithoutAClient =
-            Host.CreateDefaultBuilder([]).ConfigureApi((context, services, options) =>
+            Host.CreateDefaultBuilder(Array.Empty<string>()).ConfigureApi((context, services, options) =>
             {
-                BearerToken bearerToken1 = new("<token>", timeout: TimeSpan.FromSeconds(1));
+                BearerToken bearerToken1 = new BearerToken("<token>", timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(bearerToken1);
 
-                BasicToken basicToken1 = new("<username>", "<password>", timeout: TimeSpan.FromSeconds(1));
+                BasicToken basicToken1 = new BasicToken("<username>", "<password>", timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(basicToken1);
             })
             .Build();
 
         private readonly IHost _hostUsingConfigureWithAClient =
-            Host.CreateDefaultBuilder([]).ConfigureApi((context, services, options) =>
+            Host.CreateDefaultBuilder(Array.Empty<string>()).ConfigureApi((context, services, options) =>
             {
-                BearerToken bearerToken1 = new("<token>", timeout: TimeSpan.FromSeconds(1));
+                BearerToken bearerToken1 = new BearerToken("<token>", timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(bearerToken1);
 
-                BasicToken basicToken1 = new("<username>", "<password>", timeout: TimeSpan.FromSeconds(1));
+                BasicToken basicToken1 = new BasicToken("<username>", "<password>", timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(basicToken1);
                 options.AddApiHttpClients(client => client.BaseAddress = new Uri(ClientUtils.BASE_ADDRESS));
             })
             .Build();
 
         private readonly IHost _hostUsingAddWithoutAClient =
-            Host.CreateDefaultBuilder([]).ConfigureServices((host, services) =>
+            Host.CreateDefaultBuilder(Array.Empty<string>()).ConfigureServices((host, services) =>
             {
                 services.AddApi(options =>
                 {
-                    BearerToken bearerToken1 = new("<token>", timeout: TimeSpan.FromSeconds(1));
+                    BearerToken bearerToken1 = new BearerToken("<token>", timeout: TimeSpan.FromSeconds(1));
                     options.AddTokens(bearerToken1);
 
-                    BasicToken basicToken1 = new("<username>", "<password>", timeout: TimeSpan.FromSeconds(1));
+                    BasicToken basicToken1 = new BasicToken("<username>", "<password>", timeout: TimeSpan.FromSeconds(1));
                     options.AddTokens(basicToken1);
                 });
             })
             .Build();
 
         private readonly IHost _hostUsingAddWithAClient =
-            Host.CreateDefaultBuilder([]).ConfigureServices((host, services) =>
+            Host.CreateDefaultBuilder(Array.Empty<string>()).ConfigureServices((host, services) =>
             {
                 services.AddApi(options =>
                 {
-                    BearerToken bearerToken1 = new("<token>", timeout: TimeSpan.FromSeconds(1));
+                    BearerToken bearerToken1 = new BearerToken("<token>", timeout: TimeSpan.FromSeconds(1));
                     options.AddTokens(bearerToken1);
 
-                    BasicToken basicToken1 = new("<username>", "<password>", timeout: TimeSpan.FromSeconds(1));
+                    BasicToken basicToken1 = new BasicToken("<username>", "<password>", timeout: TimeSpan.FromSeconds(1));
                     options.AddTokens(basicToken1);
                     options.AddApiHttpClients(client => client.BaseAddress = new Uri(ClientUtils.BASE_ADDRESS));
                 });

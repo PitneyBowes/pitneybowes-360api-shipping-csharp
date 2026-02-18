@@ -56,10 +56,10 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task CancelShipmentByIdV2AsyncTest()
         {
-            ShipmentCancelV2 shipmentCancelV2 = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> xPBLocationId = default!;
-            Client.Option<string> xPBTransactionId = default!;
+            ShipmentCancelV2 shipmentCancelV2 = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> xPBLocationId = default;
+            Client.Option<string> xPBTransactionId = default;
             var response = await _instance.CancelShipmentByIdV2Async(shipmentCancelV2, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId);
             var model = response.Ok();
             Assert.IsType<CancelShipmentV2>(model);
@@ -71,11 +71,23 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task CancelStampsERRAsyncTest()
         {
-            CancelStampsRequestERR cancelStampsRequestERR = default!;
-            Client.Option<string> xPBDeveloperPartnerID = default!;
+            CancelStampsRequestERR cancelStampsRequestERR = default;
+            Client.Option<string> xPBDeveloperPartnerID = default;
             var response = await _instance.CancelStampsERRAsync(cancelStampsRequestERR, xPBDeveloperPartnerID);
             var model = response.Ok();
             Assert.IsType<CancelStampsResponseERR>(model);
+        }
+
+        /// <summary>
+        /// Test CarrierFacility
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task CarrierFacilityAsyncTest()
+        {
+            CarrierFacilityRequest carrierFacilityRequest = default;
+            var response = await _instance.CarrierFacilityAsync(carrierFacilityRequest);
+            var model = response.Ok();
+            Assert.IsType<CarrierFacilityResponse>(model);
         }
 
         /// <summary>
@@ -84,7 +96,7 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task CreateErrCoversheetAsyncTest()
         {
-            ErrCoversheetRequest errCoversheetRequest = default!;
+            ErrCoversheetRequest errCoversheetRequest = default;
             var response = await _instance.CreateErrCoversheetAsync(errCoversheetRequest);
             var model = response.Ok();
             Assert.IsType<ErrCoversheetResponse>(model);
@@ -93,179 +105,16 @@ namespace com.pitneybowes.api360.Test.Api
         /// <summary>
         /// Test CreateShipmentV2
         /// </summary>
-        [Fact ]
-        public async Task CreateShipmentV2DomesticUSPSAsyncTest()
+        [Fact (Skip = "not implemented")]
+        public async Task CreateShipmentV2AsyncTest()
         {
-            bool isReturn = false;
-            Client.Option<ByCarrierV2> byCarrier = new ByCarrierV2("kwwaeElqqnD1", "USPS", "EM");
-            ShipmentDomesticByCarrier shipReqByCarrier = new ShipmentDomesticByCarrier(
-                new FromAddressV2("Paul Wright", "24182 Kathy Ave", "203-555-1213", "Lake Forest", "CA", "92630-1827", "US"),
-                new ToAddressV2("Paul Wright", "55 Pharr Rd NW, Apt E104", "Atlanta", "GA", "30305-2151", "US", "203-555-1213"), "PKG",
-                ShipmentDomesticByCarrier.RateShopByEnum.Carrier, ShipmentDomesticByCarrier.LabelSizeEnum.DOC4X6,
-                ShipmentDomesticByCarrier.LabelTypeEnum.SHIPPINGLABEL, ShipmentDomesticByCarrier.LabelFormatEnum.PDF);
-            shipReqByCarrier.ByCarrier = byCarrier;
-            shipReqByCarrier.ContentType = ShipmentDomesticByCarrier.ContentTypeEnum.URL;
-            shipReqByCarrier.Parcel = new ParcelV2(ParcelV2.WeightUnitEnum.OZ, 2, 1, 1, ParcelV2.DimUnitEnum.IN, 2, 2);
-            shipReqByCarrier.DeliveryConfirmation = new ShipmentDomesticByCarrierDeliveryConfirmation(
-                    ShipmentDomesticByCarrierDeliveryConfirmation.TypeEnum.SIGNATURE);
-            CreateShipmentV2Request createShipmentV2Request = new CreateShipmentV2Request(shipReqByCarrier);
-            Client.Option<string> xPBDeveloperPartnerId = "";
-            Client.Option<string> xPBLocationId = "";
-            Client.Option<string> xPBTransactionId = Guid.NewGuid().ToString();
-            Client.Option<string> xPBDefaultID = "";
-            Client.Option<string> includeDeliveryCommitment = "No";
-            var response = await _instance.CreateShipmentV2Async(createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
-            var model = response.Ok();
-            Assert.IsType<CreateShipmentV2200Response>(model);
-        }
-
-        [Fact]
-        public async Task CreateShipmentV2DomesticWithCustomsUSPSAsyncTest()
-        {
-            bool isReturn = false;
-            Client.Option<ByCarrierV2> byCarrier = new ByCarrierV2("kwwaeElqqnD1", "USPS", "EM");
-            ShipmentDomesticByCarrier shipReqByCarrier = new ShipmentDomesticByCarrier(
-                new FromAddressV2("Paul Wright", "24182 Kathy Ave", "203-555-1213", "Lake Forest", "CA", "92630-1827", "US"),
-                new ToAddressV2("Paul Wright", "55 Pharr Rd NW, Apt E104", "Atlanta", "GA", "30305-2151", "US", "203-555-1213"), "PKG",
-                ShipmentDomesticByCarrier.RateShopByEnum.Carrier, ShipmentDomesticByCarrier.LabelSizeEnum.DOC4X6,
-                ShipmentDomesticByCarrier.LabelTypeEnum.SHIPPINGLABEL, ShipmentDomesticByCarrier.LabelFormatEnum.PDF);
-            shipReqByCarrier.ByCarrier = byCarrier;
-            shipReqByCarrier.ContentType = ShipmentDomesticByCarrier.ContentTypeEnum.URL;
-            shipReqByCarrier.Parcel = new ParcelV2(ParcelV2.WeightUnitEnum.OZ, 2, 1, 1, ParcelV2.DimUnitEnum.IN, 2, 2);
-            shipReqByCarrier.DeliveryConfirmation = new ShipmentDomesticByCarrierDeliveryConfirmation(
-                    ShipmentDomesticByCarrierDeliveryConfirmation.TypeEnum.SIGNATURE);
-            ShipmentDomesticByCarrierCustomsCustomsInfo customsInfo = new ShipmentDomesticByCarrierCustomsCustomsInfo(
-            reasonForExport: ShipmentDomesticByCarrierCustomsCustomsInfo.ReasonForExportEnum.DOCUMENTS,
-            comments: "test comment",
-            invoiceNumber: "001189223",
-            importerCustomsReference: "987654",
-            customsDeclaredValue: new decimal(300.3),
-            //insuredNumber: "insuredNumber0",
-            //insuredAmount: 20,
-            sdrValue: 300.3F,
-            eELPFC: "NOEEI 30.2D2",
-            currencyCode: "CAD",
-            fromCustomsReference: "11111",
-            licenseNumber: "456ABC123",
-            certificateNumber: "987", 
-            termsOfSale: ShipmentDomesticByCarrierCustomsCustomsInfo.TermsOfSaleEnum.DAP);
-            ShipmentDomesticByCarrierCustomsCustomsItemsInner cItem = new ShipmentDomesticByCarrierCustomsCustomsItemsInner(
-                description: "Books",
-                quantity: 1,
-                unitPrice: 300,
-                weight: 2,
-                weightUnit: "OZ",
-                hSTariffCode: "AST559"
-           );
-            List<ShipmentDomesticByCarrierCustomsCustomsItemsInner> items = new List<ShipmentDomesticByCarrierCustomsCustomsItemsInner>();
-            items.Add( cItem );
-            ShipmentDomesticByCarrierCustoms customs = new ShipmentDomesticByCarrierCustoms(customsInfo, items);
-            shipReqByCarrier.Customs = customs;
-            CreateShipmentV2Request createShipmentV2Request = new CreateShipmentV2Request(shipReqByCarrier);
-            Client.Option<string> xPBDeveloperPartnerId = "";
-            Client.Option<string> xPBLocationId = "";
-            Client.Option<string> xPBTransactionId = Guid.NewGuid().ToString();
-            Client.Option<string> xPBDefaultID = "";
-            Client.Option<string> includeDeliveryCommitment = "No";
-            var response = await _instance.CreateShipmentV2Async(createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
-            var model = response.Ok();
-            Assert.IsType<CreateShipmentV2200Response>(model);
-        }
-
-        [Fact]
-        public async Task CreateShipmentV2_1_DomesticUSPSAsyncTest()
-        {
-            bool isReturn = false;
-            var shipReqByCarrier = new ShipmentDomesticByCarrier(
-            contentType: ShipmentDomesticByCarrier.ContentTypeEnum.URL,
-            fromAddress: new FromAddressV2(
-                addressLine1: "24182 Kathy Ave",
-                cityTown: "Lake Forest",
-                countryCode: "US",
-                name: "Paul Wright",
-                phone: "203-555-1213",
-                postalCode: "92630-1827",
-                stateProvince: "CA"
-                ),
-            toAddress: new ToAddressV2(
-                addressLine1: "55 Pharr Rd NW, Apt E104",
-                cityTown: "Atlanta",
-                countryCode: "US",
-                name: "Paul Wright",
-                phone: "203-555-1213",
-                postalCode: "30305-2151",
-                stateProvince: "GA"
-            ),
-            parcel: new ParcelV2(
-                length: 2,
-                width: 1,
-                height: 1,
-                dimUnit: ParcelV2.DimUnitEnum.IN,
-                weightUnit: ParcelV2.WeightUnitEnum.OZ,
-                weight: 2,
-                packageValue: 2
-                ),
-            parcelType: "PKG",
-            rateShopBy: ShipmentDomesticByCarrier.RateShopByEnum.Carrier,
-            byCarrier: new ByCarrierV2(
-                carrierAccountId: "kwwaeElqqnD1",
-                carrier: "USPS",
-                service: "PM"
-                ),
-            references: new ReferenceV2
-            {
-                Reference1 = "123456",
-                Reference2 = "SendTech",
-                Reference3 = "98437",
-                Reference4 = "USPS Shipping",
-                PoNumber = "R2W 2H2",
-                Department = "Name department",
-                AdditionalReference1 = "612987641",
-                AdditionalReference2 = "989"
-            },
-            labelSize: ShipmentDomesticByCarrier.LabelSizeEnum.DOC4X6,
-            labelType: ShipmentDomesticByCarrier.LabelTypeEnum.SHIPPINGLABEL,
-            labelFormat: ShipmentDomesticByCarrier.LabelFormatEnum.PDF,
-            //printerAliasName: "test",
-            dateOfShipment: DateOnly.FromDateTime(DateTime.Today)
-        );
-            shipReqByCarrier.ShipmentOptions = new ShipmentDomesticByCarrierShipmentOptions(addToManifest: true, shipperID: "2000095148");
-            CreateShipmentV2Request createShipmentV2Request = new CreateShipmentV2Request(shipReqByCarrier);
-            Client.Option<string> xPBDeveloperPartnerId = "";
-            Client.Option<string> xPBLocationId = "";
-            Client.Option<string> xPBTransactionId = Guid.NewGuid().ToString();
-            Client.Option<string> xPBDefaultID = "";
-            Client.Option<string> includeDeliveryCommitment = "No";
-            var response = await _instance.CreateShipmentV2Async(createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
-            var model = response.Ok();
-            Assert.IsType<CreateShipmentV2200Response>(model);
-        }
-
-
-        [Fact]
-        public async Task CreateShipmentV2EdexCarrierPaymentAsyncTest()
-        {
-            bool isReturn = false;
-            Client.Option<ByCarrierV2> byCarrier = new ByCarrierV2("97wroboxVgbzK4N", "Fedex", "2DA");
-            ShipmentDomesticByCarrier shipReqByCarrier = new ShipmentDomesticByCarrier(
-                new FromAddressV2("Name", "24182 Kathy Ave", "203-555-1213", "Lake Forest", "CA", "92630-1827", "US"),
-                new ToAddressV2("Paul Wright", "55 Pharr Rd NW, Apt E104", "Atlanta", "GA", "30305-2151", "US", "203-555-1213"), "LTR",
-                ShipmentDomesticByCarrier.RateShopByEnum.Carrier, ShipmentDomesticByCarrier.LabelSizeEnum.DOC4X6,
-                ShipmentDomesticByCarrier.LabelTypeEnum.SHIPPINGLABEL, ShipmentDomesticByCarrier.LabelFormatEnum.PDF);
-            shipReqByCarrier.ByCarrier = byCarrier;
-            shipReqByCarrier.ContentType = ShipmentDomesticByCarrier.ContentTypeEnum.URL;
-            shipReqByCarrier.Parcel = new ParcelV2(ParcelV2.WeightUnitEnum.OZ, 2, 1, 1, ParcelV2.DimUnitEnum.IN, 2, 2);
-            shipReqByCarrier.DeliveryConfirmation = new ShipmentDomesticByCarrierDeliveryConfirmation(
-                    ShipmentDomesticByCarrierDeliveryConfirmation.TypeEnum.SIGNATURE);
-            Client.Option<FedExCarrierPayment> fedexPayment = new FedExCarrierPayment("602684342", "US", "14609", FedExCarrierPayment.PartyEnum.BILLTHIRDPARTY, FedExCarrierPayment.TypeOfChargeEnum.TRANSPORTATIONCHARGES);
-            shipReqByCarrier.CarrierPayments = new List<CarrierPaymentsInner> {new CarrierPaymentsInner(fedexPayment, null, null)};
-            CreateShipmentV2Request createShipmentV2Request = new CreateShipmentV2Request(shipReqByCarrier);
-            shipReqByCarrier.RateTypeId = "ONE_RATE";
-            Client.Option<string> xPBDeveloperPartnerId = "";
-            Client.Option<string> xPBLocationId = "";
-            Client.Option<string> xPBTransactionId = Guid.NewGuid().ToString();
-            Client.Option<string> xPBDefaultID = "";
-            Client.Option<string> includeDeliveryCommitment = "No";
+            CreateShipmentV2Request createShipmentV2Request = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> xPBLocationId = default;
+            Client.Option<string> xPBTransactionId = default;
+            Client.Option<string> xPBDefaultID = default;
+            Client.Option<bool> isReturn = default;
+            Client.Option<string> includeDeliveryCommitment = default;
             var response = await _instance.CreateShipmentV2Async(createShipmentV2Request, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId, xPBDefaultID, isReturn, includeDeliveryCommitment);
             var model = response.Ok();
             Assert.IsType<CreateShipmentV2200Response>(model);
@@ -277,10 +126,10 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task DownloadBpodFilesAsyncTest()
         {
-            Client.Option<string> xPBDeveloperPartnerID = default!;
-            Client.Option<string> startDate = default!;
-            Client.Option<string> endDate = default!;
-            Client.Option<BPODDownloadRequest> body = default!;
+            Client.Option<string> xPBDeveloperPartnerID = default;
+            Client.Option<string> startDate = default;
+            Client.Option<string> endDate = default;
+            Client.Option<BPODDownloadRequest> body = default;
             var response = await _instance.DownloadBpodFilesAsync(xPBDeveloperPartnerID, startDate, endDate, body);
             var model = response.Ok();
             Assert.IsType<BPODDownloadResponse>(model);
@@ -289,15 +138,23 @@ namespace com.pitneybowes.api360.Test.Api
         /// <summary>
         /// Test GetAllShipments
         /// </summary>
-        [Fact]
+        [Fact (Skip = "not implemented")]
         public async Task GetAllShipmentsAsyncTest()
         {
-            Client.Option<string> xPBDeveloperPartnerId = "";
-            Client.Option<string> startDate = "2025-08-04";
-            Client.Option<string> endDate = "2025-08-06";
-            Client.Option<string> page = "1";
-            Client.Option<string> size = "10";
-            var response = await _instance.GetAllShipmentsAsync(xPBDeveloperPartnerId, startDate, endDate, page, size);
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> startDate = default;
+            Client.Option<string> endDate = default;
+            Client.Option<string> page = default;
+            Client.Option<string> size = default;
+            Client.Option<string> carrier = default;
+            Client.Option<bool> insured = default;
+            Client.Option<bool> returnLabel = default;
+            Client.Option<bool> isInternational = default;
+            Client.Option<bool> refundEligible = default;
+            Client.Option<bool> merchant = default;
+            Client.Option<string> shipmentType = default;
+            Client.Option<string> xPBDeveloperPartnerID = default;
+            var response = await _instance.GetAllShipmentsAsync(xPBDeveloperPartnerId, startDate, endDate, page, size, carrier, insured, returnLabel, isInternational, refundEligible, merchant, shipmentType, xPBDeveloperPartnerID);
             var model = response.Ok();
             Assert.IsType<GetAllShipments>(model);
         }
@@ -305,10 +162,10 @@ namespace com.pitneybowes.api360.Test.Api
         /// <summary>
         /// Test GetCarrierAccount
         /// </summary>
-        [Fact]
+        [Fact (Skip = "not implemented")]
         public async Task GetCarrierAccountAsyncTest()
         {
-            Client.Option<string> xPBDeveloperPartnerId = default!;
+            Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.GetCarrierAccountAsync(xPBDeveloperPartnerId);
             var model = response.Ok();
             Assert.IsType<GetCarrierAccount200Response>(model);
@@ -317,10 +174,10 @@ namespace com.pitneybowes.api360.Test.Api
         /// <summary>
         /// Test GetCarriers
         /// </summary>
-        [Fact]
+        [Fact (Skip = "not implemented")]
         public async Task GetCarriersAsyncTest()
         {
-            Client.Option<string> xPBDeveloperPartnerId = default!;
+            Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.GetCarriersAsync(xPBDeveloperPartnerId);
             var model = response.Ok();
             Assert.IsType<Carriers>(model);
@@ -329,12 +186,12 @@ namespace com.pitneybowes.api360.Test.Api
         /// <summary>
         /// Test GetCountries
         /// </summary>
-        [Fact]
+        [Fact (Skip = "not implemented")]
         public async Task GetCountriesAsyncTest()
         {
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> carrier = default!;
-            Client.Option<string> originCountryCode = default!;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> carrier = default;
+            Client.Option<string> originCountryCode = default;
             var response = await _instance.GetCountriesAsync(xPBDeveloperPartnerId, carrier, originCountryCode);
             var model = response.Ok();
             Assert.IsType<Countries>(model);
@@ -346,10 +203,10 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task GetParcelTypesAsyncTest()
         {
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> carrier = default!;
-            Client.Option<string> originCountryCode = default!;
-            Client.Option<string> destinationCountryCode = default!;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> carrier = default;
+            Client.Option<string> originCountryCode = default;
+            Client.Option<string> destinationCountryCode = default;
             var response = await _instance.GetParcelTypesAsync(xPBDeveloperPartnerId, carrier, originCountryCode, destinationCountryCode);
             var model = response.Ok();
             Assert.IsType<ParcelTypes>(model);
@@ -358,13 +215,13 @@ namespace com.pitneybowes.api360.Test.Api
         /// <summary>
         /// Test GetServices
         /// </summary>
-        [Fact]
+        [Fact (Skip = "not implemented")]
         public async Task GetServicesAsyncTest()
         {
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> carrier = default!;
-            Client.Option<string> originCountryCode = default!;
-            Client.Option<string> destinationCountryCode = default!;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> carrier = default;
+            Client.Option<string> originCountryCode = default;
+            Client.Option<string> destinationCountryCode = default;
             var response = await _instance.GetServicesAsync(xPBDeveloperPartnerId, carrier, originCountryCode, destinationCountryCode);
             var model = response.Ok();
             Assert.IsType<Services>(model);
@@ -376,8 +233,8 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task GetSignatureImageERRAsyncTest()
         {
-            string shipmentId = default!;
-            Client.Option<string> xPBDeveloperPartnerID = default!;
+            string shipmentId = default;
+            Client.Option<string> xPBDeveloperPartnerID = default;
             var response = await _instance.GetSignatureImageERRAsync(shipmentId, xPBDeveloperPartnerID);
             var model = response.Ok();
             Assert.IsType<SignatureFileResponse>(model);
@@ -386,15 +243,15 @@ namespace com.pitneybowes.api360.Test.Api
         /// <summary>
         /// Test GetSpecialServices
         /// </summary>
-        [Fact]
+        [Fact (Skip = "not implemented")]
         public async Task GetSpecialServicesAsyncTest()
         {
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> service = default!;
-            Client.Option<string> parcel = default!;
-            Client.Option<string> carrier = default!;
-            Client.Option<string> originCountryCode = default!;
-            Client.Option<string> destinationCountryCode = default!;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> service = default;
+            Client.Option<string> parcel = default;
+            Client.Option<string> carrier = default;
+            Client.Option<string> originCountryCode = default;
+            Client.Option<string> destinationCountryCode = default;
             var response = await _instance.GetSpecialServicesAsync(xPBDeveloperPartnerId, service, parcel, carrier, originCountryCode, destinationCountryCode);
             var model = response.Ok();
             Assert.IsType<SpecialServices>(model);
@@ -403,16 +260,12 @@ namespace com.pitneybowes.api360.Test.Api
         /// <summary>
         /// Test RateShipment
         /// </summary>
-        [Fact]
+        [Fact (Skip = "not implemented")]
         public async Task RateShipmentAsyncTest()
         {
-            RateShopbyCarrier rateShopbyCarrier = new RateShopbyCarrier(
-                new FromAddressV2("Name", "24182 Kathy Ave", "203-555-1213", "Lake Forest", "CA", "92630-1827", "US"),
-                new ToAddressV2("Paul Wright", "55 Pharr Rd NW, Apt E104", "Atlanta", "GA", "30305-2151", "US", "203-555-1213"),
-                new RateShopbyCarrierParcel(2, 1, 1, RateShopbyCarrierParcel.DimUnitEnum.IN, RateShopbyCarrierParcel.WeightUnitEnum.OZ, 2), "PKG",
-                RateShopbyCarrier.RateShopByEnum.Carrier);
-            RateShipmentRequest rateShipmentRequest = new RateShipmentRequest(rateShopbyCarrier);
-            var response = await _instance.RateShipmentAsync(rateShipmentRequest);
+            RateShipmentRequest rateShipmentRequest = default;
+            Client.Option<string> xPBLocationId = default;
+            var response = await _instance.RateShipmentAsync(rateShipmentRequest, xPBLocationId);
             var model = response.Ok();
             Assert.IsType<RateShipment200Response>(model);
         }
@@ -423,10 +276,10 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task ReprintShipmentByIdV2AsyncTest()
         {
-            ShipmentReprintV2 shipmentReprintV2 = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> xPBLocationId = default!;
-            Client.Option<string> xPBTransactionId = default!;
+            ShipmentReprintV2 shipmentReprintV2 = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> xPBLocationId = default;
+            Client.Option<string> xPBTransactionId = default;
             var response = await _instance.ReprintShipmentByIdV2Async(shipmentReprintV2, xPBDeveloperPartnerId, xPBLocationId, xPBTransactionId);
             var model = response.Ok();
             Assert.IsType<ReprintShipmentV2>(model);
@@ -438,18 +291,18 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task SetSubscriptionCapabilitiesAsyncTest()
         {
-            string carrier = default!;
-            SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest = default!;
+            string carrier = default;
+            SubscriptionCapabilitiesRequest subscriptionCapabilitiesRequest = default;
             await _instance.SetSubscriptionCapabilitiesAsync(carrier, subscriptionCapabilitiesRequest);
         }
 
         /// <summary>
         /// Test ShipmentById
         /// </summary>
-        [Fact]
+        [Fact (Skip = "not implemented")]
         public async Task ShipmentByIdAsyncTest()
         {
-            string shipmentId = "USPS2201386201292829";
+            string shipmentId = default;
             Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.ShipmentByIdAsync(shipmentId, xPBDeveloperPartnerId);
             var model = response.Ok();

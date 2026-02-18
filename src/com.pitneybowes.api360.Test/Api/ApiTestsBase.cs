@@ -52,13 +52,13 @@ namespace com.pitneybowes.api360.Test.Api
         public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
             .ConfigureApi((context, services, options) =>
             {
-                string bearerTokenValue1 = "eyJraWQiOiItUmg0djI4NEdnVVpnSTFZSWpoRW9Fdl9VWHNxemNUTU14VV9xeWdPYTZzIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULjVyNFlyaWppTmo1bTVodVU5VzdMZ0hqSzFpYmkzTEh3eXpvWGF5UkxNZmMiLCJpc3MiOiJodHRwczovL3BpdG5leWJvd2VzLm9rdGFwcmV2aWV3LmNvbS9vYXV0aDIvYXVzMWtyYXRtcmNzSll5NWowaDgiLCJhdWQiOiJodHRwczovL2FwaS5waXRuZXlib3dlcy5jb20iLCJzdWIiOiJBUEktU1AzNjAtbmVYVzVrMVJsWE5SLVFBIiwiaWF0IjoxNzYxOTEwNTkwLCJleHAiOjE3NjE5MjQ5OTAsImNpZCI6IjBvYTI4OTFjN2RkSUMyWXh6MGg4Iiwic2NwIjpbInBzYXBpIl0sInN2Y1ZlciI6IjMuMCIsImNsYWltX3BzYXBpIjp7ImVudElEIjoiZW50X2F1dG9fc2E1MzVlMyIsInVpZCI6IjBvYTI4OTFjN2RkSUMyWXh6MGg4Iiwic3ViSUQiOiJzYTUzNWUzIiwicGFyZW50UGxhbiI6IlBJVE5FWVNISVBfRU5URVJQUklTRSIsImN0eXAiOiJjb21tZXJjaWFsIiwiY250cnkiOiJVUyIsInBsYW5zIjpbIlBJVE5FWVNISVBfQ1VCRV9JTlRFR1JBVElPTiIsIlBJVE5FWVNISVBfRU5URVJQUklTRSIsIlNFTkRJTkdfRU5URVJQUklTRV9QTEFOIiwiREFUQVJFVEFJTl9QTEFOIiwiQ09OTkVDVE9SX0VQSUNfUExBTiIsIkNPTk5FQ1RPUl9NQ0tfUExBTiIsIkNPTk5FQ1RPUl9TQ1JfUExBTiIsIkFQSV9CQVNJQyIsIkFQSV9NQU5BR0UiLCJBUElfU0VORElOR19CQVNJQ19NQU5BR0UiLCJBUElfU0VORElOR19CQVNJQyIsIk1VTFRJVVNFUiIsIkFQSV9TRU5ESU5HX0xCTF9VSV9QTEFOIiwiSU5UTF9TSFAiLCJIU19DT0RFX1VTQUdFIiwiSU5UTF9IU0xLUCIsIlBURV9VTklGSUVEX0JBU0lDIiwiSU5UTF9BRERSIiwiQUREX1ZBTF9VU0FHRSIsIkNPTlNVTUVSX1JFVFVSTlMiLCJDTElFTlRfUkVUVVJOUyIsIklOVExfREVOSUVEIiwiT1VUU0lERV9QSUNLVVAiLCJQQVJUTkVSX1BMQU4iLCJBUElfSU5UTF9BRERSRVNTX1ZBTElEQVRJT04iXSwiZGV2SUQiOiJzYTUzNWUzIiwicHJkSWQiOiJwaXRuZXlzaGlwX2VudCJ9fQ.cyyW3L2pxkJYN277I-iqy8ZmCqFoJ02f36chXMEbcjWHgryKFnmZ5GXzSxu-t8YCQbA2tlI-Q50W8PSyHb8ZvOYpaSDUQVmc09VsGq5yWp49iRY5SkgK18Uf8vEkZ31NwxwwX0v0IXPe-NmwmGpnFnSBPoCfbleZ7V5neXSgzFW6knztMT6h4f-evHUZUKFDYFVl07q7VWFXKQUmdKgZYY4tOJ7Z11DZsyGrJrMsMkLlr5FDALoz4aLNlm72jBN-JshsFlDH5all35gnT-H2MyLAg5gCMbZqpo6-PTdZjykW2vSP8B_bZ3FjezngOh0DehNCEhsS1WbjSMXF64OAzg";
-                BearerToken bearerToken1 = new(bearerTokenValue1, timeout: TimeSpan.FromSeconds(1));
+                string bearerTokenValue1 = context.Configuration["<token>"] ?? throw new Exception("Token not found.");
+                BearerToken bearerToken1 = new BearerToken(bearerTokenValue1, timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(bearerToken1);
 
-                string basicTokenUsername1 = "Test";
-                string basicTokenPassword1 = "Test";
-                BasicToken basicToken1 = new(basicTokenUsername1, basicTokenPassword1, timeout: TimeSpan.FromSeconds(1));
+                string basicTokenUsername1 = context.Configuration["<username>"] ?? throw new Exception("Username not found.");
+                string basicTokenPassword1 = context.Configuration["<password>"] ?? throw new Exception("Password not found.");
+                BasicToken basicToken1 = new BasicToken(basicTokenUsername1, basicTokenPassword1, timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(basicToken1);
             });
     }

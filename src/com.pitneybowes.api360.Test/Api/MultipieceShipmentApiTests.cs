@@ -56,9 +56,9 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task MultipieceRatesAsyncTest()
         {
-            MultipieceRatesRequest multipieceRatesRequest = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> includeDeliveryCommitment = default!;
+            MultipieceRatesRequest multipieceRatesRequest = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> includeDeliveryCommitment = default;
             var response = await _instance.MultipieceRatesAsync(multipieceRatesRequest, xPBDeveloperPartnerId, includeDeliveryCommitment);
             var model = response.Ok();
             Assert.IsType<MultipieceRates200Response>(model);
@@ -70,10 +70,10 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task MultipieceShipmentAsyncTest()
         {
-            MultipieceShipmentRequest multipieceShipmentRequest = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
-            Client.Option<string> includeDeliveryCommitment = default!;
-            Client.Option<bool> splitContent = default!;
+            MultipieceShipmentRequest multipieceShipmentRequest = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
+            Client.Option<string> includeDeliveryCommitment = default;
+            Client.Option<bool> splitContent = default;
             var response = await _instance.MultipieceShipmentAsync(multipieceShipmentRequest, xPBDeveloperPartnerId, includeDeliveryCommitment, splitContent);
             var model = response.Ok();
             Assert.IsType<MultipieceShipment200Response>(model);
@@ -85,8 +85,8 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task MultipieceShipmentCancelAsyncTest()
         {
-            string shipmentId = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
+            string shipmentId = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.MultipieceShipmentCancelAsync(shipmentId, xPBDeveloperPartnerId);
             var model = response.Ok();
             Assert.IsType<CancelShipment>(model);
@@ -98,8 +98,8 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task MultipieceShipmentReprintAsyncTest()
         {
-            string shipmentId = default!;
-            Client.Option<string> xPBDeveloperPartnerId = default!;
+            string shipmentId = default;
+            Client.Option<string> xPBDeveloperPartnerId = default;
             var response = await _instance.MultipieceShipmentReprintAsync(shipmentId, xPBDeveloperPartnerId);
             var model = response.Ok();
             Assert.IsType<ReprintMultipieceShipmentResponse>(model);

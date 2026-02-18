@@ -56,7 +56,7 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task CreateDefaultsAsyncTest()
         {
-            CreateDefaults createDefaults = default!;
+            CreateDefaults createDefaults = default;
             var response = await _instance.CreateDefaultsAsync(createDefaults);
             var model = response.Ok();
             Assert.IsType<CreateDefaultsResponse>(model);
@@ -68,7 +68,7 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task DeleteDefaultsByIdAsyncTest()
         {
-            string defaultID = default!;
+            string defaultID = default;
             await _instance.DeleteDefaultsByIdAsync(defaultID);
         }
 
@@ -78,9 +78,9 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task GetAllDefaultsAsyncTest()
         {
-            Client.Option<string> xPBDeveloperPartnerID = default!;
-            Client.Option<string> page = default!;
-            Client.Option<string> size = default!;
+            Client.Option<string> xPBDeveloperPartnerID = default;
+            Client.Option<string> page = default;
+            Client.Option<string> size = default;
             var response = await _instance.GetAllDefaultsAsync(xPBDeveloperPartnerID, page, size);
             var model = response.Ok();
             Assert.IsType<AllDefaults>(model);
@@ -92,7 +92,7 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task GetDefaultsByIdAsyncTest()
         {
-            string defaultID = default!;
+            string defaultID = default;
             var response = await _instance.GetDefaultsByIdAsync(defaultID);
             var model = response.Ok();
             Assert.IsType<DefaultResponse>(model);
@@ -104,8 +104,8 @@ namespace com.pitneybowes.api360.Test.Api
         [Fact (Skip = "not implemented")]
         public async Task PutDefaultsByIdAsyncTest()
         {
-            string defaultID = default!;
-            CreateDefaults createDefaults = default!;
+            string defaultID = default;
+            CreateDefaults createDefaults = default;
             await _instance.PutDefaultsByIdAsync(defaultID, createDefaults);
         }
     }

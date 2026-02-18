@@ -23,10 +23,10 @@ Name | Type | Description | Notes
 **Handling** | [**MilitaryMailShipmentsRequestV2Handling**](MilitaryMailShipmentsRequestV2Handling.md) |  | [optional] 
 **Insurance** | [**MilitaryMailShipmentsRequestV2Insurance**](MilitaryMailShipmentsRequestV2Insurance.md) |  | [optional] 
 **References** | [**ReferenceV2**](ReferenceV2.md) |  | [optional] 
-**Metadata** | [**List&lt;ShipmentDomesticByCustomCarrierCodeMetadataInner&gt;**](ShipmentDomesticByCustomCarrierCodeMetadataInner.md) | Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/), [Account Code](/openapi/billingcodes/operation/createAccountCode/) and [Company Code](/openapi/billingcodes/operation/createCompanyCode/) | [optional] 
+**Metadata** | [**List&lt;ShipmentDomesticByCustomCarrierCodeMetadataInner&gt;**](ShipmentDomesticByCustomCarrierCodeMetadataInner.md) | Additional metadata that needs to be stored for this shipment can be added here.&lt;br /&gt; Supported values are [Cost Account Name, Cost Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/), [Account Code](/openapi/billingcodes/operation/createAccountCode/) and [Company Code](/openapi/billingcodes/operation/createCompanyCode/). &lt;br/&gt;If Cost Account metadata is provided, all three Cost Account fields are required. | [optional] 
 **ContentType** | **string** | Specifies how the label content is encoded.&lt;br/&gt; URL is supported for &#x60;PDF&#x60; and &#x60;GIF&#x60;. &lt;br/&gt; BASE64 is supported for &#x60;ZPL2&#x60;, &#x60;PNG&#x60;, and &#x60;GIF&#x60;.  | [optional] 
 **PrinterAliasName** | **string** | Refers to a printer connected (directly or via network) to a computer. &#x60;Max length &#x3D; 60&#x60; | [optional] 
-**DateOfShipment** | **DateOnly** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
+**DateOfShipment** | **DateTime** | The date when shipment is created/shipped. The format of the Date is YYYY-MM-DD. | [optional] 
 **DeliveryOption** | [**ShipmentDomesticByRateGroupDeliveryOption**](ShipmentDomesticByRateGroupDeliveryOption.md) |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)

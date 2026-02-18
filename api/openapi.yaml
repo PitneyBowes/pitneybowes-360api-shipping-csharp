@@ -33,12 +33,14 @@ info:
   title: Shipping APIs
   version: 1.0.0
 servers:
-- url: https://api-dev.sendpro360.pitneycloud.com/shipping
-- url: https://api-qa.sendpro360.pitneycloud.com/shipping
 - description: Sandbox Server
   url: https://api-sandbox.sendpro360.pitneybowes.com/shipping
 - description: Production Server (uses live data)
   url: https://api.sendpro360.pitneybowes.com/shipping
+- description: Sandbox Server for Canada
+  url: https://api-ppd.shipping360.pitneybowes.com/ca/shipping
+- description: Production Server for Canada
+  url: https://api.shipping360.pitneybowes.com/ca/shipping
 tags:
 - name: Shipment
 paths:
@@ -94,6 +96,103 @@ paths:
       security:
       - bearerAuth: []
       summary: Get Carriers
+      tags:
+      - Shipment
+  /api/v1/carrier-facility:
+    post:
+      description: "This operation locates Post Offices and other facilities for a\
+        \ given carrier. You can use this operation, for example, to locate all USPS\
+        \ Post Offices near a given postal code.      \n"
+      operationId: carrierFacility
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CarrierFacilityRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                address:
+                  addressLine1: 24182 Kathy Ave
+                  cityTown: Lake Forest
+                  company: Pitney Bowes Inc.
+                  countryCode: US
+                  email: Kathryn@email.com
+                  phone: "6502530000"
+                  postalCode: "92630"
+                  residential: false
+                  stateProvince: CA
+                carrier: USPS
+                carrierFacilityOptions:
+                - name: FACILITY_TYPE
+                  value: POST_OFFICE
+                - name: FACILITY_TYPE_SERVICE
+                  value: LABEL_BROKER_RETAIL
+                - name: FACILITY_WITHIN_RADIUS
+                  value: "10"
+                - name: NUMBER_OF_FACILITIES
+                  value: "1"
+                carrierFacilitySuggestions:
+                - address:
+                    addressLine1: 24552 RAYMOND WAY
+                    cityTown: LAKE FOREST
+                    postalCode: "92630"
+                    residential: false
+                    stateProvince: CA
+                  facilityHours:
+                  - day: MONDAY
+                    facilityTimings:
+                    - opensAt: 08:30:00
+                      closesAt: 17:00:00
+                  - day: TUESDAY
+                    facilityTimings:
+                    - opensAt: 08:30:00
+                      closesAt: 17:00:00
+                  - day: WEDNESDAY
+                    facilityTimings:
+                    - opensAt: 08:30:00
+                      closesAt: 17:00:00
+                  - day: THURSDAY
+                    facilityTimings:
+                    - opensAt: 08:30:00
+                      closesAt: 17:00:00
+                  - day: FRIDAY
+                    facilityTimings:
+                    - opensAt: 08:30:00
+                      closesAt: 17:00:00
+                  - day: SATURDAY
+                    facilityTimings:
+                    - opensAt: 10:00:00
+                      closesAt: 15:00:00
+                  facilityParking: LOT
+              schema:
+                $ref: "#/components/schemas/CarrierFacilityResponse"
+          description: Facilities available at the specified location have been fetched
+            successfully.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/invalidErrors"
+          description: Invalid request.
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/unauthorizedError"
+          description: The request could not be authorized.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/serverError"
+          description: The request could not be completed due to an internal error.
+      security:
+      - bearerAuth: []
+      summary: Carrier facilities
       tags:
       - Shipment
   /api/v1/countries:
@@ -596,6 +695,89 @@ paths:
         schema:
           type: string
         style: form
+      - description: "Filter shipments transaction report by carrier code (e.g., `UPS`,\
+          \ `FEDEX`, `USPS`)."
+        explode: true
+        in: query
+        name: carrier
+        required: false
+        schema:
+          example: UPS
+          type: string
+        style: form
+      - description: "Filter shipments by insurance status. Set to `true` for insured\
+          \ shipments, `false` otherwise."
+        explode: true
+        in: query
+        name: insured
+        required: false
+        schema:
+          example: true
+          type: boolean
+        style: form
+      - description: "Filter shipments that include return labels. Set to `true` to\
+          \ return only shipments with return labels, `false` otherwise."
+        explode: true
+        in: query
+        name: returnLabel
+        required: false
+        schema:
+          example: false
+          type: boolean
+        style: form
+      - description: "Filter shipments by type. Set `true` for international shipments,\
+          \ `false` for domestic shipments."
+        explode: true
+        in: query
+        name: isInternational
+        required: false
+        schema:
+          example: true
+          type: boolean
+        style: form
+      - description: Filter shipments eligible for refund.
+        explode: true
+        in: query
+        name: refundEligible
+        required: false
+        schema:
+          example: true
+          type: boolean
+        style: form
+      - description: "Filter merchant shipments transaction report.\n- **true** →\
+          \ Returns shipment transaction reports for all merchants associated with\
+          \ the developer.   \n- To view the transaction report for a **specific merchant**,\
+          \ include the header `X-PB-Developer-Partner-ID` with the value set to that\
+          \ merchant's `subscriptionId`.\n"
+        explode: true
+        in: query
+        name: merchant
+        required: false
+        schema:
+          example: true
+          type: boolean
+        style: form
+      - description: |
+          Filter by shipment type. Accepted values:
+          - `multipiece`: multi-piece shipments
+          - `apv`: Adjusted Posted Value (APV) shipments
+          If omitted, all shipment types are returned.
+        explode: true
+        in: query
+        name: shipmentType
+        required: false
+        schema:
+          example: apv
+          type: string
+        style: form
+      - description: This is the Developer Partner ID.
+        explode: false
+        in: header
+        name: X-PB-Developer-Partner-ID
+        required: false
+        schema:
+          type: string
+        style: simple
       responses:
         "200":
           content:
@@ -650,7 +832,7 @@ paths:
         \ API compares shipping rates, services, and options across multiple carriers.\
         \ It selects the best shipping solution based on criteria such as cost, delivery\
         \ speed, or other business rules. This automates decision-making and eliminates\
-        \ the need for manual analysis of carrier data. It supports four RateShop\
+        \ the need for manual analysis of carrier data. It supports following RateShop\
         \ types: <br>\n\n**1. By Carrier:**<br>\n\n  - Manually specify the carrier\
         \ and service for shipment creation.\n  - Provides more customization than\
         \ V1 Create Shipment.\n\n**2. By RuleSet**<br>\n\n  - Automatically select\
@@ -672,16 +854,21 @@ paths:
         \n    - The carrier, account, service, parcel type, and special service values\
         \ from that code will then automatically apply.\n\n  - If parcel type, service,\
         \ or special services are also passed in the request payload, they will be\
-        \ overridden by the values defined in the Custom Carrier Code.\n  \n**Notes**<br>\n\
-        \n  - The `rateShopBy` field determines the variant to use (`carrier`, `ruleSet`,\
-        \ or `rateGroup`).\n  - Ensure that variant-specific fields are correctly\
-        \ populated:\n    - **byCarrier:** `carrierAccountId`, `carrier`, and `service`\n\
-        \    - **byRuleSet:** `ruleType` and `shipOption`\n    - **byRateGroup:**\
-        \ `ruleType` and `rateGroupId`\n    - **byCustomCarrierCode:** `code` \n\n\
-        \  - Define special services in one of two ways - by using a `specialServiceId`\
-        \ or by specifying  special service objects such as `deliveryConfirmation`,\
-        \ `handling`, `insurance`, or `returnOptions`. These two cannot be used together\
-        \ in the same request.\n"
+        \ overridden by the values defined in the Custom Carrier Code.\n\n**5. By\
+        \ byExternalSystemCode**<br>\n\n  - This enables shipment creation using an\
+        \ external System Code (For SPE users).\n\n  - When an `ExternalSystemCode`\
+        \ is passed in the request, the system retrieves all shipment configuration\
+        \ details (carrier, account, parcel type, service, and special services) linked\
+        \ to that code in the legacy system.\n\n  \n**Notes**<br>\n\n  - The `rateShopBy`\
+        \ field determines the variant to use (`carrier`, `ruleSet`, or `rateGroup`).\n\
+        \  - Ensure that variant-specific fields are correctly populated:\n    - **byCarrier:**\
+        \ `carrierAccountId`, `carrier`, and `service`\n    - **byRuleSet:** `ruleType`\
+        \ and `shipOption`\n    - **byRateGroup:** `ruleType` and `rateGroupId`\n\
+        \    - **byCustomCarrierCode:** `code` \n    - **byExternalSystemCode**: `externalSystemCode`,\
+        \ `carrierCode`, `serviceCode` and `parcelTypeCode`\n\n  - Define special\
+        \ services in one of two ways - by using a `specialServiceId` or by specifying\
+        \  special service objects such as `deliveryConfirmation`, `handling`, `insurance`,\
+        \ or `returnOptions`. These two cannot be used together in the same request.\n"
       operationId: createShipmentV2
       parameters:
       - description: "The Developer Partner ID is assigned by PB to uniquely identify\
@@ -791,6 +978,21 @@ paths:
       description: This operation generates rate Shop for a specified shipment without
         generating the labels.
       operationId: rateShipment
+      parameters:
+      - description: "This is the Location ID assigned as per the Developer's and\
+          \ Partner's parsed locations, to which all transactions will be billed.\
+          \ <br /> Partner's location will be used for billing if it is configured,\
+          \ however, in case Partner's location is not given, then the Developer's\
+          \ location will be taken. Developer's location will be the default value.\
+          \ <br /> Additionally, Developers and Partners can use carriers belong to\
+          \ this location only."
+        explode: false
+        in: header
+        name: X-PB-LocationId
+        required: false
+        schema:
+          type: string
+        style: simple
       requestBody:
         content:
           application/json:
@@ -1276,7 +1478,9 @@ paths:
         \ shipments.\n  - **If both pickupSummary and ShipmentIds are provided:**\
         \ a pickup is scheduled for all shipments including by both inputs.\n  - **If\
         \ neither is provided:** a pickup is scheduled for all shipments created on\
-        \ the given carrier account by that time of the day.\n"
+        \ the given carrier account by that time of the day.\n> Note: The sender's\
+        \ first name and last name are required for USPS. For example: `\"name\":\
+        \ \"John Doe\"`\n"
       operationId: schedulePickup
       parameters:
       - description: "This is the Developer Partner ID. When the developer is the\
@@ -2589,11 +2793,13 @@ paths:
       - Defaults
   /api/v1/carriers/{carrier}:
     put:
-      description: "Sets the allowed capabilities—services, packages, and special\
-        \ services - for a subscription and carrier. By default, all carrier-provided\
+      description: "This API operation sets the allowed capabilities—services, packages,\
+        \ and special services - for a subscription and carrier. By default, all carrier-provided\
         \ capabilities are available. After this call, only the specified capabilities\
         \ are permitted for Rate Shop and Create Shipment operations. Requests that\
-        \ use capabilities not in this allowlist are rejected with an error."
+        \ use capabilities not in this allowlist are rejected with an error.<br/>\
+        \ The Get Services, Get Parcel Types , and Get Special Services APIs will\
+        \ also return only the capabilities defined in this allowlist."
       operationId: setSubscriptionCapabilities
       parameters:
       - description: Carrier name whose capabilities are to be allowlisted for this
@@ -3199,7 +3405,9 @@ components:
           description: "Additional metadata that needs to be stored for this shipment\
             \ can be added here.<br /> Supported values are [Cost Account Name](/openapi/costaccount/operation/addCostAccount/),\
             \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
-            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/).<br/>If\
+            \ Cost Account metadata is provided, all three Cost Account fields are\
+            \ required."
           items:
             $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_metadata_inner"
           type: array
@@ -3532,7 +3740,9 @@ components:
             \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
             \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
             \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
-            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/).<br/>If\
+            \ Cost Account metadata is provided, all three Cost Account fields are\
+            \ required."
           example:
           - name: costAccountName
             value: costAccountName
@@ -3855,7 +4065,9 @@ components:
             \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
             \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
             \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
-            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/).<br/>If\
+            \ Cost Account metadata is provided, all three Cost Account fields are\
+            \ required."
           items:
             $ref: "#/components/schemas/shipmentDomesticByCustomCarrierCode_metadata_inner"
           type: array
@@ -3919,6 +4131,475 @@ components:
       - labelType
       - rateShopBy
       - toAddress
+      type: object
+    shipmentDomesticByExternalSystemCode:
+      properties:
+        fromAddress:
+          $ref: "#/components/schemas/fromAddressV2"
+        toAddress:
+          $ref: "#/components/schemas/toAddressV2"
+        parcel:
+          $ref: "#/components/schemas/parcelV2"
+        rateShopBy:
+          description: "Specifies that shipment creation uses a predefined configuration\
+            \ from an external system. When externalSystemCode is selected, the system\
+            \ retrieves carrier, account, service, and parcel details based on the\
+            \ external system codes provided in the request. "
+          enum:
+          - carrier
+          - rateGroup
+          - ruleSet
+          - customCarrierCode
+          - externalSystemCode
+          example: externalSystemCode
+          type: string
+        byExternalSystemCode:
+          $ref: "#/components/schemas/byExternalSystemCodeV2"
+        specialServices:
+          description: |
+            It provides a carrier based special or extra service, which also varies as per selected service and parcel type. User can override this value by defining it at shipment level.<br/>
+
+            > Provide either the specialserviceId or the specialservice objects such as deliveryConfirmation, handling, insurance and returnOptions, but not both.
+          items:
+            $ref: "#/components/schemas/SpecialService"
+          type: array
+        shipmentOptions:
+          $ref: "#/components/schemas/shipmentDomesticByExternalSystemCode_shipmentOptions"
+        references:
+          $ref: "#/components/schemas/referenceV2"
+        metadata:
+          description: "Additional metadata that needs to be stored for this shipment\
+            \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
+            \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
+            \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/).\
+            \ <br/>If Cost Account metadata is provided, all three Cost Account fields\
+            \ are required."
+          example:
+          - name: costAccountName
+            value: costAccountName
+          - name: costAccountId
+            value: costAccountId
+          - name: costAccountCode
+            value: Code
+          - name: accountCode
+            value: code
+          - name: companyCode
+            value: code
+          items:
+            $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_metadata_inner"
+          type: array
+        labelSize:
+          description: "Defines the label size of the Shipment, that is, the Shipping\
+            \ Label is available in different Doc Size. <br /> `Max length = 10`"
+          enum:
+          - DOC_8X11
+          - DOC_4X8
+          - DOC_4X6
+          example: DOC_4X6
+          type: string
+        labelType:
+          description: Defines the type of the Shipment. QR_CODE supported for carrier
+            USPS only as of now. <br /> `Max length = 14`
+          enum:
+          - SHIPPING_LABEL
+          - QR_CODE
+          example: SHIPPING_LABEL
+          type: string
+        labelFormat:
+          description: |
+            "Defines the file/format in which the label is printed.<br /> For ZPL2, DOC_4X6 will be supported, while for PDF, both the sizes are supported. QR_CODE can be generated only in GIF format. `Max length = 14`"
+          enum:
+          - PDF
+          - ZPL2
+          - PNG
+          - GIF
+          example: ZPL2
+          type: string
+        contentType:
+          description: "Specifies how the label content is encoded.<br/> URL is supported\
+            \ for `PDF` and `GIF`. <br/> BASE64 is supported for `ZPL2`, `PNG`, and\
+            \ `GIF`. "
+          enum:
+          - URL
+          - BASE64
+          example: BASE64
+          type: string
+        dateOfShipment:
+          description: The date when shipment is created/shipped. The format of the
+            Date is YYYY-MM-DD.
+          example: 2025-11-20
+          format: date
+          type: string
+        deliveryOption:
+          $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2_deliveryOption"
+      required:
+      - fromAddress
+      - labelFormat
+      - labelSize
+      - labelType
+      - rateShopBy
+      - toAddress
+      type: object
+    CarrierFacilityRequest:
+      description: |
+        Request payload to locate carrier facilities near a given address.
+      example:
+        carrier: USPS
+        address:
+          phone: "6502530000"
+          countryCode: US
+          postalCode: "92630"
+          cityTown: Lake Forest
+          addressLine1: 24182 Kathy Ave
+          stateProvince: CA
+          addressLine2: near abc street
+          company: Pitney Bowes Inc.
+          addressLine3: near xyz street
+          email: testuser@gmail.com
+        carrierFacilityOptions:
+        - - name: FACILITY_TYPE
+            value: POST_OFFICE
+          - name: FACILITY_TYPE_SERVICE
+            value: LABEL_BROKER_RETAIL
+          - name: FACILITY_WITHIN_RADIUS
+            value: "10"
+          - name: NUMBER_OF_FACILITIES
+            value: "1"
+        - - name: FACILITY_TYPE
+            value: POST_OFFICE
+          - name: FACILITY_TYPE_SERVICE
+            value: LABEL_BROKER_RETAIL
+          - name: FACILITY_WITHIN_RADIUS
+            value: "10"
+          - name: NUMBER_OF_FACILITIES
+            value: "1"
+      properties:
+        address:
+          $ref: "#/components/schemas/FacilityAddress"
+        carrier:
+          description: |
+            The carrier for which to locate facilities. This operation currently supports searching for USPS facilities.
+          example: USPS
+          type: string
+        carrierFacilityOptions:
+          description: "Filters the types of facilities returned. Each object in the\
+            \ array is a name-value pair that specifies a carrier facility option.\
+            \ Each object contains a `name` field (the option) and a `value` field\
+            \ (the option value). Both fields take strings.    \n"
+          items:
+            $ref: "#/components/schemas/CarrierFacilityOptions"
+          type: array
+      required:
+      - address
+      - carrier
+      type: object
+    FacilityAddress:
+      description: |
+        Address details used as the reference point for the facility search or returned
+        as part of a carrier facility suggestion.
+      example:
+        phone: "6502530000"
+        countryCode: US
+        postalCode: "92630"
+        cityTown: Lake Forest
+        addressLine1: 24182 Kathy Ave
+        stateProvince: CA
+        addressLine2: near abc street
+        company: Pitney Bowes Inc.
+        addressLine3: near xyz street
+        email: testuser@gmail.com
+      properties:
+        addressLine1:
+          description: The primary street address line.
+          example: 24182 Kathy Ave
+          type: string
+        addressLine2:
+          description: "Additional address information such as building, floor, or\
+            \ nearby landmark."
+          example: near abc street
+          type: string
+        addressLine3:
+          description: Optional third line for additional address details.
+          example: near xyz street
+          type: string
+        company:
+          description: Company or organization name at the address.
+          example: Pitney Bowes Inc.
+          type: string
+        email:
+          description: Email address associated with the contact at this address.
+          example: testuser@gmail.com
+          type: string
+        phone:
+          description: Phone number associated with the contact at this address.
+          example: "6502530000"
+          type: string
+        cityTown:
+          description: City or town name.
+          example: Lake Forest
+          type: string
+        stateProvince:
+          description: State or province code.
+          example: CA
+          type: string
+        postalCode:
+          description: Postal or ZIP code.
+          example: "92630"
+          type: string
+        countryCode:
+          description: The two-letter ISO country code.
+          example: US
+          type: string
+      type: object
+    CarrierFacilityOptions:
+      description: ""
+      example:
+      - name: FACILITY_TYPE
+        value: POST_OFFICE
+      - name: FACILITY_TYPE_SERVICE
+        value: LABEL_BROKER_RETAIL
+      - name: FACILITY_WITHIN_RADIUS
+        value: "10"
+      - name: NUMBER_OF_FACILITIES
+        value: "1"
+      properties:
+        name:
+          description: |
+            The option name that controls a specific aspect of the facility search.
+
+            **Facility Options**
+
+            | Name                   | Description| Value                                      |
+            |------------------------|------------------------------------|----------------------|
+            | FACILITY_TYPE          | The type of facility to return. By default, the API returns type `POST_OFFICE`.                | POST_OFFICE                                |
+            | FACILITY_TYPE_SERVICE  | A service the facility must offer. The API returns only facilities that provide this service.  | LABEL_BROKER_RETAIL, LABEL_BROKER_SELF_SERVICE_KIOSK |
+            | FACILITY_WITHIN_RADIUS | Distance from the buyer in miles.                                                              | Default: 5, Max: 25                        |
+            | NUMBER_OF_FACILITIES   | Number of facilities to return. To return only the closest one, set this to 1.                 | Default: 5, Max: 50                        |
+          type: string
+        value:
+          description: The value for the given option name.
+          type: string
+      type: object
+    CarrierFacilityResponse:
+      description: |
+        Response payload containing the original request context and suggested facilities
+        that match the search criteria.
+      example:
+        carrierFacilitySuggestions:
+        - address:
+            phone: "6502530000"
+            countryCode: US
+            postalCode: "92630"
+            cityTown: Lake Forest
+            addressLine1: 24182 Kathy Ave
+            stateProvince: CA
+            addressLine2: near abc street
+            company: Pitney Bowes Inc.
+            addressLine3: near xyz street
+            email: testuser@gmail.com
+          facilityHours:
+          - facilityTimings:
+            - "{}"
+            - "{}"
+            day: MONDAY
+          - facilityTimings:
+            - "{}"
+            - "{}"
+            day: MONDAY
+          carrierFacilityAttributes:
+          - name: FACILITY_TYPE_SERVICE
+            value: LABEL_BROKER_RETAIL
+          - name: FACILITY_TYPE_SERVICE
+            value: LABEL_BROKER_RETAIL
+          facilityParking: LOT
+        - address:
+            phone: "6502530000"
+            countryCode: US
+            postalCode: "92630"
+            cityTown: Lake Forest
+            addressLine1: 24182 Kathy Ave
+            stateProvince: CA
+            addressLine2: near abc street
+            company: Pitney Bowes Inc.
+            addressLine3: near xyz street
+            email: testuser@gmail.com
+          facilityHours:
+          - facilityTimings:
+            - "{}"
+            - "{}"
+            day: MONDAY
+          - facilityTimings:
+            - "{}"
+            - "{}"
+            day: MONDAY
+          carrierFacilityAttributes:
+          - name: FACILITY_TYPE_SERVICE
+            value: LABEL_BROKER_RETAIL
+          - name: FACILITY_TYPE_SERVICE
+            value: LABEL_BROKER_RETAIL
+          facilityParking: LOT
+        carrier: USPS
+        address:
+          phone: "6502530000"
+          countryCode: US
+          postalCode: "92630"
+          cityTown: Lake Forest
+          addressLine1: 24182 Kathy Ave
+          stateProvince: CA
+          addressLine2: near abc street
+          company: Pitney Bowes Inc.
+          addressLine3: near xyz street
+          email: testuser@gmail.com
+        carrierFacilityOptions:
+        - - name: FACILITY_TYPE
+            value: POST_OFFICE
+          - name: FACILITY_TYPE_SERVICE
+            value: LABEL_BROKER_RETAIL
+          - name: FACILITY_WITHIN_RADIUS
+            value: "10"
+          - name: NUMBER_OF_FACILITIES
+            value: "1"
+        - - name: FACILITY_TYPE
+            value: POST_OFFICE
+          - name: FACILITY_TYPE_SERVICE
+            value: LABEL_BROKER_RETAIL
+          - name: FACILITY_WITHIN_RADIUS
+            value: "10"
+          - name: NUMBER_OF_FACILITIES
+            value: "1"
+      properties:
+        address:
+          $ref: "#/components/schemas/FacilityAddress"
+        carrier:
+          description: The carrier used for the facility lookup.
+          example: USPS
+          type: string
+        carrierFacilityOptions:
+          description: |
+            Filters the types of facilities returned. Each object in the array is a name-value pair that specifies a carrier facility option. Each object contains a `name` field (the option) and a `value` field (the option value). Both fields take strings.
+          items:
+            $ref: "#/components/schemas/CarrierFacilityOptions"
+          type: array
+        carrierFacilitySuggestions:
+          description: |
+            List of facilities that match the search criteria
+          items:
+            $ref: "#/components/schemas/CarrierFacilitySuggestion"
+          type: array
+      type: object
+    CarrierFacilitySuggestion:
+      description: |
+        A suggested carrier facility that matches the search criteria.
+      example:
+        address:
+          phone: "6502530000"
+          countryCode: US
+          postalCode: "92630"
+          cityTown: Lake Forest
+          addressLine1: 24182 Kathy Ave
+          stateProvince: CA
+          addressLine2: near abc street
+          company: Pitney Bowes Inc.
+          addressLine3: near xyz street
+          email: testuser@gmail.com
+        facilityHours:
+        - facilityTimings:
+          - "{}"
+          - "{}"
+          day: MONDAY
+        - facilityTimings:
+          - "{}"
+          - "{}"
+          day: MONDAY
+        carrierFacilityAttributes:
+        - name: FACILITY_TYPE_SERVICE
+          value: LABEL_BROKER_RETAIL
+        - name: FACILITY_TYPE_SERVICE
+          value: LABEL_BROKER_RETAIL
+        facilityParking: LOT
+      properties:
+        address:
+          $ref: "#/components/schemas/FacilityAddress"
+        carrierFacilityAttributes:
+          description: |
+            List of facility attributes that describe the services available at this location.
+
+            This array is populated only when:
+            - You did not specify a FACILITY_TYPE_SERVICE value in the request, and
+            - A FACILITY_TYPE_SERVICE value applies for the facility.
+
+            Each object in the array is a name–value pair describing a facility service.
+            Both `name` and `value` are strings.
+
+            Note: If you specified a FACILITY_TYPE_SERVICE value in the request,
+            this array does not populate in the response.
+          items:
+            $ref: "#/components/schemas/CarrierFacilitySuggestion_carrierFacilityAttributes_inner"
+          readOnly: true
+          type: array
+        facilityHours:
+          description: |
+            Days and hours of operation for the facility. Each object in the array defines
+            the hours for a specific day of the week.
+          items:
+            $ref: "#/components/schemas/FacilityHours"
+          type: array
+        facilityParking:
+          description: |
+            The type of parking available at the facility.
+            Values include:
+            - NONE
+            - LOT
+            - STREET
+          example: LOT
+          type: string
+      type: object
+    FacilityHours:
+      description: |
+        Opening hours for a facility on a particular day of the week. Returned in the
+        `carrierFacilitySuggestions.facilityHours` array.
+      example:
+        facilityTimings:
+        - "{}"
+        - "{}"
+        day: MONDAY
+      properties:
+        day:
+          description: |
+            Day of the week for the facility's operating hours.
+
+            Possible values:
+            - SUNDAY
+            - MONDAY
+            - TUESDAY
+            - WEDNESDAY
+            - THURSDAY
+            - FRIDAY
+            - SATURDAY
+          example: MONDAY
+          type: string
+        facilityTimings:
+          description: |
+            A specific opening and closing time range for a facility on a given day.Returned as part of the `facilityTimings` array.
+          items:
+            type: object
+          properties:
+            opensAt:
+              description: |
+                The time the facility opens, using a 24-hour clock. The time is local to the facility.
+
+                Format: `HH:MM` or `HH:MM:SS`
+              example: 09:00:00
+              type: string
+            closesAt:
+              description: |
+                The time the facility closes, using a 24-hour clock. The time is local to the facility.
+
+                Format: `HH:MM` or `HH:MM:SS`
+              example: 17:00:00
+              type: string
+          type: array
       type: object
     fromAddressV2:
       description: The complete address of the Sender.
@@ -4287,6 +4968,94 @@ components:
       required:
       - code
       type: object
+    byExternalSystemCodeV2:
+      description: |
+        Defines shipment creation parameters based on an external system reference.
+        When provided, the system automatically retrieves and applies carrier,
+        service, and parcel details mapped to the specified external system code. <br/>
+        For now, External System Codes supported only for carriers UPS, USPS and FedEx.
+      properties:
+        externalSystemCode:
+          description: "Unique identifier or code defined in an external system used\
+            \ to retrieve shipment configuration. For now, Only SendPro Enterprise\
+            \ (SPE) is supported as an external system."
+          example: SPE
+          type: string
+        carrierCode:
+          description: |
+            Carrier code associated with the external system configuration.
+
+            ------
+            |Carrier              |ID          |
+            |---------------------|------------|
+            |FedEx Web Services   | 49         |
+            |USPS                 | 13         |
+            |UPS Consolidated     | 87         |
+          example: "87"
+          type: string
+        serviceCode:
+          description: "Service code mapped under the specified external system.\n\
+            \n------\n\n**FedExServiceCode**<br/>\n\n| Carrier Service           \
+            \                          | ID    |\n|-----------------------------------------------------|-------|\n\
+            | FedEx Priority Overnight®                           | 371   |\n| FedEx\
+            \ Standard Overnight®                           | 372   |\n| FedEx First\
+            \ Overnight®                              | 373   |\n| FedEx 2Day®   \
+            \                                      | 374   |\n| FedEx Express Saver®\
+            \                                | 375   |\n| FedEx Ground®          \
+            \                             | 383   |\n\n------   \n\n**USPSServiceCode**<br/>\n\
+            \n| Carrier Service                              | ID  |\n|----------------------------------------------|-----|\n\
+            | Express Mail International                   | 92  |\n| First-Class\
+            \ Mail®                            | 85  |\n| First-Class Mail International\
+            \               | 289 |\n| Library Mail (Basic)                      \
+            \   | 299 |\n| Media Mail (Basic)                           | 297 |\n\
+            | Priority Mail                                | 86  |\n| Priority Mail\
+            \ Cubic                          | 413 |\n| Priority Mail International\
+            \                  | 94  |\n\n------\n**UPSServiceCode**\n\n\n| Carrier\
+            \ Service                         | ID  |\n|-----------------------------------------|-----|\n\
+            | UPS Next Day Air® Early A.M.®          | 742 |\n| UPS Next Day Air®\
+            \                      | 743 |\n| UPS Next Day Air Saver®            \
+            \    | 744 |\n| UPS 2nd Day Air A.M.®                  | 745 |\n| UPS\
+            \ 2nd Day Air®                       | 746 |\n| UPS 3 Day Select®    \
+            \                  | 747 |\n| UPS® Ground                            |\
+            \ 748 |\n| UPS Express Early                      | 750 |\n| UPS Express®\
+            \                           | 753 |\n| UPS Express Saver®            \
+            \         | 754 |\n| UPS Expedited®                         | 755 |\n\
+            | UPS Standard®                          | 756 |\n| UPS Worldwide Express\
+            \ Freight®         | 757 |\n| UPS SurePost® Bound Printed Matter     \
+            \ | 759 |\n| UPS SurePost® Media                     | 760 |\n| UPS SurePost®\
+            \ 1 lb or Greater           | 761 |\n| UPS SurePost® Less than 1 lb  \
+            \          | 762 |\n"
+          example: "746"
+          type: string
+        parcelTypeCode:
+          description: "Parcel type code mapped under the specified external system.\n\
+            \n------\n\n**FedExPackageType**<br/>\n\n| Package Type              |\
+            \ ID  |\n|---------------------------|-----|\n| Customer Package     \
+            \     | 390 |\n\n-----\n      \n**USPSPackageType**\n\n| Package Type\
+            \                                       | ID  |\n|----------------------------------------------------|-----|\n\
+            | Customer Package                                   | 33  |\n| Letter\
+            \                                             | 55  |\n| Priority Mail\
+            \ Flat Rate Box (12\" x 3.5\" x 14\")     | 57  |\n| Priority Mail Flat\
+            \ Rate Box (11\" x 8.5\" x 5.5\")    | 58  |\n| Priority Mail Small Flat\
+            \ Rate Box (6\" x 9\" x 2\")   | 444 |\n| Priority Mail Large Flat-Rate\
+            \ Box (12\"x12\"x5.5\")   | 484 |\n| Priority Mail Large Flat-Rate Box\
+            \ (24\"x12\"x3\")     | 485 |\n| Priority Mail Flat Rate Padded Envelope\
+            \            | 486 |\n| Priority Mail Legal Flat Rate Envelope       \
+            \      | 490 |\n| Priority Mail Regional Rate Box A                  |\
+            \ 491 |\n| Priority Mail Regional Rate Box B                  | 492 |\n\
+            | Express Mail Legal Flat Rate Envelope              | 494 |\n| Express\
+            \ Mail Padded Flat Rate Envelope             | 495 |\n| Flat Rate Envelope\
+            \                                 | 0   |\n\n------\n\n**UPSPackageType**\n\
+            \n| Package Type                         | ID  |\n|--------------------------------------|-----|\n\
+            | Custom                               | 570 |\n| Pak                \
+            \                  | 572 |\n| Box                                  | 573\
+            \ |\n| Tube                                 | 574 |\n| Letter        \
+            \                       | 575 |\n| UPS US Express Box Small          \
+            \   | 579 |\n| UPS US Express Box Medium            | 580 |\n| UPS US\
+            \ Express Box Large             | 581 |\n\n------\n"
+          example: "570"
+          type: string
+      type: object
     carrierPayments:
       description: "Defines how carrier charges are billed to a third party. Use this\
         \ field to specify \naccount and charge type details for transportation and/or\
@@ -4300,9 +5069,6 @@ components:
         $ref: "#/components/schemas/carrierPayments_inner"
       type: array
     docTabItem:
-      description: This field will either be part of the request or response payload
-        or will be marked as a custom field. We need to pass this field only if we
-        need to print it on the label.
       properties:
         displayName:
           description: This is a mandatory field. It will be displayed on the label
@@ -4687,7 +5453,9 @@ components:
             \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
             \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
             \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
-            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/).\
+            \ <br/>If Cost Account metadata is provided, all three Cost Account fields\
+            \ are required."
           items:
             $ref: "#/components/schemas/shipmentDomesticByCustomCarrierCode_metadata_inner"
           type: array
@@ -4831,7 +5599,9 @@ components:
             \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
             \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
             \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
-            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/).\
+            \ <br/>If Cost Account metadata is provided, all three Cost Account fields\
+            \ are required."
           items:
             $ref: "#/components/schemas/shipmentDomesticByCustomCarrierCode_metadata_inner"
           type: array
@@ -4956,7 +5726,9 @@ components:
             \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
             \ Account Id, Cost Account Code](/openapi/costaccount/operation/addCostAccount/),\
             \ [Account Code](/openapi/billingcodes/operation/createAccountCode/) and\
-            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/)"
+            \ [Company Code](/openapi/billingcodes/operation/createCompanyCode/).\
+            \ <br/>If Cost Account metadata is provided, all three Cost Account fields\
+            \ are required."
           items:
             $ref: "#/components/schemas/shipmentDomesticByCustomCarrierCode_metadata_inner"
           type: array
@@ -5363,6 +6135,35 @@ components:
       - labelFormat
       - labelSize
       - labelType
+      - parcel
+      - rateShopBy
+      - toAddress
+      type: object
+    RateShopbyExternalSystemCode:
+      properties:
+        fromAddress:
+          $ref: "#/components/schemas/fromAddressV2"
+        toAddress:
+          $ref: "#/components/schemas/toAddressV2"
+        parcel:
+          $ref: "#/components/schemas/RateShopbyCarrier_parcel"
+        rateShopBy:
+          description: "Specifies that shipment creation uses a predefined configuration\
+            \ from an external system. When externalSystemCode is selected, the system\
+            \ retrieves carrier, account, service, and parcel details based on the\
+            \ external system codes provided in the request. "
+          enum:
+          - carrier
+          - rateGroup
+          - ruleSet
+          - customCarrierCode
+          - externalSystemCode
+          example: externalSystemCode
+          type: string
+        byExternalSystemCode:
+          $ref: "#/components/schemas/byExternalSystemCodeV2"
+      required:
+      - fromAddress
       - parcel
       - rateShopBy
       - toAddress
@@ -10744,9 +11545,11 @@ components:
           height: 1
         metadata:
         - name: costAccountName
-          value: cost account 123
-        - name: costAccountName
-          value: cost account 123
+          value: costAccountName
+        - name: costAccountId
+          value: costAccountId
+        - name: costAccountCode
+          value: Code
         format: PDF
         type: COVERSHEET
         shippingReferences:
@@ -10827,6 +11630,7 @@ components:
           enum:
           - LGENV
           - PKG
+          - LTR
           example: LGENV
           type: string
         serviceId:
@@ -10852,7 +11656,18 @@ components:
         shipmentOptions:
           $ref: "#/components/schemas/ErrCoversheetRequest_shipmentOptions"
         metadata:
-          description: Optional metadata for the shipment.
+          description: "Additional metadata that needs to be stored for this shipment\
+            \ can be added here.<br /> Supported values are [Cost Account Name, Cost\
+            \ Account Id and Cost Account Code](/openapi/costaccount/operation/addCostAccount/).<br/>If\
+            \ Cost Account metadata is provided, all three Cost Account fields are\
+            \ required."
+          example:
+          - name: costAccountName
+            value: costAccountName
+          - name: costAccountId
+            value: costAccountId
+          - name: costAccountCode
+            value: Code
           items:
             $ref: "#/components/schemas/MultipieceShipmentRequest_metadata_inner"
           type: array
@@ -10979,13 +11794,12 @@ components:
           type: array
       type: object
     createShipmentV2_request:
-      discriminator:
-        propertyName: rateShopBy
       oneOf:
       - $ref: "#/components/schemas/shipmentDomesticByCarrier"
       - $ref: "#/components/schemas/shipmentDomesticByRateGroup"
       - $ref: "#/components/schemas/shipmentDomesticByRuleset"
       - $ref: "#/components/schemas/shipmentDomesticByCustomCarrierCode"
+      - $ref: "#/components/schemas/shipmentDomesticByExternalSystemCode"
       - $ref: "#/components/schemas/shipmentInternationalByCarrier"
       - $ref: "#/components/schemas/MilitaryMailShipmentsRequestV2"
     createShipmentV2_200_response:
@@ -10994,13 +11808,12 @@ components:
       - $ref: "#/components/schemas/internationalShipmentResponseV2"
       - $ref: "#/components/schemas/MilitaryMailShipmentResponseV2"
     rateShipment_request:
-      discriminator:
-        propertyName: rateShopBy
       oneOf:
       - $ref: "#/components/schemas/RateShopbyCarrier"
       - $ref: "#/components/schemas/RateShopbyRategroup"
       - $ref: "#/components/schemas/RateShopbyRuleset"
       - $ref: "#/components/schemas/RateShopbyCustomCarrierCode"
+      - $ref: "#/components/schemas/RateShopbyExternalSystemCode"
     rateShipment_200_response_parcel:
       description: Details of the parcel being rated.
       example:
@@ -11293,7 +12106,7 @@ components:
           enum:
           - PDF
           type: string
-        name:
+        fileName:
           description: The name of the file to be uploaded.
           type: string
         carrierAccountId:
@@ -11314,8 +12127,8 @@ components:
       required:
       - carrierAccountId
       - documentType
+      - fileName
       - format
-      - name
       type: object
     uploadETD_200_response:
       example:
@@ -11347,8 +12160,6 @@ components:
           type: string
       type: object
     schedulePickup_request:
-      discriminator:
-        propertyName: carrierAccountId
       oneOf:
       - $ref: "#/components/schemas/schedulePickupDHLEXPRequest"
       - $ref: "#/components/schemas/schedulePickupUSPSRequest"
@@ -11361,8 +12172,6 @@ components:
       - $ref: "#/components/schemas/schedulePickupUPSResponse"
       - $ref: "#/components/schemas/schedulePickupFedexResponse"
     multipieceShipment_request:
-      discriminator:
-        propertyName: format
       oneOf:
       - $ref: "#/components/schemas/MultipieceShipmentRequest"
       - $ref: "#/components/schemas/MultipieceShipmentInternationalRequest"
@@ -11372,8 +12181,6 @@ components:
       - $ref: "#/components/schemas/MultipieceShipmentInternationalResponse"
       - $ref: "#/components/schemas/MultipieceShipmentSplitParcelLabelResponse"
     multipieceRates_request:
-      discriminator:
-        propertyName: format
       oneOf:
       - $ref: "#/components/schemas/MultipieceRateShopRequest"
       - $ref: "#/components/schemas/MultipieceRatesRequest"
@@ -13530,6 +14337,35 @@ components:
         value:
           description: Indicates the value for the CostAccount.
           example: cost1
+          type: string
+      type: object
+    shipmentDomesticByExternalSystemCode_shipmentOptions:
+      description: "Shipment Options have an added feature that is Manifest.<br />\
+        \ With Manifest, the Mail Center agent can print the Manifest (End of day\
+        \ records of all created shipment) of selected carrier."
+      properties:
+        addToManifest:
+          description: "This option asks if the shipment is to be added for Manifest,\
+            \ so that the shipment will reflect in the Manifest Form while compilation.\
+            \ Supported for CPC and USPS carriers. <br /> The value can be 'true'\
+            \ or 'false'."
+          example: true
+          type: boolean
+      type: object
+    CarrierFacilitySuggestion_carrierFacilityAttributes_inner:
+      example:
+        name: FACILITY_TYPE_SERVICE
+        value: LABEL_BROKER_RETAIL
+      properties:
+        name:
+          description: |
+            Name of the facility attribute or service.
+          example: FACILITY_TYPE_SERVICE
+          type: string
+        value:
+          description: |
+            Value for the facility attribute or service.
+          example: LABEL_BROKER_RETAIL
           type: string
       type: object
     FedEx_Carrier_Payment:
@@ -17783,7 +18619,7 @@ components:
           example: EXPRESS
           type: string
         scheduleDay:
-          description: "Indicates when the pickup is scheduled (e.g., SAME_DAY, NEXT_DAY)."
+          description: "Indicates when the pickup is scheduled (e.g., SAME_DAY, FUTURE_DAY)."
           example: SAME_DAY
           type: string
       type: object

@@ -1,6 +1,6 @@
 # com.pitneybowes.api360.Api.PrintApi
 
-All URIs are relative to *https://api-dev.sendpro360.pitneycloud.com/shipping*
+All URIs are relative to *https://api-sandbox.sendpro360.pitneybowes.com/shipping*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|

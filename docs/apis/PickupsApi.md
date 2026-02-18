@@ -1,6 +1,6 @@
 # com.pitneybowes.api360.Api.PickupsApi
 
-All URIs are relative to *https://api-dev.sendpro360.pitneycloud.com/shipping*
+All URIs are relative to *https://api-sandbox.sendpro360.pitneybowes.com/shipping*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
@@ -221,7 +221,7 @@ Get Pickups
 
 Schedule Pickup
 
-Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments.  The pickup schedule scope is determined by what you provide in the request:   - **If pickupSummary is provided:** a pickup is scheduled for the packages described in the summary.   - **If ShipmentIds is provided:** a pickup is scheduled for the specified shipments.   - **If both pickupSummary and ShipmentIds are provided:** a pickup is scheduled for all shipments including by both inputs.   - **If neither is provided:** a pickup is scheduled for all shipments created on the given carrier account by that time of the day. 
+Pickups endpoint allows you to schedule pickups with USPS, DHL Express, UPS and FedEx carriers for eligible shipments.  The pickup schedule scope is determined by what you provide in the request:   - **If pickupSummary is provided:** a pickup is scheduled for the packages described in the summary.   - **If ShipmentIds is provided:** a pickup is scheduled for the specified shipments.   - **If both pickupSummary and ShipmentIds are provided:** a pickup is scheduled for all shipments including by both inputs.   - **If neither is provided:** a pickup is scheduled for all shipments created on the given carrier account by that time of the day. > Note: The sender's first name and last name are required for USPS. For example: `\"name\": \"John Doe\"` 
 
 
 ### Parameters
